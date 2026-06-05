@@ -68,7 +68,7 @@ class SammlungenModule extends AbstractModule implements
     public function boot(): void
     {
         $this->migrateDatabase();
-        View::registerNamespace($this->name(), $this->resourcesFolder() . 'views/');
+        View::registerNamespace(self::MODULE_NAME, $this->resourcesFolder() . 'views/');
 
         $router = Registry::routeFactory()->routeMap();
 
