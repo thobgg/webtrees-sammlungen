@@ -98,7 +98,7 @@ class SammlungenRepository
             })
             ->where('mf.m_file', '=', $tree->id())
             ->select('mf.source_media_type')
-            ->selectRaw('COUNT(DISTINCT wt_mf.m_id) AS anzahl')
+            ->selectRaw('COUNT(DISTINCT ' . DB::prefix('mf') . '.m_id) AS anzahl')
             // Drei neueste m_ids für Vorschau (subquery wäre aufwändiger → nachher holen)
             ->groupBy('mf.source_media_type')
             ->orderByDesc('anzahl')
