@@ -5,6 +5,24 @@ Alle nennenswerten Änderungen an diesem Modul werden hier dokumentiert.
 Das Format orientiert sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [1.0.2] – 2026-06-24
+
+### Hinzugefügt
+- Niederländische Übersetzung (`nl.po` / `nl.mo`) – Beitrag von TheDutchJewel.
+- GitHub-Actions-Release-Workflow: bei jedem Tag `v*` wird automatisch ein
+  install-fertiges ZIP (Ordner `sammlungen/`) ans Release gehängt. Damit ist
+  die Installation ohne Composer/git möglich (entpacken nach `modules_v4/`).
+
+### Behoben
+- Direkt-/ZIP-Installation ohne Composer: Fallback-Autoloader in `module.php`
+  (kein „Class not found" mehr, wenn `vendor/` fehlt).
+- Sammlungs-Zählung respektiert das konfigurierte Tabellen-Präfix
+  (`DB::prefix('mf')` statt hartcodiertem `wt_mf`).
+- View-Namespace `_sammlungen_` wird korrekt registriert (kein
+  „Namespace not found" mehr).
+
+(Fehlerbehebungen beigetragen von Hermann Hartenthaler.)
+
 ## [1.0.1] – 2026-05-22
 
 ### Geändert
