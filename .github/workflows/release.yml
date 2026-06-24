@@ -1,0 +1,33 @@
+name: Release
+
+# Baut bei jedem Tag-Push v* ein install-fertiges ZIP und hängt es ans Release.
+# Das ZIP enthält den Ordner sammlungen/ und wird ohne Composer/vendor lauffähig
+# (Autoload-Fallback in module.php). Entpacken nach modules_v4/ genügt.
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-zip:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (Tag)
+        uses: actions/checkout@v4
+
+      - name: Install-ZIP bauen
+        run: |
+          VERSION="${GITHUB_REF_NAME}"
+          git archive --format=zip --prefix=sammlungen/ \
+            -o "sammlungen-${VERSION}.zip" HEAD
+          unzip -l "sammlungen-${VERSION}.zip" | head -20
+
+      - name: ZIP ans Release hängen
+        uses: softprops/action-gh-release@v2
+        with:
+          files: sammlungen-*.zip
+          generate_release_notes: true
