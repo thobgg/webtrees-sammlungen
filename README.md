@@ -7,7 +7,7 @@
 | | |
 |---|---|
 | Module name | `sammlungen` |
-| Version | 1.0.4 |
+| Version | 1.0.5 |
 | webtrees | 2.2.x |
 | PHP | 8.2 – 8.4 |
 | License | GPL-3.0-or-later |
@@ -207,9 +207,13 @@ Available in the admin UI:
 
 ## Localisation
 
-The UI is currently in **German**. An English translation (`en.po`) is on the roadmap.
-Contributions welcome – the source strings are wrapped in `I18N::translate()` calls
-and `resources/lang/de.po` can be used as a template.
+The UI is available in **German**, **English** and (partially) **Dutch**.
+Translation files live in `resources/lang/` (`de`, `en`, `nl`). The source strings
+are wrapped in `I18N::translate()` and German is the source language.
+
+Contributions welcome: copy `resources/lang/nl.po` (a complete, up-to-date template),
+translate the empty `msgstr` entries, compile with `msgfmt nl.po -o nl.mo`, and open a
+pull request. New languages: copy `en.po` as a starting point and name it `<code>.po`.
 
 ## Related modules
 

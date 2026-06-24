@@ -3,390 +3,390 @@ msgstr ""
 "Project-Id-Version: sammlungen 1.0.5\n"
 "Report-Msgid-Bugs-To: \n"
 "PO-Revision-Date: 2026-06-24 00:00+0000\n"
-"Language-Team: Dutch\n"
-"Language: nl\n"
+"Language-Team: English\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "%s Minuten"
-msgstr ""
+msgstr "%s minutes"
 
 msgid "%s Stunden"
-msgstr ""
+msgstr "%s hours"
 
 msgid "%s noch nicht importiert"
-msgstr ""
+msgstr "%s not yet imported"
 
 msgid "APCu ist aktiv. Abfragen werden gecacht."
-msgstr ""
+msgstr "APCu is active. Queries are cached."
 
 msgid "Abbrechen"
-msgstr ""
+msgstr "Cancel"
 
 msgid "Abgleich EXIF ↔ webtrees"
-msgstr ""
+msgstr "Sync EXIF ↔ webtrees"
 
 msgid "Aktionen"
-msgstr ""
+msgstr "Actions"
 
 msgid "Aktiv"
-msgstr ""
+msgstr "Active"
 
 msgid "Aktueller TTL: %s Sekunden"
-msgstr ""
+msgstr "Current TTL: %s seconds"
 
 msgid "Alle"
-msgstr "Alle"
+msgstr "All"
 
 msgid "Alle Medienobjekte sind mit Personen oder Familien verknüpft."
-msgstr ""
+msgstr "All media objects are linked to individuals or families."
 
 msgid "Allgemeine Einstellungen"
-msgstr ""
+msgstr "General settings"
 
 msgid "Angezeigter Name der Sammlung."
-msgstr ""
+msgstr "Display name of the collection."
 
 msgid "Anzeigen"
-msgstr ""
+msgstr "Show"
 
 msgid "Anzeigetyp"
-msgstr ""
+msgstr "Display type"
 
 msgid "Archiv-Ordner"
-msgstr ""
+msgstr "Archive folders"
 
 msgid "Bearbeiten"
-msgstr ""
+msgstr "Edit"
 
 msgid "Beschreibung"
-msgstr ""
+msgstr "Description"
 
 msgid "Bitte geben Sie einen Namen ein."
-msgstr ""
+msgstr "Please enter a name."
 
 msgid "Bitte wählen Sie einen Stammbaum aus."
-msgstr ""
+msgstr "Please select a family tree."
 
 msgid "Bitte wählen Sie oben einen Stammbaum aus."
-msgstr ""
+msgstr "Please select a family tree above."
 
 msgid "Cache jetzt leeren"
-msgstr ""
+msgstr "Clear cache now"
 
 msgid "Cache verwalten"
-msgstr ""
+msgstr "Manage cache"
 
 msgid "Cache wirklich leeren?"
-msgstr ""
+msgstr "Really clear the cache?"
 
 msgid "Cache-TTL (Sekunden)"
-msgstr ""
+msgstr "Cache TTL (seconds)"
 
 msgid "Darstellung"
-msgstr ""
+msgstr "Appearance"
 
 msgid "Datei"
-msgstr ""
+msgstr "File"
 
 msgid "Datei umbenennen"
-msgstr ""
+msgstr "Rename file"
 
 msgid "Datum"
-msgstr "Datum"
+msgstr "Date"
 
 msgid "Der Foto-Picker zeigt nur Bilder aus aktiven, ordner-basierten Foto-Sammlungen (ein Top-Level-Ordner direkt unter data/media/). Lege zuerst eine solche Sammlung an – oder befülle diese Sammlung direkt, indem du in ihrer Bearbeitungsmaske das Feld „Medienordner\" setzt."
-msgstr ""
+msgstr "The photo picker only shows images from active, folder-based photo collections (a top-level folder directly under data/media/). Create such a collection first – or fill this collection directly by setting the „Medienordner“ (media folder) field in its edit form."
 
 msgid "Der Sammlungen-Cache wurde erfolgreich geleert."
-msgstr ""
+msgstr "The collections cache was cleared successfully."
 
 msgid "Diese Sammlung ist noch leer."
-msgstr ""
+msgstr "This collection is still empty."
 
 msgid "Dieser Stammbaum enthält noch keine Medienobjekte oder Sammlungen."
-msgstr ""
+msgstr "This family tree does not contain any media objects or collections yet."
 
 msgid "Dokumente"
-msgstr "Documenten"
+msgstr "Documents"
 
 msgid "Dokumentenliste"
-msgstr ""
+msgstr "Document list"
 
 msgid "EXIF/XMP bearbeiten"
-msgstr ""
+msgstr "Edit EXIF/XMP"
 
 msgid "Einstellungen"
-msgstr ""
+msgstr "Settings"
 
 msgid "Einstellungen speichern"
-msgstr ""
+msgstr "Save settings"
 
 msgid "Einträge pro Seite"
-msgstr ""
+msgstr "Entries per page"
 
 msgid "Erste Sammlung anlegen"
-msgstr ""
+msgstr "Create first collection"
 
 msgid "Es gibt noch keine Quelle, aus der du Fotos auswählen kannst."
-msgstr ""
+msgstr "There is no source yet from which you can select photos."
 
 msgid "Es sind keine Stammbäume vorhanden."
-msgstr ""
+msgstr "There are no family trees."
 
 msgid "Farbe"
-msgstr ""
+msgstr "Colour"
 
 msgid "Footer anzeigen"
-msgstr ""
+msgstr "Show footer"
 
 msgid "Foto-Raster"
-msgstr ""
+msgstr "Photo grid"
 
 msgid "Fotogalerie"
-msgstr ""
+msgstr "Photo gallery"
 
 msgid "Fotos"
-msgstr "Foto’s"
+msgstr "Photos"
 
 msgid "Fotos als Kacheln, Dokumente als Liste"
-msgstr ""
+msgstr "Photos as tiles, documents as a list"
 
 msgid "Fotos auswählen"
-msgstr ""
+msgstr "Select photos"
 
 msgid "Fotos für: %s"
-msgstr ""
+msgstr "Photos for: %s"
 
 msgid "Fotos hinzufügen"
-msgstr ""
+msgstr "Add photos"
 
 msgid "Gemischt"
-msgstr ""
+msgstr "Mixed"
 
 msgid "Gleichförmiges Grid, sachlich"
-msgstr ""
+msgstr "Uniform grid, plain"
 
 msgid "Grundeinstellungen"
-msgstr ""
+msgstr "Basic settings"
 
 msgid "Icon"
-msgstr ""
+msgstr "Icon"
 
 msgid "In Datei speichern"
-msgstr ""
+msgstr "Save to file"
 
 msgid "In webtrees öffnen"
-msgstr ""
+msgstr "Open in webtrees"
 
 msgid "Inaktiv"
-msgstr ""
+msgstr "Inactive"
 
 msgid "Interne Kennung"
-msgstr ""
+msgstr "Internal identifier"
 
 msgid "Jetzt anlegen"
-msgstr ""
+msgstr "Create now"
 
 msgid "Keine Dateien in diesem Ordner gefunden."
-msgstr ""
+msgstr "No files found in this folder."
 
 msgid "Keine Fotos in dieser Quelle."
-msgstr ""
+msgstr "No photos in this source."
 
 msgid "Keine Objekte in dieser Kategorie."
-msgstr ""
+msgstr "No objects in this category."
 
 msgid "Keine Vorschaubilder (noch keine Bilddateien vom Typ jpg/png/gif/webp) in dieser Sammlung."
-msgstr ""
+msgstr "No preview images (no jpg/png/gif/webp image files yet) in this collection."
 
 msgid "Kennung"
-msgstr ""
+msgstr "Identifier"
 
 msgid "Kleinbuchstaben, Ziffern, - und _. Wird automatisch aus dem Namen erzeugt. Nur Buchstaben, Ziffern, Bindestrich. Nicht änderbar."
-msgstr ""
+msgstr "Lower-case letters, digits, - and _. Generated automatically from the name. Letters, digits and hyphens only. Cannot be changed."
 
 msgid "Klicken = hinzufügen/entfernen"
-msgstr ""
+msgstr "Click = add/remove"
 
 msgid "Klicken zum Umschalten"
-msgstr ""
+msgstr "Click to toggle"
 
 msgid "Klicken zum Vergrößern"
-msgstr ""
+msgstr "Click to enlarge"
 
 msgid "Komma-getrennt"
-msgstr ""
+msgstr "Comma-separated"
 
 msgid "Leert den APCu-Cache des Moduls. Notwendig nach manuellen Datenbankänderungen oder wenn Daten nicht aktualisiert erscheinen. Der Cache wird automatisch nach GEDCOM-Importen geleert."
-msgstr ""
+msgstr "Clears the module's APCu cache. Necessary after manual database changes or when data appears not to update. The cache is cleared automatically after GEDCOM imports."
 
 msgid "Legen Sie manuell gepflegte Sammlungen an, um Medienobjekte thematisch zu gruppieren. Automatisch erkannte Sammlungen aus den GEDCOM-Medientypen werden davon nicht berührt."
-msgstr ""
+msgstr "Create manually maintained collections to group media objects by topic. Automatically detected collections from the GEDCOM media types are not affected."
 
 msgid "Link im Footer anzeigen"
-msgstr ""
+msgstr "Show link in the footer"
 
 msgid "Liste, auch für JPG-Scans"
-msgstr ""
+msgstr "List, also for JPG scans"
 
 msgid "Löschen"
-msgstr ""
+msgstr "Delete"
 
 msgid "Masonry, Lightbox, EXIF-Editor"
-msgstr ""
+msgstr "Masonry, lightbox, EXIF editor"
 
 msgid "Medienobjekte ohne Verknüpfung zu Personen oder Familien"
-msgstr ""
+msgstr "Media objects without a link to individuals or families"
 
 msgid "Medienordner (automatisch befüllt)"
-msgstr ""
+msgstr "Media folder (filled automatically)"
 
 msgid "Mindestens 60 s, maximal 86400 s (24 h). Standard: 900 s (15 min)."
-msgstr ""
+msgstr "Minimum 60 s, maximum 86400 s (24 h). Default: 900 s (15 min)."
 
 msgid "Name"
-msgstr ""
+msgstr "Name"
 
 msgid "Neu"
-msgstr ""
+msgstr "New"
 
 msgid "Neue Sammlung"
-msgstr ""
+msgstr "New collection"
 
 msgid "Neue Sammlung anlegen"
-msgstr ""
+msgstr "Create new collection"
 
 msgid "Nicht eingebunden"
-msgstr ""
+msgstr "Not linked"
 
 msgid "Nicht eingebundene Medienobjekte"
-msgstr ""
+msgstr "Unlinked media objects"
 
 msgid "Noch keine Sammlungen angelegt."
-msgstr ""
+msgstr "No collections created yet."
 
 msgid "Noch keine verwalteten Sammlungen vorhanden."
-msgstr ""
+msgstr "No managed collections yet."
 
 msgid "Noch nicht in webtrees importiert"
-msgstr ""
+msgstr "Not yet imported into webtrees"
 
 msgid "Nr."
-msgstr ""
+msgstr "No."
 
 msgid "Ohne Typ"
-msgstr ""
+msgstr "Without type"
 
 msgid "Ordnerpfad relativ zu data/media/ – Unterordner werden automatisch eingeschlossen. Leer lassen für manuelle Pflege."
-msgstr ""
+msgstr "Folder path relative to data/media/ – sub-folders are included automatically. Leave empty for manual maintenance."
 
 msgid "Personen"
-msgstr "Personen"
+msgstr "Individuals"
 
 msgid "Reihenfolge"
-msgstr ""
+msgstr "Order"
 
 msgid "Sammlung #%s nicht gefunden."
-msgstr ""
+msgstr "Collection #%s not found."
 
 msgid "Sammlung #%s wurde gelöscht."
-msgstr ""
+msgstr "Collection #%s was deleted."
 
 msgid "Sammlung #%s wurde nicht gefunden."
-msgstr ""
+msgstr "Collection #%s was not found."
 
 msgid "Sammlung anlegen"
-msgstr ""
+msgstr "Create collection"
 
 msgid "Sammlung bearbeiten: %s"
-msgstr ""
+msgstr "Edit collection: %s"
 
 msgid "Sammlung nicht gefunden."
-msgstr ""
+msgstr "Collection not found."
 
 msgid "Sammlung „%s\" wurde aktualisiert."
-msgstr ""
+msgstr "Collection “%s” was updated."
 
 msgid "Sammlung „%s\" wurde angelegt."
-msgstr ""
+msgstr "Collection “%s” was created."
 
 msgid "Sammlungen"
-msgstr "Collecties"
+msgstr "Collections"
 
 msgid "Sammlungen verwalten"
-msgstr ""
+msgstr "Manage collections"
 
 msgid "Sammlungen – Einstellungen"
-msgstr ""
+msgstr "Collections – settings"
 
 msgid "Schließen"
-msgstr ""
+msgstr "Close"
 
 msgid "Seite %s von %s"
-msgstr ""
+msgstr "Page %s of %s"
 
 msgid "Sichtbar (aktiv)"
-msgstr ""
+msgstr "Visible (active)"
 
 msgid "Sie haben keine Berechtigung für diese Aktion."
-msgstr ""
+msgstr "You do not have permission for this action."
 
 msgid "Sie haben keine Berechtigung für diese Seite."
-msgstr ""
+msgstr "You do not have permission for this page."
 
 msgid "Stammbaum:"
-msgstr ""
+msgstr "Family tree:"
 
 msgid "Stichwörter"
-msgstr ""
+msgstr "Keywords"
 
 msgid "Thematische Sammlungen"
-msgstr ""
+msgstr "Thematic collections"
 
 msgid "Vollbild in neuem Tab"
-msgstr ""
+msgstr "Full screen in a new tab"
 
 msgid "Vorschau"
-msgstr ""
+msgstr "Preview"
 
 msgid "Wer, Was, Wann, Wo…"
-msgstr ""
+msgstr "Who, what, when, where…"
 
 msgid "Zu Sammlung hinzufügen"
-msgstr ""
+msgstr "Add to collection"
 
 msgid "Zurück"
-msgstr ""
+msgstr "Back"
 
 msgid "Zurück zu den Einstellungen"
-msgstr ""
+msgstr "Back to settings"
 
 msgid "z.B. Familienfotos"
-msgstr ""
+msgstr "e.g. family photos"
 
 msgid "Änderungen speichern"
-msgstr ""
+msgstr "Save changes"
 
 msgid "%s verwaltete Sammlung"
 msgid_plural "%s verwaltete Sammlungen"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s managed collection"
+msgstr[1] "%s managed collections"
 
 msgid "%s Objekt"
 msgid_plural "%s Objekte"
-msgstr[0] ""
-msgstr[1] "%s objecten"
+msgstr[0] "%s object"
+msgstr[1] "%s objects"
 
 msgid "%s Foto"
 msgid_plural "%s Fotos"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s photo"
+msgstr[1] "%s photos"
 
 msgid "%s Datei"
 msgid_plural "%s Dateien"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s file"
+msgstr[1] "%s files"
 

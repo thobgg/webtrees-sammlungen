@@ -57,8 +57,8 @@ class SammlungenModule extends AbstractModule implements
     public function title(): string { return 'Sammlungen'; }
     public function description(): string { return 'Foto- und Dokumenten-Sammlungen mit EXIF-Anreicherung, Galerie und Lightbox.'; }
     public function customModuleAuthorName(): string { return 'Thomas Bugge'; }
-    public function customModuleVersion(): string { return '1.0.4'; }
-    public function customModuleLatestVersion(): string { return '1.0.4'; }
+    public function customModuleVersion(): string { return '1.0.5'; }
+    public function customModuleLatestVersion(): string { return '1.0.5'; }
     public function customModuleSupportUrl(): string { return ''; }
 
     /**
@@ -70,9 +70,18 @@ class SammlungenModule extends AbstractModule implements
      */
     public function customTranslations(string $language): array
     {
-        $file = $this->resourcesFolder() . 'lang/' . $language . '.mo';
+        $dir = $this->resourcesFolder() . 'lang/';
 
-        return file_exists($file) ? (new Translation($file))->asArray() : [];
+        // Exakten Sprachcode zuerst versuchen (de, nl), dann 2-Buchstaben-Fallback,
+        // damit z. B. en-GB / en-US auf en.mo zurückfallen.
+        foreach ([$language, substr($language, 0, 2)] as $code) {
+            $file = $dir . $code . '.mo';
+            if (file_exists($file)) {
+                return (new Translation($file))->asArray();
+            }
+        }
+
+        return [];
     }
 
     public function getConfigLink(): string

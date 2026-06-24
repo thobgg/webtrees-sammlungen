@@ -5,6 +5,21 @@ Alle nennenswerten Änderungen an diesem Modul werden hier dokumentiert.
 Das Format orientiert sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [1.0.5] – 2026-06-24
+
+### Hinzugefügt
+- **Vollständige englische Übersetzung** (`en.po` / `en.mo`, alle ~120 Texte
+  + Pluralformen). Englischsprachige Nutzer (`en-GB` / `en-US`) sehen die
+  Oberfläche jetzt auf Englisch statt auf Deutsch.
+- **Vollständiger Übersetzungs-Katalog**: alle im Code verwendeten Texte sind
+  jetzt erfasst (vorher nur ~34 von ~120). Deutsche Katalogdatei (`de.po`)
+  vervollständigt; niederländische `nl.po` als vollständige Vorlage (bestehende
+  Übersetzungen erhalten, fehlende offen zur Ergänzung).
+
+### Geändert
+- `customTranslations()` nutzt einen 2-Buchstaben-Fallback (`en-GB` → `en`),
+  damit eine Sprachdatei alle Regionalvarianten abdeckt.
+
 ## [1.0.4] – 2026-06-24
 
 ### Behoben
