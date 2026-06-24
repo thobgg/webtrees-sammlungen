@@ -1,6 +1,6 @@
 # Sammlungen – webtrees Custom Module
 
-[🇬🇧 English](README.md) · 🇩🇪 **Deutsch**
+[🇬🇧 English](README.md) · 🇩🇪 **Deutsch** · [🇳🇱 Nederlands](README.nl.md)
 
 **Foto- und Dokumenten-Sammlungen für [webtrees](https://webtrees.net) mit EXIF-Anreicherung, Galerie, Lightbox und Abgleich gegen GEDCOM-Daten.**
 
