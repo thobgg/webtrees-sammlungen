@@ -102,6 +102,47 @@ Anschließend in webtrees unter **Steuerleiste → Module → Custom Modules** d
    - Cache-TTL und Seitengröße konfigurieren
    - Footer-Link ein-/ausschalten
 
+## Sammlungen mit Bildern füllen
+
+Es gibt **zwei Arten** von Sammlungen – der Unterschied liegt allein im Feld
+**„Medienordner"** in der Sammlungs-Maske:
+
+### 1. Ordner-Sammlung (empfohlen, automatisch)
+
+Du trägst im Feld **„Medienordner"** einen Ordner unter `data/media/` ein
+(z. B. `grabsteine`). Die Sammlung enthält dann **automatisch alle Bilder** aus
+diesem Ordner (inklusive Unterordner) – neue Dateien erscheinen ohne weiteres
+Zutun. Das ist der normale Weg und der einzige, der für große Bestände
+praktikabel ist.
+
+1. Ordner unter `data/media/` anlegen (z. B. `data/media/grabsteine/`) und die
+   Bilder hineinlegen.
+2. Sammlung anlegen, bei **„Medienordner"** den Ordnernamen eintragen
+   (`grabsteine`), Anzeigetyp **„Fotogalerie"** wählen.
+3. **„Sichtbar (aktiv)"** einschalten, speichern. Fertig – alle Bilder sind
+   automatisch enthalten.
+
+### 2. Album-Sammlung (manuell kuratiert)
+
+Lässt du **„Medienordner" leer**, entsteht ein freies Album, das du von Hand
+bestückst: über den **📷-Button** in der Sammlungs-Verwaltung wählst du einzelne
+Bilder aus.
+
+Wichtig: Der 📷-Picker zeigt nur Bilder, die aus einer **Quelle** stammen. Eine
+„Quelle" ist jede Sammlung, die *gleichzeitig* **aktiv** ist, einen
+**Medienordner** hat, dieser Ordner **direkt unter `data/media/`** liegt
+(ein Top-Level-Ordner, also **kein `/`** im Namen – z. B. `grabsteine`, nicht
+`grabsteine/2024`) und deren Anzeigetyp **„Fotogalerie"** oder **„Foto-Raster"**
+ist.
+
+Für ein manuelles Album brauchst du deshalb **zuerst mindestens eine aktive
+Ordner-Sammlung** (Weg 1) als Quelle. Ohne sie meldet der Picker
+„keine Bilder vorhanden".
+
+> **Faustregel:** Alle Bilder eines Themas liegen in einem Ordner? → Ordner-Sammlung
+> (Weg 1). Du willst gezielt einzelne Bilder über mehrere Ordner hinweg
+> zusammenstellen? → Album-Sammlung (Weg 2).
+
 ## Architektur
 
 ```

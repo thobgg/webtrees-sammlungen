@@ -102,6 +102,46 @@ The database tables are created automatically on first load.
    - Configure cache TTL and page size
    - Toggle the footer link
 
+## Filling collections with images
+
+There are **two kinds** of collections – the difference is solely the
+**"Medienordner" (media folder)** field in the collection form:
+
+### 1. Folder collection (recommended, automatic)
+
+You enter a folder below `data/media/` in the **"Medienordner"** field
+(e.g. `grabsteine`). The collection then **automatically contains all images**
+from that folder (including sub-folders) – new files appear without any further
+action. This is the normal path and the only one that scales to large holdings.
+
+1. Create a folder below `data/media/` (e.g. `data/media/grabsteine/`) and put
+   the images into it.
+2. Create a collection, enter the folder name in **"Medienordner"**
+   (`grabsteine`), choose the display type **"Fotogalerie"** (photo gallery).
+3. Turn on **"Sichtbar (aktiv)"** (visible/active), save. Done – all images are
+   included automatically.
+
+### 2. Album collection (manually curated)
+
+If you leave **"Medienordner" empty**, you get a free album that you fill by
+hand: use the **📷 button** in the collection management to pick individual
+images.
+
+Important: the 📷 picker only shows images that come from a **source**
+("Quelle"). A source is any collection that is *simultaneously* **active**, has a
+**media folder**, where that folder sits **directly below `data/media/`**
+(a top-level folder, i.e. **no `/`** in the name – e.g. `grabsteine`, not
+`grabsteine/2024`) and whose display type is **"Fotogalerie"** or
+**"Foto-Raster"**.
+
+For a manual album you therefore need **at least one active folder collection**
+(path 1) as a source first. Without one, the picker reports
+"keine Bilder vorhanden" (no images).
+
+> **Rule of thumb:** All images of a topic live in one folder? → folder collection
+> (path 1). You want to assemble individual images from across several folders?
+> → album collection (path 2).
+
 ## Architecture
 
 ```
