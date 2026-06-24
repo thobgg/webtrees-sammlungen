@@ -138,15 +138,19 @@ Lässt du **„Medienordner" leer**, entsteht ein freies Album, das du von Hand
 bestückst: über den **📷-Button** in der Sammlungs-Verwaltung wählst du einzelne
 Bilder aus.
 
-Wichtig: Der 📷-Picker zeigt nur Bilder, die aus einer **Quelle** stammen. Eine
-„Quelle" ist jede Sammlung, die *gleichzeitig* **aktiv** ist, einen
-**Medienordner** hat, dieser Ordner **direkt unter `data/media/`** liegt
-(ein Top-Level-Ordner, also **kein `/`** im Namen – z. B. `grabsteine`, nicht
-`grabsteine/2024`) und deren Anzeigetyp **„Fotogalerie"** oder **„Foto-Raster"**
-ist.
+Wichtig: Der 📷-Picker bietet keine beliebigen Dateien an, sondern nur Bilder aus
+**bestehenden Ordner-Sammlungen** (Weg 1) – eine solche Sammlung dient ihm dann als
+**Bildquelle**. Damit eine Ordner-Sammlung als Bildquelle erscheint, muss sie alle
+drei Bedingungen erfüllen:
 
-Für ein manuelles Album brauchst du deshalb **zuerst mindestens eine aktive
-Ordner-Sammlung** (Weg 1) als Quelle. Ohne sie meldet der Picker
+- sie ist **sichtbar geschaltet** – der Schalter **„Sichtbar (aktiv)"** in der
+  Bearbeitung steht an;
+- sie hat einen **Medienordner direkt unter `data/media/`** – ein Ordner ohne `/`
+  im Namen (z. B. `grabsteine`, nicht `grabsteine/2024`);
+- ihr Anzeigetyp ist **„Fotogalerie"** oder **„Foto-Raster"**.
+
+Für ein manuelles Album brauchst du also **zuerst mindestens eine solche
+Ordner-Sammlung** (Weg 1). Ohne sie hat der Picker keine Bildquelle und meldet
 „keine Bilder vorhanden".
 
 > **Faustregel:** Alle Bilder eines Themas liegen in einem Ordner? → Ordner-Sammlung

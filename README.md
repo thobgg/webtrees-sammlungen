@@ -137,16 +137,20 @@ If you leave **"Medienordner" empty**, you get a free album that you fill by
 hand: use the **📷 button** in the collection management to pick individual
 images.
 
-Important: the 📷 picker only shows images that come from a **source**
-("Quelle"). A source is any collection that is *simultaneously* **active**, has a
-**media folder**, where that folder sits **directly below `data/media/`**
-(a top-level folder, i.e. **no `/`** in the name – e.g. `grabsteine`, not
-`grabsteine/2024`) and whose display type is **"Fotogalerie"** or
-**"Foto-Raster"**.
+Important: the 📷 picker does not offer arbitrary files – it only shows images from
+**existing folder collections** (path 1), which then act as its **image source**.
+For a folder collection to appear as an image source, it must meet all three
+conditions:
 
-For a manual album you therefore need **at least one active folder collection**
-(path 1) as a source first. Without one, the picker reports
-"keine Bilder vorhanden" (no images).
+- it is **switched visible** – the **"Sichtbar (aktiv)"** (visible/active) toggle in
+  its edit form is on;
+- it has a **media folder directly below `data/media/`** – a folder with no `/` in
+  the name (e.g. `grabsteine`, not `grabsteine/2024`);
+- its display type is **"Fotogalerie"** or **"Foto-Raster"**.
+
+So for a manual album you first need **at least one such folder collection** (path 1).
+Without one, the picker has no image source and reports "keine Bilder vorhanden"
+(no images).
 
 > **Rule of thumb:** All images of a topic live in one folder? → folder collection
 > (path 1). You want to assemble individual images from across several folders?

@@ -137,14 +137,20 @@ normale manier en de enige die voor grote bestanden praktisch is.
 Laat je **„Medienordner" leeg**, dan ontstaat een vrij album dat je met de hand vult:
 via de **📷-knop** in het collectiebeheer kies je afzonderlijke afbeeldingen.
 
-Belangrijk: de 📷-kiezer toont alleen afbeeldingen die uit een **bron** („Quelle") komen.
-Een bron is elke collectie die *tegelijk* **actief** is, een **mediamap** heeft, waarbij
-die map **direct onder `data/media/`** ligt (een map op het hoogste niveau, dus **zonder
-`/`** in de naam – bijv. `grabsteine`, niet `grabsteine/2024`) en waarvan het weergavetype
-**„Fotogalerie"** of **„Foto-Raster"** is.
+Belangrijk: de 📷-kiezer biedt geen willekeurige bestanden aan – hij toont alleen
+afbeeldingen uit **bestaande mapcollecties** (manier 1), die dan als **beeldbron**
+dienen. Een mapcollectie verschijnt pas als beeldbron als ze aan alle drie de
+voorwaarden voldoet:
 
-Voor een handmatig album heb je daarom **eerst minstens één actieve mapcollectie**
-(manier 1) als bron nodig. Zonder die meldt de kiezer „geen afbeeldingen aanwezig".
+- ze is **zichtbaar gezet** – de schakelaar **„Sichtbar (aktiv)"** (zichtbaar/actief)
+  in het bewerkscherm staat aan;
+- ze heeft een **mediamap direct onder `data/media/`** – een map zonder `/` in de
+  naam (bijv. `grabsteine`, niet `grabsteine/2024`);
+- het weergavetype is **„Fotogalerie"** of **„Foto-Raster"**.
+
+Voor een handmatig album heb je dus **eerst minstens één zo'n mapcollectie**
+(manier 1) nodig. Zonder die heeft de kiezer geen beeldbron en meldt
+„geen afbeeldingen aanwezig".
 
 > **Vuistregel:** Liggen alle afbeeldingen van een thema in één map? → mapcollectie
 > (manier 1). Wil je gericht afzonderlijke afbeeldingen uit meerdere mappen samenstellen?
