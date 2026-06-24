@@ -49,7 +49,16 @@ $treeName = $tree->name();
         </ul>
     <?php endif ?>
 
-    <?php if ($quelleAktiv === null || $bilder === []) : ?>
+    <?php if ($quellen === []) : ?>
+        <div class="alert alert-warning">
+            <p class="mb-2">
+                <strong><?= I18N::translate('Es gibt noch keine Quelle, aus der du Fotos auswählen kannst.') ?></strong>
+            </p>
+            <p class="mb-0">
+                <?= I18N::translate('Der Foto-Picker zeigt nur Bilder aus aktiven, ordner-basierten Foto-Sammlungen (ein Top-Level-Ordner direkt unter data/media/). Lege zuerst eine solche Sammlung an – oder befülle diese Sammlung direkt, indem du in ihrer Bearbeitungsmaske das Feld „Medienordner" setzt.') ?>
+            </p>
+        </div>
+    <?php elseif ($quelleAktiv === null || $bilder === []) : ?>
         <div class="alert alert-info"><?= I18N::translate('Keine Fotos in dieser Quelle.') ?></div>
     <?php else : ?>
 
