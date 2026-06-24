@@ -5,6 +5,21 @@ Alle nennenswerten Änderungen an diesem Modul werden hier dokumentiert.
 Das Format orientiert sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [1.0.3] – 2026-06-24
+
+### Hinzugefügt
+- README erklärt nun ausführlich, **wie man Sammlungen mit Bildern füllt**
+  (Ordner-Sammlung automatisch vs. Album-Sammlung manuell, Begriffe „Quelle",
+  „aktiv", Top-Level-Ordner) – de und en.
+- README-Installationsabschnitt: Install-ZIP als empfohlene Variante (ohne
+  Composer/git) ergänzt.
+
+### Geändert
+- Foto-Picker zeigt eine aussagekräftige Meldung, wenn (noch) keine Quelle
+  existiert, statt pauschal „Keine Fotos in dieser Quelle" – mit Hinweis, dass
+  eine aktive, ordner-basierte Foto-Sammlung als Quelle nötig ist oder die
+  Sammlung über das Feld „Medienordner" befüllt werden kann (Ursache aus Issue #4).
+
 ## [1.0.2] – 2026-06-24
 
 ### Hinzugefügt

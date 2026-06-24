@@ -7,7 +7,7 @@
 | | |
 |---|---|
 | Modul-Name | `sammlungen` |
-| Version | 1.0.2 |
+| Version | 1.0.3 |
 | webtrees | 2.2.x |
 | PHP | 8.2 – 8.4 |
 | Lizenz | GPL-3.0-or-later |
@@ -80,6 +80,16 @@ Dokumenten-Liste, gemischt). Aktiv-Status per Ein-Klick-Toggle:
 - MariaDB / MySQL ≥ 10.5
 
 ## Installation
+
+### Variante A: Install-ZIP (empfohlen – ohne Composer/git)
+
+1. Lade das aktuelle `sammlungen-vX.Y.Z.zip` von der
+   [Releases-Seite](https://github.com/thobgg/webtrees-sammlungen/releases/latest).
+2. Entpacke es – du erhältst einen Ordner `sammlungen/`.
+3. Kopiere diesen Ordner in das Verzeichnis `modules_v4/` deiner
+   webtrees-Installation (Ziel: `modules_v4/sammlungen/`).
+
+### Variante B: Per git + Composer (für Entwickler)
 
 ```bash
 cd modules_v4
