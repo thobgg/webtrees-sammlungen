@@ -5,6 +5,20 @@ Alle nennenswerten Änderungen an diesem Modul werden hier dokumentiert.
 Das Format orientiert sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [1.0.4] – 2026-06-24
+
+### Behoben
+- **Übersetzungen wurden gar nicht geladen:** Das Modul implementierte
+  `customTranslations()` nicht, daher griff keine `.mo`-Datei und alle Sprachen
+  fielen auf den deutschen Quelltext zurück. Jetzt werden die Sprachdateien aus
+  `resources/lang/<sprache>.mo` korrekt geladen – die niederländische
+  Übersetzung (von TheDutchJewel) wird damit endlich angezeigt.
+
+### Bekannt
+- Der Übersetzungs-Katalog deckt noch nicht alle Texte ab (u. a. Teile der
+  Einstellungs-Seite). Diese erscheinen weiterhin auf Deutsch, bis sie ergänzt
+  und übersetzt sind.
+
 ## [1.0.3] – 2026-06-24
 
 ### Hinzugefügt

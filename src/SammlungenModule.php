@@ -33,6 +33,7 @@ use Fisharebest\Webtrees\Module\ModuleMenuTrait;
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\View;
+use Fisharebest\Localization\Translation;
 use Illuminate\Database\Schema\Blueprint;
 
 
@@ -56,9 +57,23 @@ class SammlungenModule extends AbstractModule implements
     public function title(): string { return 'Sammlungen'; }
     public function description(): string { return 'Foto- und Dokumenten-Sammlungen mit EXIF-Anreicherung, Galerie und Lightbox.'; }
     public function customModuleAuthorName(): string { return 'Thomas Bugge'; }
-    public function customModuleVersion(): string { return '1.0.3'; }
-    public function customModuleLatestVersion(): string { return '1.0.3'; }
+    public function customModuleVersion(): string { return '1.0.4'; }
+    public function customModuleLatestVersion(): string { return '1.0.4'; }
     public function customModuleSupportUrl(): string { return ''; }
+
+    /**
+     * Lädt die Übersetzungen aus resources/lang/<sprache>.mo.
+     * Ohne diese Methode würde webtrees keine .mo-Datei des Moduls laden
+     * und alle Texte blieben beim deutschen Quelltext.
+     *
+     * @return array<string,string>
+     */
+    public function customTranslations(string $language): array
+    {
+        $file = $this->resourcesFolder() . 'lang/' . $language . '.mo';
+
+        return file_exists($file) ? (new Translation($file))->asArray() : [];
+    }
 
     public function getConfigLink(): string
     {
