@@ -1,0 +1,120 @@
+# Familienarchiv – Deutsche Übersetzungen
+# Copyright (C) 2025
+# This file is distributed under the same license as the Familienarchiv module.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: familienarchiv 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-06-06 09:46+0200\n"
+"Last-Translator: TheDutchJewel <thedutchjewel@gmail.com>\n"
+"Language-Team: German\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.9\n"
+
+msgid "Familienarchiv"
+msgstr "Familiearchief"
+
+msgid "Stellt Archivseiten für Orte, Quellen und Sammlungen bereit."
+msgstr "Biedt archiefpagina’s voor plaatsen, bronnen en collecties."
+
+msgid "Archiv"
+msgstr "Archief"
+
+msgid "Orte"
+msgstr "Plaatsen"
+
+msgid "Quellen"
+msgstr "Bronnen"
+
+msgid "Sammlungen"
+msgstr "Collecties"
+
+msgid "Zur Ortsliste"
+msgstr "Naar de plaatsenlijst"
+
+msgid "Zur Quellenliste"
+msgstr "Naar de bronnenlijst"
+
+msgid "Zu den Sammlungen"
+msgstr "Naar de collecties"
+
+msgid "Willkommen im Familienarchiv. Hier finden Sie strukturierte Übersichten zu Orten, Quellen und Sammlungen."
+msgstr "Welkom in het familiearchief. Hier vindt u gestructureerde overzichten van plaatsen, bronnen en collecties."
+
+msgid "Geografische Orte aus dem Stammbaum mit Ereigniszuordnungen."
+msgstr "Geografische plaatsen uit de stamboom met gekoppelde gebeurtenissen."
+
+msgid "Alle GEDCOM-Quellen (SOUR) mit Repositorien und Verweisen."
+msgstr "Alle GEDCOM-bronnen (SOUR) met opslagplaatsen en verwijzingen."
+
+msgid "Thematisch gruppierte Dokumente, Medien und Quellen."
+msgstr "Thematisch gegroepeerde documenten, media en bronnen."
+
+msgid "Ortsname filtern …"
+msgstr "Plaatsnaam filteren …"
+
+msgid "Filtern"
+msgstr "Filteren"
+
+msgid "Zurücksetzen"
+msgstr "Terugzetten"
+
+msgid "Ereignisse"
+msgstr "Gebeurtenissen"
+
+msgid "Personen"
+msgstr "Personen"
+
+msgid "Quelle suchen …"
+msgstr "Bron zoeken …"
+
+msgid "Anwenden"
+msgstr "Toepassen"
+
+msgid "Titel"
+msgstr "Titel"
+
+msgid "Repositorium"
+msgstr "Opslagplaats"
+
+msgid "Datum"
+msgstr "Datum"
+
+msgid "Verknüpfte Datensätze"
+msgstr "Gekoppelde records"
+
+msgid "Alle"
+msgstr "Alle"
+
+msgid "Dokumente"
+msgstr "Documenten"
+
+msgid "Fotos"
+msgstr "Foto’s"
+
+msgid "Kirchenbücher"
+msgstr "Kerkregisters"
+
+msgid "Karten"
+msgstr "Kaarten"
+
+msgid "%s Objekte"
+msgstr "%s objecten"
+
+msgid "Version %s"
+msgstr "Versie %s"
+
+msgid "Die Ortsliste wird in einem späteren Schritt implementiert."
+msgstr "De plaatsenlijst wordt in een latere fase geïmplementeerd."
+
+msgid "Die Quellenliste wird in einem späteren Schritt implementiert."
+msgstr "De bronnenlijst wordt in een latere fase geïmplementeerd."
+
+msgid "Die Sammlungen werden in einem späteren Schritt implementiert."
+msgstr "De collecties worden in een latere fase geïmplementeerd."
