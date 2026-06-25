@@ -22,6 +22,9 @@ msgstr "%s noch nicht importiert"
 msgid "APCu ist aktiv. Abfragen werden gecacht."
 msgstr "APCu ist aktiv. Abfragen werden gecacht."
 
+msgid "APCu ist nicht verfügbar. Es wird ein In-Process-Array-Cache verwendet (kein Request-übergreifendes Caching)."
+msgstr "APCu ist nicht verfügbar. Es wird ein In-Process-Array-Cache verwendet (kein Request-übergreifendes Caching)."
+
 msgid "Abbrechen"
 msgstr "Abbrechen"
 

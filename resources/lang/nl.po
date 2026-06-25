@@ -22,6 +22,9 @@ msgstr ""
 msgid "APCu ist aktiv. Abfragen werden gecacht."
 msgstr ""
 
+msgid "APCu ist nicht verfügbar. Es wird ein In-Process-Array-Cache verwendet (kein Request-übergreifendes Caching)."
+msgstr "APCu is niet beschikbaar. Er wordt een in-process array-cache gebruikt (geen caching over requests heen)."
+
 msgid "Abbrechen"
 msgstr ""
 
