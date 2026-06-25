@@ -5,6 +5,17 @@ Alle nennenswerten Änderungen an diesem Modul werden hier dokumentiert.
 Das Format orientiert sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [1.0.6] – 2026-06-25
+
+### Behoben
+- **SQL-Crash beim Öffnen von Ordnern** unter MySQL-Strict-Mode
+  (`ONLY_FULL_GROUP_BY`): `DISTINCT` mit `ORDER BY` auf eine Spalte außerhalb
+  der SELECT-Liste löste `SQLSTATE[HY000] 3065` aus. `vorschauInOrdner()` und
+  `medienInOrdner()` nutzen jetzt `GROUP BY` + `MAX()`. (#6)
+- **Unübersetzter Hinweis** „APCu ist nicht verfügbar …" auf der
+  Einstellungsseite: fehlender Eintrag in allen Übersetzungskatalogen ergänzt
+  (de/en/nl). (#9)
+
 ## [1.0.5] – 2026-06-24
 
 ### Hinzugefügt
