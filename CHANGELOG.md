@@ -5,6 +5,20 @@ Alle nennenswerten Änderungen an diesem Modul werden hier dokumentiert.
 Das Format orientiert sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [1.0.7] – 2026-06-25
+
+### Behoben
+- **Regression aus 1.0.6:** Der GROUP-BY-Umbau nutzte in `orderByRaw('MAX(mf.…)')`
+  den **unpräfixierten** Tabellen-Alias. Da webtrees Aliase präfixt (`mf` → `wt_mf`),
+  warf die Übersichts-Abfrage `SQLSTATE[42S22] 1054 Unknown column
+  'mf.multimedia_file_refn'` — auf **jeder** Installation mit Tabellen-Präfix.
+  Jetzt `DB::prefix('mf')` in beiden `orderByRaw`-Stellen
+  (`vorschauInOrdner()`, `medienInOrdner()`). (#7)
+
+### Geändert
+- Niederländische Übersetzung vervollständigt/aktualisiert (Beitrag von
+  TheDutchJewel, #10), inkl. APCu-Fallback-String.
+
 ## [1.0.6] – 2026-06-25
 
 ### Behoben
