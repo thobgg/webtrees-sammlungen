@@ -27,6 +27,28 @@ geen **visuele fotocollecties** met de diepgang die familiearchieven nodig hebbe
 - **Bidirectionele synchronisatie** tussen fotometadata en webtrees-persoonskoppelingen
 - **Pad-gebaseerde collecties** voor foto's die nog niet in webtrees zijn geïmporteerd
 
+### Waarom deze module – en niet gewoon de webtrees-medialijst?
+
+De medialijst is een beheertool. `Sammlungen` is een **kijkervaring** – en vooral
+**ingebouwd in webtrees**, met alles wat daarbij hoort:
+
+- **Beschermd door het gebruikersbeheer van webtrees:** ingelogde familieleden bladeren
+  door de galerijen; anonieme bezoekers zien de (privacybeschermde) stamboom, maar
+  **niet** de collecties. Je bouwt geen eigen toegangscontrole – het beproefde, getrapte
+  rechtenmodel van webtrees doet dat.
+- **Geen vendor lock-in:** anders dan bij MyHeritage- of Google Foto's-"albums" blijven
+  je foto's en hun beschrijvingen volledig van jou.
+- **Metadata-eigenaarschap via bidirectionele EXIF/XMP-synchronisatie:** beschrijvingen,
+  datum en personen staan niet alleen in de database, maar worden **terug in de
+  afbeeldingsbestanden** geschreven – de metadata reist mee met de foto's.
+- **Foto's zonder personen-dwang:** ze hoeven niet aan afzonderlijke personen te hangen
+  (geen 30 oma-foto's op één profiel), maar blijven dicht bij de genealogische inhoud en
+  het publiek dat toch al in webtrees zit.
+
+Dubbel nut: dezelfde media zijn **genealogisch bewijs** én tegelijk een **toonbare,
+doorbladerbare galerij** – om binnen de familie te tonen en voor je eigen archivering en
+metadatabeheer.
+
 ### Collectieoverzicht
 
 Overzicht van alle collecties, gegroepeerd op archiefmappen en thematische groepen:

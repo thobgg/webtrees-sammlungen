@@ -27,6 +27,28 @@ ergänzt genau das:
 - **Bidirektionaler Abgleich** zwischen Foto-Metadaten und webtrees-Personenverknüpfungen
 - **Pfad-basierte Sammlungen** für Fotos, die noch nicht in webtrees importiert sind
 
+### Warum dieses Modul – und nicht einfach die webtrees-Medienliste?
+
+Die Medienliste ist ein Verwaltungswerkzeug. `Sammlungen` ist ein **Schau-Erlebnis** –
+und vor allem **in webtrees integriert**, mit allem, was daran hängt:
+
+- **Geschützt durch webtrees' Benutzerverwaltung:** Angemeldete Familienmitglieder
+  durchstöbern die Galerien; anonyme Besucher sehen den (datengeschützten) Stammbaum,
+  aber **nicht** die Sammlungen. Du baust keine eigene Zugriffskontrolle – das erprobte,
+  abgestufte Rechtemodell von webtrees übernimmt das.
+- **Kein Vendor-Lock-in:** anders als bei MyHeritage- oder Google-Fotos-„Alben" bleiben
+  deine Fotos und ihre Beschreibungen vollständig deine.
+- **Metadaten-Hoheit durch bidirektionalen EXIF/XMP-Abgleich:** Beschreibungen, Datum und
+  Personen liegen nicht nur in der Datenbank, sondern werden **in die Bilddateien
+  zurückgeschrieben** – die Metadaten reisen mit den Fotos.
+- **Fotos ohne Personen-Zwang:** Sie müssen nicht einzeln an Personen hängen (keine
+  30 Oma-Bilder im Personensatz), bleiben aber nah am genealogischen Inhalt und dem
+  Publikum, das ohnehin in webtrees ist.
+
+Doppelter Nutzen: dieselben Medien sind **genealogischer Beleg** und zugleich eine
+**ansehnliche, browsbare Galerie** – fürs Zeigen in der Familie ebenso wie fürs eigene
+Archivieren und Pflegen der Metadaten.
+
 ### Sammlungs-Übersicht
 
 Übersicht aller Sammlungen, gruppiert nach Archiv-Ordnern und thematischen Gruppen:

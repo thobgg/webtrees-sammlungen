@@ -27,6 +27,28 @@ fills exactly that gap:
 - **Bidirectional sync** between photo metadata and webtrees person links
 - **Path-based collections** for photos that are not (yet) imported into webtrees
 
+### Why this module – and not just the webtrees media list?
+
+The media list is an administration tool. `Sammlungen` is a **viewing experience** – and,
+crucially, **built into webtrees**, with everything that brings:
+
+- **Protected by webtrees' user management:** logged-in family members browse the
+  galleries; anonymous visitors see the (privacy-protected) tree but **not** the
+  collections. You don't build your own access control – webtrees' proven, tiered
+  permission model does it for you.
+- **No vendor lock-in:** unlike MyHeritage or Google Photos "albums", your photos and
+  their descriptions stay entirely yours.
+- **Metadata ownership through bidirectional EXIF/XMP sync:** descriptions, dates and
+  people don't just live in the database – they are written back **into the image files**,
+  so the metadata travels with the photos.
+- **Photos without a person requirement:** they don't have to hang on individual people
+  (no 30 grandma photos buried on one profile), yet stay close to the genealogical content
+  and the audience already in webtrees.
+
+Double benefit: the same media are **genealogical evidence** and at the same time a
+**presentable, browsable gallery** – for showing within the family as well as for your own
+archiving and metadata work.
+
 ### Collection overview
 
 Overview of all collections, grouped by archive folders and thematic groups:
