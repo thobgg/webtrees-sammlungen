@@ -36,11 +36,11 @@ De medialijst is een beheertool. `Sammlungen` is een **kijkervaring** – en voo
   door de galerijen; anonieme bezoekers zien de (privacybeschermde) stamboom, maar
   **niet** de collecties. Je bouwt geen eigen toegangscontrole – het beproefde, getrapte
   rechtenmodel van webtrees doet dat.
-- **Geen vendor lock-in:** anders dan bij MyHeritage- of Google Foto's-"albums" blijven
-  je foto's en hun beschrijvingen volledig van jou.
-- **Metadata-eigenaarschap via bidirectionele EXIF/XMP-synchronisatie:** beschrijvingen,
-  datum en personen staan niet alleen in de database, maar worden **terug in de
-  afbeeldingsbestanden** geschreven – de metadata reist mee met de foto's.
+- **Je gegevens blijven van jou – geen vendor lock-in:** anders dan bij MyHeritage- of
+  Google Foto's-"albums" blijven je foto's en hun beschrijvingen volledig van jou. De
+  **bidirectionele EXIF/XMP-synchronisatie** schrijft beschrijving, datum en personen zelfs
+  **terug in de afbeeldingsbestanden** – de metadata staat niet alleen in de database, maar
+  reist mee met de foto's.
 - **Foto's zonder personen-dwang:** ze hoeven niet aan afzonderlijke personen te hangen
   (geen 30 oma-foto's op één profiel), maar blijven dicht bij de genealogische inhoud en
   het publiek dat toch al in webtrees zit.

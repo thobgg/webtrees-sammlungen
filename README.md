@@ -36,11 +36,10 @@ crucially, **built into webtrees**, with everything that brings:
   galleries; anonymous visitors see the (privacy-protected) tree but **not** the
   collections. You don't build your own access control – webtrees' proven, tiered
   permission model does it for you.
-- **No vendor lock-in:** unlike MyHeritage or Google Photos "albums", your photos and
-  their descriptions stay entirely yours.
-- **Metadata ownership through bidirectional EXIF/XMP sync:** descriptions, dates and
-  people don't just live in the database – they are written back **into the image files**,
-  so the metadata travels with the photos.
+- **Your data stays yours – no vendor lock-in:** unlike MyHeritage or Google Photos
+  "albums", your photos and their descriptions remain entirely yours. The **bidirectional
+  EXIF/XMP sync** even writes description, date and people back **into the image files** –
+  the metadata doesn't just live in the database, it travels with the photos.
 - **Photos without a person requirement:** they don't have to hang on individual people
   (no 30 grandma photos buried on one profile), yet stay close to the genealogical content
   and the audience already in webtrees.
