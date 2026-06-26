@@ -5,6 +5,18 @@ Alle nennenswerten Änderungen an diesem Modul werden hier dokumentiert.
 Das Format orientiert sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [1.0.8] – 2026-06-25
+
+### Behoben
+- **Foto-Zähler korrigiert:** In Ordner-Sammlungen wurde die Gesamtzahl *aller*
+  Dateien als „X Fotos" angezeigt, obwohl nur Bildformate (jpg/jpeg/png/gif/webp)
+  gerendert werden. Der Zähler zählt/paginiert jetzt nur darstellbare Dateien;
+  übrige (Video/Audio/…) werden als „N weitere Dateien … nicht angezeigt"
+  ausgewiesen. (gemeldet von hartenthaler)
+- **Speichern-Button sichtbar:** Der EXIF-Speichern- und der Datei-Umbenennen-Button
+  konnten in manchen webtrees-Themes weiß-auf-weiß (unsichtbar) erscheinen; sie haben
+  jetzt theme-feste Farben.
+
 ## [1.0.7] – 2026-06-25
 
 ### Behoben

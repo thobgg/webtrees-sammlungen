@@ -275,14 +275,29 @@ final class SammlungenViewModel
         $perSeite    = $istBild ? self::PER_SEITE_FOTO : self::PER_SEITE_DOKUMENT;
         $seite       = max(1, (int) ($queryParams['seite'] ?? 1));
 
+        $bildFormate = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+
         // Dateisystem-Scan fuer ALLE Dateien (schnell, kein Imagick)
-        $alleDateien  = $this->collectionService->alleDateienInOrdner($tree, $s->ordner);
-        $gesamtAnzahl = count($alleDateien);
+        $alleDateien   = $this->collectionService->alleDateienInOrdner($tree, $s->ordner);
+        $gesamtDateien = count($alleDateien);
+
+        // Nur die in dieser Ansicht tatsaechlich darstellbaren Dateien zaehlen/paginieren,
+        // damit der Zaehler ehrlich ist (sonst werden z. B. Video/Audio als "Fotos" mitgezaehlt).
+        if ($ansicht === 'dokument') {
+            $anzeige = array_values(array_filter($alleDateien, static fn ($d) => !in_array($d['format'], $bildFormate, true)));
+        } elseif ($istGemischt) {
+            $anzeige = $alleDateien;
+        } else { // foto, raster
+            $anzeige = array_values(array_filter($alleDateien, static fn ($d) => in_array($d['format'], $bildFormate, true)));
+        }
+
+        $gesamtAnzahl = count($anzeige);
         $seitenGesamt = max(1, (int) ceil($gesamtAnzahl / $perSeite));
         $seite        = min($seite, $seitenGesamt);
-        $seiteDateien = array_slice($alleDateien, ($seite - 1) * $perSeite, $perSeite);
+        $seiteDateien = array_slice($anzeige, ($seite - 1) * $perSeite, $perSeite);
 
-        $aktive['anzahl']        = $gesamtAnzahl;
+        $aktive['anzahl']        = $gesamtAnzahl;      // in dieser Ansicht angezeigte Objekte
+        $aktive['datei_anzahl']  = $gesamtDateien;     // alle Dateien im Ordner (inkl. Video/Audio/...)
         $aktive['istBild']       = $istBild;
         $aktive['istRaster']     = $istRaster;
         $aktive['istGemischt']   = $istGemischt;
