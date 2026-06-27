@@ -1,0 +1,62 @@
+<?php
+/**
+ * Partial: „Weitere Medien" (Video/Audio/Dokumente) unter einer Foto-/Raster-Galerie.
+ * Erwartet aus Parent-Scope: $aktive['weitere'], $tree, $treeName
+ *
+ * Hinweis: webtrees bündelt Font Awesome per SVG-mit-JS nur als Subset – Icons wie
+ * fa-film/fa-headphones fehlen und würden als ?/!-Platzhalter wabern. Daher hier nur
+ * sicher gebündelte Icons (fa-play, fa-file-lines, fa-file) + farbige Badges wie beim PDF.
+ */
+use Fisharebest\Webtrees\I18N;
+
+if (empty($aktive['weitere'])) {
+    return;
+}
+
+// Kategorie je Endung: badge = [Hintergrundfarbe, Icon-Klasse|null, Kurztext|null]
+$kategorie = static function (string $fmt): array {
+    $video = ['mp4', 'avi', 'mov', 'webm', 'mkv', 'm4v', 'mpg', 'mpeg', 'wmv'];
+    $audio = ['mp3', 'wav', 'ogg', 'm4a', 'flac', 'aac', 'wma'];
+    $word  = ['doc', 'docx', 'odt', 'rtf'];
+    $excel = ['xls', 'xlsx', 'ods', 'csv'];
+
+    return match (true) {
+        $fmt === 'pdf'           => ['#CC0000', null, 'PDF'],
+        in_array($fmt, $video, true) => ['#6f42c1', 'fa-play', null],
+        in_array($fmt, $audio, true) => ['#0d6efd', 'fa-play', null],
+        in_array($fmt, $word, true)  => ['#2b579a', 'fa-file-lines', null],
+        in_array($fmt, $excel, true) => ['#217346', 'fa-file-lines', null],
+        default                  => ['#6c757d', 'fa-file', null],
+    };
+};
+?>
+            <h6 class="text-muted mb-2 mt-4">
+                <i class="fas fa-play me-1"></i><?= I18N::translate('Videos, Audio & Dokumente') ?>
+            </h6>
+            <div class="list-group mb-3">
+                <?php foreach ($aktive['weitere'] as $w) : ?>
+                    <?php
+                    $fmt   = (string) ($w['format'] ?? '');
+                    $titel = ($w['titel'] ?? '') !== '' ? $w['titel'] : $w['datei'];
+                    [$farbe, $icon, $text] = $kategorie($fmt);
+                    $href  = ($w['m_id'] ?? null) !== null
+                        ? route(\Fisharebest\Webtrees\Http\RequestHandlers\MediaPage::class, ['tree' => $tree->name(), 'xref' => $w['m_id']])
+                        : route('sammlungen.media-datei', ['tree' => $treeName, 'pfad' => $w['pfad']]);
+                    ?>
+                    <a href="<?= e($href) ?>" target="_blank"
+                       class="list-group-item list-group-item-action d-flex align-items-center gap-3 py-2">
+                        <span class="flex-shrink-0 d-inline-flex align-items-center justify-content-center text-white rounded"
+                              style="width:2rem;height:2rem;background:<?= e($farbe) ?>">
+                            <?php if ($text !== null) : ?>
+                                <span class="fw-bold" style="font-size:.6rem"><?= e($text) ?></span>
+                            <?php else : ?>
+                                <i class="fas <?= e($icon) ?>"></i>
+                            <?php endif ?>
+                        </span>
+                        <div class="flex-grow-1 min-w-0">
+                            <div class="fw-semibold text-truncate"><?= e($titel) ?></div>
+                            <small class="text-muted text-uppercase"><?= e($fmt) ?></small>
+                        </div>
+                    </a>
+                <?php endforeach ?>
+            </div>

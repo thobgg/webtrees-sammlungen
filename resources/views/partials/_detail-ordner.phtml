@@ -80,12 +80,11 @@ use Fisharebest\Webtrees\I18N;
             </div>
             <p class="text-muted small mt-3">
                 <?= I18N::plural('%s Foto', '%s Fotos', $aktive['anzahl'], I18N::number($aktive['anzahl'])) ?>
-                <?php if (($aktive['datei_anzahl'] ?? $aktive['anzahl']) > $aktive['anzahl']) : ?>
-                    · <?= I18N::translate('%s weitere Dateien (z. B. Video/Audio) werden hier nicht angezeigt', I18N::number(($aktive['datei_anzahl'] ?? 0) - $aktive['anzahl'])) ?>
-                <?php endif ?>
                 · <?= I18N::translate('Seite %s von %s', $aktive['seite'], $aktive['seiten_gesamt']) ?>
                 · <?= I18N::translate('Klicken zum Vergrößern') ?>
             </p>
+
+            <?php include __DIR__ . '/_weitere-medien.phtml'; ?>
 
         <?php elseif ($aktive['istBild'] && $aktive['istGemischt']) : ?>
             <!-- Gemischt: Foto-Raster oben, Dokumentenliste unten -->
@@ -224,9 +223,6 @@ use Fisharebest\Webtrees\I18N;
             ?>
             <p class="text-muted small mt-3 mb-2">
                 <?= I18N::plural('%s Foto', '%s Fotos', $aktive['anzahl'], I18N::number($aktive['anzahl'])) ?>
-                <?php if (($aktive['datei_anzahl'] ?? $aktive['anzahl']) > $aktive['anzahl']) : ?>
-                    · <?= I18N::translate('%s weitere Dateien (z. B. Video/Audio) werden hier nicht angezeigt', I18N::number(($aktive['datei_anzahl'] ?? 0) - $aktive['anzahl'])) ?>
-                <?php endif ?>
                 · <?= I18N::translate('Seite %s von %s', $aktive['seite'], $aktive['seiten_gesamt']) ?>
                 · <?= I18N::translate('Klicken zum Vergrößern') ?>
             </p>
@@ -256,6 +252,8 @@ use Fisharebest\Webtrees\I18N;
                 </ul>
             </nav>
             <?php endif ?>
+
+            <?php include __DIR__ . '/_weitere-medien.phtml'; ?>
 
         <?php else : ?>
             <!-- Dokumentenliste: alle Dateien aus Dateisystem -->

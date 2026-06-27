@@ -342,6 +342,13 @@ final class SammlungenViewModel
                 $seiteDateien,
                 static fn ($d) => !in_array($d['format'], ['jpg', 'jpeg', 'png', 'gif', 'webp'], true)
             ));
+        } else {
+            // Foto/Raster: Nicht-Bilder (Video/Audio/Dokumente) als abspielbare Liste
+            // unter der Galerie zeigen, statt sie nur zu zaehlen.
+            $aktive['weitere'] = array_values(array_filter(
+                $alleDateien,
+                static fn ($d) => !in_array($d['format'], $bildFormate, true)
+            ));
         }
 
         return $aktive;

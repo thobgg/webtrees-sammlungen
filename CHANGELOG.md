@@ -5,6 +5,15 @@ Alle nennenswerten Änderungen an diesem Modul werden hier dokumentiert.
 Das Format orientiert sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [1.0.10] – 2026-06-27
+
+### Neu
+- **Video, Audio & Dokumente in Foto-Galerien:** In Foto- und Raster-Sammlungen
+  werden Nicht-Bild-Dateien (Video, Audio, PDF, Office-Dokumente) jetzt unter der
+  Galerie als eigene Liste angezeigt und lassen sich öffnen/abspielen – statt nur
+  als „N weitere Dateien werden nicht angezeigt" vermerkt zu werden. Die Einträge
+  haben farbige Typ-Badges (Video, Audio, PDF, …). (angeregt von hartenthaler)
+
 ## [1.0.9] – 2026-06-26
 
 ### Behoben
