@@ -5,6 +5,10 @@ Alle nennenswerten Änderungen an diesem Modul werden hier dokumentiert.
 Das Format orientiert sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [Unreleased]
+
+_Sammelstelle fürs nächste Bündel-Release (geplant: **1.1.0**). Einzelne 1.0.x-Hotfixes nur bei Blockern (500er/Datenfehler)._
+
 ## [1.0.11] – 2026-06-27
 
 ### Geändert
