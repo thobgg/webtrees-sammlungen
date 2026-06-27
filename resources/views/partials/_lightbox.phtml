@@ -1,0 +1,193 @@
+<?php
+/**
+ * Partial: Lightbox-Modal + JS-Loader (gemeinsam für Ordner- und manuelle Galerie).
+ *
+ * Erwartet aus Parent-Scope: $tree, $treeName, $istAdmin, $manuelleGalerien, $toggleRoute
+ */
+use Fisharebest\Webtrees\I18N;
+?>
+            <!-- Lightbox Modal mit Seitenleiste -->
+            <div class="modal fade" id="archiv-lightbox" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered p-0 archiv-lb-dialog">
+                    <div class="modal-content bg-black border-0" style="max-height:92vh">
+                        <div class="modal-body p-0 d-flex" style="min-height:0;overflow:hidden">
+
+                            <!-- FOTO-BEREICH -->
+                            <div class="d-flex flex-column flex-grow-1 position-relative" style="min-width:0">
+                                <!-- Obere Leiste: Caption + Buttons + Schließen -->
+                                <div class="d-flex align-items-center gap-2 px-3 py-2 border-bottom border-secondary flex-shrink-0">
+                                    <div class="flex-grow-1 min-w-0">
+                                        <div id="archiv-lb-caption" class="text-white small fw-semibold text-truncate"></div>
+                                        <div id="archiv-lb-meta" class="text-white-50 small"></div>
+                                    </div>
+                                    <div class="d-flex gap-2 flex-shrink-0 align-items-center">
+                                        <a id="archiv-lb-fullsize" href="#" target="_blank"
+                                           class="btn btn-sm btn-outline-light"
+                                           title="<?= I18N::translate('Vollbild in neuem Tab') ?>">↗</a>
+                                        <?php if ($manuelleGalerien !== [] && $istAdmin) : ?>
+                                            <div class="dropdown" id="archiv-lb-sammlung-dd">
+                                                <button class="btn btn-sm btn-outline-success dropdown-toggle d-none"
+                                                        id="archiv-lb-sammlung-btn"
+                                                        data-bs-toggle="dropdown" aria-expanded="false"
+                                                        title="<?= I18N::translate('Zu Sammlung hinzufügen') ?>">＋</button>
+                                                <ul class="dropdown-menu dropdown-menu-dark" id="archiv-lb-sammlung-list">
+                                                    <?php foreach ($manuelleGalerien as $mg) : ?>
+                                                        <li>
+                                                            <button class="dropdown-item archiv-sammlung-toggle"
+                                                                    data-cid="<?= $mg->id ?>"
+                                                                    data-name="<?= e($mg->name) ?>">
+                                                                <span class="archiv-sammlung-check me-2">○</span><?= e($mg->name) ?>
+                                                            </button>
+                                                        </li>
+                                                    <?php endforeach ?>
+                                                </ul>
+                                            </div>
+                                        <?php endif ?>
+                                        <a id="archiv-lb-link" href="#"
+                                           class="btn btn-sm btn-outline-light d-none">
+                                            <?= I18N::translate('In webtrees öffnen') ?>
+                                        </a>
+                                        <?php if ($istAdmin) : ?>
+                                            <button id="archiv-lb-edit-btn" class="btn btn-sm btn-outline-warning"
+                                                    title="<?= I18N::translate('EXIF/XMP bearbeiten') ?>">✏️</button>
+                                        <?php endif ?>
+                                        <button type="button" class="btn-close btn-close-white ms-1"
+                                                data-bs-dismiss="modal"></button>
+                                    </div>
+                                </div>
+                                <!-- Bild -->
+                                <div class="flex-grow-1 d-flex align-items-center justify-content-center position-relative" style="min-height:0;overflow:hidden">
+                                    <img id="archiv-lb-img" src="" alt=""
+                                         style="max-height:78vh;max-width:100%;object-fit:contain">
+                                    <button id="archiv-lb-prev"
+                                            class="btn btn-dark bg-opacity-50 position-absolute start-0 top-50 translate-middle-y ms-2 fs-3 px-3">&#8249;</button>
+                                    <button id="archiv-lb-next"
+                                            class="btn btn-dark bg-opacity-50 position-absolute end-0 top-50 translate-middle-y me-2 fs-3 px-3">&#8250;</button>
+                                </div>
+                                <!-- Thumbnail-Streifen -->
+                                <div id="archiv-lb-thumbstrip"
+                                     class="flex-shrink-0 d-flex gap-1 overflow-x-auto px-2 py-1"
+                                     style="background:#0a0a0a;scroll-behavior:smooth"></div>
+                            </div>
+
+                            <!-- SEITENLEISTE (versteckt) -->
+                            <div id="archiv-lb-sidebar"
+                                 class="d-none flex-shrink-0 d-flex flex-column"
+                                 style="width:280px;background:#111;border-left:1px solid #333;overflow-y:auto">
+                                <div class="p-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <span class="text-white fw-semibold small">EXIF / XMP</span>
+                                        <button id="archiv-edit-cancel" class="btn-close btn-close-white"
+                                                title="<?= I18N::translate('Schließen') ?>"></button>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label text-white-50 small mb-1"><?= I18N::translate('Beschreibung') ?></label>
+                                        <textarea id="archiv-edit-beschreibung" rows="4"
+                                                  class="form-control form-control-sm bg-dark text-white border-secondary"
+                                                  placeholder="<?= I18N::translate('Wer, Was, Wann, Wo…') ?>"></textarea>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label text-white-50 small mb-1"><?= I18N::translate('Datum') ?></label>
+                                        <input id="archiv-edit-datum" type="text"
+                                               class="form-control form-control-sm bg-dark text-white border-secondary"
+                                               placeholder="JJJJ-MM-TT  oder  JJJJ">
+                                        <div class="form-text text-white-50 small">z.B. 1923-06-15 oder 1923</div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label text-white-50 small mb-1"><?= I18N::translate('Personen') ?></label>
+                                        <input id="archiv-edit-personen" type="text"
+                                               class="form-control form-control-sm bg-dark text-white border-secondary"
+                                               placeholder="Hans Maier, Bertha Müller">
+                                        <div class="form-text text-white-50 small"><?= I18N::translate('Komma-getrennt') ?></div>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label class="form-label text-white-50 small mb-1"><?= I18N::translate('Stichwörter') ?></label>
+                                        <input id="archiv-edit-keywords" type="text"
+                                               class="form-control form-control-sm bg-dark text-white border-secondary"
+                                               placeholder="Hamburg, Hochzeit, 1920er">
+                                        <div class="form-text text-white-50 small"><?= I18N::translate('Komma-getrennt') ?></div>
+                                    </div>
+
+                                    <button id="archiv-edit-save" class="btn btn-success btn-sm w-100" style="background:#198754;color:#fff;border-color:#198754">
+                                        <?= I18N::translate('In Datei speichern') ?>
+                                    </button>
+                                    <div id="archiv-edit-status" class="small text-center mt-2"></div>
+
+                                    <input type="hidden" id="archiv-edit-csrf" value="<?= e(csrf_token()) ?>">
+                                    <input type="hidden" id="archiv-edit-route"
+                                           value="<?= e(route('sammlungen.exif-schreiben', ['tree' => $treeName])) ?>">
+
+                                    <!-- Dateiinfo -->
+                                    <div id="archiv-datei-section" class="mt-4 d-none">
+                                        <div class="border-top border-secondary pt-3">
+                                            <div class="text-white-50 small fw-semibold mb-2 text-uppercase" style="font-size:.7rem;letter-spacing:.05em">
+                                                <?= I18N::translate('Datei') ?>
+                                            </div>
+                                            <div id="archiv-datei-name" class="text-white small mb-1 d-flex align-items-center gap-2">
+                                                <span class="text-truncate flex-grow-1" id="archiv-datei-name-text" style="font-size:.75rem"></span>
+                                                <?php if ($istAdmin) : ?>
+                                                <button id="archiv-datei-rename-btn" type="button"
+                                                        class="btn btn-sm btn-outline-warning py-0 px-1"
+                                                        style="font-size:.65rem"
+                                                        title="<?= I18N::translate('Datei umbenennen') ?>">✏️</button>
+                                                <?php endif ?>
+                                            </div>
+                                            <div id="archiv-datei-rename-form" class="d-none mb-2">
+                                                <input type="text" id="archiv-datei-rename-input"
+                                                       class="form-control form-control-sm bg-dark text-white border-secondary">
+                                                <div class="d-flex gap-1 mt-1">
+                                                    <button id="archiv-datei-rename-save" type="button" class="btn btn-sm btn-success py-0 px-2" style="font-size:.7rem;background:#198754;color:#fff;border-color:#198754">✓ Speichern</button>
+                                                    <button id="archiv-datei-rename-cancel" type="button" class="btn btn-sm btn-outline-secondary py-0 px-2" style="font-size:.7rem">Abbrechen</button>
+                                                </div>
+                                                <div id="archiv-datei-rename-status" class="small mt-1"></div>
+                                            </div>
+                                            <div id="archiv-datei-info" class="text-white-50 small"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Abgleich EXIF ↔ webtrees -->
+                                    <div id="archiv-abgleich-section" class="mt-4 d-none">
+                                        <div class="border-top border-warning pt-3">
+                                            <div class="text-warning small fw-semibold mb-2 text-uppercase" style="font-size:.7rem;letter-spacing:.05em">
+                                                ⚖️ <?= I18N::translate('Abgleich EXIF ↔ webtrees') ?>
+                                            </div>
+                                            <div id="archiv-abgleich-list" class="small"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- webtrees-Abschnitt -->
+                                    <div id="archiv-wt-section" class="mt-4 d-none">
+                                        <div class="border-top border-secondary pt-3">
+                                            <div class="text-white-50 small fw-semibold mb-2 text-uppercase" style="font-size:.7rem;letter-spacing:.05em">
+                                                webtrees
+                                            </div>
+                                            <div id="archiv-wt-personen" class="mb-2"></div>
+                                            <div id="archiv-wt-notiz" class="text-white-50 small mb-2" style="white-space:pre-line"></div>
+                                            <a id="archiv-wt-link" href="#"
+                                               class="btn btn-sm btn-outline-secondary w-100 d-none">
+                                                <?= I18N::translate('In webtrees öffnen') ?>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+            // Konfiguration für sammlung-galerie.js
+            window.archivConfig = {
+                toggleRoute:           <?= json_encode($toggleRoute) ?>,
+                renameRoute:           <?= json_encode(route('sammlungen.datei-umbenennen', ['tree' => $tree->name()])) ?>,
+                csrf:                  <?= json_encode(csrf_token()) ?>,
+                individualUrlTemplate: <?= json_encode(route(\Fisharebest\Webtrees\Http\RequestHandlers\IndividualPage::class, ['tree' => $tree->name(), 'xref' => '_XREF_'])) ?>
+            };
+            </script>
+            <script src="<?= e(route('sammlungen.asset', ['datei' => 'sammlung-galerie.js'])) ?>"></script>

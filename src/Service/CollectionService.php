@@ -204,7 +204,7 @@ class CollectionService
             ]);
         }
 
-        $this->cache->forget(sprintf('collection_pfade:%d:%d', $tree->id(), $collectionId));
+        $this->cache->flush();
     }
 
     public function pfadEntfernen(Tree $tree, int $collectionId, string $pfad): void
@@ -215,7 +215,7 @@ class CollectionService
             ->where('pfad', '=', $pfad)
             ->delete();
 
-        $this->cache->forget(sprintf('collection_pfade:%d:%d', $tree->id(), $collectionId));
+        $this->cache->flush();
     }
 
     /** Gibt alle Pfade einer Sammlung zurück. */
@@ -286,7 +286,7 @@ class CollectionService
             ]);
         }
 
-        $this->cache->forget(sprintf('collection_medien:%d:%d', $tree->id(), $collectionId));
+        $this->cache->flush();
     }
 
     /**
@@ -300,7 +300,7 @@ class CollectionService
             ->where('gedcom_id', '=', $tree->id())
             ->delete();
 
-        $this->cache->forget(sprintf('collection_medien:%d:%d', $tree->id(), $collectionId));
+        $this->cache->flush();
     }
 
     /**

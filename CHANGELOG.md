@@ -5,6 +5,19 @@ Alle nennenswerten Änderungen an diesem Modul werden hier dokumentiert.
 Das Format orientiert sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [1.0.9] – 2026-06-26
+
+### Behoben
+- **Gepickte Bilder erschienen nicht („Sammlung noch leer"):** Beim Hinzufügen
+  von Bildern zu einer manuellen Sammlung wurde der Pfad-Cache mit einem nicht
+  passenden Schlüssel invalidiert – die Galerie zeigte bis zum Cache-Ablauf
+  veraltete (leere) Daten, obwohl die Bilder gespeichert waren. Invalidierung
+  läuft jetzt über `flush()`. (gemeldet von hartenthaler)
+- **Lightbox in der manuellen Galerie:** In manuellen (gepickten) Sammlungen
+  ließen sich Fotos nicht in der Lightbox öffnen – Modal *und* JavaScript
+  fehlten dort. Beides ist jetzt in ein gemeinsames Partial (`_lightbox.phtml`)
+  ausgelagert und auch in der manuellen Galerie eingebunden.
+
 ## [1.0.8] – 2026-06-25
 
 ### Behoben
