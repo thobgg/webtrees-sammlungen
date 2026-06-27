@@ -7,7 +7,7 @@
 | | |
 |---|---|
 | Modul-Name | `sammlungen` |
-| Version | 1.0.10 |
+| Version | 1.0.11 |
 | webtrees | 2.2.x |
 | PHP | 8.2 – 8.4 |
 | Lizenz | GPL-3.0-or-later |
@@ -28,6 +28,8 @@ ergänzt genau das:
 - **Pfad-basierte Sammlungen** für Fotos, die noch nicht in webtrees importiert sind
 
 ### Warum dieses Modul – und nicht einfach die webtrees-Medienliste?
+
+Der Ausgangspunkt war praktisch: Die privaten Fotos hatte ich längst aus Google & Co. herausgelöst und selbst in der Hand. Aber wohin mit dem Rest – alte Familienfotos, Aufnahmen von Höfen und Häusern der Vorfahren, dazu Briefe, Urkunden und Testamente, Erbscheine, Führerscheine und Mitgliedsausweise, Militär- und Auswanderungspapiere, bis hin zu alten Tonaufnahmen und Schmalfilmen? Noch eine eigene Software? Nein. Vieles davon gehört ohnehin zu Personen des Stammbaums, manches steht für sich – aber alles gehört zum **einen Familienarchiv**. Und die Familie ist als webtrees-Nutzer längst da; mit diesem Modul ist sie damit automatisch auch im Archiv. **Das ist die Idee.**
 
 Die Medienliste ist ein Verwaltungswerkzeug. `Sammlungen` ist ein **Schau-Erlebnis** –
 und vor allem **in webtrees integriert**, mit allem, was daran hängt:
@@ -92,7 +94,7 @@ Dokumenten-Liste, gemischt). Aktiv-Status per Ein-Klick-Toggle:
 - **Datei umbenennen** direkt in der Lightbox (DB wird mit-aktualisiert)
 - **Manuelle Sammlungen** (CRUD): Name, Slug, Icon, Farbe, Ansicht
 - **Pfad-basierte Zuordnung**: auch nicht-importierte Bilder können Sammlungen zugewiesen werden
-- **„Nicht eingebundene Medien"** als eigene Übersicht (Medien ohne Personen-/Familien-Link)
+- **„Freier Bestand"** als eigene Übersicht (Teil des Familienarchivs ohne Verknüpfung im Stammbaum)
 - **APCu-Cache** für teure Queries mit konfigurierbarem TTL
 
 ## Voraussetzungen

@@ -7,7 +7,7 @@
 | | |
 |---|---|
 | Modulenaam | `sammlungen` |
-| Versie | 1.0.10 |
+| Versie | 1.0.11 |
 | webtrees | 2.2.x |
 | PHP | 8.2 – 8.4 |
 | Licentie | GPL-3.0-or-later |
@@ -28,6 +28,8 @@ geen **visuele fotocollecties** met de diepgang die familiearchieven nodig hebbe
 - **Pad-gebaseerde collecties** voor foto's die nog niet in webtrees zijn geïmporteerd
 
 ### Waarom deze module – en niet gewoon de webtrees-medialijst?
+
+Het beginpunt was praktisch: mijn privéfoto's had ik allang uit Google & co. gehaald en weer in eigen beheer genomen. Maar wat met de rest – oude familiefoto's, opnamen van boerderijen en huizen van voorouders, plus brieven, akten en testamenten, verklaringen van erfrecht, rijbewijzen en lidmaatschapskaarten, militaire en emigratiepapieren, tot oude geluidsopnamen en smalfilms toe? Nóg een aparte software? Nee. Veel ervan hoort sowieso bij personen in de stamboom, sommige staat op zichzelf – maar alles hoort bij het **ene familiearchief**. En de familie is als webtrees-gebruiker allang aanwezig; met deze module zit ze daarmee automatisch ook in het archief. **Dat is het idee.**
 
 De medialijst is een beheertool. `Sammlungen` is een **kijkervaring** – en vooral
 **ingebouwd in webtrees**, met alles wat daarbij hoort:
@@ -92,7 +94,7 @@ documentlijst, gemengd). Actief-status met één klik schakelen:
 - **Bestand hernoemen** direct in de lightbox (DB wordt mee bijgewerkt)
 - **Handmatige collecties** (CRUD): naam, slug, pictogram, kleur, weergave
 - **Pad-gebaseerde toewijzing**: ook niet-geïmporteerde afbeeldingen kunnen aan collecties worden toegewezen
-- **"Niet-gekoppelde media"** als eigen overzicht (media zonder persoons-/familiekoppeling)
+- **"Vrije collectie"** als eigen overzicht (onderdeel van het familiearchief, zonder koppeling in de stamboom)
 - **APCu-cache** voor dure query's met instelbare TTL
 
 ## Vereisten

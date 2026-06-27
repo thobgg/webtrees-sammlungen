@@ -7,7 +7,7 @@
 | | |
 |---|---|
 | Module name | `sammlungen` |
-| Version | 1.0.10 |
+| Version | 1.0.11 |
 | webtrees | 2.2.x |
 | PHP | 8.2 – 8.4 |
 | License | GPL-3.0-or-later |
@@ -28,6 +28,8 @@ fills exactly that gap:
 - **Path-based collections** for photos that are not (yet) imported into webtrees
 
 ### Why this module – and not just the webtrees media list?
+
+The starting point was practical: I'd long since pulled my private photos out of Google & co. and put them back under my own control. But what about the rest – old family photographs, pictures of ancestors' farms and houses, plus letters, certificates and wills, certificates of inheritance, driving licences and membership cards, military and emigration papers, right down to old audio recordings and cine films? Yet another dedicated piece of software? No. Much of it belongs to people in the family tree anyway, some of it stands on its own – but all of it belongs to the **one family archive**. And the family is already there as webtrees users; with this module they are automatically in the archive too. **That's the idea.**
 
 The media list is an administration tool. `Sammlungen` is a **viewing experience** – and,
 crucially, **built into webtrees**, with everything that brings:
@@ -91,7 +93,7 @@ document list, mixed). Active status with one-click toggle:
 - **File rename** directly from the lightbox (DB is updated atomically)
 - **Custom collections** (CRUD): name, slug, icon, colour, view
 - **Path-based assignment**: even non-imported photos can be added to collections
-- **"Unlinked media"** as a separate overview (media without person/family links)
+- **"Free holdings"** as a separate overview (part of the family archive, not linked in the family tree)
 - **APCu cache** for expensive queries with configurable TTL
 
 ## Requirements

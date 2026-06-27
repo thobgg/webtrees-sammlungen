@@ -5,6 +5,27 @@ Alle nennenswerten Änderungen an diesem Modul werden hier dokumentiert.
 Das Format orientiert sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
+## [1.0.11] – 2026-06-27
+
+### Geändert
+- **„Nicht eingebundene Medien" → „Freier Bestand":** Die Übersicht der Medien
+  ohne Personen-/Familien-Verknüpfung heißt jetzt **„Freier Bestand"** und wird
+  nicht mehr als Warnung (rot) dargestellt. Hintergrund: In diesem Modul ist ein
+  Medium ohne Stammbaum-Verknüpfung ein gewollter, oft dauerhafter Archiv-Zustand
+  – kein Fehler. Beschreibungstexte entsprechend angepasst; Übersetzungen de/en/nl
+  aktualisiert. (Konzept-Klärung mit hartenthaler, #4)
+
+### Behoben
+- **Fehlende FontAwesome-Icons:** In der Bestands-Ansicht kamen Icons zum Einsatz,
+  die webtrees nicht bündelt (`fa-unlink`, `fa-check-circle`) und daher als
+  Platzhalter erschienen – ersetzt durch gebündelte Icons.
+
+### Dokumentation
+- **„Warum dieses Modul?" geschärft:** Einleitung ergänzt, die den Grundgedanken
+  benennt – das Familienarchiv (Fotos, Urkunden, Briefe, Tonaufnahmen, Filme …)
+  lebt dort, wo die Familie ohnehin als webtrees-Nutzer ist, statt in einem
+  weiteren Insel-Tool. (de/en/nl)
+
 ## [1.0.10] – 2026-06-27
 
 ### Neu
