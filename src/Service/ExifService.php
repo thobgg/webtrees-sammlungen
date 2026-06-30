@@ -267,7 +267,8 @@ XML;
         // YYYY-MM-DD oder YYYY oder YYYY:MM:DD
         $iso = str_replace(':', '-', $iso);
         if (preg_match('/^(\d{4})-(\d{2})-(\d{2})/', $iso, $m)) {
-            return $m[3] === '00' || $m[2] === '00' ? $m[1] : "{$m[3]}.{$m[2]}.{$m[1]}";
+            // Monat/Tag „00" = unbekannt → nur das Jahr anzeigen.
+            return (int) $m[3] === 0 || (int) $m[2] === 0 ? $m[1] : "{$m[3]}.{$m[2]}.{$m[1]}";
         }
         if (preg_match('/^(\d{4})/', $iso, $m)) {
             return $m[1];

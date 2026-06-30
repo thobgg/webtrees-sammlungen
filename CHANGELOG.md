@@ -9,6 +9,20 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release (geplant: **1.1.0**). Einzelne 1.0.x-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+### Entwicklung / Qualitätssicherung
+- **Statische Analyse (PHPStan, Level 5):** Konfiguration (`phpstan.neon`) und
+  Baseline ergänzt, damit künftige Läufe grün starten. Bindet den
+  webtrees-Autoloader ein und prüft `src/`.
+- **Automatisierte Tests (PHPUnit):** Grundstock aus 32 Unit-Tests für die reine
+  Logik der Services (Datums-Formatierung, XMP-Aufbau samt Sonderzeichen-Maskierung,
+  Slug-/Hexfarben-Validierung) – ohne Datenbank. Lauf via `composer test`.
+
+### Behoben
+- **EXIF-Datumsanzeige bei „00":** Die Erkennung „Monat/Tag = 00 = unbekannt →
+  nur Jahr anzeigen" wird jetzt über einen numerischen Vergleich gelöst
+  (`(int) … === 0`). Funktional unverändert; beseitigt einen falsch-positiven
+  Befund der statischen Analyse, der die Stelle als nie zutreffend meldete.
+
 ## [1.0.11] – 2026-06-27
 
 ### Geändert

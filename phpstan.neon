@@ -1,0 +1,13 @@
+# Statische Analyse. Aus dem Modul-Ordner laufen lassen (liegt in einem
+# webtrees-Install → webtrees-Autoloader unter ../../vendor).
+#   php phpstan.phar analyse   (oder vendor/bin/phpstan)
+parameters:
+    level: 5
+    paths:
+        - src
+    bootstrapFiles:
+        - ../../vendor/autoload.php
+        - vendor/autoload.php
+    treatPhpDocTypesAsCertain: false
+includes:
+    - phpstan-baseline.neon
