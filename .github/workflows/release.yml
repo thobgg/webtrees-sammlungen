@@ -26,8 +26,20 @@ jobs:
             -o "sammlungen-${VERSION}.zip" HEAD
           unzip -l "sammlungen-${VERSION}.zip" | head -20
 
+      - name: Release-Notes aus CHANGELOG ziehen
+        run: |
+          # Abschnitt "## [X.Y.Z] ..." bis zum nächsten "## [" als Release-Text.
+          VERSION="${GITHUB_REF_NAME#v}"
+          awk -v v="$VERSION" '
+            $0 ~ "^## \\[" v "\\]" { grab = 1; next }
+            grab && /^## \[/ { exit }
+            grab { print }
+          ' CHANGELOG.md > RELEASE_NOTES.md
+          echo "----- Release-Notes -----"; cat RELEASE_NOTES.md
+
       - name: ZIP ans Release hängen
         uses: softprops/action-gh-release@v2
         with:
           files: sammlungen-*.zip
+          body_path: RELEASE_NOTES.md
           generate_release_notes: true

@@ -7,15 +7,28 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 ## [Unreleased]
 
-_Sammelstelle fürs nächste Bündel-Release (geplant: **1.1.0**). Einzelne 1.0.x-Hotfixes nur bei Blockern (500er/Datenfehler)._
+_Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
+
+## [1.1.0] – 2026-06-30
+
+**Reife-Release – kein neues Feature, sondern ein Qualitäts-Meilenstein.**
+Hinter dieser Version steht ein intensiver Praxis-Test: ein Alpha-Test-Zyklus auf
+echten Installationen, der eine Reihe realer Fehler zutage gefördert hat – vom
+`ONLY_FULL_GROUP_BY`-Absturz über eine Tabellen-Präfix-Regression bis zum
+EXIF-Foto-Zähler – allesamt gegen echte Datenbanken verifiziert und behoben.
+Diesen erreichten Stand sichert 1.1.0 jetzt dauerhaft ab: durch statische Analyse
+und einen automatisierten Test-Grundstock, damit er nicht unbemerkt zurückfällt.
+Der Versionssprung auf **1.1.0** macht genau das sichtbar – die Patch-Folge der
+intensiven Bugfix-Phase ist abgeschlossen, das Modul auf geprüftem Fundament.
 
 ### Entwicklung / Qualitätssicherung
 - **Statische Analyse (PHPStan, Level 5):** Konfiguration (`phpstan.neon`) und
-  Baseline ergänzt, damit künftige Läufe grün starten. Bindet den
-  webtrees-Autoloader ein und prüft `src/`.
-- **Automatisierte Tests (PHPUnit):** Grundstock aus 32 Unit-Tests für die reine
-  Logik der Services (Datums-Formatierung, XMP-Aufbau samt Sonderzeichen-Maskierung,
-  Slug-/Hexfarben-Validierung) – ohne Datenbank. Lauf via `composer test`.
+  Baseline ergänzt; prüft `src/` mit dem webtrees-Autoloader und läuft mit
+  **0 offenen Befunden**.
+- **Automatisierte Tests (PHPUnit):** Grundstock aus **32 Unit-Tests** für die
+  reine Service-Logik (Datums-Formatierung, XMP-Aufbau samt
+  Sonderzeichen-Maskierung, Slug-/Hexfarben-Validierung) – ohne Datenbank.
+  Lauf via `composer test`.
 
 ### Behoben
 - **EXIF-Datumsanzeige bei „00":** Die Erkennung „Monat/Tag = 00 = unbekannt →
