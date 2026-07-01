@@ -25,7 +25,7 @@ geen **visuele fotocollecties** met de diepgang die familiearchieven nodig hebbe
 - **EXIF/XMP-gegevens rechtstreeks uit de afbeeldingsbestanden** lezen en bewerken – zonder
   omweg via GEDCOM-tags
 - **Bidirectionele synchronisatie** tussen fotometadata en webtrees-persoonskoppelingen
-- **Pad-gebaseerde collecties** voor foto's die nog niet in webtrees zijn geïmporteerd
+- **Pad-gebaseerde collecties** ook voor media die helemaal niet als GEDCOM-object in de stamboom staan (een bewust onderdeel van het archief)
 
 ### Waarom deze module – en niet gewoon de webtrees-medialijst?
 

@@ -25,7 +25,7 @@ ergänzt genau das:
 - **EXIF/XMP-Daten direkt aus den Bilddateien** lesen und editieren – ohne Umweg über
   GEDCOM-Tags
 - **Bidirektionaler Abgleich** zwischen Foto-Metadaten und webtrees-Personenverknüpfungen
-- **Pfad-basierte Sammlungen** für Fotos, die noch nicht in webtrees importiert sind
+- **Pfad-basierte Sammlungen** auch für Medien, die gar nicht als GEDCOM-Objekt im Stammbaum stecken (der „Freie Bestand" des Archivs)
 
 ### Warum dieses Modul – und nicht einfach die webtrees-Medienliste?
 

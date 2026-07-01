@@ -25,7 +25,7 @@ fills exactly that gap:
 - **EXIF/XMP data read and edited directly in the image files** – no detour via
   GEDCOM tags
 - **Bidirectional sync** between photo metadata and webtrees person links
-- **Path-based collections** for photos that are not (yet) imported into webtrees
+- **Path-based collections** also for media that isn't a GEDCOM object in the tree at all (a deliberate part of the archive, not a backlog)
 
 ### Why this module – and not just the webtrees media list?
 
