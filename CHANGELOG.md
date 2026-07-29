@@ -9,6 +9,15 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+## [1.2.0] – 2026-07-29
+
+**Zwei neue Sprachen.**
+
+### Hinzugefügt
+- **Katalanisch (`ca`) und Spanisch (`es`)** – vollständige Übersetzungen
+  (je 126 Texte), beigesteuert von **Bernat Josep Banyuls i Sala** (Issue #11).
+  Herzlichen Dank!
+
 ## [1.1.1] – 2026-07-29
 
 **Hotfix-Release (Blocker).** Das Speichern der Modul-Einstellungen führte zu

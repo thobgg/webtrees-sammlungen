@@ -1,0 +1,399 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: sammlungen 1.2.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Bernat Josep Banyuls i Sala\n"
+"PO-Revision-Date: 2026-06-24 00:00+0000\n"
+"Language-Team: Español\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "%s Minuten"
+msgstr "%s minutos"
+
+msgid "%s Stunden"
+msgstr "%s horas"
+
+msgid "%s noch nicht importiert"
+msgstr "%s aún no importado"
+
+msgid "APCu ist aktiv. Abfragen werden gecacht."
+msgstr "APCu está activo. Las consultas se almacenan en caché."
+
+msgid "APCu ist nicht verfügbar. Es wird ein In-Process-Array-Cache verwendet (kein Request-übergreifendes Caching)."
+msgstr "APCu no está disponible. Se utiliza una caché interna basada en arrays (sin caché entre solicitudes)."
+
+msgid "Abbrechen"
+msgstr "Cancelar"
+
+msgid "Abgleich EXIF ↔ webtrees"
+msgstr "Comparación EXIF ↔ webtrees"
+
+msgid "Aktionen"
+msgstr "Acciones"
+
+msgid "Aktiv"
+msgstr "Activo"
+
+msgid "Aktueller TTL: %s Sekunden"
+msgstr "TTL actual: %s segundos"
+
+msgid "Alle"
+msgstr "Todos"
+
+msgid "Alle Medienobjekte sind mit Personen oder Familien verknüpft."
+msgstr "Todos los objetos multimedia están vinculados a personas o familias."
+
+msgid "Allgemeine Einstellungen"
+msgstr "Configuración general"
+
+msgid "Angezeigter Name der Sammlung."
+msgstr "Nombre mostrado de la colección."
+
+msgid "Anzeigen"
+msgstr "Mostrar"
+
+msgid "Anzeigetyp"
+msgstr "Tipo de visualización"
+
+msgid "Archiv-Ordner"
+msgstr "Carpeta de archivo"
+
+msgid "Bearbeiten"
+msgstr "Editar"
+
+msgid "Beschreibung"
+msgstr "Descripción"
+
+msgid "Bitte geben Sie einen Namen ein."
+msgstr "Introduzca un nombre."
+
+msgid "Bitte wählen Sie einen Stammbaum aus."
+msgstr "Seleccione un árbol genealógico."
+
+msgid "Bitte wählen Sie oben einen Stammbaum aus."
+msgstr "Seleccione un árbol genealógico en la parte superior."
+
+msgid "Cache jetzt leeren"
+msgstr "Vaciar la caché ahora"
+
+msgid "Cache verwalten"
+msgstr "Gestionar la caché"
+
+msgid "Cache wirklich leeren?"
+msgstr "¿Seguro que desea vaciar la caché?"
+
+msgid "Cache-TTL (Sekunden)"
+msgstr "TTL de la caché (segundos)"
+
+msgid "Darstellung"
+msgstr "Presentación"
+
+msgid "Datei"
+msgstr "Archivo"
+
+msgid "Datei umbenennen"
+msgstr "Renombrar archivo"
+
+msgid "Datum"
+msgstr "Fecha"
+
+msgid "Der Foto-Picker zeigt nur Bilder aus aktiven, ordner-basierten Foto-Sammlungen (ein Top-Level-Ordner direkt unter data/media/). Lege zuerst eine solche Sammlung an – oder befülle diese Sammlung direkt, indem du in ihrer Bearbeitungsmaske das Feld „Medienordner\" setzt."
+msgstr "El selector de fotos solo muestra imágenes de colecciones de fotos activas basadas en carpetas (una carpeta de nivel superior directamente dentro de data/media/). Cree primero una colección de este tipo, o rellénela directamente estableciendo el campo «Carpeta multimedia» en su pantalla de edición."
+
+msgid "Der Sammlungen-Cache wurde erfolgreich geleert."
+msgstr "La caché de colecciones se ha vaciado correctamente."
+
+msgid "Diese Sammlung ist noch leer."
+msgstr "Esta colección aún está vacía."
+
+msgid "Dieser Stammbaum enthält noch keine Medienobjekte oder Sammlungen."
+msgstr "Este árbol genealógico aún no contiene objetos multimedia ni colecciones."
+
+msgid "Dokumente"
+msgstr "Documentos"
+
+msgid "Dokumentenliste"
+msgstr "Lista de documentos"
+
+msgid "EXIF/XMP bearbeiten"
+msgstr "Editar EXIF/XMP"
+
+msgid "Einstellungen"
+msgstr "Configuración"
+
+msgid "Einstellungen speichern"
+msgstr "Guardar configuración"
+
+msgid "Einträge pro Seite"
+msgstr "Entradas por página"
+
+msgid "Erste Sammlung anlegen"
+msgstr "Crear la primera colección"
+
+msgid "Es gibt noch keine Quelle, aus der du Fotos auswählen kannst."
+msgstr "Todavía no existe ninguna fuente desde la que seleccionar fotos."
+
+msgid "Es sind keine Stammbäume vorhanden."
+msgstr "No hay árboles genealógicos disponibles."
+
+msgid "Farbe"
+msgstr "Color"
+
+msgid "Footer anzeigen"
+msgstr "Mostrar pie de página"
+
+msgid "Foto-Raster"
+msgstr "Cuadrícula de fotos"
+
+msgid "Fotogalerie"
+msgstr "Galería de fotos"
+
+msgid "Fotos"
+msgstr "Fotos"
+
+msgid "Fotos als Kacheln, Dokumente als Liste"
+msgstr "Fotos como mosaicos, documentos como lista"
+
+msgid "Fotos auswählen"
+msgstr "Seleccionar fotos"
+
+msgid "Fotos für: %s"
+msgstr "Fotos para: %s"
+
+msgid "Fotos hinzufügen"
+msgstr "Añadir fotos"
+
+msgid "Gemischt"
+msgstr "Mixto"
+
+msgid "Gleichförmiges Grid, sachlich"
+msgstr "Cuadrícula uniforme, funcional"
+
+msgid "Grundeinstellungen"
+msgstr "Configuración básica"
+
+msgid "Icon"
+msgstr "Icono"
+
+msgid "In Datei speichern"
+msgstr "Guardar en archivo"
+
+msgid "In webtrees öffnen"
+msgstr "Abrir en webtrees"
+
+msgid "Inaktiv"
+msgstr "Inactivo"
+
+msgid "Interne Kennung"
+msgstr "Identificador interno"
+
+msgid "Jetzt anlegen"
+msgstr "Crear ahora"
+
+msgid "Keine Dateien in diesem Ordner gefunden."
+msgstr "No se han encontrado archivos en esta carpeta."
+
+msgid "Keine Fotos in dieser Quelle."
+msgstr "No hay fotos en esta fuente."
+
+msgid "Keine Objekte in dieser Kategorie."
+msgstr "No hay objetos en esta categoría."
+
+msgid "Keine Vorschaubilder (noch keine Bilddateien vom Typ jpg/png/gif/webp) in dieser Sammlung."
+msgstr "No hay miniaturas (todavía no hay archivos de imagen jpg/png/gif/webp) en esta colección."
+msgid "Kennung"
+msgstr "Identificador"
+
+msgid "Kleinbuchstaben, Ziffern, - und _. Wird automatisch aus dem Namen erzeugt. Nur Buchstaben, Ziffern, Bindestrich. Nicht änderbar."
+msgstr "Minúsculas, dígitos, - y _. Se genera automáticamente a partir del nombre. Solo letras, dígitos y guion. No modificable."
+
+msgid "Klicken = hinzufügen/entfernen"
+msgstr "Clic = añadir/eliminar"
+
+msgid "Klicken zum Umschalten"
+msgstr "Clic para cambiar"
+
+msgid "Klicken zum Vergrößern"
+msgstr "Clic para ampliar"
+
+msgid "Komma-getrennt"
+msgstr "Separado por comas"
+
+msgid "Leert den APCu-Cache des Moduls. Notwendig nach manuellen Datenbankänderungen oder wenn Daten nicht aktualisiert erscheinen. Der Cache wird automatisch nach GEDCOM-Importen geleert."
+msgstr "Vacía la caché APCu del módulo. Necesario tras cambios manuales en la base de datos o cuando los datos no parecen actualizarse. La caché se vacía automáticamente después de las importaciones GEDCOM."
+
+msgid "Legen Sie manuell gepflegte Sammlungen an, um Medienobjekte thematisch zu gruppieren. Automatisch erkannte Sammlungen aus den GEDCOM-Medientypen werden davon nicht berührt."
+msgstr "Cree colecciones gestionadas manualmente para agrupar objetos multimedia por temas. Las colecciones detectadas automáticamente a partir de los tipos de medios GEDCOM no se ven afectadas."
+
+msgid "Link im Footer anzeigen"
+msgstr "Mostrar enlace en el pie de página"
+
+msgid "Liste, auch für JPG-Scans"
+msgstr "Lista, también para escaneos JPG"
+
+msgid "Löschen"
+msgstr "Eliminar"
+
+msgid "Masonry, Lightbox, EXIF-Editor"
+msgstr "Masonry, Lightbox, editor EXIF"
+
+msgid "Teil des Familienarchivs ohne Verknüpfung im Stammbaum"
+msgstr "Parte del archivo familiar sin vinculación en el árbol genealógico"
+
+msgid "Medienordner (automatisch befüllt)"
+msgstr "Carpeta multimedia (rellenada automáticamente)"
+
+msgid "Mindestens 60 s, maximal 86400 s (24 h). Standard: 900 s (15 min)."
+msgstr "Mínimo 60 s, máximo 86400 s (24 h). Predeterminado: 900 s (15 min)."
+
+msgid "Name"
+msgstr "Nombre"
+
+msgid "Neu"
+msgstr "Nuevo"
+
+msgid "Neue Sammlung"
+msgstr "Nueva colección"
+
+msgid "Neue Sammlung anlegen"
+msgstr "Crear nueva colección"
+
+msgid "Freier Bestand"
+msgstr "Fondo libre"
+
+msgid "Im freien Bestand"
+msgstr "En el fondo libre"
+
+msgid "Noch keine Sammlungen angelegt."
+msgstr "Todavía no se han creado colecciones."
+
+msgid "Noch keine verwalteten Sammlungen vorhanden."
+msgstr "Todavía no hay colecciones gestionadas."
+
+msgid "Noch nicht in webtrees importiert"
+msgstr "Aún no importado en webtrees"
+
+msgid "Nr."
+msgstr "N.º"
+
+msgid "Ohne Typ"
+msgstr "Sin tipo"
+
+msgid "Ordnerpfad relativ zu data/media/ – Unterordner werden automatisch eingeschlossen. Leer lassen für manuelle Pflege."
+msgstr "Ruta de carpeta relativa a data/media/ — los subdirectorios se incluyen automáticamente. Dejar vacío para gestión manual."
+
+msgid "Personen"
+msgstr "Personas"
+
+msgid "Reihenfolge"
+msgstr "Orden"
+
+msgid "Sammlung #%s nicht gefunden."
+msgstr "No se ha encontrado la colección #%s."
+
+msgid "Sammlung #%s wurde gelöscht."
+msgstr "La colección #%s ha sido eliminada."
+
+msgid "Sammlung #%s wurde nicht gefunden."
+msgstr "La colección #%s no se ha encontrado."
+
+msgid "Sammlung anlegen"
+msgstr "Crear colección"
+
+msgid "Sammlung bearbeiten: %s"
+msgstr "Editar colección: %s"
+
+msgid "Sammlung nicht gefunden."
+msgstr "Colección no encontrada."
+
+msgid "Sammlung „%s\" wurde aktualisiert."
+msgstr "La colección «%s» ha sido actualizada."
+
+msgid "Sammlung „%s\" wurde angelegt."
+msgstr "La colección «%s» ha sido creada."
+
+msgid "Sammlungen"
+msgstr "Colecciones"
+
+msgid "Sammlungen verwalten"
+msgstr "Gestionar colecciones"
+
+msgid "Sammlungen – Einstellungen"
+msgstr "Colecciones – Configuración"
+
+msgid "Schließen"
+msgstr "Cerrar"
+
+msgid "Seite %s von %s"
+msgstr "Página %s de %s"
+
+msgid "Sichtbar (aktiv)"
+msgstr "Visible (activo)"
+
+msgid "Sie haben keine Berechtigung für diese Aktion."
+msgstr "No tiene permiso para esta acción."
+
+msgid "Sie haben keine Berechtigung für diese Seite."
+msgstr "No tiene permiso para acceder a esta página."
+
+msgid "Stammbaum:"
+msgstr "Árbol genealógico:"
+
+msgid "Stichwörter"
+msgstr "Palabras clave"
+
+msgid "Thematische Sammlungen"
+msgstr "Colecciones temáticas"
+
+msgid "Vollbild in neuem Tab"
+msgstr "Pantalla completa en una nueva pestaña"
+
+msgid "Vorschau"
+msgstr "Vista previa"
+
+msgid "Wer, Was, Wann, Wo…"
+msgstr "Quién, Qué, Cuándo, Dónde…"
+
+msgid "Zu Sammlung hinzufügen"
+msgstr "Añadir a la colección"
+
+msgid "Zurück"
+msgstr "Atrás"
+
+msgid "Zurück zu den Einstellungen"
+msgstr "Volver a la configuración"
+
+msgid "z.B. Familienfotos"
+msgstr "p. ej. fotos familiares"
+
+msgid "Änderungen speichern"
+msgstr "Guardar cambios"
+
+msgid "%s verwaltete Sammlung"
+msgid_plural "%s verwaltete Sammlungen"
+msgstr[0] "%s colección gestionada"
+msgstr[1] "%s colecciones gestionadas"
+
+msgid "%s Objekt"
+msgid_plural "%s Objekte"
+msgstr[0] "%s objeto"
+msgstr[1] "%s objetos"
+
+msgid "%s Foto"
+msgid_plural "%s Fotos"
+msgstr[0] "%s foto"
+msgstr[1] "%s fotos"
+
+msgid "%s Datei"
+msgid_plural "%s Dateien"
+msgstr[0] "%s archivo"
+msgstr[1] "%s archivos"
+
+msgid "%s Medienobjekt im freien Bestand"
+msgid_plural "%s Medienobjekte im freien Bestand"
+msgstr[0] "%s objeto multimedia en el fondo libre"
+msgstr[1] "%s objetos multimedia en el fondo libre"
