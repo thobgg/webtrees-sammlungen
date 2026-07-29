@@ -54,6 +54,20 @@ class SammlungenModule extends AbstractModule implements
     public const DEFAULT_CACHE_TTL = 900;
     public const DEFAULT_PER_PAGE  = 50;
 
+    /**
+     * webtrees benennt Custom-Module erst nach dem Erzeugen per setName().
+     * Wird das Modul aber vom DI-Container in einen RequestHandler injiziert
+     * (z. B. AdminConfig), entsteht eine frische, noch NICHT benannte Instanz –
+     * name() wäre leer und setPreference() würde einen leeren module_name in
+     * wt_module_setting schreiben (FK-Verletzung). Deshalb den festen Namen
+     * bereits im Konstruktor verankern; ein späteres setName() setzt denselben
+     * Wert erneut und ist damit harmlos.
+     */
+    public function __construct()
+    {
+        $this->setName(self::MODULE_NAME);
+    }
+
     public function title(): string { return 'Sammlungen'; }
     public function description(): string { return 'Foto- und Dokumenten-Sammlungen mit EXIF-Anreicherung, Galerie und Lightbox.'; }
     public function customModuleAuthorName(): string { return 'Thomas Bugge'; }
