@@ -9,6 +9,20 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+## [1.1.1] – 2026-07-29
+
+**Hotfix-Release (Blocker).** Das Speichern der Modul-Einstellungen führte zu
+einem Fehler und war damit unbenutzbar.
+
+### Behoben
+- **Einstellungen speichern schlug fehl** (Foreign-Key-Verletzung auf
+  `wt_module`). Der DI-Container reicht dem `AdminConfig`-Handler eine frisch
+  erzeugte, noch unbenannte Modulinstanz; `name()` war leer, und
+  `setPreference()` schrieb einen leeren `module_name` nach `wt_module_setting`.
+  Der Modulname wird jetzt bereits im Konstruktor gesetzt, sodass jede Instanz –
+  ob per `include module.php` oder per Container erzeugt – gültig ist.
+  (Issue #12, Dank an @ro-la für den vollständigen Stacktrace.)
+
 ## [1.1.0] – 2026-06-30
 
 **Reife-Release – kein neues Feature, sondern ein Qualitäts-Meilenstein.**
