@@ -9,6 +9,17 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+### Behoben
+- **Verknüpfte Personennamen richten sich nach den Datenschutzregeln des Baums.**
+  Bisher las das Modul die Namen direkt aus `link`/`name` und zeigte sie ohne
+  Sichtbarkeitsprüfung an. Maßgeblich ist `canShowName()` – wahr, sobald der
+  Baum Namen Lebender zeigt; das striktere `canShow()` würde mehr verbergen als
+  webtrees selbst. Die Prüfung greift vor dem Kappen der Liste, sonst zählte der
+  „… und N weitere"-Zähler die verborgenen Personen mit und verriete ihre
+  Anzahl. Die Datensätze werden in einem Rutsch geladen und über den
+  Factory-Mapper erzeugt, also eine zusätzliche Abfrage je Seite statt einer je
+  Person. (Issue #16)
+
 ## [1.2.2] – 2026-08-03
 
 **Bugfix-Release.** Die Seitenleiste der Lightbox konnte beim Speichern die

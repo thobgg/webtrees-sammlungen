@@ -6,8 +6,13 @@ namespace Sammlungen\Service;
 
 use Sammlungen\Cache\ApcuCacheService;
 use Fisharebest\Webtrees\DB;
+use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Tree;
 
+use function array_chunk;
+use function array_map;
+use function array_unique;
+use function array_values;
 use function basename;
 use function is_dir;
 use function pathinfo;
@@ -583,18 +588,79 @@ class CollectionService
             ->select(['l.l_to AS m_id', 'l.l_from AS i_id', 'n.n_full AS name'])
             ->get();
 
+        // Sichtbarkeit einmal je Person klaeren, nicht je (Bild, Person)-Paar.
+        $sichtbar = $this->sichtbareIndividuen(
+            $tree,
+            array_values(array_unique(array_map(static fn ($row) => (string) $row->i_id, $personRows->all())))
+        );
+
         foreach ($personRows as $row) {
             $mid  = (string) $row->m_id;
+            $xref = (string) $row->i_id;
             $name = trim(str_replace('/', '', (string) $row->name));
+
+            // Datenschutzregeln des Baums gelten auch hier. Die Filterung muss
+            // VOR dem Kappen der Liste greifen, sonst zaehlt der "und N weitere"-
+            // Zaehler im ViewModel die verborgenen Personen mit und verraet ihre
+            // Anzahl (Issue #16).
+            if (!isset($sichtbar[$xref])) {
+                continue;
+            }
+
             if (isset($result[$mid])) {
                 $result[$mid]['personen'][] = [
                     'name' => $name,
-                    'xref' => (string) $row->i_id,
+                    'xref' => $xref,
                 ];
             }
         }
 
         return $result;
+    }
+
+    /**
+     * Welche der uebergebenen Personen duerfen namentlich gezeigt werden?
+     *
+     * Massgeblich ist `canShowName()`, nicht `canShow()`: erstere ist bereits
+     * wahr, wenn der Baum Namen Lebender zeigt (SHOW_LIVING_NAMES), auch wenn
+     * der Datensatz selbst geschuetzt ist. Mit `canShow()` wuerde das Modul
+     * strenger filtern als webtrees selbst.
+     *
+     * Die Datensaetze werden in einem Rutsch geladen und ueber den Factory-
+     * Mapper erzeugt, der das GEDCOM aus der Zeile nimmt – sonst entstuende eine
+     * Abfrage je Person. Die Factory merkt sich Instanzen ausserdem pro Request.
+     *
+     * @param  list<string> $xrefs
+     * @return array<string, true> Schluessel = sichtbare xrefs
+     */
+    private function sichtbareIndividuen(Tree $tree, array $xrefs): array
+    {
+        if ($xrefs === []) {
+            return [];
+        }
+
+        $mapper   = Registry::individualFactory()->mapper($tree);
+        $sichtbar = [];
+
+        // In Bloecken abfragen: eine Galerie-Seite kann sehr viele
+        // Verknuepfungen buendeln, und ein unbegrenztes IN () ist unschoen.
+        foreach (array_chunk($xrefs, 1000) as $block) {
+            $rows = DB::table('individuals')
+                ->where('i_file', '=', $tree->id())
+                ->whereIn('i_id', $block)
+                ->select(['i_id', 'i_gedcom'])
+                ->get();
+
+            foreach ($rows as $row) {
+                $individuum = $mapper($row);
+
+                if ($individuum !== null && $individuum->canShowName()) {
+                    $sichtbar[(string) $row->i_id] = true;
+                }
+            }
+        }
+
+        return $sichtbar;
     }
 
     /** Gibt Detaildaten (m_id, Titel, Dateiname, Format) für Listenansicht zurück. */
