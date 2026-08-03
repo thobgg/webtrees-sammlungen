@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Sammlungen\Service;
 
 use Sammlungen\Cache\ApcuCacheService;
+use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\DB;
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Tree;
 
 use function array_chunk;
+use function array_fill_keys;
 use function array_map;
 use function array_unique;
 use function array_values;
@@ -666,6 +668,16 @@ class CollectionService
     {
         if ($xrefs === []) {
             return [];
+        }
+
+        // canShowName() ist bereits wahr, sobald der Baum Namen vertraulicher
+        // Personen auf der Zugriffsstufe des Betrachters zeigt – dann gilt das
+        // fuer jeden Datensatz gleichermassen. In dieser (verbreiteten)
+        // Konstellation waere jedes Laden vergebliche Arbeit: die Antwort steht
+        // schon fest. Der Datenschutz-Filter kostet damit im Regelfall keine
+        // einzige zusaetzliche Abfrage.
+        if ((int) $tree->getPreference('SHOW_LIVING_NAMES') >= Auth::accessLevel($tree)) {
+            return array_fill_keys($xrefs, true);
         }
 
         $mapper   = Registry::individualFactory()->mapper($tree);

@@ -18,7 +18,9 @@ _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Bl
   „… und N weitere"-Zähler die verborgenen Personen mit und verriete ihre
   Anzahl. Die Datensätze werden in einem Rutsch geladen und über den
   Factory-Mapper erzeugt, also eine zusätzliche Abfrage je Seite statt einer je
-  Person. (Issue #16)
+  Person. Zeigt der Stammbaum Namen vertraulicher Personen ohnehin auf der
+  Zugriffsstufe des Betrachters – die verbreitete Einstellung –, steht die
+  Antwort für alle Datensätze fest und es wird gar nichts geladen. (Issue #16)
 
 ### Geändert
 - **Galerie holt die Sammlungszugehörigkeit seitenweise statt je Bild.** Bisher
