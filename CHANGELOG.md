@@ -9,6 +9,12 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+## [1.2.3] – 2026-08-03
+
+**Datenschutz und Tempo.** Verknüpfte Personennamen unterliegen jetzt den
+Datenschutzregeln des Stammbaums, und die Galerie kommt mit deutlich weniger
+Datenbankabfragen aus.
+
 ### Behoben
 - **Verknüpfte Personennamen richten sich nach den Datenschutzregeln des Baums.**
   Bisher las das Modul die Namen direkt aus `link`/`name` und zeigte sie ohne
@@ -26,6 +32,14 @@ _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Bl
 - **Galerie holt die Sammlungszugehörigkeit seitenweise statt je Bild.** Bisher
   lief pro angezeigtem Bild eine eigene Abfrage – bei 200 Einträgen pro Seite
   also 200 Abfragen für eine Information, die in eine passt.
+
+### Hinweis für Administratoren
+Ob sich für Ihre Installation etwas ändert, hängt an einer einzigen Einstellung:
+**Stammbaum verwalten → Datenschutz → „Namen vertraulicher Personen zeigen".**
+Steht sie auf der Stufe Ihrer Mitglieder oder darunter (der übliche Fall), sehen
+diese die Namen unverändert. Ist sie strenger gesetzt, verschwinden geschützte
+Namen jetzt auch aus Galerie und Lightbox – so, wie es im übrigen webtrees
+bereits der Fall war.
 
 ## [1.2.2] – 2026-08-03
 
