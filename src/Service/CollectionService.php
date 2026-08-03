@@ -256,13 +256,42 @@ class CollectionService
     /** Gibt die collection_ids zurück, in denen ein Pfad bereits enthalten ist. */
     public function sammlungenDesPfades(Tree $tree, string $pfad): array
     {
-        return DB::table('sammlungen_collection_pfad')
-            ->where('pfad', '=', $pfad)
-            ->where('gedcom_id', '=', $tree->id())
-            ->pluck('collection_id')
-            ->map(fn ($id) => (int) $id)
-            ->values()
-            ->all();
+        return $this->sammlungenFuerPfade($tree, [$pfad])[$pfad] ?? [];
+    }
+
+    /**
+     * Wie sammlungenDesPfades(), aber fuer viele Pfade in einer Abfrage.
+     *
+     * Die Galerie braucht die Zugehoerigkeit fuer jedes Bild der Seite. Einzeln
+     * abgefragt ergab das eine Abfrage je Bild – bei 200 Eintraegen pro Seite
+     * also 200 Abfragen fuer eine Information, die in eine passt.
+     *
+     * @param  list<string> $pfade
+     * @return array<string, list<int>> Pfad => collection_ids (nur Pfade mit Treffern)
+     */
+    public function sammlungenFuerPfade(Tree $tree, array $pfade): array
+    {
+        $pfade = array_values(array_unique($pfade));
+
+        if ($pfade === []) {
+            return [];
+        }
+
+        $map = [];
+
+        foreach (array_chunk($pfade, 1000) as $block) {
+            $rows = DB::table('sammlungen_collection_pfad')
+                ->where('gedcom_id', '=', $tree->id())
+                ->whereIn('pfad', $block)
+                ->select(['pfad', 'collection_id'])
+                ->get();
+
+            foreach ($rows as $row) {
+                $map[(string) $row->pfad][] = (int) $row->collection_id;
+            }
+        }
+
+        return $map;
     }
 
     // ---------------------------------------------------------------

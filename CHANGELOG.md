@@ -20,6 +20,11 @@ _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Bl
   Factory-Mapper erzeugt, also eine zusätzliche Abfrage je Seite statt einer je
   Person. (Issue #16)
 
+### Geändert
+- **Galerie holt die Sammlungszugehörigkeit seitenweise statt je Bild.** Bisher
+  lief pro angezeigtem Bild eine eigene Abfrage – bei 200 Einträgen pro Seite
+  also 200 Abfragen für eine Information, die in eine passt.
+
 ## [1.2.2] – 2026-08-03
 
 **Bugfix-Release.** Die Seitenleiste der Lightbox konnte beim Speichern die

@@ -335,6 +335,13 @@ final class SammlungenViewModel
         $mIds    = array_values(array_filter(array_column($bilder, 'm_id')));
         $wtDaten = $this->collectionService->webtreesDatenFuerMediaIds($tree, $mIds);
 
+        // Sammlungszugehoerigkeit fuer die ganze Seite in einer Abfrage statt
+        // einer je Bild.
+        $sammlungenJePfad = $this->collectionService->sammlungenFuerPfade(
+            $tree,
+            array_column($bilder, 'pfad')
+        );
+
         foreach ($bilder as &$bild) {
             $wt = $bild['m_id'] !== null ? ($wtDaten[$bild['m_id']] ?? null) : null;
 
@@ -350,7 +357,7 @@ final class SammlungenViewModel
             $bild['personen']        = $wt !== null ? array_column($wt['personen'], 'name') : [];
             $bild['personen_gesamt'] = $gesamtPersonen;
             $bild['wt']              = $wt;
-            $bild['in_sammlungen']   = $this->collectionService->sammlungenDesPfades($tree, $bild['pfad']);
+            $bild['in_sammlungen']   = $sammlungenJePfad[$bild['pfad']] ?? [];
         }
         unset($bild);
 
