@@ -90,12 +90,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const parts = [];
         if (info.datum) parts.push('📅 ' + info.datum);
+        // Bevorzugt die in webtrees verknüpften Personen; nur wenn es keine
+        // gibt, die im Dateikopf hinterlegten Namen (info.personen).
         // Nur die ersten Namen: die Kopfzeile darf nicht schrumpfen, eine
         // ungekürzte Liste (z. B. ein Wappen an 300 Personen) würde umbrechen
         // und den Bildbereich darunter auf Höhe 0 quetschen.
-        const personen = info.personen || [];
+        const wtNamen = (info.wt_personen || []).map(p => p.name);
+        const personen = wtNamen.length ? wtNamen : (info.personen || []);
         if (personen.length) {
-            const gesamt = info.personen_gesamt || personen.length;
+            const gesamt = wtNamen.length
+                ? (info.personen_gesamt || wtNamen.length)
+                : personen.length;
             const rest = gesamt - Math.min(3, personen.length);
             parts.push('👤 ' + personen.slice(0, 3).join(', ') + (rest > 0 ? ' +' + rest : ''));
         }
@@ -168,14 +173,21 @@ document.addEventListener('DOMContentLoaded', function () {
                     ziel: 'archiv-edit-beschreibung',
                 });
             }
+            const wtListe = (info.wt_personen || []).map(p => p.name);
+            // Bei sehr vielen Verknüpfungen liegt nur ein Ausschnitt vor.
+            // Dann keine Übernahme anbieten – sie würde die vollständige Liste
+            // im Dateikopf durch den Ausschnitt ersetzen.
+            const wtGekuerzt = (info.personen_gesamt || wtListe.length) > wtListe.length;
             const exifP = (info.personen || []).slice().sort().join(', ');
-            const wtP = (info.wt_personen || []).map(p => p.name).sort().join(', ');
+            const wtP = wtListe.slice().sort().join(', ');
             if (exifP !== wtP && (exifP || wtP)) {
                 diffs.push({
                     feld: 'Personen',
                     exif: exifP || '(keine)',
-                    wt: wtP || '(keine)',
-                    btn: wtP ? wtP : null,
+                    wt: wtGekuerzt
+                        ? `${wtP} … (${info.personen_gesamt} insgesamt)`
+                        : (wtP || '(keine)'),
+                    btn: (wtP && !wtGekuerzt) ? wtP : null,
                     ziel: 'archiv-edit-personen',
                 });
             }

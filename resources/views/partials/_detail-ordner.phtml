@@ -56,7 +56,7 @@ use Fisharebest\Webtrees\I18N;
                         ? route(\Fisharebest\Webtrees\Http\RequestHandlers\MediaPage::class, ['tree' => $tree->name(), 'xref' => $bild['m_id']])
                         : '';
                     $caption  = $bild['exif']['beschreibung'] !== '' ? $bild['exif']['beschreibung'] : ($bild['titel'] !== '' ? $bild['titel'] : $bild['datei']);
-                    $lbData   = json_encode(['datum'=>$bild['exif']['datum'],'datum_iso'=>$bild['exif']['datum_iso'],'exif_beschreibung'=>$bild['exif']['beschreibung'],'personen'=>$bild['personen'],'personen_gesamt'=>$bild['personen_gesamt']??count($bild['personen']),'keywords'=>$bild['exif']['keywords']??[],'media'=>$mediaUrl,'wt_titel'=>$bild['wt']['titel']??'','wt_notiz'=>$bild['wt']['notiz']??'','wt_personen'=>$bild['wt']['personen']??[],'wt_edit'=>$mediaUrl,'in_sammlungen'=>$bild['in_sammlungen']??[],'breite'=>$bild['exif']['breite'],'hoehe'=>$bild['exif']['hoehe'],'groesse_kb'=>$bild['exif']['groesse_kb'],'format'=>strtoupper($bild['format']),'thumb'=>$fullUrl], JSON_UNESCAPED_UNICODE);
+                    $lbData   = json_encode(['datum'=>$bild['exif']['datum'],'datum_iso'=>$bild['exif']['datum_iso'],'exif_beschreibung'=>$bild['exif']['beschreibung'],'personen'=>$bild['exif']['personen']??[],'personen_gesamt'=>$bild['personen_gesamt']??count($bild['personen']),'keywords'=>$bild['exif']['keywords']??[],'media'=>$mediaUrl,'wt_titel'=>$bild['wt']['titel']??'','wt_notiz'=>$bild['wt']['notiz']??'','wt_personen'=>$bild['wt']['personen']??[],'wt_edit'=>$mediaUrl,'in_sammlungen'=>$bild['in_sammlungen']??[],'breite'=>$bild['exif']['breite'],'hoehe'=>$bild['exif']['hoehe'],'groesse_kb'=>$bild['exif']['groesse_kb'],'format'=>strtoupper($bild['format']),'thumb'=>$fullUrl], JSON_UNESCAPED_UNICODE);
                     ?>
                     <div class="col">
                         <a href="#"
@@ -96,7 +96,7 @@ use Fisharebest\Webtrees\I18N;
                         $fullUrl  = route('sammlungen.media-datei', ['tree' => $treeName, 'pfad' => $bild['pfad']]);
                         $mediaUrl = $bild['m_id'] !== null ? route(\Fisharebest\Webtrees\Http\RequestHandlers\MediaPage::class, ['tree' => $tree->name(), 'xref' => $bild['m_id']]) : '';
                         $caption  = $bild['exif']['beschreibung'] !== '' ? $bild['exif']['beschreibung'] : ($bild['titel'] !== '' ? $bild['titel'] : $bild['datei']);
-                        $lbData   = json_encode(['datum'=>$bild['exif']['datum'],'datum_iso'=>$bild['exif']['datum_iso'],'exif_beschreibung'=>$bild['exif']['beschreibung'],'personen'=>$bild['personen'],'personen_gesamt'=>$bild['personen_gesamt']??count($bild['personen']),'keywords'=>$bild['exif']['keywords']??[],'media'=>$mediaUrl,'wt_titel'=>$bild['wt']['titel']??'','wt_notiz'=>$bild['wt']['notiz']??'','wt_personen'=>$bild['wt']['personen']??[],'wt_edit'=>$mediaUrl,'in_sammlungen'=>$bild['in_sammlungen']??[],'breite'=>$bild['exif']['breite'],'hoehe'=>$bild['exif']['hoehe'],'groesse_kb'=>$bild['exif']['groesse_kb'],'format'=>strtoupper($bild['format']),'thumb'=>$fullUrl], JSON_UNESCAPED_UNICODE);
+                        $lbData   = json_encode(['datum'=>$bild['exif']['datum'],'datum_iso'=>$bild['exif']['datum_iso'],'exif_beschreibung'=>$bild['exif']['beschreibung'],'personen'=>$bild['exif']['personen']??[],'personen_gesamt'=>$bild['personen_gesamt']??count($bild['personen']),'keywords'=>$bild['exif']['keywords']??[],'media'=>$mediaUrl,'wt_titel'=>$bild['wt']['titel']??'','wt_notiz'=>$bild['wt']['notiz']??'','wt_personen'=>$bild['wt']['personen']??[],'wt_edit'=>$mediaUrl,'in_sammlungen'=>$bild['in_sammlungen']??[],'breite'=>$bild['exif']['breite'],'hoehe'=>$bild['exif']['hoehe'],'groesse_kb'=>$bild['exif']['groesse_kb'],'format'=>strtoupper($bild['format']),'thumb'=>$fullUrl], JSON_UNESCAPED_UNICODE);
                         ?>
                         <div class="col">
                             <a href="#" class="archiv-gallery-item d-block ratio ratio-1x1 text-decoration-none overflow-hidden rounded"
@@ -165,13 +165,19 @@ use Fisharebest\Webtrees\I18N;
                         ? $bild['exif']['beschreibung']
                         : ($bild['titel'] !== '' ? $bild['titel'] : $bild['datei']);
                     $datum    = $bild['exif']['datum'];
-                    $personen = $bild['personen'];
+                    // $personen = die in webtrees verknuepften Personen (Kachel-Overlay).
+                    // Der data-info-Schluessel 'personen' meint dagegen die im
+                    // Dateikopf gespeicherten Namen – die Seitenleiste fuellt daraus
+                    // ihr Eingabefeld und schreibt es beim Speichern zurueck in die
+                    // Datei. Beide Quellen duerfen nicht vermischt werden (Issue #15).
+                    $personen     = $bild['personen'];
+                    $exifPersonen = $bild['exif']['personen'] ?? [];
                     $wtEditUrl = $mediaUrl;
                     $lbData = json_encode([
                         'datum'             => $datum,
                         'datum_iso'         => $bild['exif']['datum_iso'],
                         'exif_beschreibung' => $bild['exif']['beschreibung'],
-                        'personen'          => $personen,
+                        'personen'          => $exifPersonen,
                         'personen_gesamt'   => $bild['personen_gesamt'] ?? count($personen),
                         'keywords'          => $bild['exif']['keywords'] ?? [],
                         'media'             => $mediaUrl,

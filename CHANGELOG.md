@@ -9,6 +9,34 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+## [1.2.2] – 2026-08-03
+
+**Bugfix-Release.** Die Seitenleiste der Lightbox konnte beim Speichern die
+Personenliste im Dateikopf des Originalbildes überschreiben.
+
+### Behoben
+- **„In Datei speichern" schrieb webtrees-Namen in die Bilddatei.** Das Feld
+  „Personen" der Seitenleiste war in Ordner-Galerien mit den in webtrees
+  verknüpften Personen vorbelegt statt mit den im Bild hinterlegten Namen –
+  wer die Seitenleiste öffnete und speicherte, etwa nur um eine Beschreibung zu
+  korrigieren, ersetzte damit die Personenliste der Originaldatei. Die im Bild
+  gespeicherten Namen erreichten die Lightbox überhaupt nicht. In manuellen
+  Galerien blieb das Feld umgekehrt immer leer, auch wenn die Datei Namen
+  enthielt. Beide Quellen sind jetzt getrennt: das Eingabefeld zeigt die Daten
+  aus der Datei, die webtrees-Verknüpfungen stehen weiterhin im eigenen
+  Abschnitt. (Issue #15)
+- **Abgleich „EXIF ↔ webtrees" funktioniert wieder für Personen.** Er verglich
+  bisher webtrees mit webtrees und konnte deshalb nie einen Unterschied finden.
+  Bei sehr vielen Verknüpfungen wird die Übernahme bewusst nicht angeboten,
+  weil dort nur ein Ausschnitt der Liste vorliegt und die Übernahme die
+  vollständige Liste in der Datei durch diesen Ausschnitt ersetzen würde.
+
+### Bekannt
+- Verknüpfte Personennamen werden ohne Prüfung der webtrees-Datenschutzregeln
+  angezeigt. Betrifft Installationen, die Lebende auch vor Mitgliedern
+  verbergen; das Modul selbst ist nur für angemeldete Mitglieder sichtbar.
+  (Issue #16)
+
 ## [1.2.1] – 2026-08-03
 
 **Bugfix-Release.** Die Modul-Einstellungen hatten keine Wirkung, und Medien mit

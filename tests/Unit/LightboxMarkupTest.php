@@ -81,6 +81,53 @@ final class LightboxMarkupTest extends TestCase
         }
     }
 
+    /**
+     * Regression zu Issue #15: der data-info-Schluessel 'personen' speist das
+     * Eingabefeld der Seitenleiste, und dessen Inhalt wird beim Speichern in
+     * den Dateikopf geschrieben. Stand dort die webtrees-Verknuepfung statt der
+     * im Bild hinterlegten Namen, ueberschrieb ein Klick auf "In Datei
+     * speichern" die Personenliste der Originaldatei.
+     */
+    public function testEingabefeldWirdAusDenDateiDatenGespeist(): void
+    {
+        foreach (['_detail-ordner.phtml', '_detail-manuell.phtml'] as $datei) {
+            $inhalt = self::lies($datei);
+
+            preg_match_all("/'personen'\s*=>\s*([^,]+),/", $inhalt, $treffer);
+
+            self::assertNotEmpty($treffer[1], $datei . ': keine data-info-Struktur gefunden.');
+
+            foreach ($treffer[1] as $quelle) {
+                // Erlaubt sowohl $bild['exif']['personen'] als auch eine vorher
+                // gesetzte Variable wie $exifPersonen – verboten ist die
+                // webtrees-Liste ($bild['personen'] / $personen).
+                self::assertStringContainsStringIgnoringCase(
+                    'exif',
+                    $quelle,
+                    $datei . ": 'personen' muss aus den EXIF-Daten kommen, nicht aus webtrees – "
+                        . 'sonst schreibt die Seitenleiste webtrees-Namen in die Bilddatei. Gefunden: ' . $quelle
+                );
+            }
+        }
+    }
+
+    /**
+     * Gegenstueck: die webtrees-Verknuepfungen gehoeren in wt_personen, wo die
+     * Seitenleiste und die Abgleich-Sektion sie erwarten.
+     */
+    public function testWebtreesPersonenBleibenImEigenenSchluessel(): void
+    {
+        foreach (['_detail-ordner.phtml'] as $datei) {
+            $inhalt = self::lies($datei);
+
+            self::assertGreaterThan(
+                0,
+                preg_match_all("/'wt_personen'\s*=>/", $inhalt),
+                $datei . ': wt_personen fehlt.'
+            );
+        }
+    }
+
     /** Die Kappung muss greifen, bevor die Namen ueberhaupt ins Markup gelangen. */
     public function testObergrenzeIstGesetztUndPlausibel(): void
     {
