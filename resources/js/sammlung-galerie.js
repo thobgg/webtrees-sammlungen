@@ -90,7 +90,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const parts = [];
         if (info.datum) parts.push('📅 ' + info.datum);
-        if (info.personen?.length) parts.push('👤 ' + info.personen.join(', '));
+        // Nur die ersten Namen: die Kopfzeile darf nicht schrumpfen, eine
+        // ungekürzte Liste (z. B. ein Wappen an 300 Personen) würde umbrechen
+        // und den Bildbereich darunter auf Höhe 0 quetschen.
+        const personen = info.personen || [];
+        if (personen.length) {
+            const gesamt = info.personen_gesamt || personen.length;
+            const rest = gesamt - Math.min(3, personen.length);
+            parts.push('👤 ' + personen.slice(0, 3).join(', ') + (rest > 0 ? ' +' + rest : ''));
+        }
         meta.textContent = parts.join('  ·  ');
 
         link.classList.toggle('d-none', !info.media);
@@ -211,12 +219,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (hat) {
             wtSection.classList.remove('d-none');
-            wtPersonen.innerHTML = wtP.map(p =>
-                `<a href="${personUrl(p.xref)}" class="d-flex align-items-center gap-1 text-decoration-none mb-1"
+            // wtP ist serverseitig gedeckelt (MAX_PERSONEN_JE_BILD). Den Rest
+            // nicht ausgeben, sondern auf die webtrees-Medienseite verweisen –
+            // dort stehen ohnehin alle Verknüpfungen.
+            const gesamtP = info.personen_gesamt || wtP.length;
+            let html = wtP.map(p =>
+                `<a href="${escapeHtml(personUrl(p.xref))}" class="d-flex align-items-center gap-1 text-decoration-none mb-1"
                     style="color:#90cdf4;font-size:.85rem">
-                    👤 ${p.name}
+                    👤 ${escapeHtml(p.name)}
                  </a>`
             ).join('');
+            if (gesamtP > wtP.length) {
+                const weitere = gesamtP - wtP.length;
+                html += info.wt_edit
+                    ? `<a href="${escapeHtml(info.wt_edit)}" class="d-block text-decoration-none mb-1"
+                          style="color:#90cdf4;font-size:.8rem">… und ${weitere} weitere</a>`
+                    : `<div class="text-white-50 mb-1" style="font-size:.8rem">… und ${weitere} weitere</div>`;
+            }
+            wtPersonen.innerHTML = html;
             wtNotiz.textContent = info.wt_notiz || '';
             if (info.wt_edit) {
                 wtLink.href = info.wt_edit;

@@ -53,6 +53,10 @@ class SammlungenModule extends AbstractModule implements
     public const SETTING_PER_PAGE  = 'per_page';
     public const DEFAULT_CACHE_TTL = 900;
     public const DEFAULT_PER_PAGE  = 50;
+    public const MIN_CACHE_TTL     = 60;
+    public const MAX_CACHE_TTL     = 86400;
+    public const MIN_PER_PAGE      = 10;
+    public const MAX_PER_PAGE      = 200;
 
     /**
      * webtrees benennt Custom-Module erst nach dem Erzeugen per setName().
@@ -71,8 +75,8 @@ class SammlungenModule extends AbstractModule implements
     public function title(): string { return 'Sammlungen'; }
     public function description(): string { return 'Foto- und Dokumenten-Sammlungen mit EXIF-Anreicherung, Galerie und Lightbox.'; }
     public function customModuleAuthorName(): string { return 'Thomas Bugge'; }
-    public function customModuleVersion(): string { return '1.2.0'; }
-    public function customModuleLatestVersion(): string { return '1.2.0'; }
+    public function customModuleVersion(): string { return '1.2.1'; }
+    public function customModuleLatestVersion(): string { return '1.2.1'; }
     public function customModuleSupportUrl(): string { return ''; }
 
     /**
@@ -192,14 +196,44 @@ class SammlungenModule extends AbstractModule implements
         );
     }
 
+    /**
+     * Bringt einen Cache-TTL-Wert in den gueltigen Bereich.
+     *
+     * Statisch, weil dieselbe Normalisierung beim Lesen (hier) und beim
+     * Speichern (AdminConfig) gebraucht wird – vorher lagen beide Fassungen
+     * getrennt vor und wichen in der Obergrenze voneinander ab.
+     */
+    public static function normalisiereCacheTtl(mixed $wert): int
+    {
+        if (!is_scalar($wert) || $wert === '') {
+            return self::DEFAULT_CACHE_TTL;
+        }
+
+        return max(self::MIN_CACHE_TTL, min(self::MAX_CACHE_TTL, (int) $wert));
+    }
+
+    /** Bringt eine Seitengroesse in den gueltigen Bereich. Siehe normalisiereCacheTtl(). */
+    public static function normalisierePerPage(mixed $wert): int
+    {
+        if (!is_scalar($wert) || $wert === '') {
+            return self::DEFAULT_PER_PAGE;
+        }
+
+        return max(self::MIN_PER_PAGE, min(self::MAX_PER_PAGE, (int) $wert));
+    }
+
     public function cacheTtl(): int
     {
-        return max(60, (int) $this->getPreference(self::SETTING_CACHE_TTL, (string) self::DEFAULT_CACHE_TTL));
+        return self::normalisiereCacheTtl(
+            $this->getPreference(self::SETTING_CACHE_TTL, (string) self::DEFAULT_CACHE_TTL)
+        );
     }
 
     public function perPage(): int
     {
-        return max(10, min(200, (int) $this->getPreference(self::SETTING_PER_PAGE, (string) self::DEFAULT_PER_PAGE)));
+        return self::normalisierePerPage(
+            $this->getPreference(self::SETTING_PER_PAGE, (string) self::DEFAULT_PER_PAGE)
+        );
     }
 
     public function resourcesFolder(): string

@@ -8,9 +8,7 @@
  * @var \Sammlungen\SammlungenModule             $module
  * @var int                                              $cacheTtl
  * @var int                                              $perPage
- * @var bool                                             $showFooter
  * @var bool                                             $apcuAvailable
- * @var \Fisharebest\Webtrees\Tree|null                  $tree
  * @var \Illuminate\Support\Collection<string, \Fisharebest\Webtrees\Tree> $trees
  */
 
@@ -18,7 +16,7 @@ use Fisharebest\Webtrees\I18N;
 
 ?>
 
-<div class="container-lg mt-4 mb-5">
+<div class="mt-4 mb-5">
 
     <h1><?= e($title) ?></h1>
 
@@ -93,27 +91,6 @@ use Fisharebest\Webtrees\I18N;
                                 </option>
                             <?php endforeach ?>
                         </select>
-                    </div>
-                </div>
-
-                <!-- Footer anzeigen -->
-                <div class="mb-0 row">
-                    <div class="col-sm-4 fw-semibold pt-2">
-                        <?= I18N::translate('Footer anzeigen') ?>
-                    </div>
-                    <div class="col-sm-8">
-                        <div class="form-check form-switch pt-2">
-                            <input class="form-check-input"
-                                   type="checkbox"
-                                   role="switch"
-                                   id="show_footer"
-                                   name="show_footer"
-                                   value="1"
-                                   <?= $showFooter ? 'checked' : '' ?>>
-                            <label class="form-check-label" for="show_footer">
-                                <?= I18N::translate('Link im Footer anzeigen') ?>
-                            </label>
-                        </div>
                     </div>
                 </div>
 

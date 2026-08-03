@@ -8,6 +8,7 @@ use Sammlungen\Dto\SammlungDto;
 use Sammlungen\Repository\SammlungenRepository;
 use Sammlungen\Service\CollectionService;
 use Sammlungen\Service\ExifService;
+use Sammlungen\SammlungenModule;
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Tree;
@@ -22,13 +23,20 @@ use Fisharebest\Webtrees\Webtrees;
 final class SammlungenViewModel
 {
     private const SLUG_UNLINKED = '__unlinked__';
-    private const PER_SEITE_FOTO     = 48;
-    private const PER_SEITE_DOKUMENT = 50;
+
+    /**
+     * Obergrenze fuer die Anzahl Namen, die pro Bild ins data-info-JSON der
+     * Galerie-Kachel wandern. Ein Wappen kann an mehrere hundert Personen
+     * haengen; ungebremst blaeht das die Seite auf mehrere MB auf und laesst
+     * die Lightbox-Kopfzeile das Bild aus dem Layout druecken (Issue #13).
+     */
+    public const MAX_PERSONEN_JE_BILD = 25;
 
     public function __construct(
         private readonly SammlungenRepository $sammlungenRepository,
         private readonly CollectionService    $collectionService,
         private readonly ExifService          $exifService,
+        private readonly SammlungenModule     $module,
     ) {}
 
     /**
@@ -197,7 +205,7 @@ final class SammlungenViewModel
                     ? (SammlungDto::TYPEN[strtolower($typFuerQuery)] ?? ucfirst($typFuerQuery))
                     : I18N::translate('Ohne Typ'),
                 'anzahl'   => $unverknuepftTypen[$typFuerQuery] ?? 0,
-                'medien'   => $this->sammlungenRepository->medienOhneVerknuepfung($tree, $typFuerQuery, 0, 48),
+                'medien'   => $this->sammlungenRepository->medienOhneVerknuepfung($tree, $typFuerQuery, 0, $this->module->perPage()),
                 'vorschau' => $this->sammlungenRepository->queryVorschauOhneVerknuepfung($tree, $typFuerQuery, 3),
             ];
         }
@@ -221,7 +229,7 @@ final class SammlungenViewModel
     private function manuelleGalerieAnreichern(Tree $tree, array $aktive, array $queryParams): array
     {
         $s        = $aktive['sammlung'];
-        $perSeite = self::PER_SEITE_FOTO;
+        $perSeite = $this->module->perPage();
         $seite    = max(1, (int) ($queryParams['seite'] ?? 1));
         $gesamt   = $this->collectionService->anzahlPfadeSammlung($tree, $s->id);
         $seiten   = max(1, (int) ceil($gesamt / $perSeite));
@@ -239,9 +247,10 @@ final class SammlungenViewModel
                 'm_id'          => $eintrag['m_id'],
                 'titel'         => '',
                 'exif'          => $this->exifService->leseMeta($mediaBase . $eintrag['pfad']),
-                'personen'      => [],
-                'wt'            => null,
-                'in_sammlungen' => [],
+                'personen'        => [],
+                'personen_gesamt' => 0,
+                'wt'              => null,
+                'in_sammlungen'   => [],
             ];
         }
 
@@ -272,7 +281,7 @@ final class SammlungenViewModel
         $istBild     = in_array($ansicht, ['foto', 'raster', 'gemischt'], true);
         $istRaster   = $ansicht === 'raster';
         $istGemischt = $ansicht === 'gemischt';
-        $perSeite    = $istBild ? self::PER_SEITE_FOTO : self::PER_SEITE_DOKUMENT;
+        $perSeite    = $this->module->perPage();
         $seite       = max(1, (int) ($queryParams['seite'] ?? 1));
 
         $bildFormate = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
@@ -328,9 +337,20 @@ final class SammlungenViewModel
 
         foreach ($bilder as &$bild) {
             $wt = $bild['m_id'] !== null ? ($wtDaten[$bild['m_id']] ?? null) : null;
-            $bild['personen']      = $wt !== null ? array_column($wt['personen'], 'name') : [];
-            $bild['wt']            = $wt;
-            $bild['in_sammlungen'] = $this->collectionService->sammlungenDesPfades($tree, $bild['pfad']);
+
+            // Ein Wappen kann an hunderten Personen haengen. Nur die ersten
+            // MAX_PERSONEN_JE_BILD ins Markup geben und die Gesamtzahl separat
+            // mitfuehren – die Views zeigen "… und N weitere" mit Verweis auf
+            // die webtrees-Medienseite, wo ohnehin alle Verknuepfungen stehen.
+            $gesamtPersonen = $wt !== null ? count($wt['personen']) : 0;
+            if ($wt !== null && $gesamtPersonen > self::MAX_PERSONEN_JE_BILD) {
+                $wt['personen'] = array_slice($wt['personen'], 0, self::MAX_PERSONEN_JE_BILD);
+            }
+
+            $bild['personen']        = $wt !== null ? array_column($wt['personen'], 'name') : [];
+            $bild['personen_gesamt'] = $gesamtPersonen;
+            $bild['wt']              = $wt;
+            $bild['in_sammlungen']   = $this->collectionService->sammlungenDesPfades($tree, $bild['pfad']);
         }
         unset($bild);
 

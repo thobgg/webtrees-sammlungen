@@ -9,6 +9,46 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+## [1.2.1] – 2026-08-03
+
+**Bugfix-Release.** Die Modul-Einstellungen hatten keine Wirkung, und Medien mit
+sehr vielen Personen-Verknüpfungen (z. B. ein Wappen an einer ganzen Familie)
+zeigten in der Lightbox kein Bild mehr.
+
+### Behoben
+- **Bild in der Lightbox unsichtbar bei vielen verknüpften Personen.** Die
+  Kopfzeile der Lightbox darf nicht schrumpfen; eine ungekürzte Namensliste –
+  bei einem Wappen an 300 Personen sind das dutzende Zeilen Umbruch – füllte die
+  gesamte Höhe und quetschte den Bildbereich darunter auf null. Die Meta-Zeile
+  zeigt jetzt drei Namen und einen Zähler, die Seitenleiste höchstens 25 Namen
+  plus „… und N weitere" mit Verweis auf die webtrees-Medienseite. Zugleich
+  wandern nicht mehr alle Namen ins Markup jeder Galerie-Kachel – bei solchen
+  Sammlungen fiel die Seitengröße von mehreren MB auf ein normales Maß.
+  (Issue #13, gemeldet von @ro-la)
+- **„Einträge pro Seite" blieb wirkungslos.** Der Wert wurde gespeichert, aber
+  nie gelesen: die Galerie paginierte mit fest verdrahteten 48 bzw. 50 Bildern.
+  Sie richtet sich jetzt nach der Einstellung. (Issue #14)
+- **Admin-Seiten rendern im Control Panel.** Sie liefen bisher im Layout der
+  Besucheroberfläche und bekamen dadurch Kopfzeile und Navigation eines
+  konkreten Stammbaums – wer die Einstellungen öffnete, landete sichtbar im
+  ersten Baum. (Issue #14)
+
+### Entfernt
+- **Schalter „Link im Footer anzeigen".** Er wurde weder gespeichert noch
+  ausgewertet, und einen Footer gab es nie – das Modul ist über seinen
+  Menüpunkt erreichbar. Ein Schalter ohne Funktion ist irreführender als
+  keiner. (Issue #14)
+
+### Intern
+- Die Lightbox lag als Byte-genaue Kopie zusätzlich in `_detail-ordner.phtml`
+  (doppelte Element-IDs, Fixes kamen nur an einer Stelle an). Beide Galerien
+  nutzen jetzt dasselbe Partial – 186 Zeilen Duplikat weniger.
+- Grenzwerte für Cache-TTL und Seitengröße lagen doppelt vor (Modul und
+  Handler, mit abweichender Obergrenze) und liegen jetzt als
+  `normalisiereCacheTtl()` / `normalisierePerPage()` an einer Stelle.
+- Personennamen der Seitenleiste werden beim Einsetzen ins DOM maskiert.
+- Neue Regressionstests zu #13 und #14 (67 Tests gesamt).
+
 ## [1.2.0] – 2026-07-29
 
 **Zwei neue Sprachen.**

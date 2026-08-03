@@ -26,6 +26,15 @@ class AdminConfig implements RequestHandlerInterface
         private readonly TreeService          $treeService,
     ) {
         $this->cache = new ApcuCacheService($module->cacheTtl());
+
+        // ViewResponseTrait rendert per Default mit 'layouts/default', also der
+        // Besucheroberflaeche: die Seite bekaeme Kopfzeile und Navigation eines
+        // konkreten Baums und der Nutzer landet sichtbar im ersten Stammbaum.
+        // Admin-Seiten gehoeren ins Control Panel.
+        // Zuweisung statt Property-Deklaration: eine Neudeklaration mit
+        // abweichendem Default kollidiert mit der Property aus dem Trait
+        // (fataler Fehler beim Komponieren der Klasse).
+        $this->layout = 'layouts/administration';
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
@@ -55,8 +64,6 @@ class AdminConfig implements RequestHandlerInterface
                 'module'        => $this->module,
                 'cacheTtl'      => $this->module->cacheTtl(),
                 'perPage'       => $this->module->perPage(),
-                'showFooter'    => false,
-                'tree'          => $trees->first(),   // erster Baum als Default, kann null sein
                 'trees'         => $trees,            // alle Bäume für Selektor
                 'apcuAvailable' => $this->cache->isApcuAvailable(),
             ]
@@ -67,8 +74,8 @@ class AdminConfig implements RequestHandlerInterface
     {
         $params = (array) $request->getParsedBody();
 
-        $cacheTtl = max(60, min(86400, (int) ($params[SammlungenModule::SETTING_CACHE_TTL] ?? 900)));
-        $perPage  = max(10, min(200,   (int) ($params[SammlungenModule::SETTING_PER_PAGE]  ?? 50)));
+        $cacheTtl = SammlungenModule::normalisiereCacheTtl($params[SammlungenModule::SETTING_CACHE_TTL] ?? null);
+        $perPage  = SammlungenModule::normalisierePerPage($params[SammlungenModule::SETTING_PER_PAGE]  ?? null);
 
         $this->module->setPreference(SammlungenModule::SETTING_CACHE_TTL, (string) $cacheTtl);
         $this->module->setPreference(SammlungenModule::SETTING_PER_PAGE,  (string) $perPage);

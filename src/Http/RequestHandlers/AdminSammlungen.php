@@ -20,7 +20,10 @@ class AdminSammlungen implements RequestHandlerInterface
 
     public function __construct(
         private readonly CollectionService $collectionService,
-    ) {}
+    ) {
+        // Control Panel statt Besucheroberflaeche – siehe AdminConfig.
+        $this->layout = 'layouts/administration';
+    }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {

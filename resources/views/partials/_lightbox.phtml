@@ -18,7 +18,9 @@ use Fisharebest\Webtrees\I18N;
                                 <div class="d-flex align-items-center gap-2 px-3 py-2 border-bottom border-secondary flex-shrink-0">
                                     <div class="flex-grow-1 min-w-0">
                                         <div id="archiv-lb-caption" class="text-white small fw-semibold text-truncate"></div>
-                                        <div id="archiv-lb-meta" class="text-white-50 small"></div>
+                                        <!-- text-truncate: die Kopfzeile ist flex-shrink-0 – ohne Kürzung
+                                             würde eine lange Meta-Zeile den Bildbereich verdrängen. -->
+                                        <div id="archiv-lb-meta" class="text-white-50 small text-truncate"></div>
                                     </div>
                                     <div class="d-flex gap-2 flex-shrink-0 align-items-center">
                                         <a id="archiv-lb-fullsize" href="#" target="_blank"
