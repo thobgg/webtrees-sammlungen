@@ -9,6 +9,13 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+### Intern
+- PHPStan ist jetzt eine Dev-Abhängigkeit statt eines extern besorgten `.phar`.
+  Die Konfiguration lag seit 1.1.0 im Repo, das Werkzeug fehlte – die statische
+  Analyse lief damit stillschweigend gar nicht. `composer check` führt Tests und
+  Analyse zusammen aus; beide Skripte laufen über `@php vendor/bin/…`, weil
+  `vendor/bin` je nach Mount kein Ausführungsrecht hat.
+
 ## [1.2.3] – 2026-08-03
 
 **Datenschutz und Tempo.** Verknüpfte Personennamen unterliegen jetzt den
