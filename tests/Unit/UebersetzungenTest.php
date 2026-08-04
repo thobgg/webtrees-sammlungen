@@ -114,11 +114,20 @@ final class UebersetzungenTest extends TestCase
     }
 
     /**
+     * Aus dem Verzeichnis gelesen, nicht fest verdrahtet: eine neu
+     * beigesteuerte Sprache wird damit ohne Teständerung mitgeprüft.
+     *
      * @return list<array{string}>
      */
     public static function sprachen(): array
     {
-        return [['de'], ['en'], ['nl'], ['es'], ['ca']];
+        $sprachen = [];
+
+        foreach (glob(self::wurzel() . '/resources/lang/*.po') ?: [] as $datei) {
+            $sprachen[] = [basename($datei, '.po')];
+        }
+
+        return $sprachen;
     }
 
     /**

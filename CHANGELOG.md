@@ -9,6 +9,30 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+## [1.2.5] – 2026-08-04
+
+**Vollständige Übersetzungen.** Mehrere Texte waren in keiner Sprachdatei
+hinterlegt und erschienen deshalb auch in niederländischen, spanischen und
+katalanischen Installationen auf Deutsch.
+
+### Behoben
+- **Sechs Texte sind jetzt übersetzbar.** Drei davon waren seit Längerem in
+  keinem Katalog: die Sicherheitsabfrage vor dem Löschen einer Sammlung, die
+  Vorschauzeile der nicht eingebundenen Medien und die Überschrift
+  „Videos, Audio & Dokumente". Drei weitere kamen mit der Blätternavigation aus
+  1.2.4 hinzu und betrafen die Vorlesetexte der Pfeil-Schaltflächen.
+  Ergänzt in allen fünf Sprachen.
+
+### Entfernt
+- Zwei Katalogeinträge des Footer-Schalters, der in 1.2.1 entfernt wurde.
+
+### Intern
+- Ein Test gleicht die Sprachdateien gegen den Quelltext ab: jeder Text aus
+  `I18N::translate()` muss im Katalog stehen, es darf keine verwaisten Einträge
+  geben, alle Sprachen führen denselben Textsatz, und zu jeder `.po` gehört eine
+  nicht ältere `.mo`. Die Sprachliste liest der Test aus dem Verzeichnis –
+  eine neu beigesteuerte Übersetzung wird ohne Änderung mitgeprüft.
+
 ## [1.2.4] – 2026-08-04
 
 **Der Anzeigetyp „Foto-Raster" funktioniert.** Er war seit dem ersten Release
