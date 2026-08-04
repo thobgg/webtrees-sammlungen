@@ -145,9 +145,6 @@ msgstr "Er zijn geen stambomen aanwezig."
 msgid "Farbe"
 msgstr "Kleur"
 
-msgid "Footer anzeigen"
-msgstr "Voettekst tonen"
-
 msgid "Foto-Raster"
 msgstr "Fotorooster"
 
@@ -231,9 +228,6 @@ msgstr "Leegt de APCu-cache van de module. Nodig na handmatige databasewijziging
 
 msgid "Legen Sie manuell gepflegte Sammlungen an, um Medienobjekte thematisch zu gruppieren. Automatisch erkannte Sammlungen aus den GEDCOM-Medientypen werden davon nicht berührt."
 msgstr "Maak handmatig beheerde collecties aan om mediaobjecten thematisch te groeperen. Automatisch herkende collecties uit de GEDCOM-mediatypen blijven onaangetast."
-
-msgid "Link im Footer anzeigen"
-msgstr "Link in de voettekst tonen"
 
 msgid "Liste, auch für JPG-Scans"
 msgstr "Lijst, ook voor JPG-scans"
@@ -409,3 +403,12 @@ msgstr "Vorige pagina"
 
 msgid "Nächste Seite"
 msgstr "Volgende pagina"
+
+msgid "Sammlung „%s\" wirklich löschen?"
+msgstr "Verzameling “%s” echt verwijderen?"
+
+msgid "Vorschau: %s von %s Objekten."
+msgstr "Voorbeeld: %s van %s objecten."
+
+msgid "Videos, Audio & Dokumente"
+msgstr "Video's, audio & documenten"

@@ -142,9 +142,6 @@ msgstr "Es sind keine Stammbäume vorhanden."
 msgid "Farbe"
 msgstr "Farbe"
 
-msgid "Footer anzeigen"
-msgstr "Footer anzeigen"
-
 msgid "Foto-Raster"
 msgstr "Foto-Raster"
 
@@ -228,9 +225,6 @@ msgstr "Leert den APCu-Cache des Moduls. Notwendig nach manuellen Datenbankände
 
 msgid "Legen Sie manuell gepflegte Sammlungen an, um Medienobjekte thematisch zu gruppieren. Automatisch erkannte Sammlungen aus den GEDCOM-Medientypen werden davon nicht berührt."
 msgstr "Legen Sie manuell gepflegte Sammlungen an, um Medienobjekte thematisch zu gruppieren. Automatisch erkannte Sammlungen aus den GEDCOM-Medientypen werden davon nicht berührt."
-
-msgid "Link im Footer anzeigen"
-msgstr "Link im Footer anzeigen"
 
 msgid "Liste, auch für JPG-Scans"
 msgstr "Liste, auch für JPG-Scans"
@@ -406,3 +400,12 @@ msgstr "Vorherige Seite"
 
 msgid "Nächste Seite"
 msgstr "Nächste Seite"
+
+msgid "Sammlung „%s\" wirklich löschen?"
+msgstr "Sammlung „%s\" wirklich löschen?"
+
+msgid "Vorschau: %s von %s Objekten."
+msgstr "Vorschau: %s von %s Objekten."
+
+msgid "Videos, Audio & Dokumente"
+msgstr "Videos, Audio & Dokumente"

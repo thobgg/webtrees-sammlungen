@@ -143,9 +143,6 @@ msgstr "No hay árboles genealógicos disponibles."
 msgid "Farbe"
 msgstr "Color"
 
-msgid "Footer anzeigen"
-msgstr "Mostrar pie de página"
-
 msgid "Foto-Raster"
 msgstr "Cuadrícula de fotos"
 
@@ -228,9 +225,6 @@ msgstr "Vacía la caché APCu del módulo. Necesario tras cambios manuales en la
 
 msgid "Legen Sie manuell gepflegte Sammlungen an, um Medienobjekte thematisch zu gruppieren. Automatisch erkannte Sammlungen aus den GEDCOM-Medientypen werden davon nicht berührt."
 msgstr "Cree colecciones gestionadas manualmente para agrupar objetos multimedia por temas. Las colecciones detectadas automáticamente a partir de los tipos de medios GEDCOM no se ven afectadas."
-
-msgid "Link im Footer anzeigen"
-msgstr "Mostrar enlace en el pie de página"
 
 msgid "Liste, auch für JPG-Scans"
 msgstr "Lista, también para escaneos JPG"
@@ -406,3 +400,12 @@ msgstr "Página anterior"
 
 msgid "Nächste Seite"
 msgstr "Página siguiente"
+
+msgid "Sammlung „%s\" wirklich löschen?"
+msgstr "¿Eliminar realmente la colección «%s»?"
+
+msgid "Vorschau: %s von %s Objekten."
+msgstr "Vista previa: %s de %s objetos."
+
+msgid "Videos, Audio & Dokumente"
+msgstr "Vídeos, audio y documentos"

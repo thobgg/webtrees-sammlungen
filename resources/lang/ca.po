@@ -143,9 +143,6 @@ msgstr "No hi ha arbres genealògics disponibles."
 msgid "Farbe"
 msgstr "Color"
 
-msgid "Footer anzeigen"
-msgstr "Mostrar el peu de pàgina"
-
 msgid "Foto-Raster"
 msgstr "Reixeta de fotos"
 
@@ -229,9 +226,6 @@ msgstr "Buida la memòria cau APCu del mòdul. Necessari després de canvis manu
 
 msgid "Legen Sie manuell gepflegte Sammlungen an, um Medienobjekte thematisch zu gruppieren. Automatisch erkannte Sammlungen aus den GEDCOM-Medientypen werden davon nicht berührt."
 msgstr "Creeu col·leccions gestionades manualment per agrupar objectes multimèdia per temes. Les col·leccions detectades automàticament a partir dels tipus de mitjans GEDCOM no es veuen afectades."
-
-msgid "Link im Footer anzeigen"
-msgstr "Mostrar l’enllaç en el peu de pàgina"
 
 msgid "Liste, auch für JPG-Scans"
 msgstr "Llista, també per a escanejos JPG"
@@ -407,3 +401,12 @@ msgstr "Pàgina anterior"
 
 msgid "Nächste Seite"
 msgstr "Pàgina següent"
+
+msgid "Sammlung „%s\" wirklich löschen?"
+msgstr "Voleu eliminar realment la col·lecció «%s»?"
+
+msgid "Vorschau: %s von %s Objekten."
+msgstr "Vista prèvia: %s de %s objectes."
+
+msgid "Videos, Audio & Dokumente"
+msgstr "Vídeos, àudio i documents"

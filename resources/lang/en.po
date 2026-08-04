@@ -142,9 +142,6 @@ msgstr "There are no family trees."
 msgid "Farbe"
 msgstr "Colour"
 
-msgid "Footer anzeigen"
-msgstr "Show footer"
-
 msgid "Foto-Raster"
 msgstr "Photo grid"
 
@@ -228,9 +225,6 @@ msgstr "Clears the module's APCu cache. Necessary after manual database changes 
 
 msgid "Legen Sie manuell gepflegte Sammlungen an, um Medienobjekte thematisch zu gruppieren. Automatisch erkannte Sammlungen aus den GEDCOM-Medientypen werden davon nicht berührt."
 msgstr "Create manually maintained collections to group media objects by topic. Automatically detected collections from the GEDCOM media types are not affected."
-
-msgid "Link im Footer anzeigen"
-msgstr "Show link in the footer"
 
 msgid "Liste, auch für JPG-Scans"
 msgstr "List, also for JPG scans"
@@ -406,3 +400,12 @@ msgstr "Previous page"
 
 msgid "Nächste Seite"
 msgstr "Next page"
+
+msgid "Sammlung „%s\" wirklich löschen?"
+msgstr "Really delete collection “%s”?"
+
+msgid "Vorschau: %s von %s Objekten."
+msgstr "Preview: %s of %s objects."
+
+msgid "Videos, Audio & Dokumente"
+msgstr "Videos, audio & documents"
