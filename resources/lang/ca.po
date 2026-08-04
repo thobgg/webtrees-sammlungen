@@ -398,3 +398,12 @@ msgid "%s Medienobjekt im freien Bestand"
 msgid_plural "%s Medienobjekte im freien Bestand"
 msgstr[0] "%s objecte multimèdia en el fons lliure"
 msgstr[1] "%s objectes multimèdia en el fons lliure"
+
+msgid "Seitennavigation"
+msgstr "Navegació de pàgines"
+
+msgid "Vorherige Seite"
+msgstr "Pàgina anterior"
+
+msgid "Nächste Seite"
+msgstr "Pàgina següent"
