@@ -60,7 +60,7 @@ use Fisharebest\Webtrees\I18N;
                     ?>
                     <div class="col">
                         <a href="#"
-                           class="archiv-gallery-item d-block ratio ratio-1x1 text-decoration-none position-relative overflow-hidden rounded archiv-thumb"
+                           class="archiv-gallery-item d-block ratio ratio-1x1 text-decoration-none position-relative overflow-hidden rounded"
                            data-idx="<?= $idx ?>"
                            data-full="<?= e($fullUrl) ?>"
                            data-title="<?= e($caption) ?>"
@@ -78,11 +78,19 @@ use Fisharebest\Webtrees\I18N;
                     </div>
                 <?php endforeach ?>
             </div>
-            <p class="text-muted small mt-3">
+            <?php
+            $seiteUrl = fn (int $s): string => route('sammlungen.sammlungen', [
+                'tree'      => $treeName,
+                'kategorie' => $aktive['sammlung']->slug,
+                'seite'     => $s,
+            ]);
+            ?>
+            <p class="text-muted small mt-3 mb-2">
                 <?= I18N::plural('%s Foto', '%s Fotos', $aktive['anzahl'], I18N::number($aktive['anzahl'])) ?>
                 · <?= I18N::translate('Seite %s von %s', $aktive['seite'], $aktive['seiten_gesamt']) ?>
                 · <?= I18N::translate('Klicken zum Vergrößern') ?>
             </p>
+            <?php include __DIR__ . '/_seitennavigation.phtml'; ?>
 
             <?php include __DIR__ . '/_weitere-medien.phtml'; ?>
 
@@ -102,7 +110,7 @@ use Fisharebest\Webtrees\I18N;
                             <a href="#" class="archiv-gallery-item d-block ratio ratio-1x1 text-decoration-none overflow-hidden rounded"
                                data-idx="<?= $idx ?>" data-full="<?= e($fullUrl) ?>" data-title="<?= e($caption) ?>" data-info="<?= e($lbData) ?>">
                                 <img src="<?= e($fullUrl) ?>" alt="<?= e($caption) ?>" loading="lazy"
-                                     class="w-100 h-100 archiv-thumb" style="object-fit:cover"
+                                     class="w-100 h-100" style="object-fit:cover"
                                      onerror="this.closest('.col').style.display='none'">
                             </a>
                         </div>
@@ -143,10 +151,18 @@ use Fisharebest\Webtrees\I18N;
                     <?php endforeach ?>
                 </div>
             <?php endif ?>
-            <p class="text-muted small mt-3">
+            <?php
+            $seiteUrl = fn (int $s): string => route('sammlungen.sammlungen', [
+                'tree'      => $treeName,
+                'kategorie' => $aktive['sammlung']->slug,
+                'seite'     => $s,
+            ]);
+            ?>
+            <p class="text-muted small mt-3 mb-2">
                 <?= I18N::plural('%s Datei', '%s Dateien', $aktive['anzahl'], I18N::number($aktive['anzahl'])) ?>
                 · <?= I18N::translate('Seite %s von %s', $aktive['seite'], $aktive['seiten_gesamt']) ?>
             </p>
+            <?php include __DIR__ . '/_seitennavigation.phtml'; ?>
 
         <?php elseif ($aktive['istBild']) : ?>
             <!-- Fotogalerie – Masonry-Layout, natürliche Seitenverhältnisse -->
@@ -233,32 +249,7 @@ use Fisharebest\Webtrees\I18N;
                 · <?= I18N::translate('Seite %s von %s', $aktive['seite'], $aktive['seiten_gesamt']) ?>
                 · <?= I18N::translate('Klicken zum Vergrößern') ?>
             </p>
-            <?php if ($aktive['seiten_gesamt'] > 1) : ?>
-            <nav class="d-flex justify-content-center mt-2 mb-4" aria-label="Seitennavigation">
-                <ul class="pagination">
-                    <li class="page-item <?= $aktive['seite'] <= 1 ? 'disabled' : '' ?>">
-                        <a class="page-link px-3" href="<?= e($seiteUrl($aktive['seite'] - 1)) ?>">‹</a>
-                    </li>
-                    <?php
-                    $von = max(1, $aktive['seite'] - 2);
-                    $bis = min($aktive['seiten_gesamt'], $aktive['seite'] + 2);
-                    if ($von > 1) : ?>
-                        <li class="page-item disabled"><span class="page-link">…</span></li>
-                    <?php endif;
-                    for ($p = $von; $p <= $bis; $p++) : ?>
-                        <li class="page-item <?= $p === $aktive['seite'] ? 'active' : '' ?>">
-                            <a class="page-link" href="<?= e($seiteUrl($p)) ?>"><?= $p ?></a>
-                        </li>
-                    <?php endfor;
-                    if ($bis < $aktive['seiten_gesamt']) : ?>
-                        <li class="page-item disabled"><span class="page-link">…</span></li>
-                    <?php endif ?>
-                    <li class="page-item <?= $aktive['seite'] >= $aktive['seiten_gesamt'] ? 'disabled' : '' ?>">
-                        <a class="page-link px-3" href="<?= e($seiteUrl($aktive['seite'] + 1)) ?>">›</a>
-                    </li>
-                </ul>
-            </nav>
-            <?php endif ?>
+            <?php include __DIR__ . '/_seitennavigation.phtml'; ?>
 
             <?php include __DIR__ . '/_weitere-medien.phtml'; ?>
 
@@ -319,7 +310,7 @@ use Fisharebest\Webtrees\I18N;
             </div>
             <?php
             $nichtImportiert = count(array_filter($aktive['alle'], fn ($d) => $d['m_id'] === null));
-            $seiteUrlDoc = fn (int $s): string => route('sammlungen.sammlungen', [
+            $seiteUrl = fn (int $s): string => route('sammlungen.sammlungen', [
                 'tree'      => $treeName,
                 'kategorie' => $aktive['sammlung']->slug,
                 'seite'     => $s,
@@ -334,32 +325,7 @@ use Fisharebest\Webtrees\I18N;
                     </span>
                 <?php endif ?>
             </p>
-            <?php if ($aktive['seiten_gesamt'] > 1) : ?>
-            <nav class="d-flex justify-content-center mt-2 mb-4">
-                <ul class="pagination">
-                    <li class="page-item <?= $aktive['seite'] <= 1 ? 'disabled' : '' ?>">
-                        <a class="page-link px-3" href="<?= e($seiteUrlDoc($aktive['seite'] - 1)) ?>">‹</a>
-                    </li>
-                    <?php
-                    $von = max(1, $aktive['seite'] - 2);
-                    $bis = min($aktive['seiten_gesamt'], $aktive['seite'] + 2);
-                    if ($von > 1) : ?>
-                        <li class="page-item disabled"><span class="page-link">…</span></li>
-                    <?php endif;
-                    for ($p = $von; $p <= $bis; $p++) : ?>
-                        <li class="page-item <?= $p === $aktive['seite'] ? 'active' : '' ?>">
-                            <a class="page-link" href="<?= e($seiteUrlDoc($p)) ?>"><?= $p ?></a>
-                        </li>
-                    <?php endfor;
-                    if ($bis < $aktive['seiten_gesamt']) : ?>
-                        <li class="page-item disabled"><span class="page-link">…</span></li>
-                    <?php endif ?>
-                    <li class="page-item <?= $aktive['seite'] >= $aktive['seiten_gesamt'] ? 'disabled' : '' ?>">
-                        <a class="page-link px-3" href="<?= e($seiteUrlDoc($aktive['seite'] + 1)) ?>">›</a>
-                    </li>
-                </ul>
-            </nav>
-            <?php endif ?>
+            <?php include __DIR__ . '/_seitennavigation.phtml'; ?>
         <?php endif ?>
         <?php if ($aktive['istBild']): ?>
             <?php include __DIR__ . '/_lightbox.phtml'; ?>

@@ -86,7 +86,7 @@ use Fisharebest\Webtrees\I18N;
                     $lbData   = json_encode(['datum'=>$bild['exif']['datum'],'datum_iso'=>$bild['exif']['datum_iso'],'exif_beschreibung'=>$bild['exif']['beschreibung'],'personen'=>$bild['exif']['personen']??[],'personen_gesamt'=>$bild['personen_gesamt']??count($bild['personen']),'keywords'=>$bild['exif']['keywords']??[],'media'=>$mediaUrl,'wt_titel'=>'','wt_notiz'=>'','wt_personen'=>[],'wt_edit'=>$mediaUrl,'in_sammlungen'=>$bild['in_sammlungen']??[],'breite'=>$bild['exif']['breite'],'hoehe'=>$bild['exif']['hoehe'],'groesse_kb'=>$bild['exif']['groesse_kb'],'format'=>strtoupper($bild['format']),'thumb'=>$fullUrl], JSON_UNESCAPED_UNICODE);
                     ?>
                     <div class="col">
-                        <a href="#" class="archiv-gallery-item d-block ratio ratio-1x1 text-decoration-none position-relative overflow-hidden rounded archiv-thumb"
+                        <a href="#" class="archiv-gallery-item d-block ratio ratio-1x1 text-decoration-none position-relative overflow-hidden rounded"
                            data-idx="<?= $idx ?>" data-full="<?= e($fullUrl) ?>"
                            data-title="<?= e($caption) ?>" data-info="<?= e($lbData) ?>">
                             <div class="archiv-blur-bg" style="background-image:url('<?= e($fullUrl) ?>')"></div>
@@ -98,31 +98,15 @@ use Fisharebest\Webtrees\I18N;
                 <?php endforeach ?>
             </div>
             <?php
-            $seiteUrlManuell = fn (int $s): string => route('sammlungen.sammlungen', ['tree' => $treeName, 'kategorie' => $sammlung->slug, 'seite' => $s]);
+            $seiteUrl = fn (int $s): string => route('sammlungen.sammlungen', ['tree' => $treeName, 'kategorie' => $sammlung->slug, 'seite' => $s]);
             ?>
-            <p class="text-muted small mt-3">
+            <p class="text-muted small mt-3 mb-2">
                 <?= I18N::plural('%s Foto', '%s Fotos', $aktive['anzahl'], I18N::number($aktive['anzahl'])) ?>
                 <?php if (($aktive['seiten_gesamt'] ?? 1) > 1) : ?>
                     · <?= I18N::translate('Seite %s von %s', $aktive['seite'], $aktive['seiten_gesamt']) ?>
                 <?php endif ?>
             </p>
-            <?php if (($aktive['seiten_gesamt'] ?? 1) > 1) : ?>
-                <nav class="d-flex justify-content-center mt-2">
-                    <ul class="pagination">
-                        <li class="page-item <?= ($aktive['seite'] ?? 1) <= 1 ? 'disabled' : '' ?>">
-                            <a class="page-link px-3" href="<?= e($seiteUrlManuell(($aktive['seite'] ?? 1) - 1)) ?>">‹</a>
-                        </li>
-                        <?php for ($p = max(1, ($aktive['seite'] ?? 1) - 2); $p <= min($aktive['seiten_gesamt'], ($aktive['seite'] ?? 1) + 2); $p++) : ?>
-                            <li class="page-item <?= $p === ($aktive['seite'] ?? 1) ? 'active' : '' ?>">
-                                <a class="page-link" href="<?= e($seiteUrlManuell($p)) ?>"><?= $p ?></a>
-                            </li>
-                        <?php endfor ?>
-                        <li class="page-item <?= ($aktive['seite'] ?? 1) >= $aktive['seiten_gesamt'] ? 'disabled' : '' ?>">
-                            <a class="page-link px-3" href="<?= e($seiteUrlManuell(($aktive['seite'] ?? 1) + 1)) ?>">›</a>
-                        </li>
-                    </ul>
-                </nav>
-            <?php endif ?>
+            <?php include __DIR__ . '/_seitennavigation.phtml'; ?>
 
             <?php include __DIR__ . '/_lightbox.phtml'; ?>
 

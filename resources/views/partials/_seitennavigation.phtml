@@ -1,0 +1,54 @@
+<?php
+
+/**
+ * Partial: Blätternavigation einer Sammlung.
+ *
+ * Lag vorher als Kopie in einzelnen Darstellungszweigen – und fehlte in
+ * anderen, die den Seitenzähler zwar ausgaben, aber keinen Weg auf Seite 2
+ * anboten (Issue #17, betraf „Foto-Raster" und „Gemischt"). Deshalb an einer
+ * Stelle: wer den Zähler zeigt, bindet dieses Partial ein.
+ *
+ * Erwartet aus Parent-Scope:
+ *   $aktive     mit 'seite' und 'seiten_gesamt'
+ *   $seiteUrl   Closure(int $seite): string
+ */
+
+declare(strict_types=1);
+
+use Fisharebest\Webtrees\I18N;
+
+if (($aktive['seiten_gesamt'] ?? 1) <= 1) {
+    return;
+}
+
+$von = max(1, $aktive['seite'] - 2);
+$bis = min($aktive['seiten_gesamt'], $aktive['seite'] + 2);
+
+?>
+<nav class="d-flex justify-content-center mt-2 mb-4" aria-label="<?= I18N::translate('Seitennavigation') ?>">
+    <ul class="pagination">
+        <li class="page-item <?= $aktive['seite'] <= 1 ? 'disabled' : '' ?>">
+            <a class="page-link px-3" href="<?= e($seiteUrl($aktive['seite'] - 1)) ?>"
+               aria-label="<?= I18N::translate('Vorherige Seite') ?>">&lsaquo;</a>
+        </li>
+
+        <?php if ($von > 1) : ?>
+            <li class="page-item disabled"><span class="page-link">…</span></li>
+        <?php endif ?>
+
+        <?php for ($p = $von; $p <= $bis; $p++) : ?>
+            <li class="page-item <?= $p === $aktive['seite'] ? 'active' : '' ?>">
+                <a class="page-link" href="<?= e($seiteUrl($p)) ?>"><?= I18N::number($p) ?></a>
+            </li>
+        <?php endfor ?>
+
+        <?php if ($bis < $aktive['seiten_gesamt']) : ?>
+            <li class="page-item disabled"><span class="page-link">…</span></li>
+        <?php endif ?>
+
+        <li class="page-item <?= $aktive['seite'] >= $aktive['seiten_gesamt'] ? 'disabled' : '' ?>">
+            <a class="page-link px-3" href="<?= e($seiteUrl($aktive['seite'] + 1)) ?>"
+               aria-label="<?= I18N::translate('Nächste Seite') ?>">&rsaquo;</a>
+        </li>
+    </ul>
+</nav>

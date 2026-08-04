@@ -9,7 +9,31 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+## [1.2.4] – 2026-08-04
+
+**Der Anzeigetyp „Foto-Raster" funktioniert.** Er war seit dem ersten Release
+unfertig ausgeliefert: die Kacheln waren nie formatiert, und eine Blätternavigation
+gab es nicht.
+
+### Behoben
+- **Blätternavigation in „Foto-Raster" und „Gemischt".** Beide Ansichten gaben
+  „Seite 1 von N" aus, boten aber keinen Weg auf die nächste Seite – man saß auf
+  Seite 1 fest. Die Navigation lag doppelt in zwei anderen Zweigen und fehlte in
+  diesen beiden schlicht. Sie liegt jetzt als eigenes Partial an einer Stelle
+  und wird von allen Ansichten eingebunden. (Issue #17, gemeldet von @ro-la)
+- **Kacheln im Foto-Raster zeigten dieselbe Datei doppelt.** Die Kachel besteht
+  aus einem weichgezeichneten Hintergrund und dem vollständigen Bild darüber –
+  die beiden CSS-Klassen dafür standen aber seit 1.0.0 ohne jede Regel im
+  Markup. Der Browser zeichnete den Hintergrund deshalb in Originalgröße und
+  ungefiltert, sodass ein herangezoomter Ausschnitt derselben Datei hinter dem
+  Bild hervorsah. Betraf auch manuelle Galerien. (Issue #17)
+
 ### Intern
+- Neue Tests halten fest, dass jede Ansicht mit Seitenzähler auch eine
+  Navigation hat, dass das Navigations-Markup nur noch an einer Stelle liegt und
+  dass keine `archiv-*`-Klasse im Markup steht, für die es weder eine CSS-Regel
+  noch eine Verwendung im JavaScript gibt.
+- Die wirkungslose Klasse `archiv-thumb` entfernt.
 - PHPStan ist jetzt eine Dev-Abhängigkeit statt eines extern besorgten `.phar`.
   Die Konfiguration lag seit 1.1.0 im Repo, das Werkzeug fehlte – die statische
   Analyse lief damit stillschweigend gar nicht. `composer check` führt Tests und
