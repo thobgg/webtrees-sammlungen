@@ -296,7 +296,7 @@ msgstr "Medienordner (automatisch befüllt)"
 msgid "Minimum 60 s, maximum 86400 s (24 h). Default: 900 s (15 min)."
 msgstr "Mindestens 60 s, maximal 86400 s (24 h). Standard: 900 s (15 min)."
 
-msgid "Name"
+msgid "Collection name"
 msgstr "Name"
 
 msgid "Network error"

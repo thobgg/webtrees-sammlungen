@@ -304,8 +304,8 @@ msgstr "Priečinok médií (automaticky naplnené)"
 msgid "Minimum 60 s, maximum 86400 s (24 h). Default: 900 s (15 min)."
 msgstr "Minimálne 60 s. maximálne 86400s (24 h). Štabdard 900s (15 min)."
 
-msgid "Name"
-msgstr ""
+msgid "Collection name"
+msgstr "Názov"
 
 msgid "Network error"
 msgstr ""

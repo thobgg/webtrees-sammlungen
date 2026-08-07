@@ -9,6 +9,23 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+## [1.3.1] – 2026-08-07
+
+### Behoben
+- **„Name" war mehrdeutig und übernahm die falsche Übersetzung.** Der Text
+  bezeichnet den Namen einer Sammlung, stimmte als Schlüssel aber mit dem
+  webtrees-Kern überein, wo „Name" den Namen einer **Person** meint. Seit der
+  Umstellung auf englische Schlüssel griff dadurch die Kern-Übersetzung. In
+  Sprachen, die zwischen Personen- und Sachbezeichnung unterscheiden, war das
+  schlicht falsch – im Slowakischen etwa „meno" (Person) statt „názov" (Sache).
+  Der Schlüssel heißt jetzt `Collection name`; jede Sprache wählt ihr Wort
+  selbst, Deutsch zeigt weiterhin „Name". Danke an **@ro-la** für den Hinweis
+  (Issue #19).
+
+### Hinweis für Übersetzer
+Ein Schlüssel hat sich geändert: `Name` → `Collection name`. Vorhandene
+Übersetzungen wurden übernommen, es ist nichts neu zu übersetzen.
+
 ## [1.3.0] – 2026-08-07
 
 **Englisch als Quellsprache.** Das Modul war das einzige im webtrees-Umfeld, das

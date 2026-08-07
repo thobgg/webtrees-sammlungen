@@ -7,7 +7,7 @@
 | | |
 |---|---|
 | Nombre del módulo | `sammlungen` |
-| Versión | 1.3.0 |
+| Versión | 1.3.1 |
 | webtrees | 2.2.x |
 | PHP | 8.2 – 8.4 |
 | Licencia | GPL-3.0-or-later |

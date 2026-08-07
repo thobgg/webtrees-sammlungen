@@ -299,7 +299,7 @@ msgstr "Mediabestandmap (automatisch gevuld)"
 msgid "Minimum 60 s, maximum 86400 s (24 h). Default: 900 s (15 min)."
 msgstr "Minimaal 60 s, maximaal 86400 s (24 u). Standaard: 900 s (15 min)."
 
-msgid "Name"
+msgid "Collection name"
 msgstr "Naam"
 
 msgid "Network error"

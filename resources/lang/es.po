@@ -297,7 +297,7 @@ msgstr "Carpeta multimedia (rellenada automáticamente)"
 msgid "Minimum 60 s, maximum 86400 s (24 h). Default: 900 s (15 min)."
 msgstr "Mínimo 60 s, máximo 86400 s (24 h). Predeterminado: 900 s (15 min)."
 
-msgid "Name"
+msgid "Collection name"
 msgstr "Nombre"
 
 msgid "Network error"

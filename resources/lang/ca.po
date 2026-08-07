@@ -297,7 +297,7 @@ msgstr "Carpeta multimèdia (omplida automàticament)"
 msgid "Minimum 60 s, maximum 86400 s (24 h). Default: 900 s (15 min)."
 msgstr "Mínim 60 s, màxim 86400 s (24 h). Per defecte: 900 s (15 min)."
 
-msgid "Name"
+msgid "Collection name"
 msgstr "Nom"
 
 msgid "Network error"
