@@ -1,0 +1,507 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: sammlungen 1.0.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2026-08-05 13:19+0200\n"
+"Last-Translator: Ladislav Rosival <lacoros@gmail.com>\n"
+"Language-Team: English\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n>=2 && n<=4 ? 1 : 2);\n"
+"X-Generator: Poedit 3.9\n"
+
+msgid "%s Minuten"
+msgstr "%s minút"
+
+msgid "%s Stunden"
+msgstr "%s hodín"
+
+msgid "%s noch nicht importiert"
+msgstr "%s ešte nenanimportované"
+
+msgid "APCu ist aktiv. Abfragen werden gecacht."
+msgstr "APCu je aktívne. Dotazy sa ukladajú do cache."
+
+msgid ""
+"APCu ist nicht verfügbar. Es wird ein In-Process-Array-Cache verwendet (kein "
+"Request-übergreifendes Caching)."
+msgstr "APCu nie je k dispozícii. Používa sa In-Process-Array-Cache."
+
+msgid "Abbrechen"
+msgstr "Prerušiť"
+
+msgid "Abgleich EXIF ↔ webtrees"
+msgstr "Porovnanie EXIF ↔ webtrees"
+
+msgid "Aktionen"
+msgstr "Akcie"
+
+msgid "Aktiv"
+msgstr "Aktívne"
+
+msgid "Aktueller TTL: %s Sekunden"
+msgstr "Aktuálne TTL: %s sekúnd"
+
+msgid "Alle"
+msgstr "Všetko"
+
+msgid "Alle Medienobjekte sind mit Personen oder Familien verknüpft."
+msgstr "Všetky obejkty médií sú prepojené s osobami alebo rodinami."
+
+msgid "Allgemeine Einstellungen"
+msgstr "Všeobecné nastavenia"
+
+msgid "Angezeigter Name der Sammlung."
+msgstr "Zobrazený názov zbierky."
+
+msgid "Anzeigen"
+msgstr "Zobraziť"
+
+msgid "Anzeigetyp"
+msgstr "Druh zobrazenia"
+
+msgid "Archiv-Ordner"
+msgstr "Archívne priečinky"
+
+msgid "Bearbeiten"
+msgstr "Upraviť"
+
+msgid "Beschreibung"
+msgstr "Popis"
+
+msgid "Bitte geben Sie einen Namen ein."
+msgstr "Zadajte prosím názov."
+
+msgid "Bitte wählen Sie einen Stammbaum aus."
+msgstr "Zvoľte prosím rodokmeň."
+
+msgid "Bitte wählen Sie oben einen Stammbaum aus."
+msgstr "Zvoľte prosím hore rodokmeň."
+
+msgid "Cache jetzt leeren"
+msgstr "Vyprázdniť cache"
+
+msgid "Cache verwalten"
+msgstr "Spravovať cache"
+
+msgid "Cache wirklich leeren?"
+msgstr "Naozaj vyprázdniť cache?"
+
+msgid "Cache-TTL (Sekunden)"
+msgstr "Cache-TTL (sekundy)"
+
+msgid "Darstellung"
+msgstr "Zobrazenie"
+
+msgid "Datei"
+msgstr "Súbor"
+
+msgid "Datei umbenennen"
+msgstr "Premenovať súbor"
+
+msgid "Datum"
+msgstr "Dátum"
+
+msgid ""
+"Der Foto-Picker zeigt nur Bilder aus aktiven, ordner-basierten Foto-"
+"Sammlungen (ein Top-Level-Ordner direkt unter data/media/). Lege zuerst eine "
+"solche Sammlung an – oder befülle diese Sammlung direkt, indem du in ihrer "
+"Bearbeitungsmaske das Feld „Medienordner\" setzt."
+msgstr ""
+"Fotky je možné vyberať len z aktívnych zbierok, ktoré sú definované "
+"priečinkom - priamo v data/media. Vytvorte najprv takúto zbierku - alebo "
+"naplňte túto zbierku priamo naplniť tým že zadáte priečinok v nastaveniach "
+"zbierky."
+
+msgid "Der Sammlungen-Cache wurde erfolgreich geleert."
+msgstr "Cache zbierky bola úspešne zmazaná."
+
+msgid "Diese Sammlung ist noch leer."
+msgstr "Táto zbierka je ešte prázdna."
+
+msgid "Dieser Stammbaum enthält noch keine Medienobjekte oder Sammlungen."
+msgstr "Tento rodokmeň neobsahuje ešte žiadne objekty médií alebo zbierky."
+
+msgid "Dokumente"
+msgstr "Dokumenty"
+
+msgid "Dokumentenliste"
+msgstr "Zoznam dokumentov"
+
+msgid "EXIF/XMP bearbeiten"
+msgstr "EXIF/XMP upraviť"
+
+msgid "Einstellungen"
+msgstr "Nastavenia"
+
+msgid "Einstellungen speichern"
+msgstr "Uložiť nastavenia"
+
+msgid "Einträge pro Seite"
+msgstr "Počet obrázkov na strane"
+
+msgid "Erste Sammlung anlegen"
+msgstr "Vytvoriť prvú zbierku"
+
+msgid "Es gibt noch keine Quelle, aus der du Fotos auswählen kannst."
+msgstr "Ešte neexistuje zdroj, z ktorého by ste mohli vybrať fotky."
+
+msgid "Es sind keine Stammbäume vorhanden."
+msgstr "Neexistujú žiadne rodokmene."
+
+msgid "Farbe"
+msgstr "Farba"
+
+msgid "Foto-Raster"
+msgstr "Foto-mriežka"
+
+msgid "Fotogalerie"
+msgstr "Fotogaléria"
+
+msgid "Fotos"
+msgstr "Fotky"
+
+msgid "Fotos als Kacheln, Dokumente als Liste"
+msgstr "Fotky ako dlaždice, dokumenty ako zoznam"
+
+msgid "Fotos auswählen"
+msgstr "Vybrať fotky"
+
+msgid "Fotos für: %s"
+msgstr "Fotky pre: %s"
+
+msgid "Fotos hinzufügen"
+msgstr "Pridať fotky"
+
+msgid "Gemischt"
+msgstr "Zmiešané"
+
+msgid "Gleichförmiges Grid, sachlich"
+msgstr "Rovnomerná pevná mriežka, vecná"
+
+msgid "Grundeinstellungen"
+msgstr "Základné nastavenie"
+
+msgid "Icon"
+msgstr "Ikona"
+
+msgid "In Datei speichern"
+msgstr "Uložiť do súboru"
+
+msgid "In webtrees öffnen"
+msgstr "Otvoriť vo webtrees"
+
+msgid "Inaktiv"
+msgstr "Neaktívny"
+
+msgid "Interne Kennung"
+msgstr "Interný identifikátor"
+
+msgid "Jetzt anlegen"
+msgstr "Teraz vytvoriť"
+
+msgid "Keine Dateien in diesem Ordner gefunden."
+msgstr "V tejto zložke sa nenašli žiadne súbory."
+
+msgid "Keine Fotos in dieser Quelle."
+msgstr "Žiadne fotky v tomto zdroji."
+
+msgid "Keine Objekte in dieser Kategorie."
+msgstr "Žiadne objekty v tejto kategórii."
+
+msgid ""
+"Keine Vorschaubilder (noch keine Bilddateien vom Typ jpg/png/gif/webp) in "
+"dieser Sammlung."
+msgstr ""
+"Žiadne náhľady v tejto zbierke (ešte nie sú žiadne súbory obrázkov typujps/"
+"pnf/gif/webp)."
+
+msgid "Kennung"
+msgstr "Identifikátor"
+
+msgid ""
+"Kleinbuchstaben, Ziffern, - und _. Wird automatisch aus dem Namen erzeugt. "
+"Nur Buchstaben, Ziffern, Bindestrich. Nicht änderbar."
+msgstr ""
+"Malé písmená, číslice, - a _. Vytvorí sa automaticky z názvu. Iba písmená, "
+"číslice, spojovník. Nemôže sa následne meniť."
+
+msgid "Klicken = hinzufügen/entfernen"
+msgstr "Klik = pridať/odstrániť"
+
+msgid "Klicken zum Umschalten"
+msgstr "Kliknúť pre zmenu"
+
+msgid "Klicken zum Vergrößern"
+msgstr "Kliknite pre zväčšenie"
+
+msgid "Komma-getrennt"
+msgstr "oddelené čiarkou"
+
+msgid ""
+"Leert den APCu-Cache des Moduls. Notwendig nach manuellen "
+"Datenbankänderungen oder wenn Daten nicht aktualisiert erscheinen. Der Cache "
+"wird automatisch nach GEDCOM-Importen geleert."
+msgstr ""
+"Vyčistí APCu-Cache modulu. Je to potrebné po manuálnych úpravách databázy, "
+"alebo keď sa zobrazujú neaktuálne súbory. Cache sa automaticky vyprázdni po "
+"importe súboru GEDCOM."
+
+msgid ""
+"Legen Sie manuell gepflegte Sammlungen an, um Medienobjekte thematisch zu "
+"gruppieren. Automatisch erkannte Sammlungen aus den GEDCOM-Medientypen "
+"werden davon nicht berührt."
+msgstr ""
+"Vytvorte manuálne zbierky, aby ste zoskupili mediálne objekty tematicky. "
+"Automaticky rozpoznané zbierky z GEDCOM mediálnych typov týmto nie sú "
+"dotknuté."
+
+msgid "Liste, auch für JPG-Scans"
+msgstr "Zoznam, aj pre skeny JPG"
+
+msgid "Löschen"
+msgstr "Zmazať"
+
+msgid "Masonry, Lightbox, EXIF-Editor"
+msgstr "Masonry, Lightbox, EXIF-Editor"
+
+msgid "Teil des Familienarchivs ohne Verknüpfung im Stammbaum"
+msgstr "Časť rodinného archívu bez prepojenia na rodokmeň"
+
+msgid "Medienordner (automatisch befüllt)"
+msgstr "Priečinok médií (automaticky naplnené)"
+
+msgid "Mindestens 60 s, maximal 86400 s (24 h). Standard: 900 s (15 min)."
+msgstr "Minimálne 60 s. maximálne 86400s (24 h). Štabdard 900s (15 min)."
+
+msgid "Name"
+msgstr ""
+
+msgid "Neu"
+msgstr "Nové"
+
+msgid "Neue Sammlung"
+msgstr "Nová zbierka"
+
+msgid "Neue Sammlung anlegen"
+msgstr "Vytvoriť novú zbierku"
+
+msgid "Freier Bestand"
+msgstr "Voľný stav"
+
+msgid "Im freien Bestand"
+msgstr "Vo voľnom stave"
+
+msgid "Noch keine Sammlungen angelegt."
+msgstr "Ešte nie je vytvorená žiadna zbierka."
+
+msgid "Noch keine verwalteten Sammlungen vorhanden."
+msgstr "Ešte neexistujú žiadne spravované zbierky."
+
+msgid "Noch nicht in webtrees importiert"
+msgstr "Ešte nie sú importované do webtrees"
+
+msgid "Nr."
+msgstr "Č."
+
+msgid "Ohne Typ"
+msgstr "Bez typu"
+
+msgid ""
+"Ordnerpfad relativ zu data/media/ – Unterordner werden automatisch "
+"eingeschlossen. Leer lassen für manuelle Pflege."
+msgstr ""
+"Cesta priečinkov relatívne k data/media - podpriečinky sú zahrnuté "
+"automaticky. Nechať prázdne pre manuálne spravované zbierky."
+
+msgid "Personen"
+msgstr "Osoby"
+
+msgid "Reihenfolge"
+msgstr "Poradie"
+
+msgid "Sammlung #%s nicht gefunden."
+msgstr "Zbierka #%s sa nenašla."
+
+msgid "Sammlung #%s wurde gelöscht."
+msgstr "Zbierka #%s bola zmazaná."
+
+msgid "Sammlung #%s wurde nicht gefunden."
+msgstr "Zbierka #%s sa nenašla."
+
+msgid "Sammlung anlegen"
+msgstr "Vytvoriť zbierku"
+
+msgid "Sammlung bearbeiten: %s"
+msgstr "Upraviť zbierku: %s"
+
+msgid "Sammlung nicht gefunden."
+msgstr "Zbierka sa nenašla."
+
+msgid "Sammlung „%s\" wurde aktualisiert."
+msgstr "Zbierka „%s\" bola aktualizovaná."
+
+msgid "Sammlung „%s\" wurde angelegt."
+msgstr "Zbierka „%s\" bola vytvorená."
+
+msgid "Sammlungen"
+msgstr "Zbierky"
+
+msgid "Sammlungen verwalten"
+msgstr "Spravovať zbierky"
+
+msgid "Sammlungen – Einstellungen"
+msgstr "Zbierky - nastavenia"
+
+msgid "Schließen"
+msgstr "Zavrieť"
+
+msgid "Seite %s von %s"
+msgstr "Strana %s z %s"
+
+msgid "Sichtbar (aktiv)"
+msgstr "Viditeľné (aktívne)"
+
+msgid "Sie haben keine Berechtigung für diese Aktion."
+msgstr "Nemáte oprávnenie pre túto akciu."
+
+msgid "Sie haben keine Berechtigung für diese Seite."
+msgstr "Nemáte oprávnenie re túto stránku."
+
+msgid "Stammbaum:"
+msgstr "Rodokmeň:"
+
+msgid "Stichwörter"
+msgstr "Kľúčové slová"
+
+msgid "Thematische Sammlungen"
+msgstr "Tematické zbierky"
+
+msgid "Vollbild in neuem Tab"
+msgstr "Plný obrázok a novej záložke"
+
+msgid "Vorschau"
+msgstr "Náhľad"
+
+msgid "Wer, Was, Wann, Wo…"
+msgstr "Kto, čo, kedy, kde…"
+
+msgid "Zu Sammlung hinzufügen"
+msgstr "Pridať ku zbierke"
+
+msgid "Zurück"
+msgstr "Späť"
+
+msgid "Zurück zu den Einstellungen"
+msgstr "Späť na nastavenia"
+
+msgid "z.B. Familienfotos"
+msgstr "napr. rodinné fotky"
+
+msgid "Änderungen speichern"
+msgstr "Uložiť zmeny"
+
+msgid "%s verwaltete Sammlung"
+msgid_plural "%s verwaltete Sammlungen"
+msgstr[0] "%s spravovaná zbierka"
+msgstr[1] "%s spravované zbierky"
+msgstr[2] "%s spravovaných zbierok"
+
+msgid "%s Objekt"
+msgid_plural "%s Objekte"
+msgstr[0] "%s objekt"
+msgstr[1] "%s objekty"
+msgstr[2] "%s objektov"
+
+msgid "%s Foto"
+msgid_plural "%s Fotos"
+msgstr[0] "%s fotka"
+msgstr[1] "%s fotky"
+msgstr[2] "%s fotiek"
+
+msgid "%s Datei"
+msgid_plural "%s Dateien"
+msgstr[0] "%s súbor"
+msgstr[1] "%s súbory"
+msgstr[2] "%s súborov"
+
+msgid "%s Medienobjekt im freien Bestand"
+msgid_plural "%s Medienobjekte im freien Bestand"
+msgstr[0] "% mediálny objekt vo voľnom stave"
+msgstr[1] "% mediálne objekty vo voľnom stave"
+msgstr[2] "% mediálnych objektov vo voľnom stave"
+
+msgid "Seitennavigation"
+msgstr "Bočná navigácia"
+
+msgid "Vorherige Seite"
+msgstr "Predchádzajúca stránka"
+
+msgid "Nächste Seite"
+msgstr "Nasledujúca stránka"
+
+msgid "Sammlung „%s\" wirklich löschen?"
+msgstr "Naozaj zamazť zbierku „%s\"?"
+
+msgid "Vorschau: %s von %s Objekten."
+msgstr "Náhľad: % z %s objektov."
+
+msgid "Videos, Audio & Dokumente"
+msgstr "Videá, audio& dokumenty"
+
+#~ msgid "Footer anzeigen"
+#~ msgstr "Zobraziť pätičku"
+
+msgid "JJJJ-MM-TT  oder  JJJJ"
+msgstr ""
+
+msgid "z.B. 1923-06-15 oder 1923"
+msgstr ""
+
+msgid "Hans Maier, Bertha Müller"
+msgstr ""
+
+msgid "Hamburg, Hochzeit, 1920er"
+msgstr ""
+
+msgid "Speichern"
+msgstr ""
+
+msgid "Beschreibung / Titel"
+msgstr ""
+
+msgid "(leer)"
+msgstr ""
+
+msgid "(keine)"
+msgstr ""
+
+msgid "→ in EXIF übernehmen"
+msgstr ""
+
+msgid "… und %s weitere"
+msgstr ""
+
+msgid "… (%s insgesamt)"
+msgstr ""
+
+msgid "Speichern…"
+msgstr ""
+
+msgid "Gespeichert"
+msgstr ""
+
+msgid "Umbenennen…"
+msgstr ""
+
+msgid "Umbenannt"
+msgstr ""
+
+msgid "Fehler"
+msgstr ""
+
+msgid "Netzwerkfehler"
+msgstr ""

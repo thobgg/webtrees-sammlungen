@@ -409,3 +409,54 @@ msgstr "Vista previa: %s de %s objetos."
 
 msgid "Videos, Audio & Dokumente"
 msgstr "Vídeos, audio y documentos"
+
+msgid "JJJJ-MM-TT  oder  JJJJ"
+msgstr "AAAA-MM-DD  o  AAAA"
+
+msgid "z.B. 1923-06-15 oder 1923"
+msgstr "p. ej. 1923-06-15 o 1923"
+
+msgid "Hans Maier, Bertha Müller"
+msgstr "Juan Pérez, María García"
+
+msgid "Hamburg, Hochzeit, 1920er"
+msgstr "Hamburgo, boda, años 1920"
+
+msgid "Speichern"
+msgstr "Guardar"
+
+msgid "Beschreibung / Titel"
+msgstr "Descripción / título"
+
+msgid "(leer)"
+msgstr "(vacío)"
+
+msgid "(keine)"
+msgstr "(ninguna)"
+
+msgid "→ in EXIF übernehmen"
+msgstr "→ copiar a EXIF"
+
+msgid "… und %s weitere"
+msgstr "… y %s más"
+
+msgid "… (%s insgesamt)"
+msgstr "… (%s en total)"
+
+msgid "Speichern…"
+msgstr "Guardando…"
+
+msgid "Gespeichert"
+msgstr "Guardado"
+
+msgid "Umbenennen…"
+msgstr "Renombrando…"
+
+msgid "Umbenannt"
+msgstr "Renombrado"
+
+msgid "Fehler"
+msgstr "Error"
+
+msgid "Netzwerkfehler"
+msgstr "Error de red"

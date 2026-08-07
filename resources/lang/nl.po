@@ -412,3 +412,54 @@ msgstr "Voorbeeld: %s van %s objecten."
 
 msgid "Videos, Audio & Dokumente"
 msgstr "Video's, audio & documenten"
+
+msgid "JJJJ-MM-TT  oder  JJJJ"
+msgstr "JJJJ-MM-DD  of  JJJJ"
+
+msgid "z.B. 1923-06-15 oder 1923"
+msgstr "bijv. 1923-06-15 of 1923"
+
+msgid "Hans Maier, Bertha Müller"
+msgstr "Jan Jansen, Marie de Vries"
+
+msgid "Hamburg, Hochzeit, 1920er"
+msgstr "Hamburg, bruiloft, jaren 1920"
+
+msgid "Speichern"
+msgstr "Opslaan"
+
+msgid "Beschreibung / Titel"
+msgstr "Beschrijving / titel"
+
+msgid "(leer)"
+msgstr "(leeg)"
+
+msgid "(keine)"
+msgstr "(geen)"
+
+msgid "→ in EXIF übernehmen"
+msgstr "→ overnemen in EXIF"
+
+msgid "… und %s weitere"
+msgstr "… en %s meer"
+
+msgid "… (%s insgesamt)"
+msgstr "… (%s in totaal)"
+
+msgid "Speichern…"
+msgstr "Opslaan…"
+
+msgid "Gespeichert"
+msgstr "Opgeslagen"
+
+msgid "Umbenennen…"
+msgstr "Hernoemen…"
+
+msgid "Umbenannt"
+msgstr "Hernoemd"
+
+msgid "Fehler"
+msgstr "Fout"
+
+msgid "Netzwerkfehler"
+msgstr "Netwerkfout"

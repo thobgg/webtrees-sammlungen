@@ -137,6 +137,14 @@ $unverknuepftGesamt = array_sum($unverknuepft_typen ?? []);
     transition: opacity .15s;
 }
 .archiv-gallery-item:hover .archiv-photo-main { opacity: .88; }
+/* Die Seitenleiste steht auf fast schwarzem Grund. Bootstraps Platzhalter-Farbe
+   ist dafuer viel zu dunkel – der Text war praktisch unsichtbar und nur beim
+   Markieren zu erkennen (Issue #19). opacity ausdruecklich auf 1, weil Firefox
+   Platzhalter zusaetzlich abblendet. */
+#archiv-lb-sidebar .form-control::placeholder {
+    color: #98a2ad;
+    opacity: 1;
+}
 .archiv-hover-overlay {
     position: absolute; bottom: 0; left: 0; right: 0;
     background: linear-gradient(transparent, rgba(0,0,0,.82));

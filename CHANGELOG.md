@@ -9,6 +9,33 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+## [1.2.6] – 2026-08-07
+
+**Slowakisch.** Dazu zwei Fehler in der Lightbox-Seitenleiste, die beim Einbau
+der Übersetzung sichtbar wurden.
+
+### Hinzugefügt
+- **Slowakische Oberfläche** (`sk`), beigesteuert von **Ladislav Rosival**
+  (Issue #19). Herzlichen Dank!
+
+### Behoben
+- **Texte der Seitenleiste blieben deutsch, egal welche Sprache eingestellt war.**
+  Sie werden vom JavaScript zur Laufzeit gesetzt, und dort greift
+  `I18N::translate()` nicht. Die betroffenen Texte – der Abgleich EXIF ↔
+  webtrees, seine Schaltfläche, die Statusmeldungen beim Speichern und
+  Umbenennen sowie „… und N weitere" – werden jetzt übersetzt an das Skript
+  übergeben. Zusätzlich waren vier Platzhalter und zwei Schaltflächen im Markup
+  gar nicht als übersetzbar ausgezeichnet.
+- **Platzhalter in der Seitenleiste waren nicht lesbar.** Sie stehen auf fast
+  schwarzem Grund, wo Bootstraps Vorgabefarbe praktisch unsichtbar ist – der
+  Text war nur beim Markieren zu erkennen.
+
+### Intern
+- Der i18n-Test las `msgid` zeilenweise und übersah dadurch Einträge, die über
+  mehrere Zeilen umbrochen sind. Unsere eigenen Dateien schreiben lange Texte
+  auf eine Zeile, Poedit bricht sie um – der Fehler fiel deshalb erst an einer
+  beigesteuerten Übersetzung auf, die er fälschlich als unvollständig meldete.
+
 ## [1.2.5] – 2026-08-04
 
 **Vollständige Übersetzungen.** Mehrere Texte waren in keiner Sprachdatei

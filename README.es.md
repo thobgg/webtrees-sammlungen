@@ -7,7 +7,7 @@
 | | |
 |---|---|
 | Nombre del módulo | `sammlungen` |
-| Versión | 1.2.5 |
+| Versión | 1.2.6 |
 | webtrees | 2.2.x |
 | PHP | 8.2 – 8.4 |
 | Licencia | GPL-3.0-or-later |
@@ -277,4 +277,5 @@ GPL-3.0-or-later, igual que webtrees. Véase [LICENSE](LICENSE).
 Thomas Bugge · thomas@bgg-mail.de  
 Preguntas / errores: GitHub Issues
 
-Traducción de la interfaz al catalán y al español: Bernat Josep Banyuls i Sala 🇪🇸
+Traducción de la interfaz al catalán y al español: Bernat Josep Banyuls i Sala 🇪🇸  
+Traducción de la interfaz al eslovaco: Ladislav Rosival 🇸🇰

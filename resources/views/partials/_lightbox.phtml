@@ -94,15 +94,15 @@ use Fisharebest\Webtrees\I18N;
                                         <label class="form-label text-white-50 small mb-1"><?= I18N::translate('Datum') ?></label>
                                         <input id="archiv-edit-datum" type="text"
                                                class="form-control form-control-sm bg-dark text-white border-secondary"
-                                               placeholder="JJJJ-MM-TT  oder  JJJJ">
-                                        <div class="form-text text-white-50 small">z.B. 1923-06-15 oder 1923</div>
+                                               placeholder="<?= I18N::translate('JJJJ-MM-TT  oder  JJJJ') ?>">
+                                        <div class="form-text text-white-50 small"><?= I18N::translate('z.B. 1923-06-15 oder 1923') ?></div>
                                     </div>
 
                                     <div class="mb-3">
                                         <label class="form-label text-white-50 small mb-1"><?= I18N::translate('Personen') ?></label>
                                         <input id="archiv-edit-personen" type="text"
                                                class="form-control form-control-sm bg-dark text-white border-secondary"
-                                               placeholder="Hans Maier, Bertha Müller">
+                                               placeholder="<?= I18N::translate('Hans Maier, Bertha Müller') ?>">
                                         <div class="form-text text-white-50 small"><?= I18N::translate('Komma-getrennt') ?></div>
                                     </div>
 
@@ -110,7 +110,7 @@ use Fisharebest\Webtrees\I18N;
                                         <label class="form-label text-white-50 small mb-1"><?= I18N::translate('Stichwörter') ?></label>
                                         <input id="archiv-edit-keywords" type="text"
                                                class="form-control form-control-sm bg-dark text-white border-secondary"
-                                               placeholder="Hamburg, Hochzeit, 1920er">
+                                               placeholder="<?= I18N::translate('Hamburg, Hochzeit, 1920er') ?>">
                                         <div class="form-text text-white-50 small"><?= I18N::translate('Komma-getrennt') ?></div>
                                     </div>
 
@@ -142,8 +142,8 @@ use Fisharebest\Webtrees\I18N;
                                                 <input type="text" id="archiv-datei-rename-input"
                                                        class="form-control form-control-sm bg-dark text-white border-secondary">
                                                 <div class="d-flex gap-1 mt-1">
-                                                    <button id="archiv-datei-rename-save" type="button" class="btn btn-sm btn-success py-0 px-2" style="font-size:.7rem;background:#198754;color:#fff;border-color:#198754">✓ Speichern</button>
-                                                    <button id="archiv-datei-rename-cancel" type="button" class="btn btn-sm btn-outline-secondary py-0 px-2" style="font-size:.7rem">Abbrechen</button>
+                                                    <button id="archiv-datei-rename-save" type="button" class="btn btn-sm btn-success py-0 px-2" style="font-size:.7rem;background:#198754;color:#fff;border-color:#198754">✓ <?= I18N::translate('Speichern') ?></button>
+                                                    <button id="archiv-datei-rename-cancel" type="button" class="btn btn-sm btn-outline-secondary py-0 px-2" style="font-size:.7rem"><?= I18N::translate('Abbrechen') ?></button>
                                                 </div>
                                                 <div id="archiv-datei-rename-status" class="small mt-1"></div>
                                             </div>
@@ -189,7 +189,27 @@ use Fisharebest\Webtrees\I18N;
                 toggleRoute:           <?= json_encode($toggleRoute) ?>,
                 renameRoute:           <?= json_encode(route('sammlungen.datei-umbenennen', ['tree' => $tree->name()])) ?>,
                 csrf:                  <?= json_encode(csrf_token()) ?>,
-                individualUrlTemplate: <?= json_encode(route(\Fisharebest\Webtrees\Http\RequestHandlers\IndividualPage::class, ['tree' => $tree->name(), 'xref' => '_XREF_'])) ?>
+                individualUrlTemplate: <?= json_encode(route(\Fisharebest\Webtrees\Http\RequestHandlers\IndividualPage::class, ['tree' => $tree->name(), 'xref' => '_XREF_'])) ?>,
+
+                // Texte, die das Skript zur Laufzeit einsetzt. JavaScript kann
+                // I18N::translate() nicht aufrufen, deshalb werden sie hier
+                // übersetzt und mitgegeben – sonst blieben sie deutsch, egal
+                // welche Sprache eingestellt ist.
+                texte: {
+                    beschreibungTitel: <?= json_encode(I18N::translate('Beschreibung / Titel')) ?>,
+                    personen:          <?= json_encode(I18N::translate('Personen')) ?>,
+                    leer:              <?= json_encode(I18N::translate('(leer)')) ?>,
+                    keine:             <?= json_encode(I18N::translate('(keine)')) ?>,
+                    inExifUebernehmen: <?= json_encode(I18N::translate('→ in EXIF übernehmen')) ?>,
+                    undWeitere:        <?= json_encode(I18N::translate('… und %s weitere')) ?>,
+                    insgesamt:         <?= json_encode(I18N::translate('… (%s insgesamt)')) ?>,
+                    speichern:         <?= json_encode(I18N::translate('Speichern…')) ?>,
+                    gespeichert:       <?= json_encode(I18N::translate('Gespeichert')) ?>,
+                    umbenennen:        <?= json_encode(I18N::translate('Umbenennen…')) ?>,
+                    umbenannt:         <?= json_encode(I18N::translate('Umbenannt')) ?>,
+                    fehler:            <?= json_encode(I18N::translate('Fehler')) ?>,
+                    netzwerkfehler:    <?= json_encode(I18N::translate('Netzwerkfehler')) ?>
+                }
             };
             </script>
             <script src="<?= e(route('sammlungen.asset', ['datei' => 'sammlung-galerie.js'])) ?>"></script>

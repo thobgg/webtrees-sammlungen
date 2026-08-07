@@ -7,11 +7,27 @@
  *       renameRoute:           '...',   // POST datei-umbenennen
  *       csrf:                  '...',   // CSRF-Token
  *       individualUrlTemplate: '...',   // URL mit _XREF_ als Platzhalter
+ *       texte:                 {...},   // übersetzte Oberflächentexte
  *   }
+ *
+ * JavaScript kann I18N::translate() nicht aufrufen. Alle Texte, die dieses
+ * Skript zur Laufzeit einsetzt, kommen deshalb übersetzt aus `texte`; die
+ * Vorgaben unten greifen nur, wenn die Seite sie nicht mitgibt.
  */
 
 document.addEventListener('DOMContentLoaded', function () {
     const cfg = window.archivConfig || {};
+    // Uebersetzte Texte aus der Konfiguration; faellt auf den deutschen
+    // Quelltext zurueck, falls die Seite sie nicht mitgibt.
+    const T = Object.assign({
+        beschreibungTitel: 'Beschreibung / Titel', personen: 'Personen',
+        leer: '(leer)', keine: '(keine)', inExifUebernehmen: '→ in EXIF übernehmen',
+        undWeitere: '… und %s weitere', insgesamt: '… (%s insgesamt)',
+        speichern: 'Speichern…', gespeichert: 'Gespeichert',
+        umbenennen: 'Umbenennen…', umbenannt: 'Umbenannt',
+        fehler: 'Fehler', netzwerkfehler: 'Netzwerkfehler'
+    }, cfg.texte || {});
+    const platzhalter = (text, wert) => String(text).replace('%s', wert);
     const items = [...document.querySelectorAll('.archiv-gallery-item')];
     if (items.length === 0) return;
 
@@ -166,9 +182,9 @@ document.addEventListener('DOMContentLoaded', function () {
             const wtTitel = info.wt_titel || '';
             if (exifBeschr !== wtTitel && (exifBeschr || wtTitel)) {
                 diffs.push({
-                    feld: 'Beschreibung / Titel',
-                    exif: exifBeschr || '(leer)',
-                    wt: wtTitel || '(leer)',
+                    feld: T.beschreibungTitel,
+                    exif: exifBeschr || T.leer,
+                    wt: wtTitel || T.leer,
                     btn: wtTitel ? wtTitel : null,
                     ziel: 'archiv-edit-beschreibung',
                 });
@@ -182,11 +198,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const wtP = wtListe.slice().sort().join(', ');
             if (exifP !== wtP && (exifP || wtP)) {
                 diffs.push({
-                    feld: 'Personen',
-                    exif: exifP || '(keine)',
+                    feld: T.personen,
+                    exif: exifP || T.keine,
                     wt: wtGekuerzt
-                        ? `${wtP} … (${info.personen_gesamt} insgesamt)`
-                        : (wtP || '(keine)'),
+                        ? wtP + ' ' + platzhalter(T.insgesamt, info.personen_gesamt)
+                        : (wtP || T.keine),
                     btn: (wtP && !wtGekuerzt) ? wtP : null,
                     ziel: 'archiv-edit-personen',
                 });
@@ -201,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             <span class="badge bg-info me-1">webtrees</span> ${escapeHtml(d.wt)}
                         </div>
                         ${d.btn ? `<button type="button" class="btn btn-sm btn-outline-warning mt-1 abgleich-take"
-                                  data-idx="${i}" style="font-size:.7rem">→ in EXIF übernehmen</button>` : ''}
+                                  data-idx="${i}" style="font-size:.7rem">${escapeHtml(T.inExifUebernehmen)}</button>` : ''}
                     </div>
                 `).join('');
                 abgleichList.querySelectorAll('.abgleich-take').forEach(btn => {
@@ -245,8 +261,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 const weitere = gesamtP - wtP.length;
                 html += info.wt_edit
                     ? `<a href="${escapeHtml(info.wt_edit)}" class="d-block text-decoration-none mb-1"
-                          style="color:#90cdf4;font-size:.8rem">… und ${weitere} weitere</a>`
-                    : `<div class="text-white-50 mb-1" style="font-size:.8rem">… und ${weitere} weitere</div>`;
+                          style="color:#90cdf4;font-size:.8rem">${escapeHtml(platzhalter(T.undWeitere, weitere))}</a>`
+                    : `<div class="text-white-50 mb-1" style="font-size:.8rem">${escapeHtml(platzhalter(T.undWeitere, weitere))}</div>`;
             }
             wtPersonen.innerHTML = html;
             wtNotiz.textContent = info.wt_notiz || '';
@@ -355,7 +371,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const neuName = input.value.trim();
         if (!neuName || !altPfad) return;
 
-        statusEl.textContent = '⏳ Umbenennen…';
+        statusEl.textContent = '⏳ ' + T.umbenennen;
         statusEl.style.color = 'white';
 
         const body = new FormData();
@@ -367,7 +383,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const res = await fetch(renameRoute, { method: 'POST', body });
             const json = await res.json();
             if (json.ok) {
-                statusEl.textContent = '✓ Umbenannt';
+                statusEl.textContent = '✓ ' + T.umbenannt;
                 statusEl.style.color = '#90ee90';
                 const neuPfad = json.neu_pfad;
                 const baseUrl = items[current].dataset.full.split('pfad=')[0];
@@ -381,11 +397,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     statusEl.textContent = '';
                 }, 1500);
             } else {
-                statusEl.textContent = '✗ ' + (json.fehler || 'Fehler');
+                statusEl.textContent = '✗ ' + (json.fehler || T.fehler);
                 statusEl.style.color = '#ff6b6b';
             }
         } catch (err) {
-            statusEl.textContent = '✗ Netzwerkfehler';
+            statusEl.textContent = '✗ ' + T.netzwerkfehler;
             statusEl.style.color = '#ff6b6b';
         }
     });
@@ -405,14 +421,14 @@ document.addEventListener('DOMContentLoaded', function () {
         body.append('personen', document.getElementById('archiv-edit-personen').value);
         body.append('keywords', document.getElementById('archiv-edit-keywords').value);
 
-        status.textContent = '⏳ Speichern…';
+        status.textContent = '⏳ ' + T.speichern;
         status.style.color = 'white';
 
         try {
             const res = await fetch(route, { method: 'POST', body });
             const json = await res.json();
             if (json.ok) {
-                status.textContent = '✓ Gespeichert';
+                status.textContent = '✓ ' + T.gespeichert;
                 status.style.color = '#90ee90';
                 const neu = document.getElementById('archiv-edit-beschreibung').value;
                 if (neu) {
@@ -422,11 +438,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (card) card.textContent = neu;
                 }
             } else {
-                status.textContent = '✗ ' + (json.fehler || 'Fehler');
+                status.textContent = '✗ ' + (json.fehler || T.fehler);
                 status.style.color = '#ff6b6b';
             }
         } catch {
-            status.textContent = '✗ Netzwerkfehler';
+            status.textContent = '✗ ' + T.netzwerkfehler;
             status.style.color = '#ff6b6b';
         }
     });

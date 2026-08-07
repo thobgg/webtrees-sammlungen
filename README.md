@@ -7,7 +7,7 @@
 | | |
 |---|---|
 | Module name | `sammlungen` |
-| Version | 1.2.5 |
+| Version | 1.2.6 |
 | webtrees | 2.2.x |
 | PHP | 8.2 – 8.4 |
 | License | GPL-3.0-or-later |
@@ -234,8 +234,8 @@ Available in the admin UI:
 
 ## Localisation
 
-The UI is available in **German**, **English**, **Catalan**, **Spanish** and (partially) **Dutch**.
-Translation files live in `resources/lang/` (`de`, `en`, `ca`, `es`, `nl`). The source strings
+The UI is available in **German**, **English**, **Catalan**, **Spanish**, **Slovak** and (partially) **Dutch**.
+Translation files live in `resources/lang/` (`de`, `en`, `ca`, `es`, `nl`, `sk`). The source strings
 are wrapped in `I18N::translate()` and German is the source language.
 
 Contributions welcome: copy `resources/lang/nl.po` (a complete, up-to-date template),
@@ -257,4 +257,5 @@ GPL-3.0-or-later, same as webtrees. See [LICENSE](LICENSE).
 Thomas Bugge · thomas@bgg-mail.de  
 Questions / bugs: GitHub Issues
 
-Catalan & Spanish interface translation: Bernat Josep Banyuls i Sala 🇪🇸
+Catalan & Spanish interface translation: Bernat Josep Banyuls i Sala 🇪🇸  
+Slovak interface translation: Ladislav Rosival 🇸🇰

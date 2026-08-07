@@ -410,3 +410,54 @@ msgstr "Vista prèvia: %s de %s objectes."
 
 msgid "Videos, Audio & Dokumente"
 msgstr "Vídeos, àudio i documents"
+
+msgid "JJJJ-MM-TT  oder  JJJJ"
+msgstr "AAAA-MM-DD  o  AAAA"
+
+msgid "z.B. 1923-06-15 oder 1923"
+msgstr "p. ex. 1923-06-15 o 1923"
+
+msgid "Hans Maier, Bertha Müller"
+msgstr "Joan Puig, Maria Ferrer"
+
+msgid "Hamburg, Hochzeit, 1920er"
+msgstr "Hamburg, casament, anys 1920"
+
+msgid "Speichern"
+msgstr "Desa"
+
+msgid "Beschreibung / Titel"
+msgstr "Descripció / títol"
+
+msgid "(leer)"
+msgstr "(buit)"
+
+msgid "(keine)"
+msgstr "(cap)"
+
+msgid "→ in EXIF übernehmen"
+msgstr "→ copia a EXIF"
+
+msgid "… und %s weitere"
+msgstr "… i %s més"
+
+msgid "… (%s insgesamt)"
+msgstr "… (%s en total)"
+
+msgid "Speichern…"
+msgstr "Desant…"
+
+msgid "Gespeichert"
+msgstr "Desat"
+
+msgid "Umbenennen…"
+msgstr "Reanomenant…"
+
+msgid "Umbenannt"
+msgstr "Reanomenat"
+
+msgid "Fehler"
+msgstr "Error"
+
+msgid "Netzwerkfehler"
+msgstr "Error de xarxa"

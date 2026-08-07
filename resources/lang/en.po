@@ -409,3 +409,54 @@ msgstr "Preview: %s of %s objects."
 
 msgid "Videos, Audio & Dokumente"
 msgstr "Videos, audio & documents"
+
+msgid "JJJJ-MM-TT  oder  JJJJ"
+msgstr "YYYY-MM-DD  or  YYYY"
+
+msgid "z.B. 1923-06-15 oder 1923"
+msgstr "e.g. 1923-06-15 or 1923"
+
+msgid "Hans Maier, Bertha Müller"
+msgstr "John Smith, Jane Doe"
+
+msgid "Hamburg, Hochzeit, 1920er"
+msgstr "Hamburg, wedding, 1920s"
+
+msgid "Speichern"
+msgstr "Save"
+
+msgid "Beschreibung / Titel"
+msgstr "Description / title"
+
+msgid "(leer)"
+msgstr "(empty)"
+
+msgid "(keine)"
+msgstr "(none)"
+
+msgid "→ in EXIF übernehmen"
+msgstr "→ copy into EXIF"
+
+msgid "… und %s weitere"
+msgstr "… and %s more"
+
+msgid "… (%s insgesamt)"
+msgstr "… (%s in total)"
+
+msgid "Speichern…"
+msgstr "Saving…"
+
+msgid "Gespeichert"
+msgstr "Saved"
+
+msgid "Umbenennen…"
+msgstr "Renaming…"
+
+msgid "Umbenannt"
+msgstr "Renamed"
+
+msgid "Fehler"
+msgstr "Error"
+
+msgid "Netzwerkfehler"
+msgstr "Network error"

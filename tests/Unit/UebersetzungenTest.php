@@ -105,12 +105,48 @@ final class UebersetzungenTest extends TestCase
     {
         $inhalt = (string) file_get_contents(self::wurzel() . '/resources/lang/' . $sprache . '.po');
 
-        preg_match_all('/^msgid(?:_plural)? "((?:\\\\.|[^"\\\\])*)"/m', $inhalt, $treffer);
+        $ids     = [];
+        $sammelt = false;
+        $puffer  = '';
 
-        return array_values(array_filter(
-            array_map(static fn (string $s): string => stripcslashes($s), $treffer[1]),
-            static fn (string $s): bool => $s !== ''
-        ));
+        // Zeilenweise, weil gettext lange Texte auf mehrere Zeilen umbricht:
+        //   msgid ""
+        //   "erster Teil "
+        //   "zweiter Teil"
+        // Ein Muster, das nur die erste Zeile liest, sieht dort einen leeren
+        // Schluessel. Poedit bricht so um, unsere eigenen Dateien bisher nicht –
+        // deshalb fiel es erst an einer beigesteuerten Uebersetzung auf.
+        foreach (preg_split('/\R/', str_replace("\r\n", "\n", $inhalt)) ?: [] as $zeile) {
+            $zeile = trim($zeile);
+
+            if (preg_match('/^(?:msgid|msgid_plural)\s+"(.*)"$/', $zeile, $treffer) === 1) {
+                if ($sammelt && $puffer !== '') {
+                    $ids[] = stripcslashes($puffer);
+                }
+                $sammelt = true;
+                $puffer  = $treffer[1];
+                continue;
+            }
+
+            if ($sammelt && preg_match('/^"(.*)"$/', $zeile, $treffer) === 1) {
+                $puffer .= $treffer[1];
+                continue;
+            }
+
+            if ($sammelt) {
+                if ($puffer !== '') {
+                    $ids[] = stripcslashes($puffer);
+                }
+                $sammelt = false;
+                $puffer  = '';
+            }
+        }
+
+        if ($sammelt && $puffer !== '') {
+            $ids[] = stripcslashes($puffer);
+        }
+
+        return array_values(array_unique($ids));
     }
 
     /**
