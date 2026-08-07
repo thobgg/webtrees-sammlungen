@@ -9,6 +9,40 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+## [1.3.0] – 2026-08-07
+
+**Englisch als Quellsprache.** Das Modul war das einzige im webtrees-Umfeld, das
+Deutsch als Quellsprache benutzte. Angeregt von **@ro-la** (Issue #19).
+
+### Geändert
+- **Die Quellsprache ist jetzt Englisch.** Bisher waren die Schlüssel der
+  Übersetzungen deutsch. webtrees legt die Sprachkataloge flach übereinander,
+  und die Kataloge des Kerns sind nach englischen Schlüsseln aufgebaut. Daraus
+  folgten zwei Nachteile: ohne passende Übersetzung erschien **Deutsch** statt
+  Englisch, und vorhandene webtrees-Übersetzungen konnten nie greifen, selbst
+  bei wortgleichen Texten.
+
+  Für bestehende Sprachen ändert sich **nichts** – Deutsch, Englisch,
+  Niederländisch, Spanisch, Katalanisch und Slowakisch wurden vollständig
+  übernommen und nur neu verschlüsselt. Eine Sprache **ohne** eigene
+  Übersetzung, etwa Ungarisch oder Polnisch, bekommt jetzt zehn Texte direkt vom
+  webtrees-Kern und alle übrigen auf Englisch statt auf Deutsch.
+
+### Hinweis für Übersetzer
+Wer eine eigene `.po` gepflegt hat, muss sie **nicht** neu übersetzen, aber neu
+verschlüsseln: die `msgid` sind jetzt die englischen Texte. `resources/lang/en.po`
+aus dieser Version ist die Vorlage. Für vorhandene Dateien geht das mit
+`msgmerge`; im Zweifel schicken Sie die alte Datei, wir übernehmen das.
+
+### Intern
+- Alle Kataloge sind mit `msgcat --no-wrap --sort-output` normalisiert. Ohne das
+  trennen sich Einträge uneinheitlich, was beim Umschlüsseln um ein Haar einen
+  spanischen Eintrag gekostet hätte.
+- Belegt statt behauptet: für jeden der 205 übersetzbaren Texte wurde der alte
+  deutsche Quelltext gegen den neuen englischen plus `de.po` gehalten – kein
+  einziger Unterschied. Die Menge der Übersetzungswerte ist in jeder Sprache
+  zeichengleich geblieben.
+
 ## [1.2.7] – 2026-08-07
 
 **Hotfix (Blocker).** Das Öffnen einer Sammlung führte in v1.2.6 zu einem
