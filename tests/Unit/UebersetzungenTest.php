@@ -216,6 +216,47 @@ final class UebersetzungenTest extends TestCase
         self::assertSame($referenz, $dieser, $sprache . '.po weicht von en.po ab.');
     }
 
+    /**
+     * `I18N::translate()` reicht seine Nachricht immer durch `sprintf()`
+     * (app/I18N.php). Enthält sie einen Platzhalter, aber der Aufruf übergibt
+     * kein Argument, wirft PHP „2 arguments are required, 1 given" – ein
+     * fataler Fehler, der die ganze Seite abstürzen lässt.
+     *
+     * Genau so ist v1.2.6 an der Detailansicht gescheitert: zwei Formatvorlagen
+     * für JavaScript wurden übersetzt, ihr Platzhalter sollte aber erst im
+     * Browser gefüllt werden. Richtig ist, '%s' als Argument mitzugeben, dann
+     * setzt sprintf den Platzhalter unverändert wieder ein.
+     */
+    public function testFormatvorlagenBekommenEinArgument(): void
+    {
+        $verstoesse = [];
+
+        foreach (self::quelldateien() as $datei) {
+            $inhalt = (string) file_get_contents($datei);
+
+            // Nur Aufrufe, bei denen direkt nach dem Text die Klammer schliesst.
+            preg_match_all(
+                '/I18N::translate\s*\(\s*(' . self::ARGUMENT . ')\s*\)/s',
+                $inhalt,
+                $treffer
+            );
+
+            foreach ($treffer[1] as $roh) {
+                $text = self::literal($roh);
+                if (preg_match('/%[-+ 0#\']*[\d.]*[bcdeEfFgGosuxX]/', $text) === 1) {
+                    $verstoesse[] = basename($datei) . ': ' . $text;
+                }
+            }
+        }
+
+        self::assertSame(
+            [],
+            $verstoesse,
+            "Platzhalter ohne Argument – sprintf() wirft zur Laufzeit:\n  "
+                . implode("\n  ", $verstoesse)
+        );
+    }
+
     /** Zu jeder .po muss eine kompilierte .mo gehören – webtrees liest nur die .mo. */
     #[DataProvider('sprachen')]
     public function testZuJedemKatalogGibtEsEineKompilierteFassung(string $sprache): void

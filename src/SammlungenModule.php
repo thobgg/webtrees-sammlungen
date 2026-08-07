@@ -75,8 +75,8 @@ class SammlungenModule extends AbstractModule implements
     public function title(): string { return 'Sammlungen'; }
     public function description(): string { return 'Foto- und Dokumenten-Sammlungen mit EXIF-Anreicherung, Galerie und Lightbox.'; }
     public function customModuleAuthorName(): string { return 'Thomas Bugge'; }
-    public function customModuleVersion(): string { return '1.2.6'; }
-    public function customModuleLatestVersion(): string { return '1.2.6'; }
+    public function customModuleVersion(): string { return '1.2.7'; }
+    public function customModuleLatestVersion(): string { return '1.2.7'; }
     public function customModuleSupportUrl(): string { return ''; }
 
     /**
