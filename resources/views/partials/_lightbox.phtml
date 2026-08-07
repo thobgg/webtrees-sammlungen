@@ -201,8 +201,11 @@ use Fisharebest\Webtrees\I18N;
                     leer:              <?= json_encode(I18N::translate('(empty)')) ?>,
                     keine:             <?= json_encode(I18N::translate('(none)')) ?>,
                     inExifUebernehmen: <?= json_encode(I18N::translate('→ copy into EXIF')) ?>,
-                    undWeitere:        <?= json_encode(I18N::translate('… and %s more')) ?>,
-                    insgesamt:         <?= json_encode(I18N::translate('… (%s in total)')) ?>,
+                    // '%s' als Argument: I18N::translate() laeuft immer durch sprintf().
+                    // Ohne Argument wirft ein Text mit Platzhalter (v1.2.6-Absturz).
+                    // Der Platzhalter wird erst im Browser gefuellt.
+                    undWeitere:        <?= json_encode(I18N::translate('… and %s more', '%s')) ?>,
+                    insgesamt:         <?= json_encode(I18N::translate('… (%s in total)', '%s')) ?>,
                     speichern:         <?= json_encode(I18N::translate('Saving…')) ?>,
                     gespeichert:       <?= json_encode(I18N::translate('Saved')) ?>,
                     umbenennen:        <?= json_encode(I18N::translate('Renaming…')) ?>,

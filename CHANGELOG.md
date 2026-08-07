@@ -9,6 +9,19 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+## [1.2.7] – 2026-08-07
+
+**Hotfix (Blocker).** Das Öffnen einer Sammlung führte in v1.2.6 zu einem
+Serverfehler. Bitte sofort aktualisieren.
+
+### Behoben
+- **Serverfehler beim Öffnen einer Sammlung.** `I18N::translate()` reicht seine
+  Nachricht immer durch `sprintf()`. Zwei mit v1.2.6 eingeführte Texte enthalten
+  einen Platzhalter, der erst im Browser gefüllt wird – ohne Argument warf PHP
+  „2 arguments are required, 1 given" und die Seite brach ab. Betroffen war jede
+  Ansicht mit Lightbox, also alle Galerien. Ein Test prüft jetzt, dass kein
+  übersetzter Text mit Platzhalter ohne Argument aufgerufen wird.
+
 ## [1.2.6] – 2026-08-07
 
 **Slowakisch.** Dazu zwei Fehler in der Lightbox-Seitenleiste, die beim Einbau
