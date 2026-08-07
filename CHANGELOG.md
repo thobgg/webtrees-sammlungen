@@ -42,6 +42,11 @@ aus dieser Version ist die Vorlage. Für vorhandene Dateien geht das mit
   deutsche Quelltext gegen den neuen englischen plus `de.po` gehalten – kein
   einziger Unterschied. Die Menge der Übersetzungswerte ist in jeder Sprache
   zeichengleich geblieben.
+- **Neue Laufzeitprüfung:** ein Test rendert jede Ansicht in jeder Sprache und
+  schlägt fehl, sobald dabei etwas wirft. Genau diese Ebene fehlte, als v1.2.6
+  auf jeder Galerie abstürzte – Unit-Tests und statische Analyse prüfen
+  Struktur, nicht Laufzeit. Gegen den bekannten Absturz gegengeprüft: er wird
+  in allen sechs Sprachen erkannt.
 
 ## [1.2.7] – 2026-08-07
 
