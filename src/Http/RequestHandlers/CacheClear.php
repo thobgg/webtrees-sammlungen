@@ -29,7 +29,7 @@ class CacheClear implements RequestHandlerInterface
     {
         if (!Auth::isAdmin()) {
             throw new HttpAccessDeniedException(
-                I18N::translate('Sie haben keine Berechtigung für diese Aktion.')
+                I18N::translate('You do not have permission for this action.')
             );
         }
 
@@ -42,7 +42,7 @@ class CacheClear implements RequestHandlerInterface
         }
 
         FlashMessages::addMessage(
-            I18N::translate('Der Sammlungen-Cache wurde erfolgreich geleert.'),
+            I18N::translate('The collections cache was cleared successfully.'),
             'success'
         );
 

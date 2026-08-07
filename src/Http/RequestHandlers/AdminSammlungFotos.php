@@ -36,7 +36,7 @@ class AdminSammlungFotos implements RequestHandlerInterface
     {
         if (!Auth::isAdmin()) {
             throw new HttpAccessDeniedException(
-                I18N::translate('Sie haben keine Berechtigung für diese Seite.')
+                I18N::translate('You do not have permission for this page.')
             );
         }
 
@@ -54,7 +54,7 @@ class AdminSammlungFotos implements RequestHandlerInterface
         $sammlung = $this->collectionService->findeNachId($id);
 
         if ($sammlung === null || (int) $sammlung->gedcom_id !== $tree->id()) {
-            throw new HttpNotFoundException(I18N::translate('Sammlung nicht gefunden.'));
+            throw new HttpNotFoundException(I18N::translate('Collection not found.'));
         }
 
         // Ordner-basierte Fotogalerien als Quellen (nur Top-Level-Ordner, kein Unterverzeichnis)
@@ -105,7 +105,7 @@ class AdminSammlungFotos implements RequestHandlerInterface
         $bilderSeite  = array_slice($bilder, ($seite - 1) * $perSeite, $perSeite);
 
         return $this->viewResponse('_sammlungen_::admin-sammlung-fotos', [
-            'title'       => I18N::translate('Fotos für: %s', $sammlung->name),
+            'title'       => I18N::translate('Photos for: %s', $sammlung->name),
             'tree'        => $tree,
             'sammlung'    => $sammlung,
             'quellen'     => $quellen,

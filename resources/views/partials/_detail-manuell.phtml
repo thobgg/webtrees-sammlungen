@@ -35,7 +35,7 @@ use Fisharebest\Webtrees\I18N;
                 <h2 class="mb-0"><?= e($name) ?></h2>
                 <?php if ($anzahl !== null) : ?>
                     <span class="badge bg-secondary">
-                        <?= I18N::plural('%s Objekt', '%s Objekte', $anzahl, I18N::number($anzahl)) ?>
+                        <?= I18N::plural('%s object', '%s objects', $anzahl, I18N::number($anzahl)) ?>
                     </span>
                 <?php endif ?>
                 <?php if ($beschr !== '') : ?>
@@ -44,7 +44,7 @@ use Fisharebest\Webtrees\I18N;
             </div>
             <a href="<?= e(route('sammlungen.sammlungen', ['tree' => $treeName])) ?>"
                class="btn btn-sm btn-outline-secondary ms-auto">
-                <i class="fas fa-arrow-left me-1"></i><?= I18N::translate('Zurück') ?>
+                <i class="fas fa-arrow-left me-1"></i><?= I18N::translate('Back') ?>
             </a>
         </div>
 
@@ -68,7 +68,7 @@ use Fisharebest\Webtrees\I18N;
             <?php if ($sammlung->anzahl > count($sammlung->vorschauXrefs)) : ?>
                 <p class="text-muted small mt-3">
                     <?= I18N::translate(
-                        'Vorschau: %s von %s Objekten.',
+                        'Preview: %s of %s objects.',
                         count($sammlung->vorschauXrefs),
                         I18N::number($sammlung->anzahl)
                     ) ?>
@@ -101,9 +101,9 @@ use Fisharebest\Webtrees\I18N;
             $seiteUrl = fn (int $s): string => route('sammlungen.sammlungen', ['tree' => $treeName, 'kategorie' => $sammlung->slug, 'seite' => $s]);
             ?>
             <p class="text-muted small mt-3 mb-2">
-                <?= I18N::plural('%s Foto', '%s Fotos', $aktive['anzahl'], I18N::number($aktive['anzahl'])) ?>
+                <?= I18N::plural('%s photo', '%s photos', $aktive['anzahl'], I18N::number($aktive['anzahl'])) ?>
                 <?php if (($aktive['seiten_gesamt'] ?? 1) > 1) : ?>
-                    · <?= I18N::translate('Seite %s von %s', $aktive['seite'], $aktive['seiten_gesamt']) ?>
+                    · <?= I18N::translate('Page %s of %s', $aktive['seite'], $aktive['seiten_gesamt']) ?>
                 <?php endif ?>
             </p>
             <?php include __DIR__ . '/_seitennavigation.phtml'; ?>
@@ -113,15 +113,15 @@ use Fisharebest\Webtrees\I18N;
         <?php elseif ($istManuell) : ?>
             <div class="alert alert-info">
                 <i class="fas fa-info-circle me-2"></i>
-                <?= I18N::translate('Diese Sammlung ist noch leer.') ?>
+                <?= I18N::translate('This collection is still empty.') ?>
                 <?php if ($istAdmin) : ?>
                     <a href="<?= e(route('sammlungen.admin.sammlung-fotos', ['tree' => $tree->name(), 'id' => $sammlung->id])) ?>" class="alert-link">
-                        <?= I18N::translate('Fotos hinzufügen') ?>
+                        <?= I18N::translate('Add photos') ?>
                     </a>
                 <?php endif ?>
             </div>
         <?php else : ?>
             <div class="alert alert-info">
-                <?= I18N::translate('Keine Vorschaubilder (noch keine Bilddateien vom Typ jpg/png/gif/webp) in dieser Sammlung.') ?>
+                <?= I18N::translate('No preview images (no jpg/png/gif/webp image files yet) in this collection.') ?>
             </div>
         <?php endif ?>

@@ -25,15 +25,15 @@ use Fisharebest\Webtrees\I18N;
                 <i class="fas fa-folder fs-5"></i>
                 <span class="flex-grow-1">
                     <?= I18N::plural(
-                        '%s Medienobjekt im freien Bestand',
-                        '%s Medienobjekte im freien Bestand',
+                        '%s media object in the free holdings',
+                        '%s media objects in the free holdings',
                         $unverknuepftGesamt,
                         I18N::number($unverknuepftGesamt)
                     ) ?>
                 </span>
                 <a href="<?= e($unverknuepftUrl()) ?>"
                    class="btn btn-sm btn-outline-secondary flex-shrink-0">
-                    <?= I18N::translate('Anzeigen') ?>
+                    <?= I18N::translate('Show') ?>
                 </a>
             </div>
         <?php endif ?>
@@ -43,7 +43,7 @@ use Fisharebest\Webtrees\I18N;
             <div class="d-flex flex-wrap gap-2 mb-4">
                 <a href="<?= e(route('sammlungen.sammlungen', ['tree' => $treeName])) ?>"
                    class="btn btn-sm <?= $kategorie === '' ? 'btn-primary' : 'btn-outline-secondary' ?>">
-                    <i class="fas fa-list me-1"></i><?= I18N::translate('Alle') ?>
+                    <i class="fas fa-list me-1"></i><?= I18N::translate('All') ?>
                 </a>
                 <?php foreach ($manuell as $s) : ?>
                     <a href="<?= e($sammlungUrl($s->slug)) ?>"
@@ -72,17 +72,17 @@ use Fisharebest\Webtrees\I18N;
         <?php if ($manuell === []) : ?>
             <div class="alert alert-info">
                 <i class="fas fa-info-circle me-2"></i>
-                <?= I18N::translate('Noch keine Sammlungen angelegt.') ?>
+                <?= I18N::translate('No collections created yet.') ?>
                 <?php if ($istAdmin) : ?>
                     <a href="<?= e(route('sammlungen.admin.sammlungen', ['tree' => $tree->name()])) ?>" class="alert-link">
-                        <?= I18N::translate('Jetzt anlegen') ?>
+                        <?= I18N::translate('Create now') ?>
                     </a>
                 <?php endif ?>
             </div>
         <?php else : ?>
             <?php if ($kanonisch !== []) : ?>
                 <h5 class="text-muted mb-3 mt-2" style="font-size:.85rem;letter-spacing:.05em;text-transform:uppercase">
-                    <i class="fas fa-folder me-1"></i><?= I18N::translate('Archiv-Ordner') ?>
+                    <i class="fas fa-folder me-1"></i><?= I18N::translate('Archive folders') ?>
                 </h5>
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4 mb-4">
                     <?php foreach ($kanonisch as $s) : ?>
@@ -99,7 +99,7 @@ use Fisharebest\Webtrees\I18N;
                                         <h5 class="card-title mb-1 text-dark text-truncate"><?= e($s->name) ?></h5>
                                         <?php if ($s->anzahl !== null) : ?>
                                             <p class="card-text text-muted small mb-0">
-                                                <?= I18N::plural('%s Datei', '%s Dateien', $s->anzahl, I18N::number($s->anzahl)) ?>
+                                                <?= I18N::plural('%s file', '%s files', $s->anzahl, I18N::number($s->anzahl)) ?>
                                             </p>
                                         <?php elseif ($s->beschreibung !== null) : ?>
                                             <p class="card-text text-muted small mb-0">
@@ -122,7 +122,7 @@ use Fisharebest\Webtrees\I18N;
                                 <?php endif ?>
                                 <?php if (!$s->aktiv) : ?>
                                     <span class="position-absolute top-0 end-0 badge bg-secondary m-2">
-                                        <?= I18N::translate('Inaktiv') ?>
+                                        <?= I18N::translate('Inactive') ?>
                                     </span>
                                 <?php endif ?>
                             </div>
@@ -134,7 +134,7 @@ use Fisharebest\Webtrees\I18N;
 
             <?php if ($thematisch !== []) : ?>
                 <h5 class="text-muted mb-3 mt-2" style="font-size:.85rem;letter-spacing:.05em;text-transform:uppercase">
-                    <i class="fas fa-star me-1"></i><?= I18N::translate('Thematische Sammlungen') ?>
+                    <i class="fas fa-star me-1"></i><?= I18N::translate('Thematic collections') ?>
                 </h5>
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
                     <?php foreach ($thematisch as $s) : ?>
@@ -158,7 +158,7 @@ use Fisharebest\Webtrees\I18N;
                                     </div>
                                     <?php if (!$s->aktiv) : ?>
                                         <span class="position-absolute top-0 end-0 badge bg-secondary m-2">
-                                            <?= I18N::translate('Inaktiv') ?>
+                                            <?= I18N::translate('Inactive') ?>
                                         </span>
                                     <?php endif ?>
                                 </div>

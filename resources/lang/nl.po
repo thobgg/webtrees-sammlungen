@@ -13,453 +13,453 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.9\n"
 
-msgid "%s Minuten"
+msgid "%s file"
+msgid_plural "%s files"
+msgstr[0] "%s bestand"
+msgstr[1] "%s bestanden"
+
+msgid "%s photo"
+msgid_plural "%s photos"
+msgstr[0] "%s foto"
+msgstr[1] "%s foto's"
+
+msgid "%s media object in the free holdings"
+msgid_plural "%s media objects in the free holdings"
+msgstr[0] "%s media-object in de vrije collectie"
+msgstr[1] "%s media-objecten in de vrije collectie"
+
+msgid "%s minutes"
 msgstr "%s minuten"
 
-msgid "%s Stunden"
+msgid "%s object"
+msgid_plural "%s objects"
+msgstr[0] "%s object"
+msgstr[1] "%s objecten"
+
+msgid "%s hours"
 msgstr "%s uur"
 
-msgid "%s noch nicht importiert"
+msgid "%s not yet imported"
 msgstr "%s nog niet geïmporteerd"
 
-msgid "APCu ist aktiv. Abfragen werden gecacht."
+msgid "%s managed collection"
+msgid_plural "%s managed collections"
+msgstr[0] "%s beheerde collectie"
+msgstr[1] "%s beheerde collecties"
+
+msgid "(none)"
+msgstr "(geen)"
+
+msgid "(empty)"
+msgstr "(leeg)"
+
+msgid "APCu is active. Queries are cached."
 msgstr "APCu is actief. Query's worden gecachet."
 
-msgid "APCu ist nicht verfügbar. Es wird ein In-Process-Array-Cache verwendet (kein Request-übergreifendes Caching)."
+msgid "APCu is not available. An in-process array cache is used (no caching across requests)."
 msgstr "APCu is niet beschikbaar. Er wordt een in-process arraycache gebruikt (geen verzoekoverstijgende caching)."
 
-msgid "Abbrechen"
+msgid "Cancel"
 msgstr "Annuleren"
 
-msgid "Abgleich EXIF ↔ webtrees"
+msgid "Sync EXIF ↔ webtrees"
 msgstr "Synchronisatie EXIF ↔ webtrees"
 
-msgid "Aktionen"
+msgid "Actions"
 msgstr "Acties"
 
-msgid "Aktiv"
+msgid "Active"
 msgstr "Actief"
 
-msgid "Aktueller TTL: %s Sekunden"
+msgid "Current TTL: %s seconds"
 msgstr "Huidige TTL: %s seconden"
 
-msgid "Alle"
+msgid "All"
 msgstr "Alle"
 
-msgid "Alle Medienobjekte sind mit Personen oder Familien verknüpft."
+msgid "All media objects are linked to individuals or families."
 msgstr "Alle mediaobjecten zijn gekoppeld aan personen of gezinnen."
 
-msgid "Allgemeine Einstellungen"
+msgid "General settings"
 msgstr "Algemene instellingen"
 
-msgid "Angezeigter Name der Sammlung."
+msgid "Display name of the collection."
 msgstr "Weergegeven naam van de collectie."
 
-msgid "Anzeigen"
+msgid "Show"
 msgstr "Weergeven"
 
-msgid "Anzeigetyp"
+msgid "Display type"
 msgstr "Weergavetype"
 
-msgid "Archiv-Ordner"
+msgid "Archive folders"
 msgstr "Archiefmap"
 
-msgid "Bearbeiten"
+msgid "Edit"
 msgstr "Bewerken"
 
-msgid "Beschreibung"
+msgid "Description"
 msgstr "Beschrijving"
 
-msgid "Bitte geben Sie einen Namen ein."
+msgid "Description / title"
+msgstr "Beschrijving / titel"
+
+msgid "Please enter a name."
 msgstr "Voer een naam in."
 
-msgid "Bitte wählen Sie einen Stammbaum aus."
+msgid "Please select a family tree."
 msgstr "Selecteer een stamboom."
 
-msgid "Bitte wählen Sie oben einen Stammbaum aus."
+msgid "Please select a family tree above."
 msgstr "Selecteer hierboven een stamboom."
 
-msgid "Cache jetzt leeren"
+msgid "Clear cache now"
 msgstr "Cache nu leegmaken"
 
-msgid "Cache verwalten"
+msgid "Manage cache"
 msgstr "Cache beheren"
 
-msgid "Cache wirklich leeren?"
+msgid "Really clear the cache?"
 msgstr "Cache echt leegmaken?"
 
-msgid "Cache-TTL (Sekunden)"
+msgid "Cache TTL (seconds)"
 msgstr "Cache-TTL (seconden)"
 
-msgid "Darstellung"
+msgid "Appearance"
 msgstr "Weergave"
 
-msgid "Datei"
+msgid "File"
 msgstr "Bestand"
 
-msgid "Datei umbenennen"
+msgid "Rename file"
 msgstr "Bestand hernoemen"
 
-msgid "Datum"
+msgid "Date"
 msgstr "Datum"
 
-msgid "Der Foto-Picker zeigt nur Bilder aus aktiven, ordner-basierten Foto-Sammlungen (ein Top-Level-Ordner direkt unter data/media/). Lege zuerst eine solche Sammlung an – oder befülle diese Sammlung direkt, indem du in ihrer Bearbeitungsmaske das Feld „Medienordner\" setzt."
+msgid "The photo picker only shows images from active, folder-based photo collections (a top-level folder directly under data/media/). Create such a collection first – or fill this collection directly by setting the „Medienordner“ (media folder) field in its edit form."
 msgstr "De fotokiezer toont alleen afbeeldingen uit actieve, mapgebaseerde fotocollecties (een hoofdmap direct onder data/media/). Maak eerst zo'n collectie aan – of vul deze direct door in het bewerkscherm het veld „mediabestandmap\" in te stellen."
 
-msgid "Der Sammlungen-Cache wurde erfolgreich geleert."
+msgid "The collections cache was cleared successfully."
 msgstr "De collectiecache is succesvol geleegd."
 
-msgid "Diese Sammlung ist noch leer."
+msgid "This collection is still empty."
 msgstr "Deze collectie is nog leeg."
 
-msgid "Dieser Stammbaum enthält noch keine Medienobjekte oder Sammlungen."
+msgid "This family tree does not contain any media objects or collections yet."
 msgstr "Deze stamboom bevat nog geen mediaobjecten of collecties."
 
-msgid "Dokumente"
+msgid "Documents"
 msgstr "Documenten"
 
-msgid "Dokumentenliste"
+msgid "Document list"
 msgstr "Documentenlijst"
 
-msgid "EXIF/XMP bearbeiten"
+msgid "Edit EXIF/XMP"
 msgstr "EXIF/XMP bewerken"
 
-msgid "Einstellungen"
+msgid "Settings"
 msgstr "Instellingen"
 
-msgid "Einstellungen speichern"
+msgid "Save settings"
 msgstr "Instellingen opslaan"
 
-msgid "Einträge pro Seite"
+msgid "Entries per page"
 msgstr "Items per pagina"
 
-msgid "Erste Sammlung anlegen"
+msgid "Create first collection"
 msgstr "Eerste collectie aanmaken"
 
-msgid "Es gibt noch keine Quelle, aus der du Fotos auswählen kannst."
+msgid "There is no source yet from which you can select photos."
 msgstr "Er is nog geen bron waaruit je foto's kunt kiezen."
 
-msgid "Es sind keine Stammbäume vorhanden."
+msgid "There are no family trees."
 msgstr "Er zijn geen stambomen aanwezig."
 
-msgid "Farbe"
+msgid "Colour"
 msgstr "Kleur"
 
-msgid "Foto-Raster"
+msgid "Error"
+msgstr "Fout"
+
+msgid "Photo grid"
 msgstr "Fotorooster"
 
-msgid "Fotogalerie"
+msgid "Photo gallery"
 msgstr "Fotogalerij"
 
-msgid "Fotos"
+msgid "Photos"
 msgstr "Foto's"
 
-msgid "Fotos als Kacheln, Dokumente als Liste"
+msgid "Photos as tiles, documents as a list"
 msgstr "Foto's als tegels, documenten als lijst"
 
-msgid "Fotos auswählen"
+msgid "Select photos"
 msgstr "Foto's selecteren"
 
-msgid "Fotos für: %s"
+msgid "Photos for: %s"
 msgstr "Foto's voor: %s"
 
-msgid "Fotos hinzufügen"
+msgid "Add photos"
 msgstr "Foto's toevoegen"
 
-msgid "Gemischt"
+msgid "Free holdings"
+msgstr "Vrije collectie"
+
+msgid "Mixed"
 msgstr "Gemengd"
 
-msgid "Gleichförmiges Grid, sachlich"
+msgid "Saved"
+msgstr "Opgeslagen"
+
+msgid "Uniform grid, plain"
 msgstr "Uniform raster, zakelijk"
 
-msgid "Grundeinstellungen"
+msgid "Basic settings"
 msgstr "Basisinstellingen"
+
+msgid "Hamburg, wedding, 1920s"
+msgstr "Hamburg, bruiloft, jaren 1920"
+
+msgid "John Smith, Jane Doe"
+msgstr "Jan Jansen, Marie de Vries"
 
 msgid "Icon"
 msgstr "Icoon"
 
-msgid "In Datei speichern"
+msgid "In the free holdings"
+msgstr "In de vrije collectie"
+
+msgid "Save to file"
 msgstr "In bestand opslaan"
 
-msgid "In webtrees öffnen"
+msgid "Open in webtrees"
 msgstr "In webtrees openen"
 
-msgid "Inaktiv"
+msgid "Inactive"
 msgstr "Inactief"
 
-msgid "Interne Kennung"
+msgid "Internal identifier"
 msgstr "Interne code"
 
-msgid "Jetzt anlegen"
+msgid "YYYY-MM-DD  or  YYYY"
+msgstr "JJJJ-MM-DD  of  JJJJ"
+
+msgid "Create now"
 msgstr "Nu aanmaken"
 
-msgid "Keine Dateien in diesem Ordner gefunden."
+msgid "No files found in this folder."
 msgstr "Geen bestanden in deze map gevonden."
 
-msgid "Keine Fotos in dieser Quelle."
+msgid "No photos in this source."
 msgstr "Geen foto's in deze bron."
 
-msgid "Keine Objekte in dieser Kategorie."
+msgid "No objects in this category."
 msgstr "Geen objecten in deze categorie."
 
-msgid "Keine Vorschaubilder (noch keine Bilddateien vom Typ jpg/png/gif/webp) in dieser Sammlung."
+msgid "No preview images (no jpg/png/gif/webp image files yet) in this collection."
 msgstr "Geen miniaturen (nog geen afbeeldingsbestanden van het type jpg/png/gif/webp) in deze collectie."
 
-msgid "Kennung"
+msgid "Identifier"
 msgstr "Code"
 
-msgid "Kleinbuchstaben, Ziffern, - und _. Wird automatisch aus dem Namen erzeugt. Nur Buchstaben, Ziffern, Bindestrich. Nicht änderbar."
+msgid "Lower-case letters, digits, - and _. Generated automatically from the name. Letters, digits and hyphens only. Cannot be changed."
 msgstr "Kleine letters, cijfers, - en _. Wordt automatisch uit de naam gegenereerd. Alleen letters, cijfers en koppelteken. Niet wijzigbaar."
 
-msgid "Klicken = hinzufügen/entfernen"
+msgid "Click = add/remove"
 msgstr "Klikken = toevoegen/verwijderen"
 
-msgid "Klicken zum Umschalten"
+msgid "Click to toggle"
 msgstr "Klik om te schakelen"
 
-msgid "Klicken zum Vergrößern"
+msgid "Click to enlarge"
 msgstr "Klik om te vergroten"
 
-msgid "Komma-getrennt"
+msgid "Comma-separated"
 msgstr "Komma-gescheiden"
 
-msgid "Leert den APCu-Cache des Moduls. Notwendig nach manuellen Datenbankänderungen oder wenn Daten nicht aktualisiert erscheinen. Der Cache wird automatisch nach GEDCOM-Importen geleert."
+msgid "Clears the module's APCu cache. Necessary after manual database changes or when data appears not to update. The cache is cleared automatically after GEDCOM imports."
 msgstr "Leegt de APCu-cache van de module. Nodig na handmatige databasewijzigingen of als gegevens niet bijgewerkt lijken. De cache wordt automatisch geleegd na GEDCOM-imports."
 
-msgid "Legen Sie manuell gepflegte Sammlungen an, um Medienobjekte thematisch zu gruppieren. Automatisch erkannte Sammlungen aus den GEDCOM-Medientypen werden davon nicht berührt."
+msgid "Create manually maintained collections to group media objects by topic. Automatically detected collections from the GEDCOM media types are not affected."
 msgstr "Maak handmatig beheerde collecties aan om mediaobjecten thematisch te groeperen. Automatisch herkende collecties uit de GEDCOM-mediatypen blijven onaangetast."
 
-msgid "Liste, auch für JPG-Scans"
+msgid "List, also for JPG scans"
 msgstr "Lijst, ook voor JPG-scans"
 
-msgid "Löschen"
+msgid "Delete"
 msgstr "Verwijderen"
 
-msgid "Masonry, Lightbox, EXIF-Editor"
+msgid "Masonry, lightbox, EXIF editor"
 msgstr "Masonry, Lightbox, EXIF-editor"
 
-msgid "Teil des Familienarchivs ohne Verknüpfung im Stammbaum"
-msgstr "Onderdeel van het familiearchief, zonder koppeling in de stamboom"
-
-msgid "Medienordner (automatisch befüllt)"
+msgid "Media folder (filled automatically)"
 msgstr "Mediabestandmap (automatisch gevuld)"
 
-msgid "Mindestens 60 s, maximal 86400 s (24 h). Standard: 900 s (15 min)."
+msgid "Minimum 60 s, maximum 86400 s (24 h). Default: 900 s (15 min)."
 msgstr "Minimaal 60 s, maximaal 86400 s (24 u). Standaard: 900 s (15 min)."
 
 msgid "Name"
 msgstr "Naam"
 
-msgid "Neu"
+msgid "Network error"
+msgstr "Netwerkfout"
+
+msgid "New"
 msgstr "Nieuw"
 
-msgid "Neue Sammlung"
+msgid "New collection"
 msgstr "Nieuwe collectie"
 
-msgid "Neue Sammlung anlegen"
+msgid "Create new collection"
 msgstr "Nieuwe collectie aanmaken"
 
-msgid "Freier Bestand"
-msgstr "Vrije collectie"
-
-msgid "Im freien Bestand"
-msgstr "In de vrije collectie"
-
-msgid "Noch keine Sammlungen angelegt."
+msgid "No collections created yet."
 msgstr "Nog geen collecties aangemaakt."
 
-msgid "Noch keine verwalteten Sammlungen vorhanden."
+msgid "No managed collections yet."
 msgstr "Nog geen beheerde collecties aanwezig."
 
-msgid "Noch nicht in webtrees importiert"
+msgid "Not yet imported into webtrees"
 msgstr "Nog niet in webtrees geïmporteerd"
 
-msgid "Nr."
+msgid "No."
 msgstr "Nr."
 
-msgid "Ohne Typ"
-msgstr "Zonder type"
-
-msgid "Ordnerpfad relativ zu data/media/ – Unterordner werden automatisch eingeschlossen. Leer lassen für manuelle Pflege."
-msgstr "Mappad relatief aan data/media/ – submappen worden automatisch meegenomen. Leeg laten voor handmatig beheer."
-
-msgid "Personen"
-msgstr "Personen"
-
-msgid "Reihenfolge"
-msgstr "Volgorde"
-
-msgid "Sammlung #%s nicht gefunden."
-msgstr "Collectie #%s niet gevonden."
-
-msgid "Sammlung #%s wurde gelöscht."
-msgstr "Collectie #%s is verwijderd."
-
-msgid "Sammlung #%s wurde nicht gefunden."
-msgstr "Collectie #%s werd niet gevonden."
-
-msgid "Sammlung anlegen"
-msgstr "Collectie aanmaken"
-
-msgid "Sammlung bearbeiten: %s"
-msgstr "Collectie bewerken: %s"
-
-msgid "Sammlung nicht gefunden."
-msgstr "Collectie niet gevonden."
-
-msgid "Sammlung „%s\" wurde aktualisiert."
-msgstr "Collectie „%s” is bijgewerkt."
-
-msgid "Sammlung „%s\" wurde angelegt."
-msgstr "Collectie „%s” is aangemaakt."
-
-msgid "Sammlungen"
-msgstr "Collecties"
-
-msgid "Sammlungen verwalten"
-msgstr "Collecties beheren"
-
-msgid "Sammlungen – Einstellungen"
-msgstr "Collecties – instellingen"
-
-msgid "Schließen"
-msgstr "Sluiten"
-
-msgid "Seite %s von %s"
-msgstr "Pagina %s van %s"
-
-msgid "Sichtbar (aktiv)"
-msgstr "Zichtbaar (actief)"
-
-msgid "Sie haben keine Berechtigung für diese Aktion."
-msgstr "U heeft geen toestemming voor deze actie."
-
-msgid "Sie haben keine Berechtigung für diese Seite."
-msgstr "U heeft geen toegang tot deze pagina."
-
-msgid "Stammbaum:"
-msgstr "Stamboom:"
-
-msgid "Stichwörter"
-msgstr "Trefwoorden"
-
-msgid "Thematische Sammlungen"
-msgstr "Thematische collecties"
-
-msgid "Vollbild in neuem Tab"
-msgstr "Volledig scherm in nieuw tabblad"
-
-msgid "Vorschau"
-msgstr "Voorbeeld"
-
-msgid "Wer, Was, Wann, Wo…"
-msgstr "Wie, wat, wanneer, waar…"
-
-msgid "Zu Sammlung hinzufügen"
-msgstr "Aan collectie toevoegen"
-
-msgid "Zurück"
-msgstr "Terug"
-
-msgid "Zurück zu den Einstellungen"
-msgstr "Terug naar de instellingen"
-
-msgid "z.B. Familienfotos"
-msgstr "bijv. familiefoto's"
-
-msgid "Änderungen speichern"
-msgstr "Wijzigingen opslaan"
-
-msgid "%s verwaltete Sammlung"
-msgid_plural "%s verwaltete Sammlungen"
-msgstr[0] "%s beheerde collectie"
-msgstr[1] "%s beheerde collecties"
-
-msgid "%s Objekt"
-msgid_plural "%s Objekte"
-msgstr[0] "%s object"
-msgstr[1] "%s objecten"
-
-msgid "%s Foto"
-msgid_plural "%s Fotos"
-msgstr[0] "%s foto"
-msgstr[1] "%s foto's"
-
-msgid "%s Datei"
-msgid_plural "%s Dateien"
-msgstr[0] "%s bestand"
-msgstr[1] "%s bestanden"
-
-msgid "%s Medienobjekt im freien Bestand"
-msgid_plural "%s Medienobjekte im freien Bestand"
-msgstr[0] "%s media-object in de vrije collectie"
-msgstr[1] "%s media-objecten in de vrije collectie"
-
-msgid "Seitennavigation"
-msgstr "Paginanavigatie"
-
-msgid "Vorherige Seite"
-msgstr "Vorige pagina"
-
-msgid "Nächste Seite"
+msgid "Next page"
 msgstr "Volgende pagina"
 
-msgid "Sammlung „%s\" wirklich löschen?"
+msgid "Without type"
+msgstr "Zonder type"
+
+msgid "Folder path relative to data/media/ – sub-folders are included automatically. Leave empty for manual maintenance."
+msgstr "Mappad relatief aan data/media/ – submappen worden automatisch meegenomen. Leeg laten voor handmatig beheer."
+
+msgid "Individuals"
+msgstr "Personen"
+
+msgid "Order"
+msgstr "Volgorde"
+
+msgid "Collection #%s not found."
+msgstr "Collectie #%s niet gevonden."
+
+msgid "Collection #%s was deleted."
+msgstr "Collectie #%s is verwijderd."
+
+msgid "Collection #%s was not found."
+msgstr "Collectie #%s werd niet gevonden."
+
+msgid "Create collection"
+msgstr "Collectie aanmaken"
+
+msgid "Edit collection: %s"
+msgstr "Collectie bewerken: %s"
+
+msgid "Collection not found."
+msgstr "Collectie niet gevonden."
+
+msgid "Really delete collection “%s”?"
 msgstr "Verzameling “%s” echt verwijderen?"
 
-msgid "Vorschau: %s von %s Objekten."
-msgstr "Voorbeeld: %s van %s objecten."
+msgid "Collection “%s” was updated."
+msgstr "Collectie „%s” is bijgewerkt."
 
-msgid "Videos, Audio & Dokumente"
-msgstr "Video's, audio & documenten"
+msgid "Collection “%s” was created."
+msgstr "Collectie „%s” is aangemaakt."
 
-msgid "JJJJ-MM-TT  oder  JJJJ"
-msgstr "JJJJ-MM-DD  of  JJJJ"
+msgid "Collections"
+msgstr "Collecties"
 
-msgid "z.B. 1923-06-15 oder 1923"
-msgstr "bijv. 1923-06-15 of 1923"
+msgid "Manage collections"
+msgstr "Collecties beheren"
 
-msgid "Hans Maier, Bertha Müller"
-msgstr "Jan Jansen, Marie de Vries"
+msgid "Collections – settings"
+msgstr "Collecties – instellingen"
 
-msgid "Hamburg, Hochzeit, 1920er"
-msgstr "Hamburg, bruiloft, jaren 1920"
+msgid "Close"
+msgstr "Sluiten"
 
-msgid "Speichern"
+msgid "Page %s of %s"
+msgstr "Pagina %s van %s"
+
+msgid "Page navigation"
+msgstr "Paginanavigatie"
+
+msgid "Visible (active)"
+msgstr "Zichtbaar (actief)"
+
+msgid "You do not have permission for this action."
+msgstr "U heeft geen toestemming voor deze actie."
+
+msgid "You do not have permission for this page."
+msgstr "U heeft geen toegang tot deze pagina."
+
+msgid "Save"
 msgstr "Opslaan"
 
-msgid "Beschreibung / Titel"
-msgstr "Beschrijving / titel"
-
-msgid "(leer)"
-msgstr "(leeg)"
-
-msgid "(keine)"
-msgstr "(geen)"
-
-msgid "→ in EXIF übernehmen"
-msgstr "→ overnemen in EXIF"
-
-msgid "… und %s weitere"
-msgstr "… en %s meer"
-
-msgid "… (%s insgesamt)"
-msgstr "… (%s in totaal)"
-
-msgid "Speichern…"
+msgid "Saving…"
 msgstr "Opslaan…"
 
-msgid "Gespeichert"
-msgstr "Opgeslagen"
+msgid "Family tree:"
+msgstr "Stamboom:"
 
-msgid "Umbenennen…"
-msgstr "Hernoemen…"
+msgid "Keywords"
+msgstr "Trefwoorden"
 
-msgid "Umbenannt"
+msgid "Part of the family archive, not linked in the family tree"
+msgstr "Onderdeel van het familiearchief, zonder koppeling in de stamboom"
+
+msgid "Thematic collections"
+msgstr "Thematische collecties"
+
+msgid "Renamed"
 msgstr "Hernoemd"
 
-msgid "Fehler"
-msgstr "Fout"
+msgid "Renaming…"
+msgstr "Hernoemen…"
 
-msgid "Netzwerkfehler"
-msgstr "Netwerkfout"
+msgid "Videos, audio & documents"
+msgstr "Video's, audio & documenten"
+
+msgid "Full screen in a new tab"
+msgstr "Volledig scherm in nieuw tabblad"
+
+msgid "Previous page"
+msgstr "Vorige pagina"
+
+msgid "Preview"
+msgstr "Voorbeeld"
+
+msgid "Preview: %s of %s objects."
+msgstr "Voorbeeld: %s van %s objecten."
+
+msgid "Who, what, when, where…"
+msgstr "Wie, wat, wanneer, waar…"
+
+msgid "Add to collection"
+msgstr "Aan collectie toevoegen"
+
+msgid "Back"
+msgstr "Terug"
+
+msgid "Back to settings"
+msgstr "Terug naar de instellingen"
+
+msgid "e.g. 1923-06-15 or 1923"
+msgstr "bijv. 1923-06-15 of 1923"
+
+msgid "e.g. family photos"
+msgstr "bijv. familiefoto's"
+
+msgid "Save changes"
+msgstr "Wijzigingen opslaan"
+
+msgid "… (%s in total)"
+msgstr "… (%s in totaal)"
+
+msgid "… and %s more"
+msgstr "… en %s meer"
+
+msgid "→ copy into EXIF"
+msgstr "→ overnemen in EXIF"

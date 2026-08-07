@@ -11,453 +11,453 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "%s Minuten"
+msgid "%s file"
+msgid_plural "%s files"
+msgstr[0] "%s fitxer"
+msgstr[1] "%s fitxers"
+
+msgid "%s photo"
+msgid_plural "%s photos"
+msgstr[0] "%s foto"
+msgstr[1] "%s fotos"
+
+msgid "%s media object in the free holdings"
+msgid_plural "%s media objects in the free holdings"
+msgstr[0] "%s objecte multimèdia en el fons lliure"
+msgstr[1] "%s objectes multimèdia en el fons lliure"
+
+msgid "%s minutes"
 msgstr "%s minuts"
 
-msgid "%s Stunden"
+msgid "%s object"
+msgid_plural "%s objects"
+msgstr[0] "%s objecte"
+msgstr[1] "%s objectes"
+
+msgid "%s hours"
 msgstr "%s hores"
 
-msgid "%s noch nicht importiert"
+msgid "%s not yet imported"
 msgstr "%s encara no importat"
 
-msgid "APCu ist aktiv. Abfragen werden gecacht."
+msgid "%s managed collection"
+msgid_plural "%s managed collections"
+msgstr[0] "%s col·lecció gestionada"
+msgstr[1] "%s col·leccions gestionades"
+
+msgid "(none)"
+msgstr "(cap)"
+
+msgid "(empty)"
+msgstr "(buit)"
+
+msgid "APCu is active. Queries are cached."
 msgstr "APCu està actiu. Les consultes es memoritzen en la memòria cau."
 
-msgid "APCu ist nicht verfügbar. Es wird ein In-Process-Array-Cache verwendet (kein Request-übergreifendes Caching)."
+msgid "APCu is not available. An in-process array cache is used (no caching across requests)."
 msgstr "APCu no està disponible. S’utilitza una memòria cau interna en forma d’array (sense memòria cau entre peticions)."
 
-msgid "Abbrechen"
+msgid "Cancel"
 msgstr "Cancel·lar"
 
-msgid "Abgleich EXIF ↔ webtrees"
+msgid "Sync EXIF ↔ webtrees"
 msgstr "Comparació EXIF ↔ webtrees"
 
-msgid "Aktionen"
+msgid "Actions"
 msgstr "Accions"
 
-msgid "Aktiv"
+msgid "Active"
 msgstr "Actiu"
 
-msgid "Aktueller TTL: %s Sekunden"
+msgid "Current TTL: %s seconds"
 msgstr "TTL actual: %s segons"
 
-msgid "Alle"
+msgid "All"
 msgstr "Tots"
 
-msgid "Alle Medienobjekte sind mit Personen oder Familien verknüpft."
+msgid "All media objects are linked to individuals or families."
 msgstr "Tots els objectes multimèdia estan vinculats a persones o famílies."
 
-msgid "Allgemeine Einstellungen"
+msgid "General settings"
 msgstr "Configuració general"
 
-msgid "Angezeigter Name der Sammlung."
+msgid "Display name of the collection."
 msgstr "Nom visible de la col·lecció."
 
-msgid "Anzeigen"
+msgid "Show"
 msgstr "Mostrar"
 
-msgid "Anzeigetyp"
+msgid "Display type"
 msgstr "Tipus de visualització"
 
-msgid "Archiv-Ordner"
+msgid "Archive folders"
 msgstr "Carpeta d’arxiu"
 
-msgid "Bearbeiten"
+msgid "Edit"
 msgstr "Editar"
 
-msgid "Beschreibung"
+msgid "Description"
 msgstr "Descripció"
 
-msgid "Bitte geben Sie einen Namen ein."
+msgid "Description / title"
+msgstr "Descripció / títol"
+
+msgid "Please enter a name."
 msgstr "Introduïu un nom."
 
-msgid "Bitte wählen Sie einen Stammbaum aus."
+msgid "Please select a family tree."
 msgstr "Seleccioneu un arbre genealògic."
 
-msgid "Bitte wählen Sie oben einen Stammbaum aus."
+msgid "Please select a family tree above."
 msgstr "Seleccioneu un arbre genealògic a la part superior."
 
-msgid "Cache jetzt leeren"
+msgid "Clear cache now"
 msgstr "Buida la memòria cau ara"
 
-msgid "Cache verwalten"
+msgid "Manage cache"
 msgstr "Gestionar la memòria cau"
 
-msgid "Cache wirklich leeren?"
+msgid "Really clear the cache?"
 msgstr "Segur que voleu buidar la memòria cau?"
 
-msgid "Cache-TTL (Sekunden)"
+msgid "Cache TTL (seconds)"
 msgstr "TTL de la memòria cau (segons)"
 
-msgid "Darstellung"
+msgid "Appearance"
 msgstr "Presentació"
 
-msgid "Datei"
+msgid "File"
 msgstr "Fitxer"
 
-msgid "Datei umbenennen"
+msgid "Rename file"
 msgstr "Canviar el nom del fitxer"
 
-msgid "Datum"
+msgid "Date"
 msgstr "Data"
 
-msgid "Der Foto-Picker zeigt nur Bilder aus aktiven, ordner-basierten Foto-Sammlungen (ein Top-Level-Ordner direkt unter data/media/). Lege zuerst eine solche Sammlung an – oder befülle diese Sammlung direkt, indem du in ihrer Bearbeitungsmaske das Feld „Medienordner\" setzt."
+msgid "The photo picker only shows images from active, folder-based photo collections (a top-level folder directly under data/media/). Create such a collection first – or fill this collection directly by setting the „Medienordner“ (media folder) field in its edit form."
 msgstr "El selector de fotos només mostra imatges de col·leccions de fotos actives basades en carpetes (una carpeta de primer nivell directament dins de data/media/). Crea primer una col·lecció d’aquest tipus — o ompli-la directament establint el camp «Carpeta multimèdia» en la seua pantalla d’edició."
 
-msgid "Der Sammlungen-Cache wurde erfolgreich geleert."
+msgid "The collections cache was cleared successfully."
 msgstr "La memòria cau de col·leccions s’ha buidat correctament."
 
-msgid "Diese Sammlung ist noch leer."
+msgid "This collection is still empty."
 msgstr "Aquesta col·lecció encara està buida."
 
-msgid "Dieser Stammbaum enthält noch keine Medienobjekte oder Sammlungen."
+msgid "This family tree does not contain any media objects or collections yet."
 msgstr "Aquest arbre genealògic encara no conté objectes multimèdia ni col·leccions."
 
-msgid "Dokumente"
+msgid "Documents"
 msgstr "Documents"
 
-msgid "Dokumentenliste"
+msgid "Document list"
 msgstr "Llista de documents"
 
-msgid "EXIF/XMP bearbeiten"
+msgid "Edit EXIF/XMP"
 msgstr "Editar EXIF/XMP"
 
-msgid "Einstellungen"
+msgid "Settings"
 msgstr "Configuració"
 
-msgid "Einstellungen speichern"
+msgid "Save settings"
 msgstr "Guardar configuració"
 
-msgid "Einträge pro Seite"
+msgid "Entries per page"
 msgstr "Entrades per pàgina"
 
-msgid "Erste Sammlung anlegen"
+msgid "Create first collection"
 msgstr "Crear la primera col·lecció"
 
-msgid "Es gibt noch keine Quelle, aus der du Fotos auswählen kannst."
+msgid "There is no source yet from which you can select photos."
 msgstr "Encara no hi ha cap font des d’on seleccionar fotos."
 
-msgid "Es sind keine Stammbäume vorhanden."
+msgid "There are no family trees."
 msgstr "No hi ha arbres genealògics disponibles."
 
-msgid "Farbe"
+msgid "Colour"
 msgstr "Color"
 
-msgid "Foto-Raster"
+msgid "Error"
+msgstr "Error"
+
+msgid "Photo grid"
 msgstr "Reixeta de fotos"
 
-msgid "Fotogalerie"
+msgid "Photo gallery"
 msgstr "Galeria de fotos"
 
-msgid "Fotos"
+msgid "Photos"
 msgstr "Fotos"
 
-msgid "Fotos als Kacheln, Dokumente als Liste"
+msgid "Photos as tiles, documents as a list"
 msgstr "Fotos com a mosaics, documents com a llista"
 
-msgid "Fotos auswählen"
+msgid "Select photos"
 msgstr "Seleccionar fotos"
 
-msgid "Fotos für: %s"
+msgid "Photos for: %s"
 msgstr "Fotos per a: %s"
 
-msgid "Fotos hinzufügen"
+msgid "Add photos"
 msgstr "Afegir fotos"
 
-msgid "Gemischt"
+msgid "Free holdings"
+msgstr "Fons lliure"
+
+msgid "Mixed"
 msgstr "Mesclat"
 
-msgid "Gleichförmiges Grid, sachlich"
+msgid "Saved"
+msgstr "Desat"
+
+msgid "Uniform grid, plain"
 msgstr "Quadrícula uniforme, funcional"
 
-msgid "Grundeinstellungen"
+msgid "Basic settings"
 msgstr "Configuració bàsica"
+
+msgid "Hamburg, wedding, 1920s"
+msgstr "Hamburg, casament, anys 1920"
+
+msgid "John Smith, Jane Doe"
+msgstr "Joan Puig, Maria Ferrer"
 
 msgid "Icon"
 msgstr "Icona"
 
-msgid "In Datei speichern"
+msgid "In the free holdings"
+msgstr "En el fons lliure"
+
+msgid "Save to file"
 msgstr "Guardar en un fitxer"
 
-msgid "In webtrees öffnen"
+msgid "Open in webtrees"
 msgstr "Obrir en webtrees"
 
-msgid "Inaktiv"
+msgid "Inactive"
 msgstr "Inactiu"
 
-msgid "Interne Kennung"
+msgid "Internal identifier"
 msgstr "Identificador intern"
 
-msgid "Jetzt anlegen"
+msgid "YYYY-MM-DD  or  YYYY"
+msgstr "AAAA-MM-DD  o  AAAA"
+
+msgid "Create now"
 msgstr "Crear ara"
 
-msgid "Keine Dateien in diesem Ordner gefunden."
+msgid "No files found in this folder."
 msgstr "No s’han trobat fitxers en esta carpeta."
 
-msgid "Keine Fotos in dieser Quelle."
+msgid "No photos in this source."
 msgstr "No hi ha fotos en esta font."
 
-msgid "Keine Objekte in dieser Kategorie."
+msgid "No objects in this category."
 msgstr "No hi ha objectes en esta categoria."
 
-msgid "Keine Vorschaubilder (noch keine Bilddateien vom Typ jpg/png/gif/webp) in dieser Sammlung."
+msgid "No preview images (no jpg/png/gif/webp image files yet) in this collection."
 msgstr "No hi ha miniatures (encara no hi ha fitxers d’imatge jpg/png/gif/webp) en esta col·lecció."
 
-msgid "Kennung"
+msgid "Identifier"
 msgstr "Identificador"
 
-msgid "Kleinbuchstaben, Ziffern, - und _. Wird automatisch aus dem Namen erzeugt. Nur Buchstaben, Ziffern, Bindestrich. Nicht änderbar."
+msgid "Lower-case letters, digits, - and _. Generated automatically from the name. Letters, digits and hyphens only. Cannot be changed."
 msgstr "Minúscules, dígits, - i _. Es genera automàticament a partir del nom. Només lletres, dígits i guionet. No modificable."
 
-msgid "Klicken = hinzufügen/entfernen"
+msgid "Click = add/remove"
 msgstr "Clicar = afegir/eliminar"
 
-msgid "Klicken zum Umschalten"
+msgid "Click to toggle"
 msgstr "Clicar per a canviar"
 
-msgid "Klicken zum Vergrößern"
+msgid "Click to enlarge"
 msgstr "Clicar per a ampliar"
 
-msgid "Komma-getrennt"
+msgid "Comma-separated"
 msgstr "Separat per comes"
 
-msgid "Leert den APCu-Cache des Moduls. Notwendig nach manuellen Datenbankänderungen oder wenn Daten nicht aktualisiert erscheinen. Der Cache wird automatisch nach GEDCOM-Importen geleert."
+msgid "Clears the module's APCu cache. Necessary after manual database changes or when data appears not to update. The cache is cleared automatically after GEDCOM imports."
 msgstr "Buida la memòria cau APCu del mòdul. Necessari després de canvis manuals en la base de dades o quan les dades no pareixen actualitzar-se. La memòria cau es buida automàticament després d’importacions GEDCOM."
 
-msgid "Legen Sie manuell gepflegte Sammlungen an, um Medienobjekte thematisch zu gruppieren. Automatisch erkannte Sammlungen aus den GEDCOM-Medientypen werden davon nicht berührt."
+msgid "Create manually maintained collections to group media objects by topic. Automatically detected collections from the GEDCOM media types are not affected."
 msgstr "Creeu col·leccions gestionades manualment per agrupar objectes multimèdia per temes. Les col·leccions detectades automàticament a partir dels tipus de mitjans GEDCOM no es veuen afectades."
 
-msgid "Liste, auch für JPG-Scans"
+msgid "List, also for JPG scans"
 msgstr "Llista, també per a escanejos JPG"
 
-msgid "Löschen"
+msgid "Delete"
 msgstr "Eliminar"
 
-msgid "Masonry, Lightbox, EXIF-Editor"
+msgid "Masonry, lightbox, EXIF editor"
 msgstr "Masonry, Lightbox, editor EXIF"
 
-msgid "Teil des Familienarchivs ohne Verknüpfung im Stammbaum"
-msgstr "Part de l’arxiu familiar sense vinculació en l’arbre genealògic"
-
-msgid "Medienordner (automatisch befüllt)"
+msgid "Media folder (filled automatically)"
 msgstr "Carpeta multimèdia (omplida automàticament)"
 
-msgid "Mindestens 60 s, maximal 86400 s (24 h). Standard: 900 s (15 min)."
+msgid "Minimum 60 s, maximum 86400 s (24 h). Default: 900 s (15 min)."
 msgstr "Mínim 60 s, màxim 86400 s (24 h). Per defecte: 900 s (15 min)."
 
 msgid "Name"
 msgstr "Nom"
 
-msgid "Neu"
+msgid "Network error"
+msgstr "Error de xarxa"
+
+msgid "New"
 msgstr "Nou"
 
-msgid "Neue Sammlung"
+msgid "New collection"
 msgstr "Nova col·lecció"
 
-msgid "Neue Sammlung anlegen"
+msgid "Create new collection"
 msgstr "Crear nova col·lecció"
 
-msgid "Freier Bestand"
-msgstr "Fons lliure"
-
-msgid "Im freien Bestand"
-msgstr "En el fons lliure"
-
-msgid "Noch keine Sammlungen angelegt."
+msgid "No collections created yet."
 msgstr "Encara no s’han creat col·leccions."
 
-msgid "Noch keine verwalteten Sammlungen vorhanden."
+msgid "No managed collections yet."
 msgstr "Encara no hi ha col·leccions gestionades."
 
-msgid "Noch nicht in webtrees importiert"
+msgid "Not yet imported into webtrees"
 msgstr "Encara no importat en webtrees"
 
-msgid "Nr."
+msgid "No."
 msgstr "Núm."
 
-msgid "Ohne Typ"
-msgstr "Sense tipus"
-
-msgid "Ordnerpfad relativ zu data/media/ – Unterordner werden automatisch eingeschlossen. Leer lassen für manuelle Pflege."
-msgstr "Ruta de carpeta relativa a data/media/ — els subdirectoris s’inclouen automàticament. Deixar buit per a gestió manual."
-
-msgid "Personen"
-msgstr "Persones"
-
-msgid "Reihenfolge"
-msgstr "Ordre"
-
-msgid "Sammlung #%s nicht gefunden."
-msgstr "No s’ha trobat la col·lecció #%s."
-
-msgid "Sammlung #%s wurde gelöscht."
-msgstr "La col·lecció #%s s’ha eliminat."
-
-msgid "Sammlung #%s wurde nicht gefunden."
-msgstr "La col·lecció #%s no s’ha trobat."
-
-msgid "Sammlung anlegen"
-msgstr "Crear col·lecció"
-
-msgid "Sammlung bearbeiten: %s"
-msgstr "Editar col·lecció: %s"
-
-msgid "Sammlung nicht gefunden."
-msgstr "Col·lecció no trobada."
-
-msgid "Sammlung „%s\" wurde aktualisiert."
-msgstr "La col·lecció «%s» s’ha actualitzat."
-
-msgid "Sammlung „%s\" wurde angelegt."
-msgstr "La col·lecció «%s» s’ha creat."
-
-msgid "Sammlungen"
-msgstr "Col·leccions"
-
-msgid "Sammlungen verwalten"
-msgstr "Gestionar col·leccions"
-
-msgid "Sammlungen – Einstellungen"
-msgstr "Col·leccions – Configuració"
-
-msgid "Schließen"
-msgstr "Tancar"
-
-msgid "Seite %s von %s"
-msgstr "Pàgina %s de %s"
-
-msgid "Sichtbar (aktiv)"
-msgstr "Visible (actiu)"
-
-msgid "Sie haben keine Berechtigung für diese Aktion."
-msgstr "No teniu permís per a esta acció."
-
-msgid "Sie haben keine Berechtigung für diese Seite."
-msgstr "No teniu permís per a accedir a esta pàgina."
-
-msgid "Stammbaum:"
-msgstr "Arbre genealògic:"
-
-msgid "Stichwörter"
-msgstr "Paraules clau"
-
-msgid "Thematische Sammlungen"
-msgstr "Col·leccions temàtiques"
-
-msgid "Vollbild in neuem Tab"
-msgstr "Pantalla completa en una pestanya nova"
-
-msgid "Vorschau"
-msgstr "Previsualització"
-
-msgid "Wer, Was, Wann, Wo…"
-msgstr "Qui, Què, Quan, On…"
-
-msgid "Zu Sammlung hinzufügen"
-msgstr "Afegir a la col·lecció"
-
-msgid "Zurück"
-msgstr "Arrere"
-
-msgid "Zurück zu den Einstellungen"
-msgstr "Tornar a la configuració"
-
-msgid "z.B. Familienfotos"
-msgstr "p. ex. fotos familiars"
-
-msgid "Änderungen speichern"
-msgstr "Guardar canvis"
-
-msgid "%s verwaltete Sammlung"
-msgid_plural "%s verwaltete Sammlungen"
-msgstr[0] "%s col·lecció gestionada"
-msgstr[1] "%s col·leccions gestionades"
-
-msgid "%s Objekt"
-msgid_plural "%s Objekte"
-msgstr[0] "%s objecte"
-msgstr[1] "%s objectes"
-
-msgid "%s Foto"
-msgid_plural "%s Fotos"
-msgstr[0] "%s foto"
-msgstr[1] "%s fotos"
-
-msgid "%s Datei"
-msgid_plural "%s Dateien"
-msgstr[0] "%s fitxer"
-msgstr[1] "%s fitxers"
-
-msgid "%s Medienobjekt im freien Bestand"
-msgid_plural "%s Medienobjekte im freien Bestand"
-msgstr[0] "%s objecte multimèdia en el fons lliure"
-msgstr[1] "%s objectes multimèdia en el fons lliure"
-
-msgid "Seitennavigation"
-msgstr "Navegació de pàgines"
-
-msgid "Vorherige Seite"
-msgstr "Pàgina anterior"
-
-msgid "Nächste Seite"
+msgid "Next page"
 msgstr "Pàgina següent"
 
-msgid "Sammlung „%s\" wirklich löschen?"
+msgid "Without type"
+msgstr "Sense tipus"
+
+msgid "Folder path relative to data/media/ – sub-folders are included automatically. Leave empty for manual maintenance."
+msgstr "Ruta de carpeta relativa a data/media/ — els subdirectoris s’inclouen automàticament. Deixar buit per a gestió manual."
+
+msgid "Individuals"
+msgstr "Persones"
+
+msgid "Order"
+msgstr "Ordre"
+
+msgid "Collection #%s not found."
+msgstr "No s’ha trobat la col·lecció #%s."
+
+msgid "Collection #%s was deleted."
+msgstr "La col·lecció #%s s’ha eliminat."
+
+msgid "Collection #%s was not found."
+msgstr "La col·lecció #%s no s’ha trobat."
+
+msgid "Create collection"
+msgstr "Crear col·lecció"
+
+msgid "Edit collection: %s"
+msgstr "Editar col·lecció: %s"
+
+msgid "Collection not found."
+msgstr "Col·lecció no trobada."
+
+msgid "Really delete collection “%s”?"
 msgstr "Voleu eliminar realment la col·lecció «%s»?"
 
-msgid "Vorschau: %s von %s Objekten."
-msgstr "Vista prèvia: %s de %s objectes."
+msgid "Collection “%s” was updated."
+msgstr "La col·lecció «%s» s’ha actualitzat."
 
-msgid "Videos, Audio & Dokumente"
-msgstr "Vídeos, àudio i documents"
+msgid "Collection “%s” was created."
+msgstr "La col·lecció «%s» s’ha creat."
 
-msgid "JJJJ-MM-TT  oder  JJJJ"
-msgstr "AAAA-MM-DD  o  AAAA"
+msgid "Collections"
+msgstr "Col·leccions"
 
-msgid "z.B. 1923-06-15 oder 1923"
-msgstr "p. ex. 1923-06-15 o 1923"
+msgid "Manage collections"
+msgstr "Gestionar col·leccions"
 
-msgid "Hans Maier, Bertha Müller"
-msgstr "Joan Puig, Maria Ferrer"
+msgid "Collections – settings"
+msgstr "Col·leccions – Configuració"
 
-msgid "Hamburg, Hochzeit, 1920er"
-msgstr "Hamburg, casament, anys 1920"
+msgid "Close"
+msgstr "Tancar"
 
-msgid "Speichern"
+msgid "Page %s of %s"
+msgstr "Pàgina %s de %s"
+
+msgid "Page navigation"
+msgstr "Navegació de pàgines"
+
+msgid "Visible (active)"
+msgstr "Visible (actiu)"
+
+msgid "You do not have permission for this action."
+msgstr "No teniu permís per a esta acció."
+
+msgid "You do not have permission for this page."
+msgstr "No teniu permís per a accedir a esta pàgina."
+
+msgid "Save"
 msgstr "Desa"
 
-msgid "Beschreibung / Titel"
-msgstr "Descripció / títol"
-
-msgid "(leer)"
-msgstr "(buit)"
-
-msgid "(keine)"
-msgstr "(cap)"
-
-msgid "→ in EXIF übernehmen"
-msgstr "→ copia a EXIF"
-
-msgid "… und %s weitere"
-msgstr "… i %s més"
-
-msgid "… (%s insgesamt)"
-msgstr "… (%s en total)"
-
-msgid "Speichern…"
+msgid "Saving…"
 msgstr "Desant…"
 
-msgid "Gespeichert"
-msgstr "Desat"
+msgid "Family tree:"
+msgstr "Arbre genealògic:"
 
-msgid "Umbenennen…"
-msgstr "Reanomenant…"
+msgid "Keywords"
+msgstr "Paraules clau"
 
-msgid "Umbenannt"
+msgid "Part of the family archive, not linked in the family tree"
+msgstr "Part de l’arxiu familiar sense vinculació en l’arbre genealògic"
+
+msgid "Thematic collections"
+msgstr "Col·leccions temàtiques"
+
+msgid "Renamed"
 msgstr "Reanomenat"
 
-msgid "Fehler"
-msgstr "Error"
+msgid "Renaming…"
+msgstr "Reanomenant…"
 
-msgid "Netzwerkfehler"
-msgstr "Error de xarxa"
+msgid "Videos, audio & documents"
+msgstr "Vídeos, àudio i documents"
+
+msgid "Full screen in a new tab"
+msgstr "Pantalla completa en una pestanya nova"
+
+msgid "Previous page"
+msgstr "Pàgina anterior"
+
+msgid "Preview"
+msgstr "Previsualització"
+
+msgid "Preview: %s of %s objects."
+msgstr "Vista prèvia: %s de %s objectes."
+
+msgid "Who, what, when, where…"
+msgstr "Qui, Què, Quan, On…"
+
+msgid "Add to collection"
+msgstr "Afegir a la col·lecció"
+
+msgid "Back"
+msgstr "Arrere"
+
+msgid "Back to settings"
+msgstr "Tornar a la configuració"
+
+msgid "e.g. 1923-06-15 or 1923"
+msgstr "p. ex. 1923-06-15 o 1923"
+
+msgid "e.g. family photos"
+msgstr "p. ex. fotos familiars"
+
+msgid "Save changes"
+msgstr "Guardar canvis"
+
+msgid "… (%s in total)"
+msgstr "… (%s en total)"
+
+msgid "… and %s more"
+msgstr "… i %s més"
+
+msgid "→ copy into EXIF"
+msgstr "→ copia a EXIF"

@@ -24,24 +24,24 @@ use Fisharebest\Webtrees\I18N;
                 <i class="fas fa-folder fs-4" style="color:#6c757d"></i>
             </span>
             <div>
-                <h2 class="mb-0"><?= I18N::translate('Freier Bestand') ?></h2>
+                <h2 class="mb-0"><?= I18N::translate('Free holdings') ?></h2>
                 <span class="badge bg-secondary">
-                    <?= I18N::plural('%s Objekt', '%s Objekte', $aktive['gesamt'], I18N::number($aktive['gesamt'])) ?>
+                    <?= I18N::plural('%s object', '%s objects', $aktive['gesamt'], I18N::number($aktive['gesamt'])) ?>
                 </span>
                 <p class="text-muted small mb-0 mt-1">
-                    <?= I18N::translate('Teil des Familienarchivs ohne Verknüpfung im Stammbaum') ?>
+                    <?= I18N::translate('Part of the family archive, not linked in the family tree') ?>
                 </p>
             </div>
             <a href="<?= e(route('sammlungen.sammlungen', ['tree' => $treeName])) ?>"
                class="btn btn-sm btn-outline-secondary ms-auto">
-                <i class="fas fa-arrow-left me-1"></i><?= I18N::translate('Zurück') ?>
+                <i class="fas fa-arrow-left me-1"></i><?= I18N::translate('Back') ?>
             </a>
         </div>
 
         <?php if ($aktive['typen'] === []) : ?>
             <div class="alert alert-success">
                 <i class="fas fa-check me-2"></i>
-                <?= I18N::translate('Alle Medienobjekte sind mit Personen oder Familien verknüpft.') ?>
+                <?= I18N::translate('All media objects are linked to individuals or families.') ?>
             </div>
         <?php else : ?>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
@@ -60,7 +60,7 @@ use Fisharebest\Webtrees\I18N;
                                     <div>
                                         <h5 class="card-title mb-1 text-dark"><?= e($typName) ?></h5>
                                         <span class="badge bg-secondary">
-                                            <?= I18N::plural('%s Objekt', '%s Objekte', $typAnzahl, I18N::number($typAnzahl)) ?>
+                                            <?= I18N::plural('%s object', '%s objects', $typAnzahl, I18N::number($typAnzahl)) ?>
                                         </span>
                                     </div>
                                 </div>

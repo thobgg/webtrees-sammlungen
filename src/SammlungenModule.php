@@ -189,7 +189,7 @@ class SammlungenModule extends AbstractModule implements
         }
 
         return new Menu(
-            I18N::translate('Sammlungen'),
+            I18N::translate('Collections'),
             route('sammlungen.sammlungen', ['tree' => $tree->name()]),
             'menu-sammlungen',
             ['rel' => 'nofollow'],

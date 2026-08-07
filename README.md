@@ -236,7 +236,7 @@ Available in the admin UI:
 
 The UI is available in **German**, **English**, **Catalan**, **Spanish**, **Slovak** and (partially) **Dutch**.
 Translation files live in `resources/lang/` (`de`, `en`, `ca`, `es`, `nl`, `sk`). The source strings
-are wrapped in `I18N::translate()` and German is the source language.
+are wrapped in `I18N::translate()`; English is the source language, so untranslated strings fall back to English.
 
 Contributions welcome: copy `resources/lang/nl.po` (a complete, up-to-date template),
 translate the empty `msgstr` entries, compile with `msgfmt nl.po -o nl.mo`, and open a

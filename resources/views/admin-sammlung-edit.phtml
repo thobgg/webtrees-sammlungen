@@ -37,16 +37,16 @@ $fAnsicht      = $isNeu ? 'foto' : ($sammlung->ansicht ?? 'foto');
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="<?= e(route('sammlungen.admin.config')) ?>">
-                    <?= I18N::translate('Einstellungen') ?>
+                    <?= I18N::translate('Settings') ?>
                 </a>
             </li>
             <li class="breadcrumb-item">
                 <a href="<?= e(route('sammlungen.admin.sammlungen', ['tree' => $tree->name()])) ?>">
-                    <?= I18N::translate('Sammlungen') ?>
+                    <?= I18N::translate('Collections') ?>
                 </a>
             </li>
             <li class="breadcrumb-item active">
-                <?= $isNeu ? I18N::translate('Neu') : e($sammlung->name) ?>
+                <?= $isNeu ? I18N::translate('New') : e($sammlung->name) ?>
             </li>
         </ol>
     </nav>
@@ -63,7 +63,7 @@ $fAnsicht      = $isNeu ? 'foto' : ($sammlung->ansicht ?? 'foto');
                 <div class="card shadow-sm">
                     <div class="card-header fw-semibold">
                         <i class="fas fa-info-circle me-2"></i>
-                        <?= I18N::translate('Grundeinstellungen') ?>
+                        <?= I18N::translate('Basic settings') ?>
                     </div>
                     <div class="card-body">
 
@@ -82,14 +82,14 @@ $fAnsicht      = $isNeu ? 'foto' : ($sammlung->ansicht ?? 'foto');
                                    maxlength="255"
                                    autofocus>
                             <div class="form-text">
-                                <?= I18N::translate('Angezeigter Name der Sammlung.') ?>
+                                <?= I18N::translate('Display name of the collection.') ?>
                             </div>
                         </div>
 
                         <!-- Slug -->
                         <div class="mb-3">
                             <label for="slug" class="form-label fw-semibold">
-                                <?= I18N::translate('Interne Kennung') ?>
+                                <?= I18N::translate('Internal identifier') ?>
                             </label>
                             <input type="text"
                                    id="slug"
@@ -101,9 +101,7 @@ $fAnsicht      = $isNeu ? 'foto' : ($sammlung->ansicht ?? 'foto');
                                    <?= !$isNeu ? 'readonly' : '' ?>>
                             <div class="form-text">
                                 <?= I18N::translate(
-                                    'Kleinbuchstaben, Ziffern, - und _. '
-                                    . 'Wird automatisch aus dem Namen erzeugt. '
-                                    . 'Nur Buchstaben, Ziffern, Bindestrich. Nicht änderbar.'
+                                    'Lower-case letters, digits, - and _. Generated automatically from the name. Letters, digits and hyphens only. Cannot be changed.'
                                 ) ?>
                             </div>
                         </div>
@@ -111,7 +109,7 @@ $fAnsicht      = $isNeu ? 'foto' : ($sammlung->ansicht ?? 'foto');
                         <!-- Beschreibung -->
                         <div class="mb-0">
                             <label for="beschreibung" class="form-label fw-semibold">
-                                <?= I18N::translate('Beschreibung') ?>
+                                <?= I18N::translate('Description') ?>
                             </label>
                             <textarea id="beschreibung"
                                       name="beschreibung"
@@ -122,38 +120,38 @@ $fAnsicht      = $isNeu ? 'foto' : ($sammlung->ansicht ?? 'foto');
 
                         <!-- Anzeigetyp -->
                         <div class="mb-3 mt-3">
-                            <label class="form-label fw-semibold"><?= I18N::translate('Anzeigetyp') ?></label>
+                            <label class="form-label fw-semibold"><?= I18N::translate('Display type') ?></label>
                             <div class="d-flex gap-3">
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="ansicht"
                                            id="ansicht-foto" value="foto" <?= $fAnsicht === 'foto' ? 'checked' : '' ?>>
                                     <label class="form-check-label" for="ansicht-foto">
-                                        📷 <?= I18N::translate('Fotogalerie') ?>
-                                        <small class="text-muted d-block"><?= I18N::translate('Masonry, Lightbox, EXIF-Editor') ?></small>
+                                        📷 <?= I18N::translate('Photo gallery') ?>
+                                        <small class="text-muted d-block"><?= I18N::translate('Masonry, lightbox, EXIF editor') ?></small>
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="ansicht"
                                            id="ansicht-raster" value="raster" <?= $fAnsicht === 'raster' ? 'checked' : '' ?>>
                                     <label class="form-check-label" for="ansicht-raster">
-                                        🔲 <?= I18N::translate('Foto-Raster') ?>
-                                        <small class="text-muted d-block"><?= I18N::translate('Gleichförmiges Grid, sachlich') ?></small>
+                                        🔲 <?= I18N::translate('Photo grid') ?>
+                                        <small class="text-muted d-block"><?= I18N::translate('Uniform grid, plain') ?></small>
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="ansicht"
                                            id="ansicht-gemischt" value="gemischt" <?= $fAnsicht === 'gemischt' ? 'checked' : '' ?>>
                                     <label class="form-check-label" for="ansicht-gemischt">
-                                        🔀 <?= I18N::translate('Gemischt') ?>
-                                        <small class="text-muted d-block"><?= I18N::translate('Fotos als Kacheln, Dokumente als Liste') ?></small>
+                                        🔀 <?= I18N::translate('Mixed') ?>
+                                        <small class="text-muted d-block"><?= I18N::translate('Photos as tiles, documents as a list') ?></small>
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="ansicht"
                                            id="ansicht-dokument" value="dokument" <?= $fAnsicht === 'dokument' ? 'checked' : '' ?>>
                                     <label class="form-check-label" for="ansicht-dokument">
-                                        📄 <?= I18N::translate('Dokumentenliste') ?>
-                                        <small class="text-muted d-block"><?= I18N::translate('Liste, auch für JPG-Scans') ?></small>
+                                        📄 <?= I18N::translate('Document list') ?>
+                                        <small class="text-muted d-block"><?= I18N::translate('List, also for JPG scans') ?></small>
                                     </label>
                                 </div>
                             </div>
@@ -162,7 +160,7 @@ $fAnsicht      = $isNeu ? 'foto' : ($sammlung->ansicht ?? 'foto');
                         <!-- Ordner-Verknüpfung -->
                         <div class="mb-0 mt-3">
                             <label for="ordner" class="form-label fw-semibold">
-                                <?= I18N::translate('Medienordner (automatisch befüllt)') ?>
+                                <?= I18N::translate('Media folder (filled automatically)') ?>
                             </label>
                             <input type="text"
                                    id="ordner"
@@ -170,7 +168,7 @@ $fAnsicht      = $isNeu ? 'foto' : ($sammlung->ansicht ?? 'foto');
                                    class="form-control font-monospace"
                                    list="ordner-vorschlaege"
                                    value="<?= e($fOrdner) ?>"
-                                   placeholder="<?= I18N::translate('z.B. Familienfotos') ?>"
+                                   placeholder="<?= I18N::translate('e.g. family photos') ?>"
                                    autocomplete="off">
                             <datalist id="ordner-vorschlaege">
                                 <?php foreach ($verfuegbareOrdner as $o) : ?>
@@ -178,7 +176,7 @@ $fAnsicht      = $isNeu ? 'foto' : ($sammlung->ansicht ?? 'foto');
                                 <?php endforeach ?>
                             </datalist>
                             <div class="form-text">
-                                <?= I18N::translate('Ordnerpfad relativ zu data/media/ – Unterordner werden automatisch eingeschlossen. Leer lassen für manuelle Pflege.') ?>
+                                <?= I18N::translate('Folder path relative to data/media/ – sub-folders are included automatically. Leave empty for manual maintenance.') ?>
                             </div>
                         </div>
 
@@ -191,7 +189,7 @@ $fAnsicht      = $isNeu ? 'foto' : ($sammlung->ansicht ?? 'foto');
                 <div class="card shadow-sm">
                     <div class="card-header fw-semibold">
                         <i class="fas fa-paint-brush me-2"></i>
-                        <?= I18N::translate('Darstellung') ?>
+                        <?= I18N::translate('Appearance') ?>
                     </div>
                     <div class="card-body">
 
@@ -206,14 +204,14 @@ $fAnsicht      = $isNeu ? 'foto' : ($sammlung->ansicht ?? 'foto');
                                    style="color:<?= e($fFarbe) ?>"></i>
                             </div>
                             <div class="small text-muted" id="icon-vorschau-name">
-                                <?= e($fName !== '' ? $fName : I18N::translate('Vorschau')) ?>
+                                <?= e($fName !== '' ? $fName : I18N::translate('Preview')) ?>
                             </div>
                         </div>
 
                         <!-- Farbe -->
                         <div class="mb-3">
                             <label for="farbe" class="form-label fw-semibold">
-                                <?= I18N::translate('Farbe') ?>
+                                <?= I18N::translate('Colour') ?>
                             </label>
                             <div class="input-group">
                                 <input type="color"
@@ -249,7 +247,7 @@ $fAnsicht      = $isNeu ? 'foto' : ($sammlung->ansicht ?? 'foto');
                         <!-- Reihenfolge + Aktiv -->
                         <div class="mb-3">
                             <label for="reihenfolge" class="form-label fw-semibold">
-                                <?= I18N::translate('Reihenfolge') ?>
+                                <?= I18N::translate('Order') ?>
                             </label>
                             <input type="number"
                                    id="reihenfolge"
@@ -268,7 +266,7 @@ $fAnsicht      = $isNeu ? 'foto' : ($sammlung->ansicht ?? 'foto');
                                    name="aktiv"
                                    <?= $fAktiv ? 'checked' : '' ?>>
                             <label class="form-check-label" for="aktiv">
-                                <?= I18N::translate('Sichtbar (aktiv)') ?>
+                                <?= I18N::translate('Visible (active)') ?>
                             </label>
                         </div>
 
@@ -283,13 +281,13 @@ $fAnsicht      = $isNeu ? 'foto' : ($sammlung->ansicht ?? 'foto');
             <a href="<?= e(route('sammlungen.admin.sammlungen', ['tree' => $tree->name()])) ?>"
                class="btn btn-outline-secondary">
                 <i class="fas fa-times me-1"></i>
-                <?= I18N::translate('Abbrechen') ?>
+                <?= I18N::translate('Cancel') ?>
             </a>
             <button type="submit" class="btn btn-primary">
                 <i class="fas fa-save me-1"></i>
                 <?= $isNeu
-                    ? I18N::translate('Sammlung anlegen')
-                    : I18N::translate('Änderungen speichern') ?>
+                    ? I18N::translate('Create collection')
+                    : I18N::translate('Save changes') ?>
             </button>
         </div>
 
@@ -320,7 +318,7 @@ $fAnsicht      = $isNeu ? 'foto' : ($sammlung->ansicht ?? 'foto');
                     .replace(/^-+|-+$/g, '')
                     .substring(0, 80);
             }
-            vorschauNm.textContent = nameInput.value || '<?= e(I18N::translate('Vorschau')) ?>';
+            vorschauNm.textContent = nameInput.value || '<?= e(I18N::translate('Preview')) ?>';
         });
     }
 

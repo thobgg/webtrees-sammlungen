@@ -27,30 +27,30 @@ $neuUrl   = $tree !== null
             <small class="text-muted">
                 <a href="<?= e(route('sammlungen.admin.config')) ?>"
                    class="text-decoration-none">
-                    ← <?= I18N::translate('Zurück zu den Einstellungen') ?>
+                    ← <?= I18N::translate('Back to settings') ?>
                 </a>
             </small>
         </div>
         <?php if ($tree !== null) : ?>
             <a href="<?= e($neuUrl) ?>" class="btn btn-primary">
                 <i class="fas fa-plus me-1"></i>
-                <?= I18N::translate('Neue Sammlung') ?>
+                <?= I18N::translate('New collection') ?>
             </a>
         <?php endif ?>
     </div>
 
     <?php if ($tree === null) : ?>
         <div class="alert alert-warning">
-            <?= I18N::translate('Bitte wählen Sie oben einen Stammbaum aus.') ?>
+            <?= I18N::translate('Please select a family tree above.') ?>
         </div>
     <?php elseif ($sammlungen === []) : ?>
         <div class="alert alert-info d-flex align-items-center gap-3">
             <i class="fas fa-info-circle fs-4 text-info"></i>
             <div>
-                <?= I18N::translate('Noch keine verwalteten Sammlungen vorhanden.') ?>
+                <?= I18N::translate('No managed collections yet.') ?>
                 <br>
                 <a href="<?= e($neuUrl) ?>" class="fw-semibold">
-                    <?= I18N::translate('Erste Sammlung anlegen') ?>
+                    <?= I18N::translate('Create first collection') ?>
                 </a>
             </div>
         </div>
@@ -61,18 +61,18 @@ $neuUrl   = $tree !== null
                 <table class="table table-hover mb-0 align-middle">
                     <thead class="table-light">
                         <tr>
-                            <th style="width:3rem"><?= I18N::translate('Nr.') ?></th>
+                            <th style="width:3rem"><?= I18N::translate('No.') ?></th>
                             <th style="width:2.5rem"><?= I18N::translate('Icon') ?></th>
                             <th><?= I18N::translate('Name') ?></th>
-                            <th><?= I18N::translate('Kennung') ?></th>
+                            <th><?= I18N::translate('Identifier') ?></th>
                             <th style="width:5rem" class="text-center">
-                                <?= I18N::translate('Aktiv') ?>
+                                <?= I18N::translate('Active') ?>
                             </th>
                             <th style="width:5rem" class="text-end">
-                                <?= I18N::translate('Reihenfolge') ?>
+                                <?= I18N::translate('Order') ?>
                             </th>
                             <th style="width:8rem" class="text-end">
-                                <?= I18N::translate('Aktionen') ?>
+                                <?= I18N::translate('Actions') ?>
                             </th>
                         </tr>
                     </thead>
@@ -101,7 +101,7 @@ $neuUrl   = $tree !== null
                                             class="btn btn-sm p-0 border-0 bg-transparent js-aktiv-toggle"
                                             data-id="<?= (int) $s->id ?>"
                                             data-aktiv="<?= $s->aktiv ? '1' : '0' ?>"
-                                            title="<?= I18N::translate('Klicken zum Umschalten') ?>">
+                                            title="<?= I18N::translate('Click to toggle') ?>">
                                         <span class="badge <?= $s->aktiv ? 'bg-success' : 'bg-secondary' ?>">
                                             <i class="fas <?= $s->aktiv ? 'fa-check' : 'fa-times' ?>"></i>
                                         </span>
@@ -114,23 +114,23 @@ $neuUrl   = $tree !== null
                                     <?php if ($s->ordner === null || $s->ordner === '') : ?>
                                         <a href="<?= e(route('sammlungen.admin.sammlung-fotos', ['tree' => $treeName, 'id' => $s->id])) ?>"
                                            class="btn btn-sm btn-outline-success me-1"
-                                           title="<?= I18N::translate('Fotos auswählen') ?>">📷</a>
+                                           title="<?= I18N::translate('Select photos') ?>">📷</a>
                                     <?php endif ?>
                                     <a href="<?= e(route('sammlungen.admin.sammlungen.edit', ['tree' => $treeName, 'id' => $s->id])) ?>"
                                        class="btn btn-sm btn-outline-primary me-1">
-                                        <?= I18N::translate('Bearbeiten') ?>
+                                        <?= I18N::translate('Edit') ?>
                                     </a>
 
                                     <form method="post"
                                           action="<?= e(route('sammlungen.admin.sammlungen.delete', ['tree' => $treeName])) ?>"
                                           class="d-inline"
                                           onsubmit="return confirm('<?= e(I18N::translate(
-                                              'Sammlung „%s" wirklich löschen?', $s->name
+                                              'Really delete collection “%s”?', $s->name
                                           )) ?>')">
                                         <?= csrf_field() ?>
                                         <input type="hidden" name="id" value="<?= $s->id ?>">
                                         <button type="submit" class="btn btn-sm btn-outline-danger">
-                                            <?= I18N::translate('Löschen') ?>
+                                            <?= I18N::translate('Delete') ?>
                                         </button>
                                     </form>
                                 </td>
@@ -142,7 +142,7 @@ $neuUrl   = $tree !== null
         </div>
 
         <p class="text-muted small mt-2">
-            <?= I18N::plural('%s verwaltete Sammlung', '%s verwaltete Sammlungen',
+            <?= I18N::plural('%s managed collection', '%s managed collections',
                 count($sammlungen), I18N::number(count($sammlungen))) ?>
         </p>
 

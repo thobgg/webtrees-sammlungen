@@ -25,13 +25,13 @@ use Fisharebest\Webtrees\I18N;
                                     <div class="d-flex gap-2 flex-shrink-0 align-items-center">
                                         <a id="archiv-lb-fullsize" href="#" target="_blank"
                                            class="btn btn-sm btn-outline-light"
-                                           title="<?= I18N::translate('Vollbild in neuem Tab') ?>">↗</a>
+                                           title="<?= I18N::translate('Full screen in a new tab') ?>">↗</a>
                                         <?php if ($manuelleGalerien !== [] && $istAdmin) : ?>
                                             <div class="dropdown" id="archiv-lb-sammlung-dd">
                                                 <button class="btn btn-sm btn-outline-success dropdown-toggle d-none"
                                                         id="archiv-lb-sammlung-btn"
                                                         data-bs-toggle="dropdown" aria-expanded="false"
-                                                        title="<?= I18N::translate('Zu Sammlung hinzufügen') ?>">＋</button>
+                                                        title="<?= I18N::translate('Add to collection') ?>">＋</button>
                                                 <ul class="dropdown-menu dropdown-menu-dark" id="archiv-lb-sammlung-list">
                                                     <?php foreach ($manuelleGalerien as $mg) : ?>
                                                         <li>
@@ -47,11 +47,11 @@ use Fisharebest\Webtrees\I18N;
                                         <?php endif ?>
                                         <a id="archiv-lb-link" href="#"
                                            class="btn btn-sm btn-outline-light d-none">
-                                            <?= I18N::translate('In webtrees öffnen') ?>
+                                            <?= I18N::translate('Open in webtrees') ?>
                                         </a>
                                         <?php if ($istAdmin) : ?>
                                             <button id="archiv-lb-edit-btn" class="btn btn-sm btn-outline-warning"
-                                                    title="<?= I18N::translate('EXIF/XMP bearbeiten') ?>">✏️</button>
+                                                    title="<?= I18N::translate('Edit EXIF/XMP') ?>">✏️</button>
                                         <?php endif ?>
                                         <button type="button" class="btn-close btn-close-white ms-1"
                                                 data-bs-dismiss="modal"></button>
@@ -80,42 +80,42 @@ use Fisharebest\Webtrees\I18N;
                                     <div class="d-flex justify-content-between align-items-center mb-3">
                                         <span class="text-white fw-semibold small">EXIF / XMP</span>
                                         <button id="archiv-edit-cancel" class="btn-close btn-close-white"
-                                                title="<?= I18N::translate('Schließen') ?>"></button>
+                                                title="<?= I18N::translate('Close') ?>"></button>
                                     </div>
 
                                     <div class="mb-3">
-                                        <label class="form-label text-white-50 small mb-1"><?= I18N::translate('Beschreibung') ?></label>
+                                        <label class="form-label text-white-50 small mb-1"><?= I18N::translate('Description') ?></label>
                                         <textarea id="archiv-edit-beschreibung" rows="4"
                                                   class="form-control form-control-sm bg-dark text-white border-secondary"
-                                                  placeholder="<?= I18N::translate('Wer, Was, Wann, Wo…') ?>"></textarea>
+                                                  placeholder="<?= I18N::translate('Who, what, when, where…') ?>"></textarea>
                                     </div>
 
                                     <div class="mb-3">
-                                        <label class="form-label text-white-50 small mb-1"><?= I18N::translate('Datum') ?></label>
+                                        <label class="form-label text-white-50 small mb-1"><?= I18N::translate('Date') ?></label>
                                         <input id="archiv-edit-datum" type="text"
                                                class="form-control form-control-sm bg-dark text-white border-secondary"
-                                               placeholder="<?= I18N::translate('JJJJ-MM-TT  oder  JJJJ') ?>">
-                                        <div class="form-text text-white-50 small"><?= I18N::translate('z.B. 1923-06-15 oder 1923') ?></div>
+                                               placeholder="<?= I18N::translate('YYYY-MM-DD  or  YYYY') ?>">
+                                        <div class="form-text text-white-50 small"><?= I18N::translate('e.g. 1923-06-15 or 1923') ?></div>
                                     </div>
 
                                     <div class="mb-3">
-                                        <label class="form-label text-white-50 small mb-1"><?= I18N::translate('Personen') ?></label>
+                                        <label class="form-label text-white-50 small mb-1"><?= I18N::translate('Individuals') ?></label>
                                         <input id="archiv-edit-personen" type="text"
                                                class="form-control form-control-sm bg-dark text-white border-secondary"
-                                               placeholder="<?= I18N::translate('Hans Maier, Bertha Müller') ?>">
-                                        <div class="form-text text-white-50 small"><?= I18N::translate('Komma-getrennt') ?></div>
+                                               placeholder="<?= I18N::translate('John Smith, Jane Doe') ?>">
+                                        <div class="form-text text-white-50 small"><?= I18N::translate('Comma-separated') ?></div>
                                     </div>
 
                                     <div class="mb-4">
-                                        <label class="form-label text-white-50 small mb-1"><?= I18N::translate('Stichwörter') ?></label>
+                                        <label class="form-label text-white-50 small mb-1"><?= I18N::translate('Keywords') ?></label>
                                         <input id="archiv-edit-keywords" type="text"
                                                class="form-control form-control-sm bg-dark text-white border-secondary"
-                                               placeholder="<?= I18N::translate('Hamburg, Hochzeit, 1920er') ?>">
-                                        <div class="form-text text-white-50 small"><?= I18N::translate('Komma-getrennt') ?></div>
+                                               placeholder="<?= I18N::translate('Hamburg, wedding, 1920s') ?>">
+                                        <div class="form-text text-white-50 small"><?= I18N::translate('Comma-separated') ?></div>
                                     </div>
 
                                     <button id="archiv-edit-save" class="btn btn-success btn-sm w-100" style="background:#198754;color:#fff;border-color:#198754">
-                                        <?= I18N::translate('In Datei speichern') ?>
+                                        <?= I18N::translate('Save to file') ?>
                                     </button>
                                     <div id="archiv-edit-status" class="small text-center mt-2"></div>
 
@@ -127,7 +127,7 @@ use Fisharebest\Webtrees\I18N;
                                     <div id="archiv-datei-section" class="mt-4 d-none">
                                         <div class="border-top border-secondary pt-3">
                                             <div class="text-white-50 small fw-semibold mb-2 text-uppercase" style="font-size:.7rem;letter-spacing:.05em">
-                                                <?= I18N::translate('Datei') ?>
+                                                <?= I18N::translate('File') ?>
                                             </div>
                                             <div id="archiv-datei-name" class="text-white small mb-1 d-flex align-items-center gap-2">
                                                 <span class="text-truncate flex-grow-1" id="archiv-datei-name-text" style="font-size:.75rem"></span>
@@ -135,15 +135,15 @@ use Fisharebest\Webtrees\I18N;
                                                 <button id="archiv-datei-rename-btn" type="button"
                                                         class="btn btn-sm btn-outline-warning py-0 px-1"
                                                         style="font-size:.65rem"
-                                                        title="<?= I18N::translate('Datei umbenennen') ?>">✏️</button>
+                                                        title="<?= I18N::translate('Rename file') ?>">✏️</button>
                                                 <?php endif ?>
                                             </div>
                                             <div id="archiv-datei-rename-form" class="d-none mb-2">
                                                 <input type="text" id="archiv-datei-rename-input"
                                                        class="form-control form-control-sm bg-dark text-white border-secondary">
                                                 <div class="d-flex gap-1 mt-1">
-                                                    <button id="archiv-datei-rename-save" type="button" class="btn btn-sm btn-success py-0 px-2" style="font-size:.7rem;background:#198754;color:#fff;border-color:#198754">✓ <?= I18N::translate('Speichern') ?></button>
-                                                    <button id="archiv-datei-rename-cancel" type="button" class="btn btn-sm btn-outline-secondary py-0 px-2" style="font-size:.7rem"><?= I18N::translate('Abbrechen') ?></button>
+                                                    <button id="archiv-datei-rename-save" type="button" class="btn btn-sm btn-success py-0 px-2" style="font-size:.7rem;background:#198754;color:#fff;border-color:#198754">✓ <?= I18N::translate('Save') ?></button>
+                                                    <button id="archiv-datei-rename-cancel" type="button" class="btn btn-sm btn-outline-secondary py-0 px-2" style="font-size:.7rem"><?= I18N::translate('Cancel') ?></button>
                                                 </div>
                                                 <div id="archiv-datei-rename-status" class="small mt-1"></div>
                                             </div>
@@ -155,7 +155,7 @@ use Fisharebest\Webtrees\I18N;
                                     <div id="archiv-abgleich-section" class="mt-4 d-none">
                                         <div class="border-top border-warning pt-3">
                                             <div class="text-warning small fw-semibold mb-2 text-uppercase" style="font-size:.7rem;letter-spacing:.05em">
-                                                ⚖️ <?= I18N::translate('Abgleich EXIF ↔ webtrees') ?>
+                                                ⚖️ <?= I18N::translate('Sync EXIF ↔ webtrees') ?>
                                             </div>
                                             <div id="archiv-abgleich-list" class="small"></div>
                                         </div>
@@ -171,7 +171,7 @@ use Fisharebest\Webtrees\I18N;
                                             <div id="archiv-wt-notiz" class="text-white-50 small mb-2" style="white-space:pre-line"></div>
                                             <a id="archiv-wt-link" href="#"
                                                class="btn btn-sm btn-outline-secondary w-100 d-none">
-                                                <?= I18N::translate('In webtrees öffnen') ?>
+                                                <?= I18N::translate('Open in webtrees') ?>
                                             </a>
                                         </div>
                                     </div>
@@ -196,19 +196,19 @@ use Fisharebest\Webtrees\I18N;
                 // übersetzt und mitgegeben – sonst blieben sie deutsch, egal
                 // welche Sprache eingestellt ist.
                 texte: {
-                    beschreibungTitel: <?= json_encode(I18N::translate('Beschreibung / Titel')) ?>,
-                    personen:          <?= json_encode(I18N::translate('Personen')) ?>,
-                    leer:              <?= json_encode(I18N::translate('(leer)')) ?>,
-                    keine:             <?= json_encode(I18N::translate('(keine)')) ?>,
-                    inExifUebernehmen: <?= json_encode(I18N::translate('→ in EXIF übernehmen')) ?>,
-                    undWeitere:        <?= json_encode(I18N::translate('… und %s weitere')) ?>,
-                    insgesamt:         <?= json_encode(I18N::translate('… (%s insgesamt)')) ?>,
-                    speichern:         <?= json_encode(I18N::translate('Speichern…')) ?>,
-                    gespeichert:       <?= json_encode(I18N::translate('Gespeichert')) ?>,
-                    umbenennen:        <?= json_encode(I18N::translate('Umbenennen…')) ?>,
-                    umbenannt:         <?= json_encode(I18N::translate('Umbenannt')) ?>,
-                    fehler:            <?= json_encode(I18N::translate('Fehler')) ?>,
-                    netzwerkfehler:    <?= json_encode(I18N::translate('Netzwerkfehler')) ?>
+                    beschreibungTitel: <?= json_encode(I18N::translate('Description / title')) ?>,
+                    personen:          <?= json_encode(I18N::translate('Individuals')) ?>,
+                    leer:              <?= json_encode(I18N::translate('(empty)')) ?>,
+                    keine:             <?= json_encode(I18N::translate('(none)')) ?>,
+                    inExifUebernehmen: <?= json_encode(I18N::translate('→ copy into EXIF')) ?>,
+                    undWeitere:        <?= json_encode(I18N::translate('… and %s more')) ?>,
+                    insgesamt:         <?= json_encode(I18N::translate('… (%s in total)')) ?>,
+                    speichern:         <?= json_encode(I18N::translate('Saving…')) ?>,
+                    gespeichert:       <?= json_encode(I18N::translate('Saved')) ?>,
+                    umbenennen:        <?= json_encode(I18N::translate('Renaming…')) ?>,
+                    umbenannt:         <?= json_encode(I18N::translate('Renamed')) ?>,
+                    fehler:            <?= json_encode(I18N::translate('Error')) ?>,
+                    netzwerkfehler:    <?= json_encode(I18N::translate('Network error')) ?>
                 }
             };
             </script>

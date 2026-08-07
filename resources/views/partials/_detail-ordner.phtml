@@ -26,7 +26,7 @@ use Fisharebest\Webtrees\I18N;
             <div>
                 <h2 class="mb-0"><?= e($s->name) ?></h2>
                 <span class="badge bg-secondary">
-                    <?= I18N::plural('%s Objekt', '%s Objekte', $aktive['anzahl'], I18N::number($aktive['anzahl'])) ?>
+                    <?= I18N::plural('%s object', '%s objects', $aktive['anzahl'], I18N::number($aktive['anzahl'])) ?>
                 </span>
                 <?php if ($s->beschreibung !== null) : ?>
                     <p class="text-muted small mb-0 mt-1"><?= nl2br(e($s->beschreibung)) ?></p>
@@ -37,13 +37,13 @@ use Fisharebest\Webtrees\I18N;
             </div>
             <a href="<?= e(route('sammlungen.sammlungen', ['tree' => $treeName])) ?>"
                class="btn btn-sm btn-outline-secondary ms-auto">
-                <i class="fas fa-arrow-left me-1"></i><?= I18N::translate('Zurück') ?>
+                <i class="fas fa-arrow-left me-1"></i><?= I18N::translate('Back') ?>
             </a>
         </div>
 
         <?php if ($aktive['anzahl'] === 0) : ?>
             <div class="alert alert-info">
-                <?= I18N::translate('Keine Dateien in diesem Ordner gefunden.') ?>
+                <?= I18N::translate('No files found in this folder.') ?>
             </div>
 
         <?php elseif ($aktive['istBild'] && $aktive['istRaster']) : ?>
@@ -86,9 +86,9 @@ use Fisharebest\Webtrees\I18N;
             ]);
             ?>
             <p class="text-muted small mt-3 mb-2">
-                <?= I18N::plural('%s Foto', '%s Fotos', $aktive['anzahl'], I18N::number($aktive['anzahl'])) ?>
-                · <?= I18N::translate('Seite %s von %s', $aktive['seite'], $aktive['seiten_gesamt']) ?>
-                · <?= I18N::translate('Klicken zum Vergrößern') ?>
+                <?= I18N::plural('%s photo', '%s photos', $aktive['anzahl'], I18N::number($aktive['anzahl'])) ?>
+                · <?= I18N::translate('Page %s of %s', $aktive['seite'], $aktive['seiten_gesamt']) ?>
+                · <?= I18N::translate('Click to enlarge') ?>
             </p>
             <?php include __DIR__ . '/_seitennavigation.phtml'; ?>
 
@@ -97,7 +97,7 @@ use Fisharebest\Webtrees\I18N;
         <?php elseif ($aktive['istBild'] && $aktive['istGemischt']) : ?>
             <!-- Gemischt: Foto-Raster oben, Dokumentenliste unten -->
             <?php if ($aktive['bilder'] !== []) : ?>
-                <h6 class="text-muted mb-2"><i class="fas fa-image me-1"></i><?= I18N::translate('Fotos') ?></h6>
+                <h6 class="text-muted mb-2"><i class="fas fa-image me-1"></i><?= I18N::translate('Photos') ?></h6>
                 <div class="row row-cols-3 row-cols-sm-4 row-cols-lg-5 row-cols-xl-6 g-2 mb-4" id="archiv-galerie">
                     <?php foreach ($aktive['bilder'] as $idx => $bild) : ?>
                         <?php
@@ -118,7 +118,7 @@ use Fisharebest\Webtrees\I18N;
                 </div>
             <?php endif ?>
             <?php if (!empty($aktive['dokumente'])) : ?>
-                <h6 class="text-muted mb-2 mt-3"><i class="fas fa-file-alt me-1"></i><?= I18N::translate('Dokumente') ?></h6>
+                <h6 class="text-muted mb-2 mt-3"><i class="fas fa-file-alt me-1"></i><?= I18N::translate('Documents') ?></h6>
                 <?php
                 $formatIcons  = ['pdf'=>null,'doc'=>'fa-file','docx'=>'fa-file','txt'=>'fa-file-alt'];
                 $formatFarben = ['pdf'=>'#CC0000','doc'=>'#2B579A','docx'=>'#2B579A'];
@@ -159,8 +159,8 @@ use Fisharebest\Webtrees\I18N;
             ]);
             ?>
             <p class="text-muted small mt-3 mb-2">
-                <?= I18N::plural('%s Datei', '%s Dateien', $aktive['anzahl'], I18N::number($aktive['anzahl'])) ?>
-                · <?= I18N::translate('Seite %s von %s', $aktive['seite'], $aktive['seiten_gesamt']) ?>
+                <?= I18N::plural('%s file', '%s files', $aktive['anzahl'], I18N::number($aktive['anzahl'])) ?>
+                · <?= I18N::translate('Page %s of %s', $aktive['seite'], $aktive['seiten_gesamt']) ?>
             </p>
             <?php include __DIR__ . '/_seitennavigation.phtml'; ?>
 
@@ -245,9 +245,9 @@ use Fisharebest\Webtrees\I18N;
             ]);
             ?>
             <p class="text-muted small mt-3 mb-2">
-                <?= I18N::plural('%s Foto', '%s Fotos', $aktive['anzahl'], I18N::number($aktive['anzahl'])) ?>
-                · <?= I18N::translate('Seite %s von %s', $aktive['seite'], $aktive['seiten_gesamt']) ?>
-                · <?= I18N::translate('Klicken zum Vergrößern') ?>
+                <?= I18N::plural('%s photo', '%s photos', $aktive['anzahl'], I18N::number($aktive['anzahl'])) ?>
+                · <?= I18N::translate('Page %s of %s', $aktive['seite'], $aktive['seiten_gesamt']) ?>
+                · <?= I18N::translate('Click to enlarge') ?>
             </p>
             <?php include __DIR__ . '/_seitennavigation.phtml'; ?>
 
@@ -300,9 +300,9 @@ use Fisharebest\Webtrees\I18N;
                         </div>
                         <?php if ($medium['m_id'] === null) : ?>
                             <span class="badge bg-warning text-dark flex-shrink-0"
-                                  title="<?= I18N::translate('Noch nicht in webtrees importiert') ?>">
+                                  title="<?= I18N::translate('Not yet imported into webtrees') ?>">
                                 <i class="fas fa-exclamation-triangle"></i>
-                                <?= I18N::translate('Neu') ?>
+                                <?= I18N::translate('New') ?>
                             </span>
                         <?php endif ?>
                     </a>
@@ -317,11 +317,11 @@ use Fisharebest\Webtrees\I18N;
             ]);
             ?>
             <p class="text-muted small mt-3 mb-2">
-                <?= I18N::plural('%s Datei', '%s Dateien', $aktive['anzahl'], I18N::number($aktive['anzahl'])) ?>
-                · <?= I18N::translate('Seite %s von %s', $aktive['seite'], $aktive['seiten_gesamt']) ?>
+                <?= I18N::plural('%s file', '%s files', $aktive['anzahl'], I18N::number($aktive['anzahl'])) ?>
+                · <?= I18N::translate('Page %s of %s', $aktive['seite'], $aktive['seiten_gesamt']) ?>
                 <?php if ($nichtImportiert > 0) : ?>
                     · <span class="text-warning">
-                        <?= I18N::translate('%s noch nicht importiert', I18N::number($nichtImportiert)) ?>
+                        <?= I18N::translate('%s not yet imported', I18N::number($nichtImportiert)) ?>
                     </span>
                 <?php endif ?>
             </p>

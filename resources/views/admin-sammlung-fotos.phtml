@@ -21,7 +21,7 @@ $treeName = $tree->name();
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="<?= e(route('sammlungen.admin.sammlungen', ['tree' => $treeName])) ?>">
-                    <?= I18N::translate('Sammlungen verwalten') ?>
+                    <?= I18N::translate('Manage collections') ?>
                 </a>
             </li>
             <li class="breadcrumb-item active"><?= e($sammlung->name) ?></li>
@@ -31,7 +31,7 @@ $treeName = $tree->name();
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="mb-0"><?= e($title) ?></h1>
         <span class="badge bg-primary fs-6" id="anzahl-badge">
-            <?= count($inSammlung) ?> <?= I18N::translate('Fotos') ?>
+            <?= count($inSammlung) ?> <?= I18N::translate('Photos') ?>
         </span>
     </div>
 
@@ -52,20 +52,20 @@ $treeName = $tree->name();
     <?php if ($quellen === []) : ?>
         <div class="alert alert-warning">
             <p class="mb-2">
-                <strong><?= I18N::translate('Es gibt noch keine Quelle, aus der du Fotos auswählen kannst.') ?></strong>
+                <strong><?= I18N::translate('There is no source yet from which you can select photos.') ?></strong>
             </p>
             <p class="mb-0">
-                <?= I18N::translate('Der Foto-Picker zeigt nur Bilder aus aktiven, ordner-basierten Foto-Sammlungen (ein Top-Level-Ordner direkt unter data/media/). Lege zuerst eine solche Sammlung an – oder befülle diese Sammlung direkt, indem du in ihrer Bearbeitungsmaske das Feld „Medienordner" setzt.') ?>
+                <?= I18N::translate('The photo picker only shows images from active, folder-based photo collections (a top-level folder directly under data/media/). Create such a collection first – or fill this collection directly by setting the „Medienordner“ (media folder) field in its edit form.') ?>
             </p>
         </div>
     <?php elseif ($quelleAktiv === null || $bilder === []) : ?>
-        <div class="alert alert-info"><?= I18N::translate('Keine Fotos in dieser Quelle.') ?></div>
+        <div class="alert alert-info"><?= I18N::translate('No photos in this source.') ?></div>
     <?php else : ?>
 
         <p class="text-muted small mb-3">
-            <?= I18N::translate('Klicken = hinzufügen/entfernen') ?>
-            · <?= I18N::translate('Seite %s von %s', $seite, $seiten) ?>
-            · <?= I18N::number($gesamt) ?> <?= I18N::translate('Fotos') ?>
+            <?= I18N::translate('Click = add/remove') ?>
+            · <?= I18N::translate('Page %s of %s', $seite, $seiten) ?>
+            · <?= I18N::number($gesamt) ?> <?= I18N::translate('Photos') ?>
         </p>
 
         <div class="row row-cols-3 row-cols-sm-4 row-cols-lg-6 g-2 mb-4">
@@ -146,7 +146,7 @@ async function toggleFoto(el) {
             overlay.style.opacity = json.istDrin ? '1' : '0';
             anzahl += json.istDrin ? 1 : -1;
             document.getElementById('anzahl-badge').textContent =
-                anzahl + ' <?= I18N::translate('Fotos') ?>';
+                anzahl + ' <?= I18N::translate('Photos') ?>';
         }
     } catch {}
 }

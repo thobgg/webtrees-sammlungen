@@ -46,20 +46,20 @@ $unverknuepftGesamt = array_sum($unverknuepft_typen ?? []);
         <?php if ($istAdmin) : ?>
             <a href="<?= e(route('sammlungen.admin.sammlungen', ['tree' => $tree->name()])) ?>"
                class="btn btn-sm btn-outline-secondary">
-                <i class="fas fa-wrench me-1"></i><?= I18N::translate('Sammlungen verwalten') ?>
+                <i class="fas fa-wrench me-1"></i><?= I18N::translate('Manage collections') ?>
             </a>
         <?php endif ?>
     </div>
 
     <?php if ($tree === null) : ?>
         <div class="alert alert-warning">
-            <?= I18N::translate('Bitte wählen Sie einen Stammbaum aus.') ?>
+            <?= I18N::translate('Please select a family tree.') ?>
         </div>
 
     <?php elseif ($manuell === [] && $automatisch === [] && $unverknuepftGesamt === 0) : ?>
         <div class="alert alert-info">
             <i class="fas fa-info-circle me-2"></i>
-            <?= I18N::translate('Dieser Stammbaum enthält noch keine Medienobjekte oder Sammlungen.') ?>
+            <?= I18N::translate('This family tree does not contain any media objects or collections yet.') ?>
         </div>
 
     <?php elseif ($aktive !== null && $aktive['typ'] === 'unverknuepft') : ?>

@@ -90,7 +90,7 @@ final class SammlungenViewModel
         ));
 
         return [
-            'title'              => I18N::translate('Sammlungen'),
+            'title'              => I18N::translate('Collections'),
             'tree'               => $tree,
             'kategorie'          => $kategorie,
             'sammlungen'         => [
@@ -110,7 +110,7 @@ final class SammlungenViewModel
     private function leereDaten(string $kategorie): array
     {
         return [
-            'title'              => I18N::translate('Sammlungen'),
+            'title'              => I18N::translate('Collections'),
             'tree'               => null,
             'kategorie'          => $kategorie,
             'sammlungen'         => [],
@@ -203,7 +203,7 @@ final class SammlungenViewModel
                 'typ_key'  => $typFuerQuery,
                 'typ_name' => $typFuerQuery !== ''
                     ? (SammlungDto::TYPEN[strtolower($typFuerQuery)] ?? ucfirst($typFuerQuery))
-                    : I18N::translate('Ohne Typ'),
+                    : I18N::translate('Without type'),
                 'anzahl'   => $unverknuepftTypen[$typFuerQuery] ?? 0,
                 'medien'   => $this->sammlungenRepository->medienOhneVerknuepfung($tree, $typFuerQuery, 0, $this->module->perPage()),
                 'vorschau' => $this->sammlungenRepository->queryVorschauOhneVerknuepfung($tree, $typFuerQuery, 3),

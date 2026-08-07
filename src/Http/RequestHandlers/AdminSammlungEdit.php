@@ -64,7 +64,7 @@ class AdminSammlungEdit implements RequestHandlerInterface
     {
         if (!Auth::isAdmin()) {
             throw new HttpAccessDeniedException(
-                I18N::translate('Sie haben keine Berechtigung für diese Seite.')
+                I18N::translate('You do not have permission for this page.')
             );
         }
 
@@ -75,7 +75,7 @@ class AdminSammlungEdit implements RequestHandlerInterface
         }
 
         if ($tree === null) {
-            FlashMessages::addMessage(I18N::translate('Bitte wählen Sie einen Stammbaum aus.'), 'warning');
+            FlashMessages::addMessage(I18N::translate('Please select a family tree.'), 'warning');
             return redirect(route('sammlungen.admin.sammlungen'));
         }
 
@@ -107,15 +107,15 @@ class AdminSammlungEdit implements RequestHandlerInterface
 
             if ($sammlung === null) {
                 throw new HttpNotFoundException(
-                    I18N::translate('Sammlung #%s nicht gefunden.', (string) $id)
+                    I18N::translate('Collection #%s not found.', (string) $id)
                 );
             }
         }
 
         return $this->viewResponse('_sammlungen_::admin-sammlung-edit', [
             'title'              => $sammlung !== null
-                ? I18N::translate('Sammlung bearbeiten: %s', $sammlung->name)
-                : I18N::translate('Neue Sammlung anlegen'),
+                ? I18N::translate('Edit collection: %s', $sammlung->name)
+                : I18N::translate('Create new collection'),
             'tree'               => $tree,
             'sammlung'           => $sammlung,
             'iconAuswahl'        => self::ICON_AUSWAHL,
@@ -144,7 +144,7 @@ class AdminSammlungEdit implements RequestHandlerInterface
                         ? (string) $body['ansicht'] : 'foto';
 
         if ($name === '') {
-            FlashMessages::addMessage(I18N::translate('Bitte geben Sie einen Namen ein.'), 'danger');
+            FlashMessages::addMessage(I18N::translate('Please enter a name.'), 'danger');
             return redirect(route('sammlungen.admin.sammlungen.edit', ['tree' => $tree->name(), 'id' => $id]));
         }
 
@@ -171,7 +171,7 @@ class AdminSammlungEdit implements RequestHandlerInterface
                 );
 
                 FlashMessages::addMessage(
-                    I18N::translate('Sammlung „%s" wurde angelegt.', e($name)),
+                    I18N::translate('Collection “%s” was created.', e($name)),
                     'success'
                 );
             } else {
@@ -189,7 +189,7 @@ class AdminSammlungEdit implements RequestHandlerInterface
                 );
 
                 FlashMessages::addMessage(
-                    I18N::translate('Sammlung „%s" wurde aktualisiert.', e($name)),
+                    I18N::translate('Collection “%s” was updated.', e($name)),
                     'success'
                 );
             }

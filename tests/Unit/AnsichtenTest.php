@@ -21,6 +21,9 @@ final class AnsichtenTest extends TestCase
 {
     private const NAVIGATION = '_seitennavigation.phtml';
 
+    /** Quelltext des Seitenzaehlers – seit 1.3.0 englisch. */
+    private const SEITENZAEHLER = 'Page %s of %s';
+
     private static function views(): string
     {
         return dirname(__DIR__, 2) . '/resources/views/';
@@ -46,7 +49,7 @@ final class AnsichtenTest extends TestCase
     {
         $inhalt = (string) file_get_contents(self::views() . $view);
 
-        $zaehler = substr_count($inhalt, 'Seite %s von %s');
+        $zaehler = substr_count($inhalt, self::SEITENZAEHLER);
         $navi    = substr_count($inhalt, self::NAVIGATION);
 
         self::assertGreaterThan(0, $zaehler, $view . ': kein Seitenzähler gefunden.');

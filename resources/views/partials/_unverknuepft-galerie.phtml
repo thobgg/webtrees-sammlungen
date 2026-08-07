@@ -28,21 +28,21 @@ use Fisharebest\Webtrees\I18N;
             <div>
                 <h2 class="mb-0"><?= e($aktive['typ_name']) ?></h2>
                 <span class="badge bg-secondary">
-                    <?= I18N::plural('%s Objekt', '%s Objekte', $aktive['anzahl'], I18N::number($aktive['anzahl'])) ?>
+                    <?= I18N::plural('%s object', '%s objects', $aktive['anzahl'], I18N::number($aktive['anzahl'])) ?>
                 </span>
                 <p class="text-muted small mb-0 mt-1">
-                    <?= I18N::translate('Im freien Bestand') ?>
+                    <?= I18N::translate('In the free holdings') ?>
                 </p>
             </div>
             <a href="<?= e($unverknuepftUrl()) ?>"
                class="btn btn-sm btn-outline-secondary ms-auto">
-                <i class="fas fa-arrow-left me-1"></i><?= I18N::translate('Zurück') ?>
+                <i class="fas fa-arrow-left me-1"></i><?= I18N::translate('Back') ?>
             </a>
         </div>
 
         <?php if ($aktive['medien'] === []) : ?>
             <div class="alert alert-info">
-                <?= I18N::translate('Keine Objekte in dieser Kategorie.') ?>
+                <?= I18N::translate('No objects in this category.') ?>
             </div>
         <?php else : ?>
             <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-4 row-cols-xl-6 g-3">
@@ -63,7 +63,7 @@ use Fisharebest\Webtrees\I18N;
             <?php if ($aktive['anzahl'] > count($aktive['medien'])) : ?>
                 <p class="text-muted small mt-3">
                     <?= I18N::translate(
-                        'Vorschau: %s von %s Objekten.',
+                        'Preview: %s of %s objects.',
                         count($aktive['medien']),
                         I18N::number($aktive['anzahl'])
                     ) ?>

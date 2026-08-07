@@ -17,15 +17,15 @@
 
 document.addEventListener('DOMContentLoaded', function () {
     const cfg = window.archivConfig || {};
-    // Uebersetzte Texte aus der Konfiguration; faellt auf den deutschen
+    // Uebersetzte Texte aus der Konfiguration; faellt auf den englischen
     // Quelltext zurueck, falls die Seite sie nicht mitgibt.
     const T = Object.assign({
-        beschreibungTitel: 'Beschreibung / Titel', personen: 'Personen',
-        leer: '(leer)', keine: '(keine)', inExifUebernehmen: '→ in EXIF übernehmen',
-        undWeitere: '… und %s weitere', insgesamt: '… (%s insgesamt)',
-        speichern: 'Speichern…', gespeichert: 'Gespeichert',
-        umbenennen: 'Umbenennen…', umbenannt: 'Umbenannt',
-        fehler: 'Fehler', netzwerkfehler: 'Netzwerkfehler'
+        beschreibungTitel: 'Description / title', personen: 'Individuals',
+        leer: '(empty)', keine: '(none)', inExifUebernehmen: '→ copy into EXIF',
+        undWeitere: '… and %s more', insgesamt: '… (%s in total)',
+        speichern: 'Saving…', gespeichert: 'Saved',
+        umbenennen: 'Renaming…', umbenannt: 'Renamed',
+        fehler: 'Error', netzwerkfehler: 'Network error'
     }, cfg.texte || {});
     const platzhalter = (text, wert) => String(text).replace('%s', wert);
     const items = [...document.querySelectorAll('.archiv-gallery-item')];

@@ -29,7 +29,7 @@ class AdminSammlungen implements RequestHandlerInterface
     {
         if (!Auth::isAdmin()) {
             throw new HttpAccessDeniedException(
-                I18N::translate('Sie haben keine Berechtigung für diese Seite.')
+                I18N::translate('You do not have permission for this page.')
             );
         }
 
@@ -44,7 +44,7 @@ class AdminSammlungen implements RequestHandlerInterface
             : [];
 
         return $this->viewResponse('_sammlungen_::admin-sammlungen', [
-            'title'      => I18N::translate('Sammlungen verwalten'),
+            'title'      => I18N::translate('Manage collections'),
             'tree'       => $tree,
             'sammlungen' => $sammlungen,
         ]);

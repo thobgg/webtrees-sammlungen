@@ -25,11 +25,11 @@ $von = max(1, $aktive['seite'] - 2);
 $bis = min($aktive['seiten_gesamt'], $aktive['seite'] + 2);
 
 ?>
-<nav class="d-flex justify-content-center mt-2 mb-4" aria-label="<?= I18N::translate('Seitennavigation') ?>">
+<nav class="d-flex justify-content-center mt-2 mb-4" aria-label="<?= I18N::translate('Page navigation') ?>">
     <ul class="pagination">
         <li class="page-item <?= $aktive['seite'] <= 1 ? 'disabled' : '' ?>">
             <a class="page-link px-3" href="<?= e($seiteUrl($aktive['seite'] - 1)) ?>"
-               aria-label="<?= I18N::translate('Vorherige Seite') ?>">&lsaquo;</a>
+               aria-label="<?= I18N::translate('Previous page') ?>">&lsaquo;</a>
         </li>
 
         <?php if ($von > 1) : ?>
@@ -48,7 +48,7 @@ $bis = min($aktive['seiten_gesamt'], $aktive['seite'] + 2);
 
         <li class="page-item <?= $aktive['seite'] >= $aktive['seiten_gesamt'] ? 'disabled' : '' ?>">
             <a class="page-link px-3" href="<?= e($seiteUrl($aktive['seite'] + 1)) ?>"
-               aria-label="<?= I18N::translate('Nächste Seite') ?>">&rsaquo;</a>
+               aria-label="<?= I18N::translate('Next page') ?>">&rsaquo;</a>
         </li>
     </ul>
 </nav>

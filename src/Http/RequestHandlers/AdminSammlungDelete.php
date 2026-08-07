@@ -31,7 +31,7 @@ class AdminSammlungDelete implements RequestHandlerInterface
     {
         if (!Auth::isAdmin()) {
             throw new HttpAccessDeniedException(
-                I18N::translate('Sie haben keine Berechtigung für diese Aktion.')
+                I18N::translate('You do not have permission for this action.')
             );
         }
 
@@ -50,8 +50,8 @@ class AdminSammlungDelete implements RequestHandlerInterface
 
             FlashMessages::addMessage(
                 $deleted
-                    ? I18N::translate('Sammlung #%s wurde gelöscht.', (string) $id)
-                    : I18N::translate('Sammlung #%s wurde nicht gefunden.', (string) $id),
+                    ? I18N::translate('Collection #%s was deleted.', (string) $id)
+                    : I18N::translate('Collection #%s was not found.', (string) $id),
                 $deleted ? 'success' : 'warning'
             );
         }

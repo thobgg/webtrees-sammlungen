@@ -41,7 +41,7 @@ class AdminConfig implements RequestHandlerInterface
     {
         if (!Auth::isAdmin()) {
             throw new HttpAccessDeniedException(
-                I18N::translate('Sie haben keine Berechtigung für diese Seite.')
+                I18N::translate('You do not have permission for this page.')
             );
         }
 
@@ -60,7 +60,7 @@ class AdminConfig implements RequestHandlerInterface
         return $this->viewResponse(
             '_sammlungen_::admin-config',
             [
-                'title'         => I18N::translate('Sammlungen – Einstellungen'),
+                'title'         => I18N::translate('Collections – settings'),
                 'module'        => $this->module,
                 'cacheTtl'      => $this->module->cacheTtl(),
                 'perPage'       => $this->module->perPage(),
