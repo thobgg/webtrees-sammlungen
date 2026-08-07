@@ -1,4 +1,5 @@
-/vendor/
+# ohne Schraegstrich, sonst greift die Regel nicht bei einem Symlink dieses Namens
+/vendor
 /composer.phar
 /.phpunit.cache/
 /build/
