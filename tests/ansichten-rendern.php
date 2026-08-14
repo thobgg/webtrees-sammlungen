@@ -43,6 +43,14 @@ namespace Fisharebest\Webtrees {
     }
 }
 
+namespace Sammlungen\Dto {
+    class SammlungDto
+    {
+        public const TYPEN = ['photo' => 'Fotos', '' => 'Ohne Typ'];
+        public const ICONS = ['photo' => 'fa-image'];
+    }
+}
+
 namespace Fisharebest\Webtrees\Http\RequestHandlers {
     class MediaPage {}
     class MediaFileThumbnail {}
@@ -99,6 +107,7 @@ namespace {
         public $beschreibung = 'Text'; public $ordner = 'Fotos'; public $slug = 'test';
         public $ansicht = 'raster'; public $id = 1; public $anzahl = 24;
         public $vorschauXrefs = []; public $reihenfolge = 0; public $aktiv = true;
+        public $vorschau = ['M1', 'M2']; public $typ = 'photo';
         public function icon(): string { return 'fa-folder'; }
         public function slug(): string { return 'test'; }
     };
@@ -158,6 +167,47 @@ namespace {
         } catch (\Throwable $ex) {
             ob_end_clean();
             printf("  %-18s %d Seite(n): FEHLER %s – %s @ %s:%d\n", 'manuell', $seiten,
+                get_class($ex), $ex->getMessage(), basename($ex->getFile()), $ex->getLine());
+            $fehler++;
+        }
+    }
+
+    // --- Uebersicht + automatische Sammlung + unverknuepfte Galerie ---------
+    // Diese drei blieben zunaechst aussen vor. Genau dort steckten die
+    // fehlerhaften Platzhalter einer beigesteuerten Uebersetzung (sk, 08/2026):
+    // "% ..." statt "%s ..." laesst sprintf() werfen und reisst die Seite mit.
+    $auto = new class {
+        public $name = 'Fotos'; public $anzahl = 42; public $typ = 'photo';
+        public $vorschauXrefs = ['M1', 'M2']; public $vorschau = ['M1', 'M2'];
+        public function icon(): string { return 'fa-image'; }
+        public function slug(): string { return 'fotos'; }
+    };
+    $manuell            = [$sammlung];
+    $automatisch        = [$auto];
+    $unverknuepftGesamt = 7;
+    $unverknuepftUrl    = fn (string $typ = ''): string => '/frei/' . $typ;
+    $sammlungUrl        = fn (string $slug): string => '/s/' . $slug;
+    $unverknuepft_typen = ['photo' => 5, '' => 2];
+
+    $weitere = [
+        'uebersicht' => ['partials/_uebersicht.phtml', []],
+        'automatisch' => ['partials/_detail-manuell.phtml',
+            ['typ' => 'automatisch', 'sammlung' => $auto, 'anzahl' => 42]],
+        'unverknuepft' => ['partials/_unverknuepft-galerie.phtml',
+            ['typ' => 'unverknuepft_galerie', 'typ_key' => 'photo', 'typ_name' => 'Fotos',
+             'anzahl' => 42, 'medien' => ['M1'], 'vorschau' => ['M1']]],
+    ];
+
+    foreach ($weitere as $name => [$datei, $zusatzDaten]) {
+        $aktive = $zusatzDaten;
+        ob_start();
+        try {
+            include $modul . '/resources/views/' . $datei;
+            $html = ob_get_clean();
+            printf("  %-18s %s: ok (%d Zeichen)\n", $name, '-', strlen($html));
+        } catch (\Throwable $ex) {
+            ob_end_clean();
+            printf("  %-18s %s: FEHLER %s – %s @ %s:%d\n", $name, '-',
                 get_class($ex), $ex->getMessage(), basename($ex->getFile()), $ex->getLine());
             $fehler++;
         }

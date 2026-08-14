@@ -9,6 +9,30 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+## [1.3.2] – 2026-08-14
+
+**Slowakisch ist vollständig.** 147 von 147 Texten, überarbeitet von
+**Ladislav Rosival** (Issue #19). Herzlichen Dank!
+
+### Behoben
+- **Vier Übersetzungen hätten die Seite zum Absturz gebracht.** In der
+  beigesteuerten Fassung stand an vier Stellen `%` statt `%s` – bei der Zählung
+  im freien Bestand (alle drei Mehrzahlformen) und in der Vorschauzeile.
+  `sprintf()` wirft dabei `Unknown format specifier`, und die Übersichtsseite
+  sowie die Galerie nicht eingebundener Medien hätten auf Slowakisch mit einem
+  Serverfehler geantwortet. Der Wortlaut blieb unverändert, nur der Platzhalter
+  ist repariert.
+
+### Intern
+- **Neuer Wächter für Platzhalter.** Ein Test vergleicht in jeder Sprachdatei
+  die Formatangaben jeder Übersetzung mit denen des Originals und meldet auch
+  jedes `%`, das zu keiner gültigen Angabe gehört. `msgfmt --check` fängt das
+  nicht: gettext prüft nur Einträge, die als c-format markiert sind, und diese
+  Markierung fehlt je nach Werkzeug.
+- Der Renderprüfer deckt jetzt auch die Übersichtsseite, automatische
+  Sammlungen und die Galerie nicht eingebundener Medien ab. Zwei der vier
+  Fehler wären ihm vorher entgangen, weil diese Ansichten nicht geprüft wurden.
+
 ## [1.3.1] – 2026-08-07
 
 ### Behoben

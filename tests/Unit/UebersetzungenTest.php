@@ -257,6 +257,80 @@ final class UebersetzungenTest extends TestCase
         );
     }
 
+    /**
+     * Jede Übersetzung muss dieselben Platzhalter führen wie ihr Original.
+     *
+     * Ein `%` ohne gültige Angabe dahinter – etwa „% Objekte" statt
+     * „%s Objekte" – lässt `sprintf()` mit `ValueError: Unknown format
+     * specifier` werfen und reißt die ganze Seite mit. Genau das steckte in
+     * einer beigesteuerten Übersetzung (sk, 08/2026) an vier Stellen.
+     *
+     * `msgfmt --check` fängt das NICHT: gettext prüft Formatangaben nur bei
+     * Einträgen, die als c-format markiert sind, und diese Markierung fehlt
+     * je nach Werkzeug.
+     *
+     * @param string $sprache
+     */
+    #[DataProvider('sprachen')]
+    public function testPlatzhalterStimmenMitDemOriginalUeberein(string $sprache): void
+    {
+        $inhalt = self::normalisiert(self::wurzel() . '/resources/lang/' . $sprache . '.po');
+        $muster = '/%[-+ 0#\']*[\d.]*[bcdeEfFgGosuxX]/';
+        $fehler = [];
+
+        foreach (explode("\n\n", $inhalt) as $block) {
+            $felder = [];
+            foreach (explode("\n", $block) as $zeile) {
+                if (preg_match('/^(msgid_plural|msgid|msgstr(?:\[\d+\])?) "(.*)"$/', trim($zeile), $t) === 1) {
+                    $felder[$t[1]] = $t[2];
+                }
+            }
+
+            if (($felder['msgid'] ?? '') === '') {
+                continue;
+            }
+
+            $soll = preg_match_all($muster, $felder['msgid']);
+
+            foreach ($felder as $name => $wert) {
+                if (!str_starts_with($name, 'msgstr') || $wert === '') {
+                    continue;
+                }
+
+                $gueltige = preg_match_all($muster, $wert);
+                // Jedes %-Zeichen muss zu einer gültigen Angabe gehören
+                // (oder als %% verdoppelt sein).
+                $alle = preg_match_all('/%/', str_replace('%%', '', $wert));
+
+                if ($gueltige !== $soll || $alle !== $gueltige) {
+                    $fehler[] = sprintf(
+                        '%s: „%s" → „%s" (erwartet %d, gültig %d, %%-Zeichen %d)',
+                        $name,
+                        mb_strimwidth($felder['msgid'], 0, 45, '…'),
+                        mb_strimwidth($wert, 0, 45, '…'),
+                        $soll,
+                        $gueltige,
+                        $alle
+                    );
+                }
+            }
+        }
+
+        self::assertSame(
+            [],
+            $fehler,
+            $sprache . ".po – sprintf() würde zur Laufzeit werfen:\n  " . implode("\n  ", $fehler)
+        );
+    }
+
+    /** Liest eine .po in kanonischer Form (ein Feld je Zeile, Blöcke getrennt). */
+    private static function normalisiert(string $pfad): string
+    {
+        $befehl = sprintf('msgcat --no-wrap -o - %s 2>/dev/null', escapeshellarg($pfad));
+
+        return (string) shell_exec($befehl);
+    }
+
     /** Zu jeder .po muss eine kompilierte .mo gehören – webtrees liest nur die .mo. */
     #[DataProvider('sprachen')]
     public function testZuJedemKatalogGibtEsEineKompilierteFassung(string $sprache): void

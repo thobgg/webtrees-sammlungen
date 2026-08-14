@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: sammlungen 1.0.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-08-05 13:19+0200\n"
+"PO-Revision-Date: 2026-08-07 15:54+0200\n"
 "Last-Translator: Ladislav Rosival <lacoros@gmail.com>\n"
 "Language-Team: English\n"
 "Language: sk\n"
@@ -19,32 +19,8 @@ msgstr[0] "%s súbor"
 msgstr[1] "%s súbory"
 msgstr[2] "%s súborov"
 
-msgid "%s photo"
-msgid_plural "%s photos"
-msgstr[0] "%s fotka"
-msgstr[1] "%s fotky"
-msgstr[2] "%s fotiek"
-
-msgid "%s media object in the free holdings"
-msgid_plural "%s media objects in the free holdings"
-msgstr[0] "% mediálny objekt vo voľnom stave"
-msgstr[1] "% mediálne objekty vo voľnom stave"
-msgstr[2] "% mediálnych objektov vo voľnom stave"
-
-msgid "%s minutes"
-msgstr "%s minút"
-
-msgid "%s object"
-msgid_plural "%s objects"
-msgstr[0] "%s objekt"
-msgstr[1] "%s objekty"
-msgstr[2] "%s objektov"
-
 msgid "%s hours"
 msgstr "%s hodín"
-
-msgid "%s not yet imported"
-msgstr "%s ešte nenanimportované"
 
 msgid "%s managed collection"
 msgid_plural "%s managed collections"
@@ -52,11 +28,35 @@ msgstr[0] "%s spravovaná zbierka"
 msgstr[1] "%s spravované zbierky"
 msgstr[2] "%s spravovaných zbierok"
 
-msgid "(none)"
-msgstr ""
+msgid "%s media object in the free holdings"
+msgid_plural "%s media objects in the free holdings"
+msgstr[0] "%s mediálny objekt vo voľnom stave"
+msgstr[1] "%s mediálne objekty vo voľnom stave"
+msgstr[2] "%s mediálnych objektov vo voľnom stave"
+
+msgid "%s minutes"
+msgstr "%s minút"
+
+msgid "%s not yet imported"
+msgstr "%s ešte nenanimportované"
+
+msgid "%s object"
+msgid_plural "%s objects"
+msgstr[0] "%s objekt"
+msgstr[1] "%s objekty"
+msgstr[2] "%s objektov"
+
+msgid "%s photo"
+msgid_plural "%s photos"
+msgstr[0] "%s fotka"
+msgstr[1] "%s fotky"
+msgstr[2] "%s fotiek"
 
 msgid "(empty)"
-msgstr ""
+msgstr "(prázdny)"
+
+msgid "(none)"
+msgstr "(žiaden)"
 
 msgid "APCu is active. Queries are cached."
 msgstr "APCu je aktívne. Dotazy sa ukladajú do cache."
@@ -64,20 +64,17 @@ msgstr "APCu je aktívne. Dotazy sa ukladajú do cache."
 msgid "APCu is not available. An in-process array cache is used (no caching across requests)."
 msgstr "APCu nie je k dispozícii. Používa sa In-Process-Array-Cache."
 
-msgid "Cancel"
-msgstr "Prerušiť"
-
-msgid "Sync EXIF ↔ webtrees"
-msgstr "Porovnanie EXIF ↔ webtrees"
-
 msgid "Actions"
 msgstr "Akcie"
 
 msgid "Active"
 msgstr "Aktívne"
 
-msgid "Current TTL: %s seconds"
-msgstr "Aktuálne TTL: %s sekúnd"
+msgid "Add photos"
+msgstr "Pridať fotky"
+
+msgid "Add to collection"
+msgstr "Pridať ku zbierke"
 
 msgid "All"
 msgstr "Všetko"
@@ -85,266 +82,44 @@ msgstr "Všetko"
 msgid "All media objects are linked to individuals or families."
 msgstr "Všetky obejkty médií sú prepojené s osobami alebo rodinami."
 
-msgid "General settings"
-msgstr "Všeobecné nastavenia"
-
-msgid "Display name of the collection."
-msgstr "Zobrazený názov zbierky."
-
-msgid "Show"
-msgstr "Zobraziť"
-
-msgid "Display type"
-msgstr "Druh zobrazenia"
+msgid "Appearance"
+msgstr "Zobrazenie"
 
 msgid "Archive folders"
 msgstr "Archívne priečinky"
 
-msgid "Edit"
-msgstr "Upraviť"
+msgid "Back"
+msgstr "Späť"
 
-msgid "Description"
-msgstr "Popis"
-
-msgid "Description / title"
-msgstr ""
-
-msgid "Please enter a name."
-msgstr "Zadajte prosím názov."
-
-msgid "Please select a family tree."
-msgstr "Zvoľte prosím rodokmeň."
-
-msgid "Please select a family tree above."
-msgstr "Zvoľte prosím hore rodokmeň."
-
-msgid "Clear cache now"
-msgstr "Vyprázdniť cache"
-
-msgid "Manage cache"
-msgstr "Spravovať cache"
-
-msgid "Really clear the cache?"
-msgstr "Naozaj vyprázdniť cache?"
-
-msgid "Cache TTL (seconds)"
-msgstr "Cache-TTL (sekundy)"
-
-msgid "Appearance"
-msgstr "Zobrazenie"
-
-msgid "File"
-msgstr "Súbor"
-
-msgid "Rename file"
-msgstr "Premenovať súbor"
-
-msgid "Date"
-msgstr "Dátum"
-
-msgid "The photo picker only shows images from active, folder-based photo collections (a top-level folder directly under data/media/). Create such a collection first – or fill this collection directly by setting the „Medienordner“ (media folder) field in its edit form."
-msgstr "Fotky je možné vyberať len z aktívnych zbierok, ktoré sú definované priečinkom - priamo v data/media. Vytvorte najprv takúto zbierku - alebo naplňte túto zbierku priamo naplniť tým že zadáte priečinok v nastaveniach zbierky."
-
-msgid "The collections cache was cleared successfully."
-msgstr "Cache zbierky bola úspešne zmazaná."
-
-msgid "This collection is still empty."
-msgstr "Táto zbierka je ešte prázdna."
-
-msgid "This family tree does not contain any media objects or collections yet."
-msgstr "Tento rodokmeň neobsahuje ešte žiadne objekty médií alebo zbierky."
-
-msgid "Documents"
-msgstr "Dokumenty"
-
-msgid "Document list"
-msgstr "Zoznam dokumentov"
-
-msgid "Edit EXIF/XMP"
-msgstr "EXIF/XMP upraviť"
-
-msgid "Settings"
-msgstr "Nastavenia"
-
-msgid "Save settings"
-msgstr "Uložiť nastavenia"
-
-msgid "Entries per page"
-msgstr "Počet obrázkov na strane"
-
-msgid "Create first collection"
-msgstr "Vytvoriť prvú zbierku"
-
-msgid "There is no source yet from which you can select photos."
-msgstr "Ešte neexistuje zdroj, z ktorého by ste mohli vybrať fotky."
-
-msgid "There are no family trees."
-msgstr "Neexistujú žiadne rodokmene."
-
-msgid "Colour"
-msgstr "Farba"
-
-msgid "Error"
-msgstr ""
-
-msgid "Photo grid"
-msgstr "Foto-mriežka"
-
-msgid "Photo gallery"
-msgstr "Fotogaléria"
-
-msgid "Photos"
-msgstr "Fotky"
-
-msgid "Photos as tiles, documents as a list"
-msgstr "Fotky ako dlaždice, dokumenty ako zoznam"
-
-msgid "Select photos"
-msgstr "Vybrať fotky"
-
-msgid "Photos for: %s"
-msgstr "Fotky pre: %s"
-
-msgid "Add photos"
-msgstr "Pridať fotky"
-
-msgid "Free holdings"
-msgstr "Voľný stav"
-
-msgid "Mixed"
-msgstr "Zmiešané"
-
-msgid "Saved"
-msgstr ""
-
-msgid "Uniform grid, plain"
-msgstr "Rovnomerná pevná mriežka, vecná"
+msgid "Back to settings"
+msgstr "Späť na nastavenia"
 
 msgid "Basic settings"
 msgstr "Základné nastavenie"
 
-msgid "Hamburg, wedding, 1920s"
-msgstr ""
+msgid "Cache TTL (seconds)"
+msgstr "Cache-TTL (sekundy)"
 
-msgid "John Smith, Jane Doe"
-msgstr ""
+msgid "Cancel"
+msgstr "Prerušiť"
 
-msgid "Icon"
-msgstr "Ikona"
-
-msgid "In the free holdings"
-msgstr "Vo voľnom stave"
-
-msgid "Save to file"
-msgstr "Uložiť do súboru"
-
-msgid "Open in webtrees"
-msgstr "Otvoriť vo webtrees"
-
-msgid "Inactive"
-msgstr "Neaktívny"
-
-msgid "Internal identifier"
-msgstr "Interný identifikátor"
-
-msgid "YYYY-MM-DD  or  YYYY"
-msgstr ""
-
-msgid "Create now"
-msgstr "Teraz vytvoriť"
-
-msgid "No files found in this folder."
-msgstr "V tejto zložke sa nenašli žiadne súbory."
-
-msgid "No photos in this source."
-msgstr "Žiadne fotky v tomto zdroji."
-
-msgid "No objects in this category."
-msgstr "Žiadne objekty v tejto kategórii."
-
-msgid "No preview images (no jpg/png/gif/webp image files yet) in this collection."
-msgstr "Žiadne náhľady v tejto zbierke (ešte nie sú žiadne súbory obrázkov typujps/pnf/gif/webp)."
-
-msgid "Identifier"
-msgstr "Identifikátor"
-
-msgid "Lower-case letters, digits, - and _. Generated automatically from the name. Letters, digits and hyphens only. Cannot be changed."
-msgstr "Malé písmená, číslice, - a _. Vytvorí sa automaticky z názvu. Iba písmená, číslice, spojovník. Nemôže sa následne meniť."
-
-msgid "Click = add/remove"
-msgstr "Klik = pridať/odstrániť"
-
-msgid "Click to toggle"
-msgstr "Kliknúť pre zmenu"
-
-msgid "Click to enlarge"
-msgstr "Kliknite pre zväčšenie"
-
-msgid "Comma-separated"
-msgstr "oddelené čiarkou"
+msgid "Clear cache now"
+msgstr "Vyprázdniť cache"
 
 msgid "Clears the module's APCu cache. Necessary after manual database changes or when data appears not to update. The cache is cleared automatically after GEDCOM imports."
 msgstr "Vyčistí APCu-Cache modulu. Je to potrebné po manuálnych úpravách databázy, alebo keď sa zobrazujú neaktuálne súbory. Cache sa automaticky vyprázdni po importe súboru GEDCOM."
 
-msgid "Create manually maintained collections to group media objects by topic. Automatically detected collections from the GEDCOM media types are not affected."
-msgstr "Vytvorte manuálne zbierky, aby ste zoskupili mediálne objekty tematicky. Automaticky rozpoznané zbierky z GEDCOM mediálnych typov týmto nie sú dotknuté."
+msgid "Click = add/remove"
+msgstr "Klik = pridať/odstrániť"
 
-msgid "List, also for JPG scans"
-msgstr "Zoznam, aj pre skeny JPG"
+msgid "Click to enlarge"
+msgstr "Kliknite pre zväčšenie"
 
-msgid "Delete"
-msgstr "Zmazať"
+msgid "Click to toggle"
+msgstr "Kliknúť pre zmenu"
 
-msgid "Masonry, lightbox, EXIF editor"
-msgstr "Masonry, Lightbox, EXIF-Editor"
-
-msgid "Media folder (filled automatically)"
-msgstr "Priečinok médií (automaticky naplnené)"
-
-msgid "Minimum 60 s, maximum 86400 s (24 h). Default: 900 s (15 min)."
-msgstr "Minimálne 60 s. maximálne 86400s (24 h). Štabdard 900s (15 min)."
-
-msgid "Collection name"
-msgstr "Názov"
-
-msgid "Network error"
-msgstr ""
-
-msgid "New"
-msgstr "Nové"
-
-msgid "New collection"
-msgstr "Nová zbierka"
-
-msgid "Create new collection"
-msgstr "Vytvoriť novú zbierku"
-
-msgid "No collections created yet."
-msgstr "Ešte nie je vytvorená žiadna zbierka."
-
-msgid "No managed collections yet."
-msgstr "Ešte neexistujú žiadne spravované zbierky."
-
-msgid "Not yet imported into webtrees"
-msgstr "Ešte nie sú importované do webtrees"
-
-msgid "No."
-msgstr "Č."
-
-msgid "Next page"
-msgstr "Nasledujúca stránka"
-
-msgid "Without type"
-msgstr "Bez typu"
-
-msgid "Folder path relative to data/media/ – sub-folders are included automatically. Leave empty for manual maintenance."
-msgstr "Cesta priečinkov relatívne k data/media - podpriečinky sú zahrnuté automaticky. Nechať prázdne pre manuálne spravované zbierky."
-
-msgid "Individuals"
-msgstr "Osoby"
-
-msgid "Order"
-msgstr "Poradie"
+msgid "Close"
+msgstr "Zavrieť"
 
 msgid "Collection #%s not found."
 msgstr "Zbierka #%s sa nenašla."
@@ -355,35 +130,197 @@ msgstr "Zbierka #%s bola zmazaná."
 msgid "Collection #%s was not found."
 msgstr "Zbierka #%s sa nenašla."
 
-msgid "Create collection"
-msgstr "Vytvoriť zbierku"
-
-msgid "Edit collection: %s"
-msgstr "Upraviť zbierku: %s"
+msgid "Collection name"
+msgstr "Názov"
 
 msgid "Collection not found."
 msgstr "Zbierka sa nenašla."
 
-msgid "Really delete collection “%s”?"
-msgstr "Naozaj zamazť zbierku „%s\"?"
+msgid "Collection “%s” was created."
+msgstr "Zbierka „%s\" bola vytvorená."
 
 msgid "Collection “%s” was updated."
 msgstr "Zbierka „%s\" bola aktualizovaná."
 
-msgid "Collection “%s” was created."
-msgstr "Zbierka „%s\" bola vytvorená."
-
 msgid "Collections"
 msgstr "Zbierky"
-
-msgid "Manage collections"
-msgstr "Spravovať zbierky"
 
 msgid "Collections – settings"
 msgstr "Zbierky - nastavenia"
 
-msgid "Close"
-msgstr "Zavrieť"
+msgid "Colour"
+msgstr "Farba"
+
+msgid "Comma-separated"
+msgstr "Oddelené čiarkou"
+
+msgid "Create collection"
+msgstr "Vytvoriť zbierku"
+
+msgid "Create first collection"
+msgstr "Vytvoriť prvú zbierku"
+
+msgid "Create manually maintained collections to group media objects by topic. Automatically detected collections from the GEDCOM media types are not affected."
+msgstr "Vytvorte manuálne zbierky, aby ste zoskupili mediálne objekty tematicky. Automaticky rozpoznané zbierky z GEDCOM mediálnych typov týmto nie sú dotknuté."
+
+msgid "Create new collection"
+msgstr "Vytvoriť novú zbierku"
+
+msgid "Create now"
+msgstr "Teraz vytvoriť"
+
+msgid "Current TTL: %s seconds"
+msgstr "Aktuálne TTL: %s sekúnd"
+
+msgid "Date"
+msgstr "Dátum"
+
+msgid "Delete"
+msgstr "Zmazať"
+
+msgid "Description"
+msgstr "Popis"
+
+msgid "Description / title"
+msgstr "Popis / názov)"
+
+msgid "Display name of the collection."
+msgstr "Zobrazený názov zbierky."
+
+msgid "Display type"
+msgstr "Druh zobrazenia"
+
+msgid "Document list"
+msgstr "Zoznam dokumentov"
+
+msgid "Documents"
+msgstr "Dokumenty"
+
+msgid "Edit"
+msgstr "Upraviť"
+
+msgid "Edit EXIF/XMP"
+msgstr "EXIF/XMP upraviť"
+
+msgid "Edit collection: %s"
+msgstr "Upraviť zbierku: %s"
+
+msgid "Entries per page"
+msgstr "Počet obrázkov na strane"
+
+msgid "Error"
+msgstr "Chyba"
+
+msgid "Family tree:"
+msgstr "Rodokmeň:"
+
+msgid "File"
+msgstr "Súbor"
+
+msgid "Folder path relative to data/media/ – sub-folders are included automatically. Leave empty for manual maintenance."
+msgstr "Cesta priečinkov relatívne k data/media - podpriečinky sú zahrnuté automaticky. Nechať prázdne pre manuálne spravované zbierky."
+
+msgid "Free holdings"
+msgstr "Voľný stav"
+
+msgid "Full screen in a new tab"
+msgstr "Plný obrázok a novej záložke"
+
+msgid "General settings"
+msgstr "Všeobecné nastavenia"
+
+msgid "Hamburg, wedding, 1920s"
+msgstr "Horná Lehota, svadba, 1920"
+
+msgid "Icon"
+msgstr "Ikona"
+
+msgid "Identifier"
+msgstr "Identifikátor"
+
+msgid "In the free holdings"
+msgstr "Vo voľnom stave"
+
+msgid "Inactive"
+msgstr "Neaktívny"
+
+msgid "Individuals"
+msgstr "Osoby"
+
+msgid "Internal identifier"
+msgstr "Interný identifikátor"
+
+msgid "John Smith, Jane Doe"
+msgstr "Ferko Palička, Janko Mrkvička"
+
+msgid "Keywords"
+msgstr "Kľúčové slová"
+
+msgid "List, also for JPG scans"
+msgstr "Zoznam, aj pre skeny JPG"
+
+msgid "Lower-case letters, digits, - and _. Generated automatically from the name. Letters, digits and hyphens only. Cannot be changed."
+msgstr "Malé písmená, číslice, - a _. Vytvorí sa automaticky z názvu. Iba písmená, číslice, spojovník. Nemôže sa následne meniť."
+
+msgid "Manage cache"
+msgstr "Spravovať cache"
+
+msgid "Manage collections"
+msgstr "Spravovať zbierky"
+
+msgid "Masonry, lightbox, EXIF editor"
+msgstr "Masonry, Lightbox, EXIF-Editor"
+
+msgid "Media folder (filled automatically)"
+msgstr "Priečinok médií (automaticky naplnené)"
+
+msgid "Minimum 60 s, maximum 86400 s (24 h). Default: 900 s (15 min)."
+msgstr "Minimálne 60 s. maximálne 86400s (24 h). Štabdard 900s (15 min)."
+
+msgid "Mixed"
+msgstr "Zmiešané"
+
+msgid "Network error"
+msgstr "Chyba siete"
+
+msgid "New"
+msgstr "Nové"
+
+msgid "New collection"
+msgstr "Nová zbierka"
+
+msgid "Next page"
+msgstr "Nasledujúca stránka"
+
+msgid "No collections created yet."
+msgstr "Ešte nie je vytvorená žiadna zbierka."
+
+msgid "No files found in this folder."
+msgstr "V tejto zložke sa nenašli žiadne súbory."
+
+msgid "No managed collections yet."
+msgstr "Ešte neexistujú žiadne spravované zbierky."
+
+msgid "No objects in this category."
+msgstr "Žiadne objekty v tejto kategórii."
+
+msgid "No photos in this source."
+msgstr "Žiadne fotky v tomto zdroji."
+
+msgid "No preview images (no jpg/png/gif/webp image files yet) in this collection."
+msgstr "Žiadne náhľady v tejto zbierke (ešte nie sú žiadne súbory obrázkov typujps/pnf/gif/webp)."
+
+msgid "No."
+msgstr "Č."
+
+msgid "Not yet imported into webtrees"
+msgstr "Ešte nie sú importované do webtrees"
+
+msgid "Open in webtrees"
+msgstr "Otvoriť vo webtrees"
+
+msgid "Order"
+msgstr "Poradie"
 
 msgid "Page %s of %s"
 msgstr "Strana %s z %s"
@@ -391,8 +328,125 @@ msgstr "Strana %s z %s"
 msgid "Page navigation"
 msgstr "Bočná navigácia"
 
+msgid "Part of the family archive, not linked in the family tree"
+msgstr "Časť rodinného archívu bez prepojenia na rodokmeň"
+
+msgid "Photo gallery"
+msgstr "Fotogaléria"
+
+msgid "Photo grid"
+msgstr "Foto-mriežka"
+
+msgid "Photos"
+msgstr "Fotky"
+
+msgid "Photos as tiles, documents as a list"
+msgstr "Fotky ako dlaždice, dokumenty ako zoznam"
+
+msgid "Photos for: %s"
+msgstr "Fotky pre: %s"
+
+msgid "Please enter a name."
+msgstr "Zadajte prosím názov."
+
+msgid "Please select a family tree above."
+msgstr "Zvoľte prosím hore rodokmeň."
+
+msgid "Please select a family tree."
+msgstr "Zvoľte prosím rodokmeň."
+
+msgid "Preview"
+msgstr "Náhľad"
+
+msgid "Preview: %s of %s objects."
+msgstr "Náhľad: %s z %s objektov."
+
+msgid "Previous page"
+msgstr "Predchádzajúca stránka"
+
+msgid "Really clear the cache?"
+msgstr "Naozaj vyprázdniť cache?"
+
+msgid "Really delete collection “%s”?"
+msgstr "Naozaj zamazť zbierku „%s\"?"
+
+msgid "Rename file"
+msgstr "Premenovať súbor"
+
+msgid "Renamed"
+msgstr "Premenované"
+
+msgid "Renaming…"
+msgstr "Premenúva sa…"
+
+msgid "Save"
+msgstr "Uložiť"
+
+msgid "Save changes"
+msgstr "Uložiť zmeny"
+
+msgid "Save settings"
+msgstr "Uložiť nastavenia"
+
+msgid "Save to file"
+msgstr "Uložiť do súboru"
+
+msgid "Saved"
+msgstr "Uložené"
+
+msgid "Saving…"
+msgstr "Ukladá sa…"
+
+msgid "Select photos"
+msgstr "Vybrať fotky"
+
+msgid "Settings"
+msgstr "Nastavenia"
+
+msgid "Show"
+msgstr "Zobraziť"
+
+msgid "Sync EXIF ↔ webtrees"
+msgstr "Porovnanie EXIF ↔ webtrees"
+
+msgid "The collections cache was cleared successfully."
+msgstr "Cache zbierky bola úspešne zmazaná."
+
+msgid "The photo picker only shows images from active, folder-based photo collections (a top-level folder directly under data/media/). Create such a collection first – or fill this collection directly by setting the „Medienordner“ (media folder) field in its edit form."
+msgstr "Fotky je možné vyberať len z aktívnych zbierok, ktoré sú definované priečinkom - priamo v data/media. Vytvorte najprv takúto zbierku - alebo naplňte túto zbierku priamo naplniť tým že zadáte priečinok v nastaveniach zbierky."
+
+msgid "Thematic collections"
+msgstr "Tematické zbierky"
+
+msgid "There are no family trees."
+msgstr "Neexistujú žiadne rodokmene."
+
+msgid "There is no source yet from which you can select photos."
+msgstr "Ešte neexistuje zdroj, z ktorého by ste mohli vybrať fotky."
+
+msgid "This collection is still empty."
+msgstr "Táto zbierka je ešte prázdna."
+
+msgid "This family tree does not contain any media objects or collections yet."
+msgstr "Tento rodokmeň neobsahuje ešte žiadne objekty médií alebo zbierky."
+
+msgid "Uniform grid, plain"
+msgstr "Rovnomerná pevná mriežka, vecná"
+
+msgid "Videos, audio & documents"
+msgstr "Videá, audio& dokumenty"
+
 msgid "Visible (active)"
 msgstr "Viditeľné (aktívne)"
+
+msgid "Who, what, when, where…"
+msgstr "Kto, čo, kedy, kde…"
+
+msgid "Without type"
+msgstr "Bez typu"
+
+msgid "YYYY-MM-DD  or  YYYY"
+msgstr "RRRR-MM-DD alebo RRRR"
 
 msgid "You do not have permission for this action."
 msgstr "Nemáte oprávnenie pre túto akciu."
@@ -400,71 +454,17 @@ msgstr "Nemáte oprávnenie pre túto akciu."
 msgid "You do not have permission for this page."
 msgstr "Nemáte oprávnenie re túto stránku."
 
-msgid "Save"
-msgstr ""
-
-msgid "Saving…"
-msgstr ""
-
-msgid "Family tree:"
-msgstr "Rodokmeň:"
-
-msgid "Keywords"
-msgstr "Kľúčové slová"
-
-msgid "Part of the family archive, not linked in the family tree"
-msgstr "Časť rodinného archívu bez prepojenia na rodokmeň"
-
-msgid "Thematic collections"
-msgstr "Tematické zbierky"
-
-msgid "Renamed"
-msgstr ""
-
-msgid "Renaming…"
-msgstr ""
-
-msgid "Videos, audio & documents"
-msgstr "Videá, audio& dokumenty"
-
-msgid "Full screen in a new tab"
-msgstr "Plný obrázok a novej záložke"
-
-msgid "Previous page"
-msgstr "Predchádzajúca stránka"
-
-msgid "Preview"
-msgstr "Náhľad"
-
-msgid "Preview: %s of %s objects."
-msgstr "Náhľad: % z %s objektov."
-
-msgid "Who, what, when, where…"
-msgstr "Kto, čo, kedy, kde…"
-
-msgid "Add to collection"
-msgstr "Pridať ku zbierke"
-
-msgid "Back"
-msgstr "Späť"
-
-msgid "Back to settings"
-msgstr "Späť na nastavenia"
-
 msgid "e.g. 1923-06-15 or 1923"
-msgstr ""
+msgstr "napr. 1923-06-15 alebo 1923"
 
 msgid "e.g. family photos"
 msgstr "napr. rodinné fotky"
 
-msgid "Save changes"
-msgstr "Uložiť zmeny"
-
 msgid "… (%s in total)"
-msgstr ""
+msgstr "… (%s spolu)"
 
 msgid "… and %s more"
-msgstr ""
+msgstr "… a %s viac"
 
 msgid "→ copy into EXIF"
-msgstr ""
+msgstr "→ kopírovať do EXIF-u"
