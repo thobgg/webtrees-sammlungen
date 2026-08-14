@@ -9,6 +9,27 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+## [1.3.3] – 2026-08-14
+
+Zwei Anzeigefehler, beide gemeldet von **@ro-la**.
+
+### Behoben
+- **Kopfzeile der Lightbox lief über, statt zu kürzen** (Issue #21). Bei mehreren
+  verknüpften Personen mit langen Namen wurden die Schaltflächen aus dem Bild
+  geschoben oder von der Seitenleiste überdeckt. Ursache: das Markup benutzte
+  `min-w-0`, um dem Textbereich das Schrumpfen zu erlauben – diese Klasse gehört
+  jedoch zu Tailwind, das Bootstrap von webtrees kennt sie nicht. Ohne
+  `min-width: 0` darf ein Flex-Element nicht unter seine Inhaltsbreite
+  schrumpfen, und weil `text-truncate` Umbrüche verbietet, ist das die volle
+  Textbreite. Die Klasse ist jetzt im Modul definiert; sie wurde an **sechs**
+  Stellen benutzt, betroffen waren also auch Dokumentenlisten und Übersichtskarten.
+- **Weiße Schrift auf weißem Grund im Theme „Potts Modern"** (Issue #20). Die
+  Lightbox ist bewusst dunkel, verließ sich für den Hintergrund aber auf das
+  Theme. Färbt dieses den Modal-Körper hell, blieb die weiße Schrift unlesbar –
+  die Seitenleiste nicht, weil sie ihre Farbe als `style`-Attribut trägt.
+  Hintergrund und Schriftfarben sind jetzt für alle Flächen der Lightbox
+  ausdrücklich gesetzt und damit vom Theme unabhängig.
+
 ## [1.3.2] – 2026-08-14
 
 **Slowakisch ist vollständig.** 147 von 147 Texten, überarbeitet von

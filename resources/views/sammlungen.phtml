@@ -114,6 +114,24 @@ $unverknuepftGesamt = array_sum($unverknuepft_typen ?? []);
     transition: opacity .15s;
 }
 .archiv-masonry-item:hover .archiv-masonry-img { opacity: .88; }
+/* `min-w-0` ist eine Tailwind-Klasse – das Bootstrap von webtrees kennt sie
+   nicht. Ohne `min-width: 0` darf ein Flex-Element nicht unter seine
+   Inhaltsbreite schrumpfen; zusammen mit `text-truncate` (kein Umbruch) ist das
+   die volle Textbreite. Die Zeile kürzt dann nicht, sondern läuft über und
+   schiebt die Schaltflächen aus dem Bild (Issue #21). */
+.min-w-0 { min-width: 0 !important; }
+
+/* Die Lightbox ist bewusst dunkel. Sie darf sich dafür nicht auf das Theme
+   verlassen: Potts Modern färbt den Modal-Körper hell, wodurch unsere weiße
+   Schrift auf weißem Grund stand (Issue #20). Die Seitenleiste blieb lesbar,
+   weil sie ihre Farbe als style-Attribut trägt – hier dasselbe für die
+   übrigen Flächen, damit kein Theme sie überschreiben kann. */
+#archiv-lightbox .modal-content,
+#archiv-lightbox .modal-body { background-color: #000 !important; }
+#archiv-lightbox .archiv-lb-kopf { background-color: #000 !important; }
+#archiv-lightbox #archiv-lb-caption { color: #fff !important; }
+#archiv-lightbox #archiv-lb-meta    { color: rgba(255,255,255,.72) !important; }
+
 /* Foto-Raster: quadratische Kachel mit weichgezeichnetem Hintergrund aus
    demselben Bild, damit Hoch- und Querformate ohne Beschnitt passen.
    Beide Klassen standen seit 1.0.0 im Markup, aber ohne Regeln: der
