@@ -7,7 +7,7 @@
 | | |
 |---|---|
 | Modul-Name | `sammlungen` |
-| Version | 1.3.3 |
+| Version | 1.4.0 |
 | webtrees | 2.2.x |
 | PHP | 8.2 – 8.4 |
 | Lizenz | GPL-3.0-or-later |
@@ -51,6 +51,63 @@ Doppelter Nutzen: dieselben Medien sind **genealogischer Beleg** und zugleich ei
 **ansehnliche, browsbare Galerie** – fürs Zeigen in der Familie ebenso wie fürs eigene
 Archivieren und Pflegen der Metadaten.
 
+### Wie das Archiv geordnet ist
+
+Alles, was du siehst, ist eines von drei Dingen. Sie stehen auf der Übersicht
+nebeneinander, in dieser Reihenfolge:
+
+| | was es ist | woher es kommt |
+|---|---|---|
+| **Archiv-Ordner** | deine Verzeichnisse unter `data/media/`, je eine Kachel – „Kirchenbücher", „Familienfotos", „Grabsteine" | dem Dateisystem; eine Ordner-Sammlung wird einmal in der Verwaltung angelegt und zeigt auf ein Verzeichnis |
+| **Thematische Sammlungen** | kuratierte Alben quer durch die Ordner – „Hochzeit 1928", „Opas Briefe" | von dir, durch Auswählen von Dateien; eine thematische Sammlung hat keinen eigenen Ordner |
+| **Freier Bestand** | alles im Archiv, was im Stammbaum **nirgends** auftaucht | wird berechnet, nicht gepflegt |
+
+Das dritte ist der Zweck des Moduls und deshalb einen Satz mehr wert.
+
+Eine Datei gilt als **frei**, wenn weder eine Person noch eine Familie auf sie
+verweist – entweder weil sie nie als Medienobjekt in webtrees eingetragen wurde,
+oder weil sie eines ist, auf das niemand zeigt. Das ist kein Rückstand: zu einem
+Vorfahren mögen dreißig Aufnahmen existieren, von denen drei an seinen Datensatz
+gehören; die anderen siebenundzwanzig sind das Archiv. Verweise aus Quellen oder
+Notizen zählen dabei **nicht** als Auftauchen im Stammbaum – ein Registerscan an
+einer Quelle bleibt Teil des freien Bestands.
+
+Die Zahl wird bei jedem Aufruf aus dem Dateisystem berechnet und kurz
+zwischengespeichert. Du pflegst sie nie, und sie braucht keine
+Datenbankeinträge – genau deshalb ist ein Archiv aus reinen Dateien hier
+überhaupt sichtbar.
+
+### Auf Telefon und Tablet
+
+Die Lightbox ist zum Herzeigen gebaut, nicht nur zum Archivieren am
+Schreibtisch. Auf einem Berührungsgerät öffnet sie randlos, und die Seitenleiste
+legt sich über das Bild, statt es zu quetschen:
+
+- **Kneifen** vergrößert bis fünffach, **ein Finger** schiebt das vergrößerte Bild
+- **Doppeltippen** fährt auf die getippte Stelle zu und wieder zurück
+- **Wischen** blättert weiter – nur bei unvergrößertem Bild, sonst wäre jedes
+  Verschieben ein Bildwechsel
+- **Einmal tippen** räumt Kopfzeile und Vorschauleiste weg und fordert Vollbild an
+- Am Rechner: Doppelklick und Strg + Mausrad
+
+Warum das zählt: ein Querformat-Foto füllt auf einem 384 Pixel breiten Schirm nur
+ein Band von rund 256 Pixeln, egal wie viel Platz darunter frei bleibt. Quer
+gehalten wächst ein 3:2-Foto durch Wegtippen und Vollbild von 284 × 189 auf
+576 × 384 – gut die vierfache Fläche (gemessen an einem Galaxy S25 Ultra).
+
+### Geschwindigkeit
+
+Gemessen an einer Installation mit 1826 Archivdateien, eine Galerieseite mit 50 Fotos:
+
+| | vor 1.4.0 | seit 1.4.0 |
+|---|---|---|
+| Seitengewicht | 174,2 MB | **4,8 MB** |
+| Zeit bis zum ersten Byte | 12 s (warm 5,3 s) | **0,13 – 0,32 s** |
+
+Zwei Ursachen, beide behoben: die Galerien schickten die Originaldateien (im
+Mittel 21-mal breiter als der Schirm sie zeigt), und das Auslesen der Metadaten
+dekodierte jedes Bild vollständig, statt seinen Kopf zu lesen.
+
 ### Sammlungs-Übersicht
 
 Übersicht aller Sammlungen, gruppiert nach Archiv-Ordnern und thematischen Gruppen:
@@ -88,13 +145,15 @@ Dokumenten-Liste, gemischt). Aktiv-Status per Ein-Klick-Toggle:
 
 - **Galerien** für Foto-Sammlungen (`Familienfotos`, `Grabsteine`, `Konterfeis`, eigene Sammlungen)
 - **Lightbox** mit Tastatur-Navigation, Thumbnail-Streifen und Sidebar
+- **Gesten**: Kneifen zum Vergrößern, Schieben, Doppeltippen, Wischen, Tippen für randlos
 - **EXIF/XMP-Lesen** (Beschreibung, Datum, Personen, Keywords) mit Imagick-Cache
 - **EXIF/XMP-Schreiben** mit automatischem Tages-Backup vor jeder Änderung
 - **Abgleich EXIF ↔ webtrees** (Beschreibung, Personen) mit Ein-Klick-Übernahme
 - **Datei umbenennen** direkt in der Lightbox (DB wird mit-aktualisiert)
 - **Manuelle Sammlungen** (CRUD): Name, Slug, Icon, Farbe, Ansicht
 - **Pfad-basierte Zuordnung**: auch nicht-importierte Bilder können Sammlungen zugewiesen werden
-- **„Freier Bestand"** als eigene Übersicht (Teil des Familienarchivs ohne Verknüpfung im Stammbaum)
+- **„Freier Bestand"** aus dem Dateisystem gezählt: alles im Archiv, was im Stammbaum nicht auftaucht, je Ordner
+- **Verkleinerte Auslieferung**: 400 px für Kacheln, 1600 px für die Lightbox, das Original einen Klick entfernt – mit dem Bildstapel von webtrees, ohne zusätzliche Voraussetzung
 - **APCu-Cache** für teure Queries mit konfigurierbarem TTL
 
 ## Voraussetzungen

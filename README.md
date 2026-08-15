@@ -7,7 +7,7 @@
 | | |
 |---|---|
 | Module name | `sammlungen` |
-| Version | 1.3.3 |
+| Version | 1.4.0 |
 | webtrees | 2.2.x |
 | PHP | 8.2 – 8.4 |
 | License | GPL-3.0-or-later |
@@ -49,6 +49,31 @@ crucially, **built into webtrees**, with everything that brings:
 Double benefit: the same media are **genealogical evidence** and at the same time a
 **presentable, browsable gallery** – for showing within the family as well as for your own
 archiving and metadata work.
+
+### How the archive is organised
+
+Everything you see is one of three things. They sit next to each other on the
+overview, in this order:
+
+| | what it is | where it comes from |
+|---|---|---|
+| **Archive folders** | your directories under `data/media/`, one card each – "Church books", "Family photos", "Gravestones" | the file system; a folder collection is created once in the admin area and points at a directory |
+| **Thematic collections** | curated albums that cut across folders – "Wedding 1928", "Grandpa's letters" | you, by picking files; a thematic collection has no folder of its own |
+| **Free holdings** | everything in the archive that does **not** appear anywhere in the family tree | calculated, not maintained |
+
+The third one is the point of the module, so it deserves a sentence more.
+
+A file counts as **free** when no individual and no family links to it – either
+because it was never imported into webtrees as a media object, or because it is
+one but nobody points at it. That is not a backlog. Thirty photographs may exist
+of one ancestor while only three belong on their record; the other twenty-seven
+are the archive. Links from sources or notes do **not** count as an appearance in
+the tree: a register scan attached to a source is still part of the free
+holdings.
+
+The number is calculated on every view, from the file system, and cached
+briefly. You never maintain it, and it needs no database entries – which is
+exactly why an archive of plain files is visible here at all.
 
 ### Collection overview
 
@@ -117,8 +142,22 @@ document list, mixed). Active status with one-click toggle:
 - **File rename** directly from the lightbox (DB is updated atomically)
 - **Custom collections** (CRUD): name, slug, icon, colour, view
 - **Path-based assignment**: even non-imported photos can be added to collections
-- **"Free holdings"** as a separate overview (part of the family archive, not linked in the family tree)
+- **"Free holdings"** counted from the file system: everything in the archive that does not appear in the family tree, per folder
+- **Scaled delivery**: 400 px for tiles, 1600 px for the lightbox, the original one click away – built on webtrees' own image stack, no extra requirement
 - **APCu cache** for expensive queries with configurable TTL
+
+### Speed
+
+Measured on an installation with 1826 archive files, one gallery page of 50 photos:
+
+| | before 1.4.0 | since 1.4.0 |
+|---|---|---|
+| page weight | 174.2 MB | **4.8 MB** |
+| time to first byte | 12 s (5.3 s warm) | **0.13 – 0.32 s** |
+
+Two causes, both fixed: galleries sent the original files (on average 21 times
+wider than the screen shows them), and reading metadata decoded every image in
+full instead of reading its header.
 
 ## Requirements
 

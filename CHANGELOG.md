@@ -9,6 +9,22 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+## [1.4.0] – 2026-08-15
+
+**Das Modul wird auf dem Telefon benutzbar – und auf jedem Gerät schnell.**
+
+Zwei Zahlen fassen das Release zusammen, beide an einer Instanz mit 1826
+Archivdateien gemessen: eine Galerieseite wog **174,2 MB und braucht jetzt
+4,8 MB**, und sie brauchte **12 Sekunden bis zum ersten Byte und braucht jetzt
+0,2**. Dazu eine Bedienung, mit der man Fotos herumzeigen kann, ohne sich zu
+entschuldigen: kneifen, schieben, wischen, tippen für randlos.
+
+Der dritte Strang ist die Ehrlichkeit der Zahlen. Der freie Bestand – der Teil
+des Archivs, der im Stammbaum nicht auftaucht – wurde falsch gezählt, und zwar
+seit 1.0.0 in zwei Richtungen gleichzeitig: Verweise aus Quellen galten als
+Einbindung, und Dateien ohne Medienobjekt kamen gar nicht vor. Auf der
+Testinstanz meldete die Ansicht deshalb **0 Objekte, wo 1126 Dateien liegen**.
+
 ### Hinzugefügt
 - **Bedienung wie in einer Foto-App auf Telefon und Tablet.** Die Lightbox
   öffnet dort über die volle Höhe, die Seitenleiste legt sich über das Bild
