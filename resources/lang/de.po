@@ -20,11 +20,6 @@ msgid_plural "%s photos"
 msgstr[0] "%s Foto"
 msgstr[1] "%s Fotos"
 
-msgid "%s media object in the free holdings"
-msgid_plural "%s media objects in the free holdings"
-msgstr[0] "%s Medienobjekt im freien Bestand"
-msgstr[1] "%s Medienobjekte im freien Bestand"
-
 msgid "%s minutes"
 msgstr "%s Minuten"
 
@@ -82,9 +77,6 @@ msgstr "Allgemeine Einstellungen"
 
 msgid "Display name of the collection."
 msgstr "Angezeigter Name der Sammlung."
-
-msgid "Show"
-msgstr "Anzeigen"
 
 msgid "Display type"
 msgstr "Anzeigetyp"

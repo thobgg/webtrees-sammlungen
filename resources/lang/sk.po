@@ -28,12 +28,6 @@ msgstr[0] "%s spravovaná zbierka"
 msgstr[1] "%s spravované zbierky"
 msgstr[2] "%s spravovaných zbierok"
 
-msgid "%s media object in the free holdings"
-msgid_plural "%s media objects in the free holdings"
-msgstr[0] "%s mediálny objekt vo voľnom stave"
-msgstr[1] "%s mediálne objekty vo voľnom stave"
-msgstr[2] "%s mediálnych objektov vo voľnom stave"
-
 msgid "%s minutes"
 msgstr "%s minút"
 
@@ -402,9 +396,6 @@ msgstr "Vybrať fotky"
 
 msgid "Settings"
 msgstr "Nastavenia"
-
-msgid "Show"
-msgstr "Zobraziť"
 
 msgid "Sync EXIF ↔ webtrees"
 msgstr "Porovnanie EXIF ↔ webtrees"

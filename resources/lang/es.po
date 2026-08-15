@@ -21,11 +21,6 @@ msgid_plural "%s photos"
 msgstr[0] "%s foto"
 msgstr[1] "%s fotos"
 
-msgid "%s media object in the free holdings"
-msgid_plural "%s media objects in the free holdings"
-msgstr[0] "%s objeto multimedia en el fondo libre"
-msgstr[1] "%s objetos multimedia en el fondo libre"
-
 msgid "%s minutes"
 msgstr "%s minutos"
 
@@ -83,9 +78,6 @@ msgstr "Configuración general"
 
 msgid "Display name of the collection."
 msgstr "Nombre mostrado de la colección."
-
-msgid "Show"
-msgstr "Mostrar"
 
 msgid "Display type"
 msgstr "Tipo de visualización"

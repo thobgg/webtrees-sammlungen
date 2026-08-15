@@ -213,5 +213,23 @@ namespace {
         }
     }
 
+    // Freier Bestand leer: der Abschnitt steht auch dann, mit einem Satz statt
+    // Kacheln. Beide Zweige gehoeren gerendert - der leere ist bei den meisten
+    // Installationen der haeufigere.
+    $unverknuepftGesamt = 0;
+    $unverknuepft_typen = [];
+    $aktive             = [];
+    ob_start();
+    try {
+        include $modul . '/resources/views/partials/_uebersicht.phtml';
+        $html = ob_get_clean();
+        printf("  %-18s %s: ok (%d Zeichen)\n", 'uebersicht_leer', '-', strlen($html));
+    } catch (\Throwable $ex) {
+        ob_end_clean();
+        printf("  %-18s %s: FEHLER %s – %s @ %s:%d\n", 'uebersicht_leer', '-',
+            get_class($ex), $ex->getMessage(), basename($ex->getFile()), $ex->getLine());
+        $fehler++;
+    }
+
     exit($fehler > 0 ? 1 : 0);
 }
