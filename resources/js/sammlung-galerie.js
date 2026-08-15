@@ -321,9 +321,39 @@ document.addEventListener('DOMContentLoaded', function () {
         // Einmal tippen nimmt Kopfzeile und Vorschauleiste weg. Der Zug muss
         // warten, bis ein zweiter Tipp ausgeschlossen ist - sonst blinkte die
         // Leiste bei jedem Doppeltipp kurz auf.
-        function kahlUmschalten() {
-            lightbox.classList.toggle('archiv-kahl');
+        //
+        // Unsere eigenen Leisten sind dabei nur die Hälfte: Adressleiste oben
+        // und Systemleiste unten gehören dem Browser und gehen allein über die
+        // Fullscreen-API weg. Die verlangt eine echte Geste - die 330 ms
+        // Wartezeit liegen weit innerhalb des Zeitfensters, das der Browser
+        // dafür offen hält. Wo sie fehlt (iPhone) oder abgeschaltet ist,
+        // bleibt es beim Wegräumen unserer eigenen Leisten.
+        function vollbild(an) {
+            try {
+                if (an && !document.fullscreenElement) {
+                    const el = document.documentElement;
+                    const anfordern = el.requestFullscreen || el.webkitRequestFullscreen;
+                    if (anfordern) {
+                        const p = anfordern.call(el);
+                        if (p && p.catch) p.catch(() => {});
+                    }
+                } else if (!an && document.fullscreenElement && document.exitFullscreen) {
+                    const p = document.exitFullscreen();
+                    if (p && p.catch) p.catch(() => {});
+                }
+            } catch (e) { /* Vollbild ist Zugabe, kein Muss */ }
         }
+
+        function kahlUmschalten() {
+            const kahl = lightbox.classList.toggle('archiv-kahl');
+            vollbild(kahl);
+        }
+
+        // Wer das Vollbild mit der Systemgeste verlässt, soll auch die Leisten
+        // zurückbekommen - sonst steht die Anzeige halb umgeschaltet da.
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) lightbox.classList.remove('archiv-kahl');
+        });
 
         // touch-action gehoert auf die Flaeche, nicht nur aufs Bild: die
         // Handler haengen an der Flaeche, und neben dem Bild ist schwarzer
@@ -456,6 +486,7 @@ document.addEventListener('DOMContentLoaded', function () {
         lightbox.addEventListener('hidden.bs.modal', () => {
             clearTimeout(tippUhr);
             lightbox.classList.remove('archiv-kahl');
+            vollbild(false);
             zoomZuruecksetzen();
         });
     })();

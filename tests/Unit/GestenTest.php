@@ -133,6 +133,33 @@ final class GestenTest extends TestCase
     }
 
     /**
+     * Adressleiste oben und Systemleiste unten gehoeren dem Browser; ohne
+     * Vollbild bleibt der Rahmen stehen, auch wenn unsere eigenen Leisten weg
+     * sind. Und das Vollbild muss wieder aus, sonst haengt das Telefon nach dem
+     * Schliessen in einer leeren Vollbildseite.
+     */
+    public function testKahlerZustandNimmtDasVollbildMit(): void
+    {
+        $js = self::js();
+
+        self::assertMatchesRegularExpression(
+            '/const kahl = lightbox\.classList\.toggle\(\'archiv-kahl\'\);\s*vollbild\(kahl\);/',
+            $js,
+            'Das Vollbild haengt nicht am kahlen Zustand.'
+        );
+        self::assertMatchesRegularExpression(
+            "/'hidden\.bs\.modal'.*?vollbild\(false\)/s",
+            $js,
+            'Beim Schliessen bleibt das Vollbild stehen.'
+        );
+        self::assertMatchesRegularExpression(
+            "/'fullscreenchange'.*?classList\.remove\('archiv-kahl'\)/s",
+            $js,
+            'Verlaesst man das Vollbild mit der Systemgeste, bleiben die Leisten weg.'
+        );
+    }
+
+    /**
      * Wer die Leisten beim letzten Bild weggetippt hat, sucht sie sonst beim
      * naechsten Oeffnen.
      */
