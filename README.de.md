@@ -79,13 +79,10 @@ Datenbankeinträge – genau deshalb ist ein Archiv aus reinen Dateien hier
 
 ### Auf Telefon und Tablet
 
-**Der Anwendungsfall ist Herzeigen, nicht Erfassen.** Die Familie sitzt am Tisch,
-ein Name fällt, und du holst das Bild an Ort und Stelle aus dem Archiv – „schau
-mal, das war doch Tante Erna" – „wo hast du das denn her?". Erfassen, EXIF-Arbeit
-und Verknüpfen passieren am Schreibtisch auf einem großen Schirm. Das Telefon hat
-eine Aufgabe: das Foto, groß, in zwei Tippern, und das nächste mit einem Wisch.
-
-Deshalb verhält sich die Lightbox auf einem Berührungsgerät wie eine Foto-App:
+Auf dem Telefon dient das Modul dem **Ansehen, nicht dem Bearbeiten**. Erfassen,
+EXIF-Arbeit und Verknüpfen bleiben Schreibtischarbeit am großen Schirm; auf dem
+kleinen zählt nur, dass ein Foto schnell den Schirm füllt und das nächste einen
+Wisch entfernt ist. Deshalb verhält sich die Lightbox dort wie eine Foto-App:
 sie öffnet randlos, und die Seitenleiste legt sich über das Bild, statt es zu
 quetschen:
 

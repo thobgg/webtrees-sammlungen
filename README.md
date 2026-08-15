@@ -94,14 +94,11 @@ one-click "take over" for any differences.
 
 ### On phone and tablet
 
-**The use case is showing, not filing.** The family is around the table, someone
-mentions a name, and you pull the picture out of the archive on the spot – "look,
-that's great-aunt Erna" – "where on earth did you get that?". Cataloguing,
-EXIF work and linking happen at a desk on a big screen. The phone has one job:
-the photograph, large, in two taps, and the next one with a swipe.
-
-That is why the lightbox behaves like a photo app on a touch device: it opens
-edge to edge, and the sidebar slides over the picture instead of squeezing it:
+On a phone the module is for **looking, not editing**. Cataloguing, EXIF work and
+linking stay desk work on a large screen; on a small one it only matters that a
+photograph fills the screen quickly and the next one is a swipe away. The
+lightbox therefore behaves like a photo app: it opens edge to edge, and the
+sidebar slides over the picture instead of squeezing it:
 
 - **pinch** to zoom up to 5×, **one finger** pans the enlarged picture
 - **double tap** zooms towards the spot you tapped, and back
