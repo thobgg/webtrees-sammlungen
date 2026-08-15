@@ -67,6 +67,20 @@ _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Bl
   Fensterbreite – ein schmales Fenster am Rechner hat weiterhin eine Maus.
 
 ### Behoben
+- **Der freie Bestand sah nur Medienobjekte und übersah das Archiv.** Gezählt
+  wurde in der Datenbank: Medienobjekte ohne Verknüpfung. Ein Archiv besteht
+  aber in aller Regel aus Dateien, die gar kein Medienobjekt haben – zu einem
+  Vorfahren gehören dutzende Aufnahmen, von denen nur ein paar am Datensatz
+  hängen sollen. Der Rest ist kein Rückstand, sondern der Bestand.
+
+  Gezählt wird jetzt vom Dateisystem her: frei ist, was entweder gar nicht als
+  Medienobjekt eingetragen ist **oder** eingetragen ist und an keiner Person
+  und keiner Familie hängt. Die Übersicht zeigt die Summe und eine Kachel je
+  Ordner. Ein Durchlauf durch das Verzeichnis und zwei Abfragen, nicht eine je
+  Datei.
+
+  Am Beispiel eines Archivs mit 1826 Dateien: vorher meldete die Ansicht
+  **0 Objekte**, jetzt **1126 Dateien**, aufgeschlüsselt nach Ordner.
 - **Der freie Bestand zählte Verweise aus Quellen und Notizen als Einbindung**
   und meldete dadurch „Alle Medienobjekte sind mit Personen oder Familien
   verknüpft", obwohl an keiner Person etwas hing. In webtrees darf eine

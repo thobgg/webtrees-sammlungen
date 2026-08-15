@@ -849,6 +849,91 @@ class CollectionService
         return $ergebnis;
     }
 
+    /**
+     * Was im Archiv liegt und im Stammbaum nirgends auftaucht, je Ordner.
+     *
+     * Das ist die Menge, um derentwillen es das Modul gibt: zu einem Vorfahren
+     * gehoeren oft dutzende Aufnahmen, von denen nur ein paar am Datensatz
+     * haengen sollen. Der Rest ist kein Rueckstand, sondern das Archiv.
+     *
+     * Frei ist eine Datei in zwei Faellen:
+     *   1. sie ist in webtrees gar nicht als Medienobjekt eingetragen
+     *   2. sie ist eingetragen, haengt aber an keiner Person und keiner Familie
+     *
+     * Die frueheren Zaehlungen kannten nur Fall 2 und meldeten deshalb bei
+     * einem Archiv aus reinen Dateien null - obwohl tausende Dateien dalagen.
+     *
+     * Ein Durchlauf durch das Verzeichnis und zwei Abfragen, nicht eine je
+     * Datei; bei 1826 Dateien ist das der Unterschied zwischen einer Sekunde
+     * und einer Minute.
+     *
+     * @return array{gesamt:int, jeOrdner:array<string,int>, dateien:int}
+     */
+    public function nichtEingebundeneDateien(Tree $tree): array
+    {
+        $cacheKey = sprintf('sammlungen_frei_fs:%d', $tree->id());
+
+        return $this->cache->remember($cacheKey, function () use ($tree): array {
+            $mediaBase = \Fisharebest\Webtrees\Webtrees::DATA_DIR
+                . $tree->getPreference('MEDIA_DIRECTORY', 'media/');
+
+            if (!is_dir($mediaBase)) {
+                return ['gesamt' => 0, 'jeOrdner' => [], 'dateien' => 0];
+            }
+
+            // Alle eingetragenen Dateien des Baums: Pfad => m_id
+            $eingetragen = DB::table('media_file AS mf')
+                ->where('mf.m_file', '=', $tree->id())
+                ->pluck('mf.m_id', 'mf.multimedia_file_refn')
+                ->all();
+
+            // Medienobjekte, an denen eine Person oder Familie haengt
+            $verknuepft = DB::table('link AS lnk')
+                ->leftJoin('individuals AS i', function ($join): void {
+                    $join->on('i.i_file', '=', 'lnk.l_file')->on('i.i_id', '=', 'lnk.l_from');
+                })
+                ->leftJoin('families AS f', function ($join): void {
+                    $join->on('f.f_file', '=', 'lnk.l_file')->on('f.f_id', '=', 'lnk.l_from');
+                })
+                ->where('lnk.l_file', '=', $tree->id())
+                ->where('lnk.l_type', '=', 'OBJE')
+                ->where(function ($oder): void {
+                    $oder->whereNotNull('i.i_id')->orWhereNotNull('f.f_id');
+                })
+                ->distinct()
+                ->pluck('lnk.l_to')
+                ->flip()
+                ->all();
+
+            $basis    = rtrim(str_replace('\\', '/', $mediaBase), '/') . '/';
+            $jeOrdner = [];
+            $gesamt   = 0;
+            $dateien  = 0;
+
+            foreach ($this->medienIterator($mediaBase) as $datei) {
+                if (!$datei->isFile()) {
+                    continue;
+                }
+                $dateien++;
+
+                $relativ = ltrim(str_replace($basis, '', str_replace('\\', '/', $datei->getPathname())), '/');
+                $mId     = $eingetragen[$relativ] ?? null;
+
+                if ($mId !== null && isset($verknuepft[(string) $mId])) {
+                    continue;   // haengt an einer Person oder Familie
+                }
+
+                $ordner            = strpos($relativ, '/') === false ? '' : explode('/', $relativ)[0];
+                $jeOrdner[$ordner] = ($jeOrdner[$ordner] ?? 0) + 1;
+                $gesamt++;
+            }
+
+            arsort($jeOrdner);
+
+            return ['gesamt' => $gesamt, 'jeOrdner' => $jeOrdner, 'dateien' => $dateien];
+        }, 300);
+    }
+
     public function vorschauInOrdner(Tree $tree, string $ordner, int $n): array
     {
         return DB::table('media_file AS mf')

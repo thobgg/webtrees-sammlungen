@@ -204,6 +204,7 @@ namespace {
     $unverknuepftUrl    = fn (string $typ = ''): string => '/frei/' . $typ;
     $sammlungUrl        = fn (string $slug): string => '/s/' . $slug;
     $unverknuepft_typen = ['photo' => 5, '' => 2];
+    $freie_dateien      = ['gesamt' => 1234, 'jeOrdner' => ['Familienfotos' => 900, 'Grabsteine' => 334], 'dateien' => 1826];
 
     $weitere = [
         'uebersicht' => ['partials/_uebersicht.phtml', []],
@@ -234,6 +235,7 @@ namespace {
     // Installationen der haeufigere.
     $unverknuepftGesamt = 0;
     $unverknuepft_typen = [];
+    $freie_dateien      = ['gesamt' => 0, 'jeOrdner' => [], 'dateien' => 0];
     $aktive             = [];
     ob_start();
     try {

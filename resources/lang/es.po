@@ -456,3 +456,13 @@ msgstr "→ copiar a EXIF"
 
 msgid "No type"
 msgstr "Sin tipo"
+
+msgid "%s file in the archive does not appear in the family tree."
+msgid_plural "%s files in the archive do not appear in the family tree."
+msgstr[0] "%s archivo del archivo no aparece en el árbol genealógico."
+msgstr[1] "%s archivos del archivo no aparecen en el árbol genealógico."
+
+msgid "%s of them is a media object in webtrees"
+msgid_plural "%s of them are media objects in webtrees"
+msgstr[0] "%s de ellos es un objeto audiovisual en webtrees"
+msgstr[1] "%s de ellos son objetos audiovisuales en webtrees"

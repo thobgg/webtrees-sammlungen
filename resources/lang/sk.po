@@ -462,3 +462,15 @@ msgstr "→ kopírovať do EXIF-u"
 
 msgid "No type"
 msgstr "Bez typu"
+
+msgid "%s file in the archive does not appear in the family tree."
+msgid_plural "%s files in the archive do not appear in the family tree."
+msgstr[0] "%s súbor v archíve sa nenachádza v rodokmeni."
+msgstr[1] "%s súbory v archíve sa nenachádzajú v rodokmeni."
+msgstr[2] "%s súborov v archíve sa nenachádza v rodokmeni."
+
+msgid "%s of them is a media object in webtrees"
+msgid_plural "%s of them are media objects in webtrees"
+msgstr[0] "%s z nich je mediálny objekt vo webtrees"
+msgstr[1] "%s z nich sú mediálne objekty vo webtrees"
+msgstr[2] "%s z nich je mediálnych objektov vo webtrees"

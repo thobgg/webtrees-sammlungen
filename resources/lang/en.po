@@ -455,3 +455,13 @@ msgstr "→ copy into EXIF"
 
 msgid "No type"
 msgstr "No type"
+
+msgid "%s file in the archive does not appear in the family tree."
+msgid_plural "%s files in the archive do not appear in the family tree."
+msgstr[0] "%s file in the archive does not appear in the family tree."
+msgstr[1] "%s files in the archive do not appear in the family tree."
+
+msgid "%s of them is a media object in webtrees"
+msgid_plural "%s of them are media objects in webtrees"
+msgstr[0] "%s of them is a media object in webtrees"
+msgstr[1] "%s of them are media objects in webtrees"

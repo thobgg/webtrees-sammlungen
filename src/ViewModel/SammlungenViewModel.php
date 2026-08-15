@@ -70,6 +70,12 @@ final class SammlungenViewModel
         // (d) Nicht-eingebundene Medien (fuer Banner auf Uebersicht)
         $unverknuepftTypen = $this->sammlungenRepository->anzahlNachTypOhneVerknuepfung($tree);
 
+        // (e) Freier Bestand vom Dateisystem her: alles im Archiv, was im
+        // Stammbaum nirgends auftaucht. Die Abfrage unter (d) kennt nur
+        // Medienobjekte - ein Archiv aus reinen Dateien meldete dort null,
+        // obwohl tausende Dateien dalagen.
+        $freieDateien = $this->collectionService->nichtEingebundeneDateien($tree);
+
         // Aktive Sammlung bestimmen
         $aktive = $this->aktiveBestimmen($tree, $kategorie, $typParam, $manuell, $automatisch, $unverknuepftTypen);
 
@@ -99,6 +105,7 @@ final class SammlungenViewModel
             ],
             'aktive'             => $aktive,
             'unverknuepft_typen' => $unverknuepftTypen,
+            'freie_dateien'      => $freieDateien,
             'istAdmin'           => Auth::isAdmin(),
             'mediaDateiRoute'    => 'sammlungen.media-datei',
             'manuelleGalerien'   => $manuelleGalerien,
@@ -116,6 +123,7 @@ final class SammlungenViewModel
             'sammlungen'         => [],
             'aktive'             => null,
             'unverknuepft_typen' => [],
+            'freie_dateien'      => ['gesamt' => 0, 'jeOrdner' => [], 'dateien' => 0],
             'istAdmin'           => false,
             'mediaDateiRoute'    => 'sammlungen.media-datei',
             'manuelleGalerien'   => [],

@@ -162,38 +162,69 @@ use Fisharebest\Webtrees\I18N;
             <i class="fas fa-folder-open me-1"></i><?= I18N::translate('Free holdings') ?>
         </h5>
 
-        <?php if ($unverknuepftGesamt === 0) : ?>
+        <?php
+        // Gezählt wird vom Dateisystem her, nicht aus der Datenbank: ein Archiv
+        // besteht in aller Regel aus Dateien, die gar kein Medienobjekt haben.
+        // Wer nur Medienobjekte zählt, meldet null, während tausend Dateien
+        // danebenliegen. Zu jedem Ordner die passende Sammlung heraussuchen,
+        // damit die Kachel irgendwohin führt.
+        $freiGesamt   = $freie_dateien['gesamt'] ?? 0;
+        $freiJeOrdner = $freie_dateien['jeOrdner'] ?? [];
+        $ordnerZuSlug = [];
+        foreach ($manuell as $s) {
+            if ($s->ordner !== null && $s->ordner !== '') {
+                $ordnerZuSlug[$s->ordner] = $s->slug;
+            }
+        }
+        ?>
+
+        <?php if ($freiGesamt === 0) : ?>
             <p class="text-muted small mb-4">
-                <i class="fas fa-check me-1"></i>
                 <?= I18N::translate('All media objects are linked to individuals or families.') ?>
             </p>
         <?php else : ?>
+            <p class="text-muted small mb-3">
+                <?= I18N::plural(
+                    '%s file in the archive does not appear in the family tree.',
+                    '%s files in the archive do not appear in the family tree.',
+                    $freiGesamt,
+                    I18N::number($freiGesamt)
+                ) ?>
+            </p>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4 mb-4">
-                <?php foreach ($unverknuepft_typen as $typKey => $typAnzahl) : ?>
+                <?php foreach ($freiJeOrdner as $ordnerName => $anzahl) : ?>
                     <?php
-                    $typName = \Sammlungen\Dto\SammlungDto::typBezeichnung((string) $typKey);
-                    $typIcon = \Sammlungen\Dto\SammlungDto::ICONS[strtolower((string) $typKey)] ?? 'fa-folder-open';
+                    $beschriftung = (string) $ordnerName !== ''
+                        ? (string) $ordnerName
+                        : I18N::translate('No type');
+                    $slug = $ordnerZuSlug[$ordnerName] ?? null;
                     ?>
                     <div class="col">
-                        <a href="<?= e($unverknuepftUrl((string) $typKey !== '' ? (string) $typKey : '__ohne_typ__')) ?>"
-                           class="text-decoration-none">
+                        <?php if ($slug !== null) : ?><a href="<?= e($sammlungUrl($slug)) ?>" class="text-decoration-none"><?php endif ?>
                             <div class="card h-100 shadow-sm border-0 position-relative overflow-hidden archiv-card-hover"
                                  style="border-left:4px solid #6c757d !important;">
-                                <div class="card-body d-flex gap-3 align-items-start">
-                                    <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle"
-                                         style="width:48px;height:48px;background:#6c757d20">
-                                        <i class="fas <?= e($typIcon) ?> fs-5" style="color:#6c757d"></i>
-                                    </div>
-                                    <div class="flex-grow-1 min-w-0">
-                                        <h5 class="card-title mb-1 text-dark text-truncate"><?= e($typName) ?></h5>
-                                        <p class="card-text text-muted small mb-0">
-                                            <?= I18N::plural('%s object', '%s objects', $typAnzahl, I18N::number($typAnzahl)) ?>
-                                        </p>
-                                    </div>
+                                <div class="card-body">
+                                    <h5 class="card-title mb-1 text-dark text-truncate"><?= e($beschriftung) ?></h5>
+                                    <p class="card-text text-muted small mb-0">
+                                        <?= I18N::plural('%s file', '%s files', $anzahl, I18N::number($anzahl)) ?>
+                                    </p>
                                 </div>
                             </div>
-                        </a>
+                        <?php if ($slug !== null) : ?></a><?php endif ?>
                     </div>
                 <?php endforeach ?>
             </div>
+
+            <?php if ($unverknuepftGesamt > 0) : ?>
+                <p class="text-muted small mb-4">
+                    <a href="<?= e($unverknuepftUrl()) ?>">
+                        <?= I18N::plural(
+                            '%s of them is a media object in webtrees',
+                            '%s of them are media objects in webtrees',
+                            $unverknuepftGesamt,
+                            I18N::number($unverknuepftGesamt)
+                        ) ?>
+                    </a>
+                </p>
+            <?php endif ?>
         <?php endif ?>

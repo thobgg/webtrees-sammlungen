@@ -458,3 +458,13 @@ msgstr "→ overnemen in EXIF"
 
 msgid "No type"
 msgstr "Geen type"
+
+msgid "%s file in the archive does not appear in the family tree."
+msgid_plural "%s files in the archive do not appear in the family tree."
+msgstr[0] "%s bestand in het archief komt niet voor in de stamboom."
+msgstr[1] "%s bestanden in het archief komen niet voor in de stamboom."
+
+msgid "%s of them is a media object in webtrees"
+msgid_plural "%s of them are media objects in webtrees"
+msgstr[0] "%s daarvan is een mediaobject in webtrees"
+msgstr[1] "%s daarvan zijn mediaobjecten in webtrees"
