@@ -4,8 +4,8 @@
  * Erwartet aus Parent-Scope: $aktive['weitere'], $tree, $treeName
  *
  * Hinweis: webtrees bündelt Font Awesome per SVG-mit-JS nur als Subset – Icons wie
- * fa-film/fa-headphones fehlen und würden als ?/!-Platzhalter wabern. Daher hier nur
- * sicher gebündelte Icons (fa-play, fa-file-lines, fa-file) + farbige Badges wie beim PDF.
+ * fa-play/fa-play fehlen und würden als ?/!-Platzhalter wabern. Daher hier nur
+ * sicher gebündelte Icons (fa-play, fa-file-alt, fa-file) + farbige Badges wie beim PDF.
  */
 use Fisharebest\Webtrees\I18N;
 
@@ -24,8 +24,8 @@ $kategorie = static function (string $fmt): array {
         $fmt === 'pdf'           => ['#CC0000', null, 'PDF'],
         in_array($fmt, $video, true) => ['#6f42c1', 'fa-play', null],
         in_array($fmt, $audio, true) => ['#0d6efd', 'fa-play', null],
-        in_array($fmt, $word, true)  => ['#2b579a', 'fa-file-lines', null],
-        in_array($fmt, $excel, true) => ['#217346', 'fa-file-lines', null],
+        in_array($fmt, $word, true)  => ['#2b579a', 'fa-file-alt', null],
+        in_array($fmt, $excel, true) => ['#217346', 'fa-file-alt', null],
         default                  => ['#6c757d', 'fa-file', null],
     };
 };
@@ -50,7 +50,7 @@ $kategorie = static function (string $fmt): array {
                             <?php if ($text !== null) : ?>
                                 <span class="fw-bold" style="font-size:.6rem"><?= e($text) ?></span>
                             <?php else : ?>
-                                <i class="fas <?= e($icon) ?>"></i>
+                                <i class="fas <?= e(\Sammlungen\Dto\Symbole::fa($icon)) ?>"></i>
                             <?php endif ?>
                         </span>
                         <div class="flex-grow-1 min-w-0">

@@ -55,21 +55,21 @@ final class SammlungDto
 
     /** Zuordnung Medientyp → FontAwesome-Icon-Klasse */
     public const ICONS = [
-        'audio'      => 'fa-headphones',
-        'book'       => 'fa-book',
-        'card'       => 'fa-id-card',
+        'audio'      => 'fa-play',
+        'book'       => 'fa-file',
+        'card'       => 'fa-address-card',
         'document'   => 'fa-file-alt',
         'electronic' => 'fa-file-alt',
-        'fiche'      => 'fa-th',
-        'film'       => 'fa-film',
-        'magazine'   => 'fa-newspaper',
-        'manuscript' => 'fa-scroll',
+        'fiche'      => 'fa-th-list',
+        'film'       => 'fa-play',
+        'magazine'   => 'fa-file-alt',
+        'manuscript' => 'fa-file-alt',
         'map'        => 'fa-map',
-        'newspaper'  => 'fa-newspaper',
-        'photo'      => 'fa-image',
-        'tombstone'  => 'fa-monument',
-        'video'      => 'fa-video',
-        'other'      => 'fa-folder-open',
+        'newspaper'  => 'fa-file-alt',
+        'photo'      => 'fa-file-image',
+        'tombstone'  => 'fa-map-marker-alt',
+        'video'      => 'fa-play',
+        'other'      => 'fa-folder',
         ''           => 'fa-folder',
     ];
 
@@ -98,7 +98,7 @@ final class SammlungDto
      */
     public function icon(): string
     {
-        return self::ICONS[strtolower($this->typ)] ?? 'fa-folder-open';
+        return self::ICONS[strtolower($this->typ)] ?? 'fa-folder';
     }
 
     /**

@@ -48,14 +48,14 @@ use Fisharebest\Webtrees\I18N;
                 <?php foreach ($aktive['typen'] as $typKey => $typAnzahl) : ?>
                     <?php
                     $typName = SammlungDto::typBezeichnung((string) $typKey);
-                    $typIcon = SammlungDto::ICONS[strtolower($typKey)] ?? 'fa-folder-open';
+                    $typIcon = SammlungDto::ICONS[strtolower($typKey)] ?? 'fa-folder';
                     ?>
                     <div class="col">
                         <a href="<?= e($unverknuepftUrl($typKey !== '' ? $typKey : '__ohne_typ__')) ?>" class="text-decoration-none">
                             <div class="card h-100 shadow-sm border-secondary border-opacity-25 archiv-card-hover">
                                 <div class="card-body d-flex gap-3 align-items-center">
                                     <div class="flex-shrink-0 fs-2 text-secondary">
-                                        <i class="fas <?= e($typIcon) ?>"></i>
+                                        <i class="fas <?= e(\Sammlungen\Dto\Symbole::fa($typIcon)) ?>"></i>
                                     </div>
                                     <div>
                                         <h5 class="card-title mb-1 text-dark"><?= e($typName) ?></h5>

@@ -21,7 +21,7 @@ use Fisharebest\Webtrees\I18N;
         <div class="d-flex align-items-center gap-3 mb-4">
             <span class="d-inline-flex align-items-center justify-content-center rounded-circle"
                   style="width:56px;height:56px;background:<?= e($s->farbe) ?>20;border:2px solid <?= e($s->farbe) ?>">
-                <i class="fas fa-<?= e($s->icon) ?> fs-4" style="color:<?= e($s->farbe) ?>"></i>
+                <i class="fas <?= e(\Sammlungen\Dto\Symbole::fa($s->icon)) ?> fs-4" style="color:<?= e($s->farbe) ?>"></i>
             </span>
             <div>
                 <h2 class="mb-0"><?= e($s->name) ?></h2>
@@ -100,7 +100,7 @@ use Fisharebest\Webtrees\I18N;
         <?php elseif ($aktive['istBild'] && $aktive['istGemischt']) : ?>
             <!-- Gemischt: Foto-Raster oben, Dokumentenliste unten -->
             <?php if ($aktive['bilder'] !== []) : ?>
-                <h6 class="text-muted mb-2"><i class="fas fa-image me-1"></i><?= I18N::translate('Photos') ?></h6>
+                <h6 class="text-muted mb-2"><i class="fas fa-file-image me-1"></i><?= I18N::translate('Photos') ?></h6>
                 <div class="row row-cols-3 row-cols-sm-4 row-cols-lg-5 row-cols-xl-6 g-2 mb-4" id="archiv-galerie">
                     <?php foreach ($aktive['bilder'] as $idx => $bild) : ?>
                         <?php
@@ -270,8 +270,8 @@ use Fisharebest\Webtrees\I18N;
                 'doc'  => 'fa-file', 'docx' => 'fa-file',
                 'xls'  => 'fa-file', 'xlsx' => 'fa-file',
                 'txt'  => 'fa-file-alt',
-                'mp3'  => 'fa-headphones', 'wav' => 'fa-headphones',
-                'mp4'  => 'fa-film',  'avi'  => 'fa-film',
+                'mp3'  => 'fa-play', 'wav' => 'fa-play',
+                'mp4'  => 'fa-play',  'avi'  => 'fa-play',
             ];
             $formatFarben = [
                 'doc'  => '#2B579A', 'docx' => '#2B579A',
@@ -298,7 +298,7 @@ use Fisharebest\Webtrees\I18N;
                             <span class="flex-shrink-0 d-inline-flex align-items-center justify-content-center fw-bold text-white rounded"
                                   style="width:2rem;height:2rem;background:#CC0000;font-size:0.6rem;letter-spacing:0.05em">PDF</span>
                         <?php else : ?>
-                            <i class="fas <?= e($icon) ?> fs-5 flex-shrink-0"
+                            <i class="fas <?= e(\Sammlungen\Dto\Symbole::fa($icon)) ?> fs-5 flex-shrink-0"
                                style="width:2rem;text-align:center;color:<?= e($farbe) ?>"></i>
                         <?php endif ?>
                         <div class="flex-grow-1 min-w-0">

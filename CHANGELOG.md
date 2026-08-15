@@ -67,6 +67,15 @@ _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Bl
   Fensterbreite – ein schmales Fenster am Rechner hat weiterhin eine Maus.
 
 ### Behoben
+- **Ein Teil der Piktogramme erschien als Fragezeichen.** webtrees liefert kein
+  vollständiges FontAwesome aus, sondern die Auswahl, die es selbst benutzt –
+  ein Name außerhalb dieser Auswahl wird nicht etwa weggelassen, sondern als
+  gestrichelter Kreis mit Fragezeichen gezeichnet. Das Modul benutzte 16 solcher
+  Namen, unter anderem beim freien Bestand und beim Medienobjekt.
+
+  Alle Symbole laufen jetzt über eine Zuordnung auf das, was vorhanden ist; auch
+  die in der Verwaltung frei eingetragenen Namen. Ein Test hält fest, dass im
+  Markup kein unbekannter Name mehr steht.
 - **Der freie Bestand sah nur Medienobjekte und übersah das Archiv.** Gezählt
   wurde in der Datenbank: Medienobjekte ohne Verknüpfung. Ein Archiv besteht
   aber in aller Regel aus Dateien, die gar kein Medienobjekt haben – zu einem

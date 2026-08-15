@@ -31,7 +31,7 @@ use Fisharebest\Webtrees\I18N;
                        class="btn btn-sm <?= $kategorie === $s->slug ? 'btn-primary' : 'btn-outline-secondary' ?>"
                        style="border-color:<?= e($s->farbe) ?>;
                               <?= $kategorie === $s->slug ? "background:{$s->farbe};border-color:{$s->farbe};" : '' ?>">
-                        <i class="fas fa-<?= e($s->icon) ?> me-1"></i><?= e($s->name) ?>
+                        <i class="fas <?= e(\Sammlungen\Dto\Symbole::fa($s->icon)) ?> me-1"></i><?= e($s->name) ?>
                         <?php if ($s->anzahl !== null) : ?>
                             <span class="badge bg-white text-dark ms-1 small"><?= I18N::number($s->anzahl) ?></span>
                         <?php endif ?>
@@ -74,7 +74,7 @@ use Fisharebest\Webtrees\I18N;
                                 <div class="card-body d-flex gap-3 align-items-start">
                                     <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle"
                                          style="width:48px;height:48px;background:<?= e($s->farbe) ?>20">
-                                        <i class="fas fa-<?= e($s->icon) ?> fs-5" style="color:<?= e($s->farbe) ?>"></i>
+                                        <i class="fas <?= e(\Sammlungen\Dto\Symbole::fa($s->icon)) ?> fs-5" style="color:<?= e($s->farbe) ?>"></i>
                                     </div>
                                     <div class="flex-grow-1 min-w-0">
                                         <h5 class="card-title mb-1 text-dark text-truncate"><?= e($s->name) ?></h5>
@@ -115,7 +115,7 @@ use Fisharebest\Webtrees\I18N;
 
             <?php if ($thematisch !== []) : ?>
                 <h5 class="text-muted mb-3 mt-2" style="font-size:.85rem;letter-spacing:.05em;text-transform:uppercase">
-                    <i class="fas fa-star me-1"></i><?= I18N::translate('Thematic collections') ?>
+                    <i class="fas fa-thumbtack me-1"></i><?= I18N::translate('Thematic collections') ?>
                 </h5>
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
                     <?php foreach ($thematisch as $s) : ?>
@@ -126,7 +126,7 @@ use Fisharebest\Webtrees\I18N;
                                     <div class="card-body d-flex gap-3 align-items-start">
                                         <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle"
                                              style="width:48px;height:48px;background:<?= e($s->farbe) ?>20">
-                                            <i class="fas fa-<?= e($s->icon) ?> fs-5" style="color:<?= e($s->farbe) ?>"></i>
+                                            <i class="fas <?= e(\Sammlungen\Dto\Symbole::fa($s->icon)) ?> fs-5" style="color:<?= e($s->farbe) ?>"></i>
                                         </div>
                                         <div class="flex-grow-1 min-w-0">
                                             <h5 class="card-title mb-1 text-dark text-truncate"><?= e($s->name) ?></h5>
@@ -159,7 +159,7 @@ use Fisharebest\Webtrees\I18N;
              nichts da ist.
         ============================================================ -->
         <h5 class="text-muted mb-3 mt-4" style="font-size:.85rem;letter-spacing:.05em;text-transform:uppercase">
-            <i class="fas fa-folder-open me-1"></i><?= I18N::translate('Free holdings') ?>
+            <i class="fas fa-folder me-1"></i><?= I18N::translate('Free holdings') ?>
         </h5>
 
         <?php

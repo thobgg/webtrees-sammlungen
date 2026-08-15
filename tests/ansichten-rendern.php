@@ -50,6 +50,16 @@ namespace Sammlungen\Dto {
      * muessen aber stimmen - sonst rendert der Test etwas, das es so nicht
      * gibt, und meldet gruen, waehrend die Seite live abstuerzt.
      */
+    class Symbole
+    {
+        /** Attrappe: die echte Klasse bildet auf das ab, was webtrees zeichnet. */
+        public static function fa(string $wunsch): string
+        {
+            $n = strtolower(trim($wunsch));
+            return str_starts_with($n, 'fa-') ? $n : 'fa-' . $n;
+        }
+    }
+
     class SammlungDto
     {
         public const ICONS = ['photo' => 'fa-image'];

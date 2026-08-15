@@ -18,12 +18,12 @@ use Fisharebest\Webtrees\I18N;
          NICHT-EINGEBUNDEN: Galerie eines Medientyps
     ============================================================ -->
         <?php
-        $typIcon = SammlungDto::ICONS[strtolower($aktive['typ_key'])] ?? 'fa-folder-open';
+        $typIcon = SammlungDto::ICONS[strtolower($aktive['typ_key'])] ?? 'fa-folder';
         ?>
         <div class="d-flex align-items-center gap-3 mb-4">
             <span class="d-inline-flex align-items-center justify-content-center rounded-circle"
                   style="width:56px;height:56px;background:#6c757d20;border:2px solid #6c757d">
-                <i class="fas <?= e($typIcon) ?> fs-4" style="color:#6c757d"></i>
+                <i class="fas <?= e(\Sammlungen\Dto\Symbole::fa($typIcon)) ?> fs-4" style="color:#6c757d"></i>
             </span>
             <div>
                 <h2 class="mb-0"><?= e($aktive['typ_name']) ?></h2>

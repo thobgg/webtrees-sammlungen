@@ -82,7 +82,7 @@ $neuUrl   = $tree !== null
                                 <td class="text-muted small">#<?= $s->id ?></td>
                                 <td>
                                     <span style="color: <?= e($s->farbe) ?>; font-size: 1.2rem;">
-                                        <i class="fas fa-<?= e($s->icon) ?>"></i>
+                                        <i class="fas <?= e(\Sammlungen\Dto\Symbole::fa($s->icon)) ?>"></i>
                                     </span>
                                 </td>
                                 <td>

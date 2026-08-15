@@ -22,7 +22,7 @@ use Fisharebest\Webtrees\I18N;
 
     <!-- APCu-Status -->
     <div class="alert alert-<?= $apcuAvailable ? 'success' : 'warning' ?> d-flex align-items-center gap-2 mb-4">
-        <i class="fas fa-<?= $apcuAvailable ? 'check-circle' : 'exclamation-triangle' ?> fs-5"></i>
+        <i class="fas <?= $apcuAvailable ? 'fa-check' : 'fa-exclamation-triangle' ?> fs-5"></i>
         <div>
             <?php if ($apcuAvailable) : ?>
                 <?= I18N::translate('APCu is active. Queries are cached.') ?>
@@ -43,7 +43,7 @@ use Fisharebest\Webtrees\I18N;
 
         <div class="card mb-4">
             <div class="card-header fw-semibold">
-                <i class="fas fa-sliders-h me-2"></i>
+                <i class="fas fa-wrench me-2"></i>
                 <?= I18N::translate('General settings') ?>
             </div>
             <div class="card-body">
@@ -97,7 +97,7 @@ use Fisharebest\Webtrees\I18N;
             </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save me-1"></i>
+                    <i class="fas fa-check me-1"></i>
                     <?= I18N::translate('Save settings') ?>
                 </button>
             </div>
@@ -122,7 +122,7 @@ use Fisharebest\Webtrees\I18N;
                 <button type="submit"
                         class="btn btn-outline-warning"
                         onclick="return confirm('<?= I18N::translate('Really clear the cache?') ?>')">
-                    <i class="fas fa-broom me-1"></i>
+                    <i class="fas fa-sync-alt me-1"></i>
                     <?= I18N::translate('Clear cache now') ?>
                 </button>
             </form>
@@ -132,7 +132,7 @@ use Fisharebest\Webtrees\I18N;
     <!-- Sammlungen verwalten -->
     <div class="card">
         <div class="card-header fw-semibold">
-            <i class="fas fa-layer-group me-2"></i>
+            <i class="fas fa-th-list me-2"></i>
             <?= I18N::translate('Collections') ?>
         </div>
         <div class="card-body">
@@ -149,7 +149,7 @@ use Fisharebest\Webtrees\I18N;
             <?php elseif ($trees->count() === 1) : ?>
                 <a href="<?= e(route('sammlungen.admin.sammlungen', ['tree' => $trees->first()->name()])) ?>"
                    class="btn btn-outline-primary">
-                    <i class="fas fa-cog me-1"></i>
+                    <i class="fas fa-wrench me-1"></i>
                     <?= I18N::translate('Manage collections') ?>
                 </a>
             <?php else : ?>
@@ -167,7 +167,7 @@ use Fisharebest\Webtrees\I18N;
                     <a id="sammlungen-tree-link"
                        href="<?= e(route('sammlungen.admin.sammlungen', ['tree' => $trees->first()->name()])) ?>"
                        class="btn btn-outline-primary">
-                        <i class="fas fa-cog me-1"></i>
+                        <i class="fas fa-wrench me-1"></i>
                         <?= I18N::translate('Manage collections') ?>
                     </a>
                 </div>
