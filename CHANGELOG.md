@@ -42,6 +42,17 @@ _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Bl
   lässt; so erscheint er einmal je Galerie statt bei jedem zweiten Tippen.
 
 ### Geändert
+- **Das Auslesen der Metadaten dekodierte jedes Foto vollständig.** Für Angaben,
+  die im Dateikopf stehen, öffnete das Modul die ganze Datei: bei einem 7 MB
+  großen Bild mit 4796 × 7731 Punkten rund hundert Megabyte Speicher und ein
+  Zehntel Sekunde Rechenzeit – mal fünfzig Bilder je Galerieseite. Gemessen
+  vergingen so **5,3 Sekunden**, bevor das erste Byte beim Browser ankam, beim
+  ersten Aufruf einer Seite sogar zwölf.
+
+  `Imagick::pingImage()` liest nur den Kopf samt EXIF- und XMP-Profil. Dieselbe
+  Seite braucht jetzt **125 bis 320 Millisekunden**, und die ausgelesenen Werte
+  sind unverändert – gegengeprüft an drei Seiten: gleiche Anzahl Beschreibungen,
+  Daten und Bildmaße wie vorher.
 - **Galerien liefern verkleinerte Bilder statt der Originale.** Eine Rasterseite
   schickte bisher 50 Originaldateien: gemessen **174,2 MB**, im Mittel mit der
   21-fachen Breite dessen, was auf dem Schirm ankommt – also rund der

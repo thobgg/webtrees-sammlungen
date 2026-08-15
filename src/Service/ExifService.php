@@ -60,7 +60,15 @@ class ExifService
         }
 
         try {
-            $imagick = new \Imagick($fullPath);
+            // pingImage statt Konstruktor: der Konstruktor dekodiert die ganze
+            // Datei. Bei einem 7-MB-Foto mit 4796 x 7731 Punkten sind das rund
+            // hundert Megabyte Speicher und ein Zehntel Sekunde Rechenzeit -
+            // fuer Angaben, die im Dateikopf stehen. Auf einer Galerieseite mit
+            // 50 Bildern waren das gemessen ueber fuenf Sekunden, bevor das
+            // erste Byte beim Browser ankam. Ping liest nur den Kopf samt
+            // Profilen; Breite, Hoehe, EXIF und XMP bleiben verfuegbar.
+            $imagick = new \Imagick();
+            $imagick->pingImage($fullPath);
             $result['breite'] = $imagick->getImageWidth();
             $result['hoehe']  = $imagick->getImageHeight();
 
