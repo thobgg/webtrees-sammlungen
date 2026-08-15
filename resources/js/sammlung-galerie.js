@@ -314,6 +314,16 @@ document.addEventListener('DOMContentLoaded', function () {
         let startX = 0, startY = 0, startVx = 0, startVy = 0, startZeit = 0;
         let modus = null;
         let letzterTipp = 0, letzterTippX = 0, letzterTippY = 0;
+        let tippUhr = null;
+
+        const lightbox = document.getElementById('archiv-lightbox');
+
+        // Einmal tippen nimmt Kopfzeile und Vorschauleiste weg. Der Zug muss
+        // warten, bis ein zweiter Tipp ausgeschlossen ist - sonst blinkte die
+        // Leiste bei jedem Doppeltipp kurz auf.
+        function kahlUmschalten() {
+            lightbox.classList.toggle('archiv-kahl');
+        }
 
         // touch-action gehoert auf die Flaeche, nicht nur aufs Bild: die
         // Handler haengen an der Flaeche, und neben dem Bild ist schwarzer
@@ -409,6 +419,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (jetzt - letzterTipp < 320 &&
                     Math.abs(t.clientX - letzterTippX) < 40 &&
                     Math.abs(t.clientY - letzterTippY) < 40) {
+                    clearTimeout(tippUhr);
                     umschalten(t.clientX, t.clientY);
                     letzterTipp = 0;
                     modus = null;
@@ -417,6 +428,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 letzterTipp = jetzt;
                 letzterTippX = t.clientX;
                 letzterTippY = t.clientY;
+                clearTimeout(tippUhr);
+                tippUhr = setTimeout(kahlUmschalten, 330);
             }
 
             // Blättern nur bei unvergrößertem Bild, sonst schiebt man ja.
@@ -437,6 +450,14 @@ document.addEventListener('DOMContentLoaded', function () {
             if (skala === 1) { vx = 0; vy = 0; }
             anwenden(false);
         }, { passive: false });
+
+        // Jede Lightbox faengt mit Leisten und ohne Zoom an: wer sie beim
+        // letzten Bild weggetippt hat, sucht sie sonst beim naechsten Oeffnen.
+        lightbox.addEventListener('hidden.bs.modal', () => {
+            clearTimeout(tippUhr);
+            lightbox.classList.remove('archiv-kahl');
+            zoomZuruecksetzen();
+        });
     })();
 
     document.getElementById('archiv-lightbox').addEventListener('keydown', e => {

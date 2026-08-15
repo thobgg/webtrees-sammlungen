@@ -83,6 +83,68 @@ final class GestenTest extends TestCase
     }
 
     /**
+     * Beide Leisten tragen Bootstraps Hilfsklasse `d-flex`, und die
+     * Hilfsklassen sind mit !important gesetzt. Ohne Gegengewicht bleibt die
+     * Kopfzeile stehen, obwohl die Regel greift - am Geraet gemessen.
+     */
+    public function testKahlerZustandSchlaegtDieHilfsklassen(): void
+    {
+        self::assertMatchesRegularExpression(
+            '/#archiv-lightbox\.archiv-kahl[^{]*\{\s*display:\s*none\s*!important/',
+            self::css(),
+            'Die Leisten verschwinden nicht: d-flex gewinnt.'
+        );
+    }
+
+    /**
+     * Ohne Kopfzeile faellt der Schliesser weg. Die Zurueck-Taste des Telefons
+     * ist kein Ersatz, die verlaesst im Browser die Seite.
+     */
+    public function testImKahlenZustandBleibtEinSchliesser(): void
+    {
+        $markup  = (string) file_get_contents(
+            dirname(__DIR__, 2) . '/resources/views/partials/_lightbox.phtml'
+        );
+        $treffer = [];
+        preg_match('/<button id="archiv-lb-zu".*?>/s', $markup, $treffer);
+
+        self::assertNotEmpty($treffer, 'Ersatz-Schliesser fehlt im Markup.');
+        self::assertStringContainsString('data-bs-dismiss="modal"', $treffer[0]);
+        self::assertMatchesRegularExpression(
+            '/#archiv-lightbox\.archiv-kahl \.archiv-lb-zu\s*\{[^}]*display:\s*block/',
+            self::css()
+        );
+    }
+
+    /**
+     * Der Zug muss warten, bis ein zweiter Tipp ausgeschlossen ist - sonst
+     * blinkt die Leiste bei jedem Doppeltipp kurz auf.
+     */
+    public function testEinzelnerTippWartetAufDenDoppeltipp(): void
+    {
+        $js = self::js();
+
+        self::assertStringContainsString('tippUhr = setTimeout(kahlUmschalten', $js);
+        self::assertMatchesRegularExpression(
+            '/clearTimeout\(tippUhr\);\s*umschalten\(/',
+            $js,
+            'Der Doppeltipp bricht den anstehenden Zug nicht ab.'
+        );
+    }
+
+    /**
+     * Wer die Leisten beim letzten Bild weggetippt hat, sucht sie sonst beim
+     * naechsten Oeffnen.
+     */
+    public function testSchliessenRaeumtDenKahlenZustandAb(): void
+    {
+        self::assertMatchesRegularExpression(
+            "/'hidden\.bs\.modal'.*?classList\.remove\('archiv-kahl'\)/s",
+            self::js()
+        );
+    }
+
+    /**
      * Das Bootstrap-Buendel von webtrees ist fuer Schreibrichtungen aufbereitet
      * und setzt den Dialogabstand ueber `[dir] .modal-dialog`. Attribut plus
      * Klasse schlaegt eine einzelne Klasse: ein `margin` auf .archiv-lb-dialog

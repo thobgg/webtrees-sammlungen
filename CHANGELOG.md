@@ -23,6 +23,13 @@ _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Bl
   Hintergrund: quer aufgenommene Fotos füllen auf einem 384 Pixel breiten
   Schirm nur ein Band von rund 256 Pixeln Höhe, egal wie viel Platz darunter
   frei bleibt. Ohne Vergrößern ist darauf kein Gesicht zu erkennen.
+- **Einmal aufs Bild tippen räumt Kopfzeile und Vorschauleiste weg**, nochmal
+  tippen holt sie zurück. Das sind 109 von 686 Pixeln Höhe. Ein Schließer
+  bleibt oben rechts stehen, sonst käme man nur über die Zurück-Taste heraus,
+  und die verlässt im Telefon-Browser die Seite. Am meisten bringt das quer
+  gehaltenen Geräten und hochformatigen Fotos; ein Querformat-Foto im
+  Hochformat-Schirm ist ohnehin durch die Breite begrenzt, dort gewinnt man
+  nur Schwarz – dafür ist der Zoom da.
 
 ### Behoben
 - **Lightbox saß auf dem Telefon um 8 Pixel versetzt** und ragte rechts über den

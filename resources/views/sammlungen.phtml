@@ -167,6 +167,27 @@ $unverknuepftGesamt = array_sum($unverknuepft_typen ?? []);
   #archiv-lb-thumbstrip img { width: 42px !important; height: 42px !important; }
 }
 
+/* ---------------------------------------------------------------------
+   Kahler Zustand: einmal aufs Bild tippen nimmt Kopfzeile und Vorschauleiste
+   weg. Auf einem 384 x 686 großen Schirm sind das 109 Pixel, die dem Foto
+   fehlen - beim Herumzeigen in der Familie zählt jeder davon. Nochmal tippen
+   holt beides zurück.
+   --------------------------------------------------------------------- */
+/* !important ist hier kein Holzhammer, sondern Pflicht: beide Leisten tragen
+   Bootstraps Hilfsklasse `d-flex`, und die Hilfsklassen sind selbst mit
+   !important gesetzt. Ohne das bleibt die Kopfzeile stehen, obwohl die Regel
+   greift - gemessen am Geraet: display=flex trotz gesetzter Klasse. */
+#archiv-lightbox.archiv-kahl .archiv-lb-kopf,
+#archiv-lightbox.archiv-kahl #archiv-lb-thumbstrip { display: none !important; }
+
+/* Der Ersatz-Schließer taucht nur im kahlen Zustand auf; sonst steht der
+   in der Kopfzeile. */
+.archiv-lb-zu {
+    position: absolute; top: .5rem; right: .5rem; z-index: 3;
+    display: none; opacity: .65;
+}
+#archiv-lightbox.archiv-kahl .archiv-lb-zu { display: block; }
+
 /* Foto-Raster: quadratische Kachel mit weichgezeichnetem Hintergrund aus
    demselben Bild, damit Hoch- und Querformate ohne Beschnitt passen.
    Beide Klassen standen seit 1.0.0 im Markup, aber ohne Regeln: der

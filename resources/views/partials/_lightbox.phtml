@@ -65,6 +65,13 @@ use Fisharebest\Webtrees\I18N;
                                             class="btn btn-dark bg-opacity-50 position-absolute start-0 top-50 translate-middle-y ms-2 fs-3 px-3">&#8249;</button>
                                     <button id="archiv-lb-next"
                                             class="btn btn-dark bg-opacity-50 position-absolute end-0 top-50 translate-middle-y me-2 fs-3 px-3">&#8250;</button>
+                                    <!-- Im kahlen Zustand ist die Kopfzeile weg und mit ihr der
+                                         Schließer. Ohne Ersatz käme man nur über die Zurück-Taste
+                                         heraus, und die verlässt im Telefon-Browser die Seite. -->
+                                    <button id="archiv-lb-zu" type="button"
+                                            class="archiv-lb-zu btn btn-dark bg-opacity-50 px-3 fs-4 lh-1"
+                                            data-bs-dismiss="modal"
+                                            aria-label="<?= I18N::translate('Close') ?>">&times;</button>
                                 </div>
                                 <!-- Thumbnail-Streifen -->
                                 <div id="archiv-lb-thumbstrip"
