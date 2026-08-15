@@ -94,9 +94,14 @@ one-click "take over" for any differences.
 
 ### On phone and tablet
 
-The lightbox is built for showing photos to people standing next to you, not
-just for archiving them at a desk. On a touch device it opens edge to edge, and
-the sidebar slides over the picture instead of squeezing it:
+**The use case is showing, not filing.** The family is around the table, someone
+mentions a name, and you pull the picture out of the archive on the spot – "look,
+that's great-aunt Erna" – "where on earth did you get that?". Cataloguing,
+EXIF work and linking happen at a desk on a big screen. The phone has one job:
+the photograph, large, in two taps, and the next one with a swipe.
+
+That is why the lightbox behaves like a photo app on a touch device: it opens
+edge to edge, and the sidebar slides over the picture instead of squeezing it:
 
 - **pinch** to zoom up to 5×, **one finger** pans the enlarged picture
 - **double tap** zooms towards the spot you tapped, and back

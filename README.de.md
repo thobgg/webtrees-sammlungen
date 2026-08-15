@@ -79,9 +79,15 @@ Datenbankeinträge – genau deshalb ist ein Archiv aus reinen Dateien hier
 
 ### Auf Telefon und Tablet
 
-Die Lightbox ist zum Herzeigen gebaut, nicht nur zum Archivieren am
-Schreibtisch. Auf einem Berührungsgerät öffnet sie randlos, und die Seitenleiste
-legt sich über das Bild, statt es zu quetschen:
+**Der Anwendungsfall ist Herzeigen, nicht Erfassen.** Die Familie sitzt am Tisch,
+ein Name fällt, und du holst das Bild an Ort und Stelle aus dem Archiv – „schau
+mal, das war doch Tante Erna" – „wo hast du das denn her?". Erfassen, EXIF-Arbeit
+und Verknüpfen passieren am Schreibtisch auf einem großen Schirm. Das Telefon hat
+eine Aufgabe: das Foto, groß, in zwei Tippern, und das nächste mit einem Wisch.
+
+Deshalb verhält sich die Lightbox auf einem Berührungsgerät wie eine Foto-App:
+sie öffnet randlos, und die Seitenleiste legt sich über das Bild, statt es zu
+quetschen:
 
 - **Kneifen** vergrößert bis fünffach, **ein Finger** schiebt das vergrößerte Bild
 - **Doppeltippen** fährt auf die getippte Stelle zu und wieder zurück
