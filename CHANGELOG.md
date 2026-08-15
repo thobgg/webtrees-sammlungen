@@ -36,6 +36,11 @@ _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Bl
   Wo es die Fullscreen-API nicht gibt (iPhone) oder sie abgelehnt wird, bleibt
   es beim Wegräumen der modul-eigenen Leisten.
 
+  Das Vollbild wird dabei nur betreten und erst beim Schließen wieder verlassen.
+  Jedes Betreten quittiert der Browser mit seinem Sicherheitshinweis („… ist
+  jetzt im Vollbildmodus"), der sich aus der Seite heraus nicht abschalten
+  lässt; so erscheint er einmal je Galerie statt bei jedem zweiten Tippen.
+
 ### Geändert
 - **Ein quer gehaltenes Telefon zählt jetzt als Telefon.** Die Regeln für die
   randlose Lightbox hingen an `max-width: 767.98px`; quer gehalten ist dasselbe
