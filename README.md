@@ -113,6 +113,15 @@ Why it matters: a landscape photo on a 384 pixel wide screen is a band of some
 bars and going full screen takes a 3:2 photo from 284 × 189 to 576 × 384 –
 roughly four times the area (measured on a Galaxy S25 Ultra).
 
+The largest remaining border isn't the module's, it's the browser's: a web page
+cannot hide the address bar, only ask for full screen – and every entry into it
+is announced by a notice no script can switch off. Measured, the browser bars
+cost about 86 of 384 pixels of height in landscape. An installed shell doesn't
+have that problem; [WebtreesAnd](https://github.com/thobgg/WebtreesAnd) (same
+author, GPL) is one: a WebView around your own instance with the status and
+navigation bars permanently hidden, a swipe from the edge brings them back. It
+isn't required – the module works fully in a browser.
+
 Where the fullscreen API is unavailable (iPhone) or declined, the module's own
 bars still go away. Gestures are verified against the real files with the test
 bench in [`tests/browser/`](tests/browser/README.md).

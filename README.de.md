@@ -98,6 +98,16 @@ ein Band von rund 256 Pixeln, egal wie viel Platz darunter frei bleibt. Quer
 gehalten wächst ein 3:2-Foto durch Wegtippen und Vollbild von 284 × 189 auf
 576 × 384 – gut die vierfache Fläche (gemessen an einem Galaxy S25 Ultra).
 
+Den größten verbliebenen Rand hat nicht das Modul, sondern der Browser: die
+Adressleiste lässt sich aus einer Webseite heraus nicht ausblenden, nur über die
+Vollbild-API – und die quittiert jedes Betreten mit einem Hinweis, den kein
+Skript abschalten kann. Gemessen kosten die Browserleisten quer rund 86 von 384
+Pixeln Höhe. Eine installierte Hülle hat das Problem nicht;
+[WebtreesAnd](https://github.com/thobgg/WebtreesAnd) (vom selben Autor, GPL) ist
+so eine: ein WebView um die eigene Instanz, Status- und Navigationsleiste
+dauerhaft ausgeblendet, ein Wischen vom Rand holt sie zurück. Nötig ist das
+nicht – das Modul funktioniert im Browser vollständig.
+
 ### Geschwindigkeit
 
 Gemessen an einer Installation mit 1826 Archivdateien, eine Galerieseite mit 50 Fotos:
