@@ -67,6 +67,29 @@ The sidebar displays EXIF and XMP, lets you edit description, date, persons and
 keywords, compares the values against the webtrees person links and offers
 one-click "take over" for any differences.
 
+### On phone and tablet
+
+The lightbox is built for showing photos to people standing next to you, not
+just for archiving them at a desk. On a touch device it opens edge to edge, and
+the sidebar slides over the picture instead of squeezing it:
+
+- **pinch** to zoom up to 5×, **one finger** pans the enlarged picture
+- **double tap** zooms towards the spot you tapped, and back
+- **swipe** moves to the next photo – only while not zoomed, otherwise every
+  pan would change the picture
+- **a single tap** hides the header and the thumbnail strip and asks for full
+  screen; tapping again brings them back
+- mouse users get double click and Ctrl + wheel
+
+Why it matters: a landscape photo on a 384 pixel wide screen is a band of some
+256 pixels, no matter how much room is left below it. Held sideways, hiding the
+bars and going full screen takes a 3:2 photo from 284 × 189 to 576 × 384 –
+roughly four times the area (measured on a Galaxy S25 Ultra).
+
+Where the fullscreen API is unavailable (iPhone) or declined, the module's own
+bars still go away. Gestures are verified against the real files with the test
+bench in [`tests/browser/`](tests/browser/README.md).
+
 ### Document lists
 
 Collections that contain PDFs/documents (parish records, civil registers, …)
@@ -87,6 +110,7 @@ document list, mixed). Active status with one-click toggle:
 
 - **Galleries** for photo collections (`Family photos`, `Gravestones`, `Portraits`, custom collections)
 - **Lightbox** with keyboard navigation, thumbnail strip and sidebar
+- **Touch gestures**: pinch zoom, pan, double tap, swipe, tap to hide the bars and go full screen
 - **EXIF/XMP read** (description, date, persons, keywords) with Imagick caching
 - **EXIF/XMP write** with automatic daily backup before every change
 - **EXIF ↔ webtrees sync** (description, persons) with one-click take-over
