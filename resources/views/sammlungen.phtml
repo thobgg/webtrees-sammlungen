@@ -137,8 +137,13 @@ $unverknuepftGesamt = array_sum($unverknuepft_typen ?? []);
    Die Seitenleiste ist 280 px breit und darf nicht schrumpfen - neben dem
    Bild blieben auf einem 360-px-Gerät keine 70 px übrig. Unterhalb von
    768 px legt sie sich deshalb über das Bild, wie in Bildbetrachtern üblich.
+
+   Die zweite Bedingung ist die wichtigere: quer gehalten ist dasselbe Telefon
+   832 Pixel breit und fiele damit unter "groß" - gemessen wurde dort ein Bild
+   von 284 x 189 statt der möglichen 576 x 384. Entscheidend ist nicht die
+   Breite, sondern die geringe Höhe.
    --------------------------------------------------------------------- */
-@media (max-width: 767.98px) {
+@media (max-width: 767.98px), (max-height: 500px) {
   /* Nicht `margin: 0` auf der eigenen Klasse: das Bootstrap-Bündel von webtrees
      ist für Schreibrichtungen aufbereitet und setzt den Abstand über
      `[dir] .modal-dialog` – Attribut plus Klasse schlägt eine einzelne Klasse.
@@ -161,10 +166,15 @@ $unverknuepftGesamt = array_sum($unverknuepft_typen ?? []);
     border-left: 0 !important;
     z-index: 2;
   }
-  /* Blätterpfeile stören auf dem Telefon - dort wird gewischt. */
-  #archiv-lb-prev, #archiv-lb-next { display: none; }
   /* Kleinere Vorschauleiste, damit mehr Bild bleibt. */
   #archiv-lb-thumbstrip img { width: 42px !important; height: 42px !important; }
+}
+
+/* Blätterpfeile stören, wo gewischt wird. Das hängt am Eingabegerät, nicht an
+   der Fenstergröße: ein schmales Fenster am Rechner hat weiterhin eine Maus
+   und soll die Pfeile behalten. */
+@media (hover: none) and (pointer: coarse) {
+  #archiv-lb-prev, #archiv-lb-next { display: none; }
 }
 
 /* ---------------------------------------------------------------------

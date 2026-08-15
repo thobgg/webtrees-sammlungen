@@ -23,13 +23,27 @@ _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Bl
   Hintergrund: quer aufgenommene Fotos füllen auf einem 384 Pixel breiten
   Schirm nur ein Band von rund 256 Pixeln Höhe, egal wie viel Platz darunter
   frei bleibt. Ohne Vergrößern ist darauf kein Gesicht zu erkennen.
-- **Einmal aufs Bild tippen räumt Kopfzeile und Vorschauleiste weg**, nochmal
-  tippen holt sie zurück. Das sind 109 von 686 Pixeln Höhe. Ein Schließer
-  bleibt oben rechts stehen, sonst käme man nur über die Zurück-Taste heraus,
-  und die verlässt im Telefon-Browser die Seite. Am meisten bringt das quer
-  gehaltenen Geräten und hochformatigen Fotos; ein Querformat-Foto im
-  Hochformat-Schirm ist ohnehin durch die Breite begrenzt, dort gewinnt man
-  nur Schwarz – dafür ist der Zoom da.
+- **Einmal aufs Bild tippen räumt Kopfzeile und Vorschauleiste weg** und
+  fordert zugleich Vollbild an, nochmal tippen holt beides zurück. Ein
+  Schließer bleibt oben rechts stehen, sonst käme man nur über die
+  Zurück-Taste heraus, und die verlässt im Telefon-Browser die Seite.
+
+  Am S25 Ultra gemessen, quer gehalten und mit einem 3:2-Foto: **284 × 189
+  vorher, 576 × 384 nachher** – gut die vierfache Fläche. Hochkant wächst der
+  Rahmen von 646 auf 832 Pixel; ein Querformat-Foto ist dort weiterhin durch
+  die Breite begrenzt, gewonnen wird also Schwarz – dafür ist der Zoom da.
+
+  Wo es die Fullscreen-API nicht gibt (iPhone) oder sie abgelehnt wird, bleibt
+  es beim Wegräumen der modul-eigenen Leisten.
+
+### Geändert
+- **Ein quer gehaltenes Telefon zählt jetzt als Telefon.** Die Regeln für die
+  randlose Lightbox hingen an `max-width: 767.98px`; quer gehalten ist dasselbe
+  Gerät 832 Pixel breit und bekam die Darstellung für große Bildschirme, also
+  einen geschrumpften Dialog mitten auf dem Schirm. Maßgeblich ist zusätzlich
+  die geringe Höhe (`max-height: 500px`). Die Blätterpfeile verschwinden nun
+  nach Eingabegerät (`hover: none` und `pointer: coarse`) statt nach
+  Fensterbreite – ein schmales Fenster am Rechner hat weiterhin eine Maus.
 
 ### Behoben
 - **Lightbox saß auf dem Telefon um 8 Pixel versetzt** und ragte rechts über den

@@ -83,6 +83,32 @@ final class GestenTest extends TestCase
     }
 
     /**
+     * Quer gehalten ist dasselbe Telefon 832 px breit und faellt damit aus einer
+     * reinen Breitenregel heraus - gemessen wurden dort 284 x 189 statt der
+     * moeglichen 576 x 384. Entscheidend ist die geringe Hoehe.
+     */
+    public function testQuerlageZaehltAlsTelefon(): void
+    {
+        self::assertStringContainsString(
+            '@media (max-width: 767.98px), (max-height: 500px)',
+            self::css(),
+            'Die Telefonregel greift quer gehalten nicht.'
+        );
+    }
+
+    /**
+     * Ob Blaetterpfeile stoeren, haengt am Eingabegeraet, nicht an der
+     * Fenstergroesse: ein schmales Fenster am Rechner hat weiterhin eine Maus.
+     */
+    public function testPfeileVerschwindenNurOhneMaus(): void
+    {
+        self::assertMatchesRegularExpression(
+            '/@media \(hover: none\) and \(pointer: coarse\)\s*\{[^}]*#archiv-lb-prev/',
+            self::css()
+        );
+    }
+
+    /**
      * Beide Leisten tragen Bootstraps Hilfsklasse `d-flex`, und die
      * Hilfsklassen sind mit !important gesetzt. Ohne Gegengewicht bleibt die
      * Kopfzeile stehen, obwohl die Regel greift - am Geraet gemessen.
