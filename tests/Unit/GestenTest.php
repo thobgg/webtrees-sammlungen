@@ -169,9 +169,16 @@ final class GestenTest extends TestCase
         $js = self::js();
 
         self::assertMatchesRegularExpression(
-            '/const kahl = lightbox\.classList\.toggle\(\'archiv-kahl\'\);\s*vollbild\(kahl\);/',
+            '/const kahl = lightbox\.classList\.toggle\(\'archiv-kahl\'\);/',
             $js,
             'Das Vollbild haengt nicht am kahlen Zustand.'
+        );
+        // Nur hinein, nie wieder heraus: sonst zeigt der Browser seinen
+        // Vollbild-Hinweis bei jedem zweiten Tippen erneut.
+        self::assertMatchesRegularExpression(
+            '/if \(kahl\) vollbild\(true\);/',
+            $js,
+            'Das Vollbild wird beim Zurueckschalten verlassen und danach neu betreten.'
         );
         self::assertMatchesRegularExpression(
             "/'hidden\.bs\.modal'.*?vollbild\(false\)/s",

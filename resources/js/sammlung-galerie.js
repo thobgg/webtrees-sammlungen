@@ -346,7 +346,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
         function kahlUmschalten() {
             const kahl = lightbox.classList.toggle('archiv-kahl');
-            vollbild(kahl);
+            // Nur hinein, nie wieder heraus: jedes Betreten des Vollbilds blendet
+            // der Browser mit seinem Sicherheitshinweis ein ("… ist jetzt im
+            // Vollbildmodus"). Der ist nicht abschaltbar, also soll er einmal je
+            // Lightbox kommen und nicht bei jedem zweiten Tippen. Verlassen wird
+            // das Vollbild erst beim Schließen - oder vom Nutzer selbst.
+            if (kahl) vollbild(true);
         }
 
         // Wer das Vollbild mit der Systemgeste verlässt, soll auch die Leisten
