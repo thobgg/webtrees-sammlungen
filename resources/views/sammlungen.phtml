@@ -132,6 +132,41 @@ $unverknuepftGesamt = array_sum($unverknuepft_typen ?? []);
 #archiv-lightbox #archiv-lb-caption { color: #fff !important; }
 #archiv-lightbox #archiv-lb-meta    { color: rgba(255,255,255,.72) !important; }
 
+/* ---------------------------------------------------------------------
+   Lightbox auf dem Telefon: echtes Vollbild statt geschrumpftem Dialog.
+   Die Seitenleiste ist 280 px breit und darf nicht schrumpfen - neben dem
+   Bild blieben auf einem 360-px-Gerät keine 70 px übrig. Unterhalb von
+   768 px legt sie sich deshalb über das Bild, wie in Bildbetrachtern üblich.
+   --------------------------------------------------------------------- */
+@media (max-width: 767.98px) {
+  /* Nicht `margin: 0` auf der eigenen Klasse: das Bootstrap-Bündel von webtrees
+     ist für Schreibrichtungen aufbereitet und setzt den Abstand über
+     `[dir] .modal-dialog` – Attribut plus Klasse schlägt eine einzelne Klasse.
+     Statt mit !important dagegenzuhalten, wird Bootstraps eigene Stellschraube
+     umgestellt; sie steckt auch in `min-height: calc(100% - margin*2)` der
+     zentrierten Variante, beides ist damit auf einmal erledigt. */
+  #archiv-lightbox { --bs-modal-margin: 0; }
+  .archiv-lb-dialog { max-width: 100%; width: 100%; }
+  #archiv-lightbox .modal-content {
+    max-height: 100dvh !important;
+    height: 100dvh;
+    border-radius: 0;
+  }
+  /* Das Bild bekommt den ganzen freien Platz statt fester 78vh. */
+  #archiv-lb-img { max-height: 100% !important; max-width: 100% !important; }
+
+  #archiv-lb-sidebar {
+    position: absolute; inset: 0;
+    width: 100% !important;
+    border-left: 0 !important;
+    z-index: 2;
+  }
+  /* Blätterpfeile stören auf dem Telefon - dort wird gewischt. */
+  #archiv-lb-prev, #archiv-lb-next { display: none; }
+  /* Kleinere Vorschauleiste, damit mehr Bild bleibt. */
+  #archiv-lb-thumbstrip img { width: 42px !important; height: 42px !important; }
+}
+
 /* Foto-Raster: quadratische Kachel mit weichgezeichnetem Hintergrund aus
    demselben Bild, damit Hoch- und Querformate ohne Beschnitt passen.
    Beide Klassen standen seit 1.0.0 im Markup, aber ohne Regeln: der

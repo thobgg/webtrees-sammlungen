@@ -84,6 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const d = items[current].dataset;
         const info = JSON.parse(d.info || '{}');
 
+        zoomZuruecksetzen();
         img.src = d.full;
         img.alt = d.title;
         caption.textContent = d.title;
@@ -288,6 +289,155 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('archiv-lb-prev').addEventListener('click', () => show(current - 1));
     document.getElementById('archiv-lb-next').addEventListener('click', () => show(current + 1));
+
+    // ---------------------------------------------------------------
+    // Berühren: Zoomen, Schieben, Wischen.
+    //
+    // Auf dem Telefon ist das Modul vor allem zum Herzeigen da, und dort
+    // begrenzt bei Querformat-Fotos die Breite: 384 Pixel breit heißt bei 3:2
+    // gerade 256 Pixel hoch, egal wie viel Platz darunter frei ist. Ohne
+    // Vergrößern erkennt man kein Gesicht.
+    //
+    // Reihenfolge der Gesten: zwei Finger vergrößern, ein Finger schiebt das
+    // vergrößerte Bild, und nur bei unvergrößertem Bild blättert ein Wischen
+    // weiter. Sonst würde jedes Verschieben zum nächsten Foto springen.
+    // ---------------------------------------------------------------
+    let zoomZuruecksetzen = () => {};
+
+    (function () {
+        const flaeche = img && img.parentElement;
+        if (!flaeche) return;
+
+        const MAX = 5;
+        let skala = 1, vx = 0, vy = 0;
+        let startAbstand = 0, startSkala = 1;
+        let startX = 0, startY = 0, startVx = 0, startVy = 0, startZeit = 0;
+        let modus = null;
+        let letzterTipp = 0, letzterTippX = 0, letzterTippY = 0;
+
+        // touch-action gehoert auf die Flaeche, nicht nur aufs Bild: die
+        // Handler haengen an der Flaeche, und neben dem Bild ist schwarzer
+        // Rand. Ohne das rollt der Browser dort die Seite, statt uns die
+        // Geste zu geben.
+        flaeche.style.touchAction = 'none';
+        img.style.touchAction = 'none';
+        img.style.transformOrigin = 'center center';
+        img.style.willChange = 'transform';
+
+        const abstand = (a, b) => Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+
+        function grenzenEinhalten() {
+            // Das vergrößerte Bild darf nicht aus dem Rahmen geschoben werden.
+            const maxX = Math.max(0, (img.offsetWidth  * skala - flaeche.clientWidth)  / 2);
+            const maxY = Math.max(0, (img.offsetHeight * skala - flaeche.clientHeight) / 2);
+            vx = Math.min(maxX, Math.max(-maxX, vx));
+            vy = Math.min(maxY, Math.max(-maxY, vy));
+        }
+
+        function anwenden(weich) {
+            grenzenEinhalten();
+            img.style.transition = weich ? 'transform .18s ease-out' : '';
+            img.style.transform  = `translate(${vx}px, ${vy}px) scale(${skala})`;
+        }
+
+        zoomZuruecksetzen = function () {
+            skala = 1; vx = 0; vy = 0;
+            img.style.transition = '';
+            img.style.transform = '';
+        };
+
+        function umschalten(punktX, punktY) {
+            if (skala > 1) {
+                skala = 1; vx = 0; vy = 0;
+            } else {
+                skala = 2.5;
+                // Auf den angetippten Punkt zufahren, nicht auf die Mitte.
+                const r = flaeche.getBoundingClientRect();
+                vx = (r.left + r.width  / 2 - punktX) * (skala - 1);
+                vy = (r.top  + r.height / 2 - punktY) * (skala - 1);
+            }
+            anwenden(true);
+        }
+
+        flaeche.addEventListener('touchstart', e => {
+            if (e.touches.length === 2) {
+                modus = 'zoomen';
+                startAbstand = abstand(e.touches[0], e.touches[1]);
+                startSkala = skala;
+            } else if (e.touches.length === 1) {
+                const t = e.touches[0];
+                modus = skala > 1 ? 'schieben' : 'wischen';
+                startX = t.clientX; startY = t.clientY;
+                startVx = vx; startVy = vy;
+                startZeit = Date.now();
+            }
+        }, { passive: false });
+
+        flaeche.addEventListener('touchmove', e => {
+            if (modus === 'zoomen' && e.touches.length === 2) {
+                e.preventDefault();
+                const jetzt = abstand(e.touches[0], e.touches[1]);
+                if (startAbstand > 0) {
+                    skala = Math.min(MAX, Math.max(1, startSkala * (jetzt / startAbstand)));
+                    anwenden(false);
+                }
+            } else if (modus === 'schieben' && e.touches.length === 1) {
+                e.preventDefault();
+                const t = e.touches[0];
+                vx = startVx + (t.clientX - startX);
+                vy = startVy + (t.clientY - startY);
+                anwenden(false);
+            }
+        }, { passive: false });
+
+        flaeche.addEventListener('touchend', e => {
+            if (modus === 'zoomen') {
+                // Fast unvergrößert wieder einrasten, sonst bleibt ein Rest.
+                if (skala < 1.05) { skala = 1; vx = 0; vy = 0; anwenden(true); }
+                modus = null;
+                return;
+            }
+
+            const t = e.changedTouches[0];
+            const dx = t.clientX - startX;
+            const dy = t.clientY - startY;
+            const dauer = Date.now() - startZeit;
+
+            // Doppeltippen: zweimal kurz an fast derselben Stelle.
+            if (Math.abs(dx) < 12 && Math.abs(dy) < 12 && dauer < 300) {
+                const jetzt = Date.now();
+                if (jetzt - letzterTipp < 320 &&
+                    Math.abs(t.clientX - letzterTippX) < 40 &&
+                    Math.abs(t.clientY - letzterTippY) < 40) {
+                    umschalten(t.clientX, t.clientY);
+                    letzterTipp = 0;
+                    modus = null;
+                    return;
+                }
+                letzterTipp = jetzt;
+                letzterTippX = t.clientX;
+                letzterTippY = t.clientY;
+            }
+
+            // Blättern nur bei unvergrößertem Bild, sonst schiebt man ja.
+            if (modus === 'wischen' && skala === 1) {
+                if (Math.abs(dx) >= 45 && Math.abs(dx) >= Math.abs(dy) * 1.5 && dauer <= 800) {
+                    show(dx < 0 ? current + 1 : current - 1);
+                }
+            }
+            modus = null;
+        }, { passive: false });
+
+        // Mit der Maus: Doppelklick vergrößert, Rad zoomt bei gedrückter Strg-Taste.
+        flaeche.addEventListener('dblclick', e => umschalten(e.clientX, e.clientY));
+        flaeche.addEventListener('wheel', e => {
+            if (!e.ctrlKey) return;
+            e.preventDefault();
+            skala = Math.min(MAX, Math.max(1, skala * (e.deltaY < 0 ? 1.15 : 1 / 1.15)));
+            if (skala === 1) { vx = 0; vy = 0; }
+            anwenden(false);
+        }, { passive: false });
+    })();
 
     document.getElementById('archiv-lightbox').addEventListener('keydown', e => {
         if (e.key === 'ArrowLeft') show(current - 1);

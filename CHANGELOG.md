@@ -9,6 +9,29 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+### Hinzugefügt
+- **Bedienung wie in einer Foto-App auf Telefon und Tablet.** Die Lightbox
+  öffnet dort über die volle Höhe, die Seitenleiste legt sich über das Bild
+  statt daneben zu drängen, und die Blätterpfeile weichen den Gesten:
+  - zwei Finger vergrößern bis fünffach,
+  - ein Finger schiebt das vergrößerte Bild, das dabei im Rahmen bleibt,
+  - Doppeltippen fährt auf die getippte Stelle zu und wieder zurück,
+  - Wischen blättert weiter, aber nur bei unvergrößertem Bild – sonst wäre
+    jedes Verschieben ein Bildwechsel,
+  - am Rechner Doppelklick und Strg + Mausrad.
+
+  Hintergrund: quer aufgenommene Fotos füllen auf einem 384 Pixel breiten
+  Schirm nur ein Band von rund 256 Pixeln Höhe, egal wie viel Platz darunter
+  frei bleibt. Ohne Vergrößern ist darauf kein Gesicht zu erkennen.
+
+### Behoben
+- **Lightbox saß auf dem Telefon um 8 Pixel versetzt** und ragte rechts über den
+  Bildschirmrand hinaus, wodurch der Schließknopf angeschnitten war. Das
+  Bootstrap-Bündel von webtrees ist für Schreibrichtungen aufbereitet und setzt
+  den Abstand des Dialogs über `[dir] .modal-dialog`; Attribut plus Klasse
+  schlägt eine einzelne Klasse, unser `margin` kam nie an. Jetzt wird
+  Bootstraps eigene Stellschraube `--bs-modal-margin` umgestellt.
+
 ## [1.3.3] – 2026-08-14
 
 Zwei Anzeigefehler, beide gemeldet von **@ro-la**.
