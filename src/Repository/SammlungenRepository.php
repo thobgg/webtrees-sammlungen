@@ -108,7 +108,7 @@ class SammlungenRepository
         $dtos = [];
         foreach ($rows as $row) {
             $typ  = (string) ($row->source_media_type ?? '');
-            $name = SammlungDto::TYPEN[strtolower($typ)] ?? ucfirst($typ);
+            $name = SammlungDto::typBezeichnung($typ);
 
             $vorschauXrefs = $this->queryVorschauXrefs($tree, $typ, 3);
 

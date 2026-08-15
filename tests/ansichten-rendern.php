@@ -44,10 +44,26 @@ namespace Fisharebest\Webtrees {
 }
 
 namespace Sammlungen\Dto {
+    /**
+     * Attrappe: die echte Klasse holt die Bezeichnungen aus webtrees
+     * (SourceMediaType), das hier laeuft ohne webtrees. Die Methodennamen
+     * muessen aber stimmen - sonst rendert der Test etwas, das es so nicht
+     * gibt, und meldet gruen, waehrend die Seite live abstuerzt.
+     */
     class SammlungDto
     {
-        public const TYPEN = ['photo' => 'Fotos', '' => 'Ohne Typ'];
         public const ICONS = ['photo' => 'fa-image'];
+
+        /** @return array<string,string> */
+        public static function typBezeichnungen(): array
+        {
+            return ['photo' => 'Fotos', 'painting' => 'Gemaelde', '' => 'Ohne Typ'];
+        }
+
+        public static function typBezeichnung(string $typ): string
+        {
+            return self::typBezeichnungen()[strtolower($typ)] ?? ucfirst($typ);
+        }
     }
 }
 

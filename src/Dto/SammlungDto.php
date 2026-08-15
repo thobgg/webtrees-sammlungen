@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Sammlungen\Dto;
 
+use Fisharebest\Webtrees\Elements\SourceMediaType;
+use Fisharebest\Webtrees\I18N;
+
 /**
  * Unveränderliches Value-Object für eine Sammlung
  * (thematisch gruppierte Medienobjekte nach `source_media_type`).
@@ -11,26 +14,44 @@ namespace Sammlungen\Dto;
 final class SammlungDto
 {
     /**
-     * Alle gültigen GEDCOM-Medientypen gemäß GEDCOM 5.5.1 Standard.
+     * Bezeichnungen der GEDCOM-Medientypen.
+     *
+     * Sie kommen aus webtrees selbst: dessen Liste ist vollständig - sie kennt
+     * auch Gemälde, Wappen und Urkunden, die hier fehlten und dann roh als
+     * "PAINTING" auf dem Schirm standen - und sie ist in jede Sprache
+     * übersetzt, in der webtrees ausgeliefert wird. Die frühere Liste im Modul
+     * war fest eingedeutscht und erschien auch in einer englischen oder
+     * slowakischen Oberfläche auf Deutsch.
+     *
+     * @return array<string,string>  [typ => Bezeichnung], Schlüssel kleingeschrieben
      */
-    public const TYPEN = [
-        'audio'        => 'Audio',
-        'book'         => 'Bücher',
-        'card'         => 'Karten / Karteikarten',
-        'document'     => 'Dokumente',
-        'electronic'   => 'Elektronische Dokumente',
-        'fiche'        => 'Mikrofiche',
-        'film'         => 'Film / Mikrofilm',
-        'magazine'     => 'Zeitschriften',
-        'manuscript'   => 'Manuskripte',
-        'map'          => 'Landkarten',
-        'newspaper'    => 'Zeitungen',
-        'photo'        => 'Fotos',
-        'tombstone'    => 'Grabsteine',
-        'video'        => 'Video',
-        'other'        => 'Sonstiges',
-        ''             => 'Ohne Typ',
-    ];
+    public static function typBezeichnungen(): array
+    {
+        $werte = (new SourceMediaType(''))->values();
+
+        $liste = [];
+        foreach ($werte as $schluessel => $bezeichnung) {
+            $liste[strtolower((string) $schluessel)] = (string) $bezeichnung;
+        }
+
+        // webtrees führt den leeren Typ ohne Bezeichnung - hier braucht die
+        // Kachel eine.
+        $liste[''] = I18N::translate('No type');
+
+        return $liste;
+    }
+
+    /**
+     * Bezeichnung eines einzelnen Typs; unbekannte Schlüssel kommen unverändert
+     * zurück, damit ein exotischer GEDCOM-Wert sichtbar bleibt statt zu
+     * verschwinden.
+     */
+    public static function typBezeichnung(string $typ): string
+    {
+        $typ = strtolower($typ);
+
+        return self::typBezeichnungen()[$typ] ?? ucfirst($typ);
+    }
 
     /** Zuordnung Medientyp → FontAwesome-Icon-Klasse */
     public const ICONS = [

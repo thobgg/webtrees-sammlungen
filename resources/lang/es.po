@@ -453,3 +453,6 @@ msgstr "… y %s más"
 
 msgid "→ copy into EXIF"
 msgstr "→ copiar a EXIF"
+
+msgid "No type"
+msgstr "Sin tipo"

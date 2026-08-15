@@ -171,8 +171,7 @@ use Fisharebest\Webtrees\I18N;
             <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4 mb-4">
                 <?php foreach ($unverknuepft_typen as $typKey => $typAnzahl) : ?>
                     <?php
-                    $typName = \Sammlungen\Dto\SammlungDto::TYPEN[strtolower((string) $typKey)]
-                        ?? ucfirst((string) $typKey !== '' ? (string) $typKey : I18N::translate('Free holdings'));
+                    $typName = \Sammlungen\Dto\SammlungDto::typBezeichnung((string) $typKey);
                     $typIcon = \Sammlungen\Dto\SammlungDto::ICONS[strtolower((string) $typKey)] ?? 'fa-folder-open';
                     ?>
                     <div class="col">

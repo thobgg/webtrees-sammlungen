@@ -459,3 +459,6 @@ msgstr "… a %s viac"
 
 msgid "→ copy into EXIF"
 msgstr "→ kopírovať do EXIF-u"
+
+msgid "No type"
+msgstr "Bez typu"

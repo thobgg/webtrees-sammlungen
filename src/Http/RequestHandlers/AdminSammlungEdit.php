@@ -119,7 +119,7 @@ class AdminSammlungEdit implements RequestHandlerInterface
             'tree'               => $tree,
             'sammlung'           => $sammlung,
             'iconAuswahl'        => self::ICON_AUSWAHL,
-            'medienTypen'        => SammlungDto::TYPEN,
+            'medienTypen'        => SammlungDto::typBezeichnungen(),
             'verfuegbareOrdner'  => $this->collectionService->verfuegbareOrdner($tree),
         ]);
     }

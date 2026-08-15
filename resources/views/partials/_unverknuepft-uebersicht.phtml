@@ -47,7 +47,7 @@ use Fisharebest\Webtrees\I18N;
             <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
                 <?php foreach ($aktive['typen'] as $typKey => $typAnzahl) : ?>
                     <?php
-                    $typName = SammlungDto::TYPEN[strtolower($typKey)] ?? ucfirst($typKey ?: 'Ohne Typ');
+                    $typName = SammlungDto::typBezeichnung((string) $typKey);
                     $typIcon = SammlungDto::ICONS[strtolower($typKey)] ?? 'fa-folder-open';
                     ?>
                     <div class="col">

@@ -202,7 +202,7 @@ final class SammlungenViewModel
                 'typ'      => 'unverknuepft_galerie',
                 'typ_key'  => $typFuerQuery,
                 'typ_name' => $typFuerQuery !== ''
-                    ? (SammlungDto::TYPEN[strtolower($typFuerQuery)] ?? ucfirst($typFuerQuery))
+                    ? SammlungDto::typBezeichnung($typFuerQuery)
                     : I18N::translate('Without type'),
                 'anzahl'   => $unverknuepftTypen[$typFuerQuery] ?? 0,
                 'medien'   => $this->sammlungenRepository->medienOhneVerknuepfung($tree, $typFuerQuery, 0, $this->module->perPage()),
