@@ -88,7 +88,10 @@ document.addEventListener('DOMContentLoaded', function () {
         img.src = d.full;
         img.alt = d.title;
         caption.textContent = d.title;
-        if (fullsize) fullsize.href = d.full;
+        // In der Lightbox hängt eine Bildschirmfassung; "Vollbild in neuem Tab"
+        // soll die Originaldatei zeigen, sonst käme man an die volle Auflösung
+        // gar nicht mehr heran.
+        if (fullsize) fullsize.href = d.original || d.full;
 
         // + Zu Sammlung Button: nur für importierte Fotos
         const sammlungBtn = document.getElementById('archiv-lb-sammlung-btn');

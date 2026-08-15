@@ -42,6 +42,22 @@ _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Bl
   lässt; so erscheint er einmal je Galerie statt bei jedem zweiten Tippen.
 
 ### Geändert
+- **Galerien liefern verkleinerte Bilder statt der Originale.** Eine Rasterseite
+  schickte bisher 50 Originaldateien: gemessen **174,2 MB**, im Mittel mit der
+  21-fachen Breite dessen, was auf dem Schirm ankommt – also rund der
+  450-fachen Pixelzahl. Jede Kachel wurde zudem zweimal dekodiert, weil dasselbe
+  Original als weichgezeichneter Hintergrund dahinterliegt. Auf dem Telefon
+  ruckelte davon jedes Blättern und jedes Drehen.
+
+  Jetzt gibt es drei Größen: 400 Pixel für die Kachel, 1600 für die Lightbox,
+  das Original hinter „Vollbild in neuem Tab". Dieselbe Seite wiegt damit
+  **4,8 MB** statt 174,2 – ein Sechsunddreißigstel.
+
+  Erzeugt wird mit dem Bildstapel von webtrees selbst (`ImageFactory`, also
+  Imagick oder GD, je nach Server): keine zusätzliche Voraussetzung für andere
+  Installationen. Dateien unter 150 KB oder solche, die ohnehin schmaler sind
+  als angefordert, gehen unverändert raus – bei denen kostet das Umrechnen mehr
+  als es spart (gemessen: 54 ms unverändert gegen 149 ms verkleinert).
 - **Ein quer gehaltenes Telefon zählt jetzt als Telefon.** Die Regeln für die
   randlose Lightbox hingen an `max-width: 767.98px`; quer gehalten ist dasselbe
   Gerät 832 Pixel breit und bekam die Darstellung für große Bildschirme, also
