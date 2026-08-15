@@ -8,6 +8,7 @@ use Sammlungen\Cache\ApcuCacheService;
 use Sammlungen\Dto\SammlungDto;
 use Fisharebest\Webtrees\DB;
 use Fisharebest\Webtrees\Tree;
+use Illuminate\Database\Query\Builder;
 
 /**
  * Repository für Mediensammlungen.
@@ -169,11 +170,44 @@ class SammlungenRepository
     // ---------------------------------------------------------------
 
     /**
+     * Schraenkt eine Abfrage auf Medien ein, an denen weder eine Person noch
+     * eine Familie haengt.
+     *
+     * Bis 1.3.3 genuegte hier irgendeine `OBJE`-Zeile. In webtrees darf die
+     * aber genauso in einer Quelle, einer Notiz, einem Repositorium oder einem
+     * Einreicher stehen - und wer seine Registerscans sauber an Quellen haengt,
+     * bekam dadurch einen leeren freien Bestand gemeldet, obwohl an keiner
+     * Person etwas hing. Genau diese Menge ist aber der Zweck der Ansicht:
+     * "Teil des Familienarchivs ohne Verknuepfung im Stammbaum".
+     */
+    private function nurOhnePersonOderFamilie(Builder $query): Builder
+    {
+        return $query->whereNotExists(function (Builder $unter): void {
+            $unter->from('link AS lnk')
+                ->leftJoin('individuals AS i', function ($join): void {
+                    $join->on('i.i_file', '=', 'lnk.l_file')
+                         ->on('i.i_id', '=', 'lnk.l_from');
+                })
+                ->leftJoin('families AS f', function ($join): void {
+                    $join->on('f.f_file', '=', 'lnk.l_file')
+                         ->on('f.f_id', '=', 'lnk.l_from');
+                })
+                ->whereColumn('lnk.l_file', '=', 'm.m_file')
+                ->whereColumn('lnk.l_to', '=', 'm.m_id')
+                ->where('lnk.l_type', '=', 'OBJE')
+                ->where(function (Builder $oder): void {
+                    $oder->whereNotNull('i.i_id')->orWhereNotNull('f.f_id');
+                })
+                ->selectRaw('1');
+        });
+    }
+
+    /**
      * Anzahl nicht-eingebundener Medien, gruppiert nach source_media_type.
      *
-     * "Nicht eingebunden" bedeutet: kein Eintrag in der link-Tabelle
-     * mit l_type='OBJE', der auf dieses Medienobjekt zeigt.
-     * Externe URLs (http/https) werden ausgeschlossen.
+     * "Nicht eingebunden" bedeutet: es haengt weder eine Person noch eine
+     * Familie daran. Verweise aus Quellen oder Notizen zaehlen nicht als
+     * Einbindung in den Stammbaum. Externe URLs (http/https) bleiben aussen vor.
      *
      * @return array<string, int>  [typ => anzahl], absteigend nach anzahl
      */
@@ -182,20 +216,16 @@ class SammlungenRepository
         $cacheKey = sprintf('sammlungen_unverknuepft:%d', $tree->id());
 
         return $this->cache->remember($cacheKey, function () use ($tree): array {
-            $rows = DB::table('media AS m')
+            $basis = DB::table('media AS m')
                 ->join('media_file AS mf', function ($join): void {
                     $join->on('mf.m_id', '=', 'm.m_id')
                          ->on('mf.m_file', '=', 'm.m_file');
                 })
-                ->leftJoin('link AS lnk', function ($join): void {
-                    $join->on('lnk.l_file', '=', 'm.m_file')
-                         ->on('lnk.l_to', '=', 'm.m_id')
-                         ->where('lnk.l_type', '=', 'OBJE');
-                })
                 ->where('m.m_file', '=', $tree->id())
                 ->where('mf.multimedia_file_refn', 'NOT LIKE', 'http:%')
-                ->where('mf.multimedia_file_refn', 'NOT LIKE', 'https:%')
-                ->whereNull('lnk.l_to')
+                ->where('mf.multimedia_file_refn', 'NOT LIKE', 'https:%');
+
+            $rows = $this->nurOhnePersonOderFamilie($basis)
                 ->select('mf.source_media_type')
                 ->selectRaw('COUNT(DISTINCT ' . DB::prefix('m') . '.m_id) AS anzahl')
                 ->groupBy('mf.source_media_type')
@@ -227,20 +257,16 @@ class SammlungenRepository
         $cacheKey = sprintf('sammlungen_unverknuepft_medien:%d:%s:%d:%d', $tree->id(), $typ, $offset, $limit);
 
         return $this->cache->remember($cacheKey, function () use ($tree, $typ, $offset, $limit): array {
-            $query = DB::table('media AS m')
-                ->join('media_file AS mf', function ($join): void {
-                    $join->on('mf.m_id', '=', 'm.m_id')
-                         ->on('mf.m_file', '=', 'm.m_file');
-                })
-                ->leftJoin('link AS lnk', function ($join): void {
-                    $join->on('lnk.l_file', '=', 'm.m_file')
-                         ->on('lnk.l_to', '=', 'm.m_id')
-                         ->where('lnk.l_type', '=', 'OBJE');
-                })
-                ->where('m.m_file', '=', $tree->id())
-                ->where('mf.multimedia_file_refn', 'NOT LIKE', 'http:%')
-                ->where('mf.multimedia_file_refn', 'NOT LIKE', 'https:%')
-                ->whereNull('lnk.l_to');
+            $query = $this->nurOhnePersonOderFamilie(
+                DB::table('media AS m')
+                    ->join('media_file AS mf', function ($join): void {
+                        $join->on('mf.m_id', '=', 'm.m_id')
+                             ->on('mf.m_file', '=', 'm.m_file');
+                    })
+                    ->where('m.m_file', '=', $tree->id())
+                    ->where('mf.multimedia_file_refn', 'NOT LIKE', 'http:%')
+                    ->where('mf.multimedia_file_refn', 'NOT LIKE', 'https:%')
+            );
 
             if ($typ !== '') {
                 $query->where('mf.source_media_type', '=', $typ);
@@ -267,21 +293,17 @@ class SammlungenRepository
      */
     public function queryVorschauOhneVerknuepfung(Tree $tree, string $typ, int $n): array
     {
-        $query = DB::table('media AS m')
-            ->join('media_file AS mf', function ($join): void {
-                $join->on('mf.m_id', '=', 'm.m_id')
-                     ->on('mf.m_file', '=', 'm.m_file');
-            })
-            ->leftJoin('link AS lnk', function ($join): void {
-                $join->on('lnk.l_file', '=', 'm.m_file')
-                     ->on('lnk.l_to', '=', 'm.m_id')
-                     ->where('lnk.l_type', '=', 'OBJE');
-            })
-            ->where('m.m_file', '=', $tree->id())
-            ->where('mf.multimedia_file_refn', 'NOT LIKE', 'http:%')
-            ->where('mf.multimedia_file_refn', 'NOT LIKE', 'https:%')
-            ->whereIn('mf.multimedia_format', ['jpg', 'jpeg', 'png', 'gif', 'webp'])
-            ->whereNull('lnk.l_to');
+        $query = $this->nurOhnePersonOderFamilie(
+            DB::table('media AS m')
+                ->join('media_file AS mf', function ($join): void {
+                    $join->on('mf.m_id', '=', 'm.m_id')
+                         ->on('mf.m_file', '=', 'm.m_file');
+                })
+                ->where('m.m_file', '=', $tree->id())
+                ->where('mf.multimedia_file_refn', 'NOT LIKE', 'http:%')
+                ->where('mf.multimedia_file_refn', 'NOT LIKE', 'https:%')
+                ->whereIn('mf.multimedia_format', ['jpg', 'jpeg', 'png', 'gif', 'webp'])
+        );
 
         if ($typ !== '') {
             $query->where('mf.source_media_type', '=', $typ);

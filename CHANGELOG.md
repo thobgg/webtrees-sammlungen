@@ -51,6 +51,18 @@ _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Bl
   Fensterbreite – ein schmales Fenster am Rechner hat weiterhin eine Maus.
 
 ### Behoben
+- **Der freie Bestand zählte Verweise aus Quellen und Notizen als Einbindung**
+  und meldete dadurch „Alle Medienobjekte sind mit Personen oder Familien
+  verknüpft", obwohl an keiner Person etwas hing. In webtrees darf eine
+  `OBJE`-Zeile in jedem Datensatz stehen – auch in einer Quelle, einer Notiz,
+  einem Repositorium oder einem Einreicher. Die Abfrage prüfte nur, *dass* es
+  eine gibt, nicht *wer* verweist. Wer seine Registerscans an Quellen hängt –
+  der Normalfall bei Kirchenbüchern und Standesämtern – bekam einen leeren
+  freien Bestand gemeldet, also genau das Gegenteil der Aussage der Ansicht.
+
+  Maßgeblich sind jetzt ausschließlich Personen und Familien. Betroffen waren
+  drei Abfragen (Zählung, Auflistung, Vorschaubilder); sie teilen sich die
+  Regel nun an einer Stelle. Der Fehler steckt seit 1.0.0 im Modul.
 - **Lightbox saß auf dem Telefon um 8 Pixel versetzt** und ragte rechts über den
   Bildschirmrand hinaus, wodurch der Schließknopf angeschnitten war. Das
   Bootstrap-Bündel von webtrees ist für Schreibrichtungen aufbereitet und setzt
