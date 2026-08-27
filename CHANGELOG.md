@@ -9,6 +9,11 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+## [1.4.1] – 2026-08-27
+
+Ein Anzeigefehler, gemeldet von **@ro-la** – und weil Meldungen selten kommen,
+soll er nicht bis zum nächsten Bündel warten.
+
 ### Behoben
 - **Das Menüsymbol überstimmte jedes Theme** (Issue #22, gemeldet von **@ro-la**).
   Es wurde über `content: url(...)` eingesetzt, fest auf 50 Pixel skaliert und in
