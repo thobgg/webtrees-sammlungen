@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <!-- Sammlungen: Ordner mit Foto. Flach und einfarbig gehalten, damit das
+       Symbol neben den gezeichneten Symbolen der Themes nicht auffaellt, und
+       in einem warmen Ton, der sowohl auf hellen Leisten (webtrees, Xenea,
+       Clouds) als auch auf der dunklen Leiste des Colors-Themes steht. -->
+  <path fill="#d9a441" d="M4 12a3 3 0 0 1 3-3h11l4 4h15a3 3 0 0 1 3 3v20a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3z"/>
+  <rect x="11" y="19" width="26" height="18" rx="2" fill="#fff"/>
+  <circle cx="17.5" cy="25" r="2.5" fill="#d9a441"/>
+  <path fill="#8a6a24" d="M13 35l7.5-9 5.5 6.5 4-4.5 5.5 7z"/>
+</svg>

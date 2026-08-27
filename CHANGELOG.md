@@ -9,6 +9,22 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+### Behoben
+- **Das Menüsymbol überstimmte jedes Theme** (Issue #22, gemeldet von **@ro-la**).
+  Es wurde über `content: url(...)` eingesetzt, fest auf 50 Pixel skaliert und in
+  *jedem* Theme. Über `content:` eingefügte Bilder ignorieren `width` und
+  `height` – das Theme konnte sich also nicht wehren. Am Gerät gemessen sind die
+  Symbole der Themes 50 Pixel groß (webtrees), 40 (Colors), 28 (Xenea), 22
+  (Clouds); minimal, F.A.B. und die meisten fremden Themes haben gar keine. In
+  Colors war unseres dadurch mehr als doppelt so groß wie alle anderen, in
+  minimal stand ein Bild mitten in einer reinen Textzeile.
+
+  Jetzt ist es ein Hintergrundbild in einer Box fester Größe – damit bestimmen
+  wir Größe und Ausrichtung – und es erscheint nur in Themes, die selbst
+  Menüsymbole zeigen; erkannt an der Klasse, die webtrees am `<body>` setzt.
+  Statt des Fotos ein flaches SVG, das neben gezeichneten Symbolen nicht
+  auffällt. Damit entfällt auch Imagick im Seitenkopf.
+
 ## [1.4.0] – 2026-08-15
 
 **Das Modul wird auf dem Telefon benutzbar – und auf jedem Gerät schnell.**

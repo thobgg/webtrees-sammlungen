@@ -150,35 +150,59 @@ class SammlungenModule extends AbstractModule implements
 
     public function defaultMenuOrder(): int { return 99; }
 
+    /**
+     * Groesse des Menuesymbols je Theme, ausgelesen aus deren eigenen Symbolen.
+     *
+     * Themes, die keine Menuesymbole haben - minimal, F.A.B. und die meisten
+     * fremden -, stehen absichtlich nicht in der Liste.
+     *
+     * @var array<string,int>
+     */
+    private const SYMBOLGROESSE = [
+        'webtrees' => 50,
+        'colors'   => 40,
+        'xenea'    => 28,
+        'clouds'   => 22,
+    ];
+
+    /**
+     * Menuesymbol, das sich dem Theme fuegt statt es zu ueberstimmen.
+     *
+     * Vorher stand hier ein auf 50 Pixel skaliertes Foto, eingesetzt ueber
+     * `content: url(...)` - und zwar in jedem Theme. Zwei Fehler auf einmal:
+     * eingefuegter Inhalt laesst sich per CSS nicht groessern oder kleinern,
+     * das Theme kann sich also nicht wehren; und Themes ohne Menuesymbole
+     * bekamen trotzdem eines. In Colors war unser Symbol dadurch mehr als
+     * doppelt so gross wie alle anderen, in minimal stand ein Bild mitten in
+     * einer reinen Textzeile (Issue #22).
+     *
+     * Jetzt: als Hintergrundbild in einer Box fester Groesse - damit bestimmen
+     * wir Groesse und Ausrichtung - und nur dort eingeschaltet, wo das Theme
+     * selbst Symbole zeigt.
+     */
     public function headContent(): string
     {
-        $path = $this->resourcesFolder() . 'archiv-icon.jpg';
-        if (!file_exists($path) || !class_exists('Imagick')) {
-            return '';
-        }
-        try {
-            // Auf 40×40px skalieren und als PNG ausgeben – exakt wie andere Nav-Icons
-            $im = new \Imagick($path);
-            $im->thumbnailImage(50, 50, true, true);
-            $im->setImageFormat('png');
-            $b64 = base64_encode($im->getImageBlob());
-            $im->destroy();
-        } catch (\Throwable) {
-            return '';
-        }
-        return '<style>'
-            . '.menu-sammlungen .nav-link:before{'
-            . 'content:url("data:image/png;base64,' . $b64 . '")}'
-            . '</style>';
-    }
+        $pfad = $this->resourcesFolder() . 'menu-icon.svg';
 
-    private function archivIconBase64(): string
-    {
-        $path = $this->resourcesFolder() . 'archiv-icon.jpg';
-        if (!file_exists($path)) {
+        if (!file_exists($pfad)) {
             return '';
         }
-        return 'data:image/jpeg;base64,' . base64_encode(file_get_contents($path));
+
+        $symbol = 'data:image/svg+xml;base64,' . base64_encode((string) file_get_contents($pfad));
+        $klasse = '.menu-sammlungen .nav-link::before';
+
+        // Grundzustand: kein Symbol. Wer ein Theme ohne Menuesymbole benutzt,
+        // sieht auch bei uns keines.
+        $css = $klasse . '{content:none}';
+
+        foreach (self::SYMBOLGROESSE as $theme => $px) {
+            $css .= '.wt-theme-' . $theme . ' ' . $klasse . '{'
+                . 'content:"";display:block;margin:0 auto;'
+                . 'width:' . $px . 'px;height:' . $px . 'px;'
+                . 'background:url("' . $symbol . '") center/contain no-repeat}';
+        }
+
+        return '<style>' . $css . '</style>';
     }
 
     public function getMenu(Tree $tree): ?Menu

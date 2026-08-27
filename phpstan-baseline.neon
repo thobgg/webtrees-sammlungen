@@ -1,6 +1,5 @@
 # PHPStan-Baseline (Level 5). Enthält nur kosmetische Restbefunde:
 #   1. @var $tree an einem try-Statement (Annotation greift dort nicht, aber harmlos)
-#   2. archivIconBase64() – ungenutzte Alternativ-Implementierung des Menü-Icons
 # Echte Befunde werden im Code behoben, nicht hier hineingeschrieben.
 parameters:
 	ignoreErrors:
@@ -10,8 +9,3 @@ parameters:
 			count: 1
 			path: src/Http/RequestHandlers/AbstractArchivHandler.php
 
-		-
-			message: '#^Method Sammlungen\\SammlungenModule\:\:archivIconBase64\(\) is unused\.$#'
-			identifier: method.unused
-			count: 1
-			path: src/SammlungenModule.php
