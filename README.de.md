@@ -7,7 +7,7 @@
 | | |
 |---|---|
 | Modul-Name | `sammlungen` |
-| Version | 1.4.1 |
+| Version | 1.5.0 |
 | webtrees | 2.2.x |
 | PHP | 8.2 – 8.4 |
 | Lizenz | GPL-3.0-or-later |
@@ -167,6 +167,8 @@ Dokumenten-Liste, gemischt). Aktiv-Status per Ein-Klick-Toggle:
 - **Pfad-basierte Zuordnung**: auch nicht-importierte Bilder können Sammlungen zugewiesen werden
 - **„Freier Bestand"** aus dem Dateisystem gezählt: alles im Archiv, was im Stammbaum nicht auftaucht, je Ordner
 - **Verkleinerte Auslieferung**: 400 px für Kacheln, 1600 px für die Lightbox, das Original einen Klick entfernt – mit dem Bildstapel von webtrees, ohne zusätzliche Voraussetzung
+- **Einträge pro Seite und Darstellung in der Galerie wählbar** (10–200,
+  Foto-Raster oder große Bilder), je Nutzer gemerkt
 - **APCu-Cache** für teure Queries mit konfigurierbarem TTL
 
 ## Voraussetzungen
@@ -203,10 +205,11 @@ Anschließend in webtrees unter **Steuerleiste → Module → Custom Modules** d
 2. **Klick auf eine Sammlung** öffnet die Galerie (Foto-Raster oder Dokumenten-Liste)
 3. **Klick auf ein Foto** öffnet die Lightbox mit Pfeil-Tasten-Navigation
 4. **Bleistift-Icon in der Lightbox** öffnet die Sidebar mit EXIF-Editor
-5. **Admin-Bereich** über `Steuerleiste → Module → Sammlungen → Konfiguration` erreichbar:
-   - Eigene Sammlungen anlegen/bearbeiten/löschen
-   - Cache-TTL und Seitengröße konfigurieren
-   - Footer-Link ein-/ausschalten
+5. **Zahl der Einträge und Darstellung** wählt jeder Betrachter oben in der
+   Galerie selbst; die Wahl bleibt für das nächste Mal stehen.
+6. **Admin-Bereich**: Administratoren finden „Sammlungen verwalten" und
+   „Einstellungen" direkt im aufklappenden Menü „Sammlungen"; der Weg über
+   `Steuerleiste → Module → Sammlungen → Konfiguration` bleibt daneben bestehen.
 
 ## Sammlungen mit Bildern füllen
 
@@ -303,8 +306,8 @@ sammlungen_collection_pfad      -- M:N Pfad ↔ Sammlung (auch nicht-importierte
 In der Admin-UI einstellbar:
 
 - **Cache-TTL** (Default: 900 s)
-- **Seiten-Größe** (Default: 50)
-- **Footer-Link anzeigen** (ja/nein)
+- **Seiten-Größe** (Default: 50 – eine Vorgabe; jeder Betrachter kann sie in der
+  Galerie für sich ändern)
 
 ## Verwandte Module
 

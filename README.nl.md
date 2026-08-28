@@ -7,7 +7,7 @@
 | | |
 |---|---|
 | Modulenaam | `sammlungen` |
-| Versie | 1.4.1 |
+| Versie | 1.5.0 |
 | webtrees | 2.2.x |
 | PHP | 8.2 – 8.4 |
 | Licentie | GPL-3.0-or-later |
@@ -95,6 +95,8 @@ documentlijst, gemengd). Actief-status met één klik schakelen:
 - **Handmatige collecties** (CRUD): naam, slug, pictogram, kleur, weergave
 - **Pad-gebaseerde toewijzing**: ook niet-geïmporteerde afbeeldingen kunnen aan collecties worden toegewezen
 - **"Vrije collectie"** als eigen overzicht (onderdeel van het familiearchief, zonder koppeling in de stamboom)
+- **Aantal items per pagina en weergave instelbaar in de galerij** (10–200,
+  fotoraster of grote afbeeldingen), per gebruiker onthouden
 - **APCu-cache** voor dure query's met instelbare TTL
 
 ## Vereisten
@@ -132,10 +134,11 @@ automatisch aangemaakt.
 2. **Klikken op een collectie** opent de galerij (fotoraster of documentlijst).
 3. **Klikken op een foto** opent de lightbox met pijltjestoets-navigatie.
 4. Het **potloodpictogram in de lightbox** opent de zijbalk met de EXIF-editor.
-5. Het **beheergedeelte** is bereikbaar via `Bedieningspaneel → Modules → Sammlungen → Configuratie`:
-   - Eigen collecties aanmaken/bewerken/verwijderen
-   - Cache-TTL en paginagrootte configureren
-   - Footer-link in-/uitschakelen
+5. **Aantal items en weergave** kiest elke bezoeker bovenaan de galerij zelf;
+   de keuze blijft voor de volgende keer staan.
+6. **Beheergedeelte**: beheerders vinden „Collecties beheren" en „Instellingen"
+   direct in het uitklapmenu „Sammlungen"; de weg via
+   `Bedieningspaneel → Modules → Sammlungen → Configuratie` blijft bestaan.
 
 ## Collecties met afbeeldingen vullen
 
@@ -230,8 +233,8 @@ sammlungen_collection_pfad      -- M:N pad ↔ collectie (ook niet-geïmporteerd
 In de beheer-UI instelbaar:
 
 - **Cache-TTL** (standaard: 900 s)
-- **Paginagrootte** (standaard: 50)
-- **Footer-link tonen** (ja/nee)
+- **Paginagrootte** (standaard: 50 – een uitgangswaarde; elke bezoeker kan die
+  in de galerij voor zichzelf wijzigen)
 
 ## Verwante modules
 

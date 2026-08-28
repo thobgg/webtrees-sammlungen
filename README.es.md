@@ -7,7 +7,7 @@
 | | |
 |---|---|
 | Nombre del módulo | `sammlungen` |
-| Versión | 1.4.1 |
+| Versión | 1.5.0 |
 | webtrees | 2.2.x |
 | PHP | 8.2 – 8.4 |
 | Licencia | GPL-3.0-or-later |
@@ -113,6 +113,8 @@ fotos, lista de documentos, mixto). Estado activo con conmutador de un clic:
 - **Colecciones propias** (CRUD): nombre, slug, icono, color, vista
 - **Asignación basada en rutas**: incluso las fotos no importadas pueden añadirse a colecciones
 - **"Fondo libre"** como vista general aparte (parte del archivo familiar, no enlazada en el árbol)
+- **Elementos por página y presentación seleccionables en la galería**
+  (10–200, cuadrícula de fotos o imágenes grandes), recordado por usuario
 - **Caché APCu** para consultas costosas con TTL configurable
 
 ## Requisitos
@@ -149,10 +151,12 @@ Las tablas de la base de datos se crean automáticamente en la primera carga.
 2. **Haz clic en una colección** para abrir la galería (cuadrícula de fotos o lista de documentos).
 3. **Haz clic en una foto** para abrir el lightbox con navegación por teclas de flecha.
 4. **El icono del lápiz en el lightbox** abre la barra lateral con el editor EXIF.
-5. El **área de administración** está accesible en `Panel de control → Módulos → Sammlungen → Preferencias`:
-   - Crear / editar / eliminar colecciones propias
-   - Configurar el TTL de la caché y el tamaño de página
-   - Activar o desactivar el enlace del pie de página
+5. **El número de elementos y la presentación** los elige cada visitante en la
+   parte superior de la galería; la elección se recuerda para la próxima vez.
+6. **Área de administración**: los administradores encuentran «Gestionar
+   colecciones» y «Ajustes» directamente en el menú desplegable «Sammlungen»;
+   la ruta `Panel de control → Módulos → Sammlungen → Preferencias` sigue
+   disponible.
 
 ## Llenar las colecciones con imágenes
 
@@ -249,8 +253,8 @@ sammlungen_collection_pfad      -- N:M ruta ↔ colección (también imágenes n
 Disponible en la interfaz de administración:
 
 - **TTL de la caché** (por defecto: 900 s)
-- **Tamaño de página** (por defecto: 50)
-- **Mostrar enlace en el pie** (sí/no)
+- **Tamaño de página** (por defecto: 50 – un valor inicial; cada visitante puede
+  cambiarlo en la galería para sí mismo)
 
 ## Localización
 

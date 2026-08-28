@@ -7,7 +7,7 @@
 | | |
 |---|---|
 | Module name | `sammlungen` |
-| Version | 1.4.1 |
+| Version | 1.5.0 |
 | webtrees | 2.2.x |
 | PHP | 8.2 – 8.4 |
 | License | GPL-3.0-or-later |
@@ -155,6 +155,8 @@ document list, mixed). Active status with one-click toggle:
 - **Path-based assignment**: even non-imported photos can be added to collections
 - **"Free holdings"** counted from the file system: everything in the archive that does not appear in the family tree, per folder
 - **Scaled delivery**: 400 px for tiles, 1600 px for the lightbox, the original one click away – built on webtrees' own image stack, no extra requirement
+- **Entries per page and layout selectable in the gallery** (10–200, photo
+  grid or large images), remembered per user
 - **APCu cache** for expensive queries with configurable TTL
 
 ### Speed
@@ -204,10 +206,11 @@ The database tables are created automatically on first load.
 2. **Click a collection** to open the gallery (photo grid or document list).
 3. **Click a photo** to open the lightbox with arrow-key navigation.
 4. **The pencil icon in the lightbox** opens the sidebar with the EXIF editor.
-5. The **admin area** is reachable via `Control Panel → Modules → Sammlungen → Preferences`:
-   - Create / edit / delete custom collections
-   - Configure cache TTL and page size
-   - Toggle the footer link
+5. **Number of entries and layout** are chosen by each viewer at the top of the
+   gallery; the choice is remembered for next time.
+6. **Admin area**: administrators find "Manage collections" and "Settings"
+   directly in the "Sammlungen" drop-down menu; the route via
+   `Control Panel → Modules → Sammlungen → Preferences` still works.
 
 ## Filling collections with images
 
@@ -303,8 +306,8 @@ sammlungen_collection_pfad      -- M:N path ↔ collection (also non-imported im
 Available in the admin UI:
 
 - **Cache TTL** (default: 900 s)
-- **Page size** (default: 50)
-- **Show footer link** (yes/no)
+- **Page size** (default: 50 – a default; every viewer can change it in the
+  gallery for themselves)
 
 ## Localisation
 

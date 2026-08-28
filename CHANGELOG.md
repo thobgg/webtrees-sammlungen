@@ -9,7 +9,30 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+## [1.5.0] – 2026-08-28
+
+**Vier Anregungen aus Issue #23 von @ro-la** – die erste Rückmeldung, die nicht
+von einem Fehler handelt, sondern davon, wie sich das Modul anfühlt, wenn man es
+nicht selbst gebaut hat. Drei davon sind Bedienung: die Verwaltung liegt jetzt im
+Menü, Seitengröße und Darstellung entscheidet der Betrachter statt der Verwalter.
+Die vierte war ein Fehler, den niemand sah, dessen Installation aussieht wie
+unsere: wer sein Datenverzeichnis verschoben hatte, bekam ein leeres Archiv.
+
+Ein fünfter Punkt – ein Bilderwähler über *alle* Medienobjekte statt nur die des
+Ordners – steht als Issue #24 offen; er ist eine eigene Baustelle, kein Nebensatz.
+
 ### Behoben
+- **Aus der Verwaltung führte kein Weg zurück** (Issue #23). Die
+  Verwaltungsseiten des Moduls laufen im Verwaltungs-Layout von webtrees, und
+  das zeigt kein Genealogie-Menü – oben stehen nur Hilfe, Meine Seite, Sprache,
+  Abmelden. Solange man nur über die Schaltfläche auf der Übersicht hineinkam,
+  fiel das nicht auf. Seit das Aufklappmenü von jeder Seite aus dorthin einlädt,
+  saß man drin fest.
+
+  Jetzt hat jede der vier Verwaltungsseiten die Brotkrumenleiste von webtrees
+  selbst – Verwaltung / Einstellungen / Sammlungen verwalten / Name, jedes Glied
+  anklickbar – und wo der Baum bekannt ist, führt ein Verweis direkt zurück in
+  die Galerie.
 - **Der Medienordner musste innerhalb der Installation liegen** (Issue #23,
   gemeldet von **@ro-la**). webtrees erlaubt es, das Datenverzeichnis zu
   verschieben – der empfohlene Weg, die Originaldateien aus der Reichweite der
