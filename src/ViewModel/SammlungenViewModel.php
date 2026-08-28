@@ -113,6 +113,77 @@ final class SammlungenViewModel
         ];
     }
 
+
+    /**
+     * Eintraege je Seite - aus der Adresse, sonst aus der Merkung des Nutzers,
+     * sonst die Einstellung des Moduls.
+     *
+     * Bisher galt eine modulweite Zahl fuer alle und fuer jedes Geraet gleich.
+     * Auf einem grossen Schirm sind 50 Bilder wenig, auf dem Telefon sind
+     * dieselben 50 mehrere Megabyte (Issue #23). Die Grenzen des Moduls gelten
+     * weiter: wer 5000 in die Adresse schreibt, bekommt die Obergrenze.
+     */
+    private function proSeite(array $queryParams): int
+    {
+        $wunsch = $queryParams['pro_seite'] ?? null;
+
+        if ($wunsch !== null) {
+            $wert = SammlungenModule::normalisierePerPage($wunsch);
+            $this->merken('pro-seite', (string) $wert);
+
+            return $wert;
+        }
+
+        $gemerkt = $this->gemerkt('pro-seite');
+
+        return $gemerkt === ''
+            ? $this->module->perPage()
+            : SammlungenModule::normalisierePerPage($gemerkt);
+    }
+
+    /**
+     * Darstellung einer Bildersammlung: Raster oder grosse Einzelbilder.
+     *
+     * Nur fuer Sammlungen, in denen beides sinnvoll ist. Bei einer
+     * Dokumentensammlung waere ein Foto-Raster ein Gitter aus PDF-Symbolen -
+     * die Wahl des Verwalters bleibt dort stehen.
+     */
+    private function ansichtWaehlen(string $ansicht, array $queryParams): string
+    {
+        if (!in_array($ansicht, ['foto', 'raster'], true)) {
+            return $ansicht;
+        }
+
+        $wunsch = $queryParams['darstellung'] ?? null;
+
+        if (in_array($wunsch, ['foto', 'raster'], true)) {
+            $this->merken('darstellung', $wunsch);
+
+            return $wunsch;
+        }
+
+        $gemerkt = $this->gemerkt('darstellung');
+
+        return in_array($gemerkt, ['foto', 'raster'], true) ? $gemerkt : $ansicht;
+    }
+
+    /** Merkt eine Wahl beim angemeldeten Nutzer; Gaeste merken nichts. */
+    private function merken(string $name, string $wert): void
+    {
+        $nutzer = Auth::user();
+
+        if ($nutzer->id() !== 0) {
+            $nutzer->setPreference('sammlungen-' . $name, $wert);
+        }
+    }
+
+    private function gemerkt(string $name): string
+    {
+        $nutzer = Auth::user();
+
+        return $nutzer->id() === 0 ? '' : $nutzer->getPreference('sammlungen-' . $name, '');
+    }
+
     /** @return array<string,mixed> */
     private function leereDaten(string $kategorie): array
     {
@@ -237,7 +308,7 @@ final class SammlungenViewModel
     private function manuelleGalerieAnreichern(Tree $tree, array $aktive, array $queryParams): array
     {
         $s        = $aktive['sammlung'];
-        $perSeite = $this->module->perPage();
+        $perSeite = $this->proSeite($queryParams);
         $seite    = max(1, (int) ($queryParams['seite'] ?? 1));
         $gesamt   = $this->collectionService->anzahlPfadeSammlung($tree, $s->id);
         $seiten   = max(1, (int) ceil($gesamt / $perSeite));
@@ -285,11 +356,11 @@ final class SammlungenViewModel
     private function ordnerGalerieAnreichern(Tree $tree, array $aktive, array $queryParams): array
     {
         $s           = $aktive['sammlung'];
-        $ansicht     = $s->ansicht ?? 'foto';
+        $ansicht     = $this->ansichtWaehlen($s->ansicht ?? 'foto', $queryParams);
         $istBild     = in_array($ansicht, ['foto', 'raster', 'gemischt'], true);
         $istRaster   = $ansicht === 'raster';
         $istGemischt = $ansicht === 'gemischt';
-        $perSeite    = $this->module->perPage();
+        $perSeite    = $this->proSeite($queryParams);
         $seite       = max(1, (int) ($queryParams['seite'] ?? 1));
 
         $bildFormate = ['jpg', 'jpeg', 'png', 'gif', 'webp'];

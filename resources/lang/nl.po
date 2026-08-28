@@ -471,3 +471,6 @@ msgstr[1] "%s daarvan zijn mediaobjecten in webtrees"
 
 msgid "Overview"
 msgstr "Overzicht"
+
+msgid "Large pictures"
+msgstr "Grote afbeeldingen"

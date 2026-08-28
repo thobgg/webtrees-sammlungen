@@ -10,6 +10,16 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
 ### Hinzugefügt
+- **Einträge pro Seite in der Ansicht umschaltbar** (Issue #23, vorgeschlagen von
+  **@ro-la**), 10 bis 200, gemerkt je Nutzer. Bisher galt eine modulweite Zahl
+  für alle und für jedes Gerät gleich – auf einem großen Schirm sind 50 Bilder
+  wenig, auf dem Telefon sind dieselben 50 mehrere Megabyte. Die Grenzen des
+  Moduls gelten weiter: wer eine größere Zahl in die Adresse schreibt, bekommt
+  die Obergrenze.
+- **Foto-Raster und große Bilder umschaltbar**, aber nur in Bildersammlungen.
+  In einer Dokumentensammlung wäre ein Foto-Raster ein Gitter aus PDF-Symbolen;
+  dort bleibt die Wahl des Verwalters stehen. Der Vorschlag lautete „Anzeigetyp
+  frei wählbar" – umgesetzt ist er dort, wo beide Darstellungen etwas zeigen.
 - **Verwaltung direkt aus dem Menü erreichbar** (Issue #23, vorgeschlagen von
   **@ro-la**). Für Administratoren klappt der Menüpunkt jetzt auf: Übersicht,
   Sammlungen verwalten, Einstellungen. Bisher führte der Weg dorthin nur über

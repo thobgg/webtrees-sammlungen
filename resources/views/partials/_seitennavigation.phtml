@@ -17,14 +17,62 @@ declare(strict_types=1);
 
 use Fisharebest\Webtrees\I18N;
 
-if (($aktive['seiten_gesamt'] ?? 1) <= 1) {
-    return;
-}
+$seitenGesamt = $aktive['seiten_gesamt'] ?? 1;
+$proSeite     = $aktive['per_seite'] ?? \Sammlungen\SammlungenModule::DEFAULT_PER_PAGE;
 
-$von = max(1, $aktive['seite'] - 2);
-$bis = min($aktive['seiten_gesamt'], $aktive['seite'] + 2);
+// Adresse der aktuellen Ansicht mit geänderten Angaben - ohne die Seitenzahl,
+// denn nach einer Änderung der Seitengröße stimmt die alte Nummer nicht mehr.
+$mitParametern = static function (array $neue) use ($seiteUrl): string {
+    $basis = $seiteUrl(1);
+    foreach ($neue as $name => $wert) {
+        $basis .= '&' . $name . '=' . rawurlencode((string) $wert);
+    }
+    return $basis;
+};
+
+$stufen = [10, 20, 50, 100, 200];
+
+// Umschalten zwischen Raster und großen Einzelbildern nur, wo beides Sinn
+// ergibt. In einer Dokumentensammlung wäre ein Foto-Raster ein Gitter aus
+// PDF-Symbolen.
+$darstellungWaehlbar = ($aktive['istBild'] ?? false)
+    && !($aktive['istGemischt'] ?? false)
+    && ($aktive['typ'] ?? '') === 'ordner';
+
+$von = max(1, ($aktive['seite'] ?? 1) - 2);
+$bis = min($seitenGesamt, ($aktive['seite'] ?? 1) + 2);
 
 ?>
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mt-3">
+    <div class="d-flex align-items-center gap-2">
+        <label class="text-muted small mb-0" for="archiv-pro-seite">
+            <?= I18N::translate('Entries per page') ?>
+        </label>
+        <select id="archiv-pro-seite" class="form-select form-select-sm w-auto"
+                onchange="location.href = this.value">
+            <?php foreach ($stufen as $stufe) : ?>
+                <option value="<?= e($mitParametern(['pro_seite' => $stufe])) ?>"
+                    <?= $stufe === $proSeite ? 'selected' : '' ?>><?= I18N::number($stufe) ?></option>
+            <?php endforeach ?>
+        </select>
+    </div>
+
+    <?php if ($darstellungWaehlbar) : ?>
+        <div class="btn-group btn-group-sm" role="group">
+            <a href="<?= e($mitParametern(['darstellung' => 'raster'])) ?>"
+               class="btn <?= ($aktive['istRaster'] ?? false) ? 'btn-secondary' : 'btn-outline-secondary' ?>">
+                <?= I18N::translate('Photo grid') ?>
+            </a>
+            <a href="<?= e($mitParametern(['darstellung' => 'foto'])) ?>"
+               class="btn <?= ($aktive['istRaster'] ?? false) ? 'btn-outline-secondary' : 'btn-secondary' ?>">
+                <?= I18N::translate('Large pictures') ?>
+            </a>
+        </div>
+    <?php endif ?>
+</div>
+
+<?php if ($seitenGesamt <= 1) { return; } ?>
 <nav class="d-flex justify-content-center mt-2 mb-4" aria-label="<?= I18N::translate('Page navigation') ?>">
     <ul class="pagination">
         <li class="page-item <?= $aktive['seite'] <= 1 ? 'disabled' : '' ?>">

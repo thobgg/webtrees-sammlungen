@@ -469,3 +469,6 @@ msgstr[1] "%s d'ells són objectes audiovisuals a webtrees"
 
 msgid "Overview"
 msgstr "Resum"
+
+msgid "Large pictures"
+msgstr "Imatges grans"

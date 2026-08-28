@@ -468,3 +468,6 @@ msgstr[1] "%s davon sind Medienobjekte in webtrees"
 
 msgid "Overview"
 msgstr "Übersicht"
+
+msgid "Large pictures"
+msgstr "Große Bilder"

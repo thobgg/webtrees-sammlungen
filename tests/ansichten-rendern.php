@@ -43,6 +43,14 @@ namespace Fisharebest\Webtrees {
     }
 }
 
+namespace Sammlungen {
+    /** Attrappe: die Ansicht greift fuer den Rueckfallwert auf die Konstante zu. */
+    class SammlungenModule
+    {
+        public const DEFAULT_PER_PAGE = 50;
+    }
+}
+
 namespace Sammlungen\Dto {
     /**
      * Attrappe: die echte Klasse holt die Bezeichnungen aus webtrees

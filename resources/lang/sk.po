@@ -477,3 +477,6 @@ msgstr[2] "%s z nich je mediálnych objektov vo webtrees"
 
 msgid "Overview"
 msgstr "Prehľad"
+
+msgid "Large pictures"
+msgstr "Veľké obrázky"
