@@ -433,9 +433,6 @@ msgstr "Afegir a la col·lecció"
 msgid "Back"
 msgstr "Arrere"
 
-msgid "Back to settings"
-msgstr "Tornar a la configuració"
-
 msgid "e.g. 1923-06-15 or 1923"
 msgstr "p. ex. 1923-06-15 o 1923"
 

@@ -432,9 +432,6 @@ msgstr "Zu Sammlung hinzufügen"
 msgid "Back"
 msgstr "Zurück"
 
-msgid "Back to settings"
-msgstr "Zurück zu den Einstellungen"
-
 msgid "e.g. 1923-06-15 or 1923"
 msgstr "z.B. 1923-06-15 oder 1923"
 

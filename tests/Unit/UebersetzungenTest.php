@@ -21,6 +21,18 @@ use SplFileInfo;
  */
 final class UebersetzungenTest extends TestCase
 {
+    /**
+     * Texte, die webtrees selbst schon übersetzt.
+     *
+     * I18N::translate() schlägt in einer Tabelle nach, in der die Texte des
+     * Kerns und die des Moduls zusammenliegen. Was der Kern übersetzt, braucht
+     * im Modulkatalog nicht noch einmal zu stehen – eine zweite Fassung wäre
+     * nur eine Gelegenheit, in einer der Sprachen von der ersten abzuweichen.
+     *
+     * @var list<string>
+     */
+    private const AUS_DEM_KERN = ['Control panel'];
+
     /** Ein einfach gequoteter PHP-String, optional über `.` verkettet. */
     private const ARGUMENT = "'(?:\\\\.|[^'\\\\])*'(?:\\s*\\.\\s*'(?:\\\\.|[^'\\\\])*')*";
 
@@ -173,7 +185,7 @@ final class UebersetzungenTest extends TestCase
     public function testJederTextImQuelltextStehtImKatalog(): void
     {
         $imCode  = self::imQuelltext();
-        $fehlend = array_diff(array_keys($imCode), self::katalog('en'));
+        $fehlend = array_diff(array_keys($imCode), self::katalog('en'), self::AUS_DEM_KERN);
 
         $meldung = implode("\n", array_map(
             static fn (string $s): string => sprintf('  [%s] %s', $imCode[$s], $s),

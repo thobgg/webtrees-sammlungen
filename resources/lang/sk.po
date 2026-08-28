@@ -85,9 +85,6 @@ msgstr "Archívne priečinky"
 msgid "Back"
 msgstr "Späť"
 
-msgid "Back to settings"
-msgstr "Späť na nastavenia"
-
 msgid "Basic settings"
 msgstr "Základné nastavenie"
 

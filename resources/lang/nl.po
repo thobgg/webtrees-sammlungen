@@ -435,9 +435,6 @@ msgstr "Aan collectie toevoegen"
 msgid "Back"
 msgstr "Terug"
 
-msgid "Back to settings"
-msgstr "Terug naar de instellingen"
-
 msgid "e.g. 1923-06-15 or 1923"
 msgstr "bijv. 1923-06-15 of 1923"
 

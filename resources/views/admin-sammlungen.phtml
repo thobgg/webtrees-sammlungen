@@ -9,6 +9,7 @@
  * @var list<object>                        $sammlungen
  */
 
+use Fisharebest\Webtrees\Http\RequestHandlers\ControlPanel;
 use Fisharebest\Webtrees\I18N;
 
 // $tree ist hier immer gesetzt (Route erzwingt {tree}), aber defensiv absichern.
@@ -16,20 +17,30 @@ $treeName = $tree?->name() ?? '';
 $neuUrl   = $tree !== null
     ? route('sammlungen.admin.sammlungen.edit', ['tree' => $treeName])
     : '#';
+$galerie  = $tree !== null
+    ? route('sammlungen.sammlungen', ['tree' => $treeName])
+    : '';
 
 ?>
 
 <div class="mt-4 mb-5">
 
+    <?= view('components/breadcrumbs', ['links' => [
+        route(ControlPanel::class)       => I18N::translate('Control panel'),
+        route('sammlungen.admin.config') => I18N::translate('Settings'),
+        e($title),
+    ]]) ?>
+
     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
         <div>
             <h1 class="mb-0"><?= e($title) ?></h1>
-            <small class="text-muted">
-                <a href="<?= e(route('sammlungen.admin.config')) ?>"
-                   class="text-decoration-none">
-                    ← <?= I18N::translate('Back to settings') ?>
-                </a>
-            </small>
+            <?php if ($tree !== null) : ?>
+                <small class="text-muted">
+                    <a href="<?= e($galerie) ?>" class="text-decoration-none">
+                        ← <?= I18N::translate('Overview') ?>
+                    </a>
+                </small>
+            <?php endif ?>
         </div>
         <?php if ($tree !== null) : ?>
             <a href="<?= e($neuUrl) ?>" class="btn btn-primary">

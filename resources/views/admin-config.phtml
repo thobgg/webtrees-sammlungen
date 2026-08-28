@@ -12,11 +12,17 @@
  * @var \Illuminate\Support\Collection<string, \Fisharebest\Webtrees\Tree> $trees
  */
 
+use Fisharebest\Webtrees\Http\RequestHandlers\ControlPanel;
 use Fisharebest\Webtrees\I18N;
 
 ?>
 
 <div class="mt-4 mb-5">
+
+    <?= view('components/breadcrumbs', ['links' => [
+        route(ControlPanel::class) => I18N::translate('Control panel'),
+        e($title),
+    ]]) ?>
 
     <h1><?= e($title) ?></h1>
 

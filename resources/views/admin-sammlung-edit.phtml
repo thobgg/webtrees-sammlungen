@@ -11,6 +11,7 @@
  * @var array<string, string>               $medienTypen
  */
 
+use Fisharebest\Webtrees\Http\RequestHandlers\ControlPanel;
 use Fisharebest\Webtrees\I18N;
 
 $isNeu    = $sammlung === null;
@@ -33,23 +34,12 @@ $fAnsicht      = $isNeu ? 'foto' : ($sammlung->ansicht ?? 'foto');
 
 <div class="mt-4 mb-5">
 
-    <nav aria-label="breadcrumb" class="mb-3">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="<?= e(route('sammlungen.admin.config')) ?>">
-                    <?= I18N::translate('Settings') ?>
-                </a>
-            </li>
-            <li class="breadcrumb-item">
-                <a href="<?= e(route('sammlungen.admin.sammlungen', ['tree' => $tree->name()])) ?>">
-                    <?= I18N::translate('Collections') ?>
-                </a>
-            </li>
-            <li class="breadcrumb-item active">
-                <?= $isNeu ? I18N::translate('New') : e($sammlung->name) ?>
-            </li>
-        </ol>
-    </nav>
+    <?= view('components/breadcrumbs', ['links' => [
+        route(ControlPanel::class)       => I18N::translate('Control panel'),
+        route('sammlungen.admin.config') => I18N::translate('Settings'),
+        route('sammlungen.admin.sammlungen', ['tree' => $tree->name()]) => I18N::translate('Manage collections'),
+        $isNeu ? I18N::translate('New') : e($sammlung->name),
+    ]]) ?>
 
     <h1><?= e($title) ?></h1>
 
