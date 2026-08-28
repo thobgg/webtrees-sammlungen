@@ -60,7 +60,7 @@ final class ExifSchreiben implements RequestHandlerInterface
 
         try {
             $fullPath = $this->exifService->fullPath($tree, $pfad);
-            $this->exifService->schreibeMeta($fullPath, $beschreibung, $datum, $personen, $keywords);
+            $this->exifService->schreibeMeta($fullPath, $beschreibung, $datum, $personen, $keywords, $tree);
 
             return $this->json(['ok' => true]);
         } catch (\Throwable $e) {

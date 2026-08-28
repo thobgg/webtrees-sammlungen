@@ -401,8 +401,7 @@ class CollectionService
     {
         // Direkt vom Dateisystem lesen – zuverlässig, unabhängig von
         // ggf. falschen Windows-Pfaden in der DB (Ahnenblatt-Migration).
-        $mediaBase = \Fisharebest\Webtrees\Webtrees::DATA_DIR
-            . $tree->getPreference('MEDIA_DIRECTORY', 'media/');
+        $mediaBase = MedienPfad::wurzel($tree);
 
         if (!is_dir($mediaBase)) {
             return [];
@@ -454,8 +453,7 @@ class CollectionService
     /** Prüft anhand des Dateisystems ob eine Sammlung überwiegend Bilddateien enthält (> 50%). */
     public function istBildsammlung(Tree $tree, string $ordner): bool
     {
-        $mediaBase  = \Fisharebest\Webtrees\Webtrees::DATA_DIR
-            . $tree->getPreference('MEDIA_DIRECTORY', 'media/');
+        $mediaBase  = MedienPfad::wurzel($tree);
         $ordnerPfad = $mediaBase . $ordner . '/';
 
         if (!is_dir($ordnerPfad)) {
@@ -775,8 +773,7 @@ class CollectionService
         $cacheKey = sprintf('ordner_fs_count:%d:%s', $tree->id(), md5($ordner));
 
         return $this->cache->remember($cacheKey, function () use ($tree, $ordner): int {
-            $mediaBase  = \Fisharebest\Webtrees\Webtrees::DATA_DIR
-                . $tree->getPreference('MEDIA_DIRECTORY', 'media/');
+            $mediaBase  = MedienPfad::wurzel($tree);
             $ordnerPfad = $mediaBase . $ordner . '/';
 
             if (!is_dir($ordnerPfad)) {
@@ -795,8 +792,7 @@ class CollectionService
 
     public function alleDateienInOrdner(Tree $tree, string $ordner): array
     {
-        $mediaBase = \Fisharebest\Webtrees\Webtrees::DATA_DIR
-            . $tree->getPreference('MEDIA_DIRECTORY', 'media/');
+        $mediaBase = MedienPfad::wurzel($tree);
 
         $ordnerPfad = $mediaBase . $ordner . '/';
 
@@ -874,8 +870,7 @@ class CollectionService
         $cacheKey = sprintf('sammlungen_frei_fs:%d', $tree->id());
 
         return $this->cache->remember($cacheKey, function () use ($tree): array {
-            $mediaBase = \Fisharebest\Webtrees\Webtrees::DATA_DIR
-                . $tree->getPreference('MEDIA_DIRECTORY', 'media/');
+            $mediaBase = MedienPfad::wurzel($tree);
 
             if (!is_dir($mediaBase)) {
                 return ['gesamt' => 0, 'jeOrdner' => [], 'dateien' => 0];

@@ -9,6 +9,25 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+### Behoben
+- **Der Medienordner musste innerhalb der Installation liegen** (Issue #23,
+  gemeldet von **@ro-la**). webtrees erlaubt es, das Datenverzeichnis zu
+  verschieben – der empfohlene Weg, die Originaldateien aus der Reichweite der
+  Adresszeile zu nehmen. Das Modul setzte den Pfad aber an zwölf Stellen selbst
+  aus der Konstante `Webtrees::DATA_DIR` zusammen, die nur die *Vorgabe* für die
+  Einstellung `INDEX_DIRECTORY` ist. Wer sein Datenverzeichnis verschoben hatte,
+  bekam leere Sammlungen, einen freien Bestand von null und Bilder als 404.
+
+  Eine Stelle war schwerwiegender als der Rest: die Sicherung vor dem Schreiben
+  von EXIF prüfte gegen `data/media` – mit fest verdrahtetem Ordnernamen. Wer
+  seinen Medienordner anders nennt, bei dem schlug die Prüfung fehl, die
+  Sicherung wurde übersprungen und die Datei ohne Netz überschrieben. Still.
+
+  Alle zwölf Stellen holen den Pfad jetzt aus einer Funktion, die ihn so
+  bestimmt wie webtrees selbst. Bei unveränderten Einstellungen kommt Zeichen
+  für Zeichen derselbe Pfad heraus wie bisher; ein Test hält das fest, ein
+  zweiter, dass die feste Annahme nicht zurückkehrt.
+
 ### Hinzugefügt
 - **Einträge pro Seite in der Ansicht umschaltbar** (Issue #23, vorgeschlagen von
   **@ro-la**), 10 bis 200, gemerkt je Nutzer. Bisher galt eine modulweite Zahl

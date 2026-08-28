@@ -161,7 +161,8 @@ class ExifService
         string $beschreibung,
         string $datumIso,     // YYYY-MM-DD oder YYYY
         array  $personen,
-        array  $keywords
+        array  $keywords,
+        Tree   $tree
     ): void {
         if (!class_exists('Imagick')) {
             throw new \RuntimeException('Imagick nicht verfügbar.');
@@ -177,7 +178,7 @@ class ExifService
         }
 
         // Backup vor destruktiver Operation (pro Datei max. 1× pro Tag)
-        $this->erstelleBackup($fullPath);
+        $this->erstelleBackup($fullPath, $tree);
 
         $imagick = new \Imagick($fullPath);
 
@@ -209,7 +210,7 @@ class ExifService
     /** Vollständiger Dateisystempfad aus Tree + relativer Pfad. */
     public function fullPath(Tree $tree, string $relativPfad): string
     {
-        $base = Webtrees::DATA_DIR . $tree->getPreference('MEDIA_DIRECTORY', 'media/');
+        $base = MedienPfad::wurzel($tree);
         // Sicherheit: kein Path-Traversal
         $real = realpath($base . $relativPfad);
         $base = realpath($base);
@@ -301,10 +302,15 @@ XML;
      * Erstellt Backup der Datei vor destruktiver Bearbeitung.
      * Pro Datei nur 1× pro Tag (überschreibt nicht bei mehrfacher Änderung).
      */
-    private function erstelleBackup(string $fullPath): void
+    private function erstelleBackup(string $fullPath, Tree $tree): void
     {
-        $dataDir = \Fisharebest\Webtrees\Webtrees::DATA_DIR;
-        $mediaBase = realpath($dataDir . 'media') ?: '';
+        // Frueher standen hier das Datenverzeichnis und der Ordnername 'media'
+        // fest im Code. Wer seinen Medienordner anders nennt oder sein
+        // Datenverzeichnis verschoben hat, bei dem schlug die Pruefung fehl -
+        // und dann wurde EXIF geschrieben, ohne dass vorher gesichert wurde.
+        // Still, ohne Meldung.
+        $dataDir   = MedienPfad::datenverzeichnis();
+        $mediaBase = realpath(MedienPfad::wurzel($tree)) ?: '';
         $realPath  = realpath($fullPath) ?: '';
         if ($mediaBase === '' || $realPath === '' || !str_starts_with($realPath, $mediaBase)) {
             return; // außerhalb media/ – kein Backup

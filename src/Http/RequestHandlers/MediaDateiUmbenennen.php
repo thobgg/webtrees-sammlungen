@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Sammlungen\Http\RequestHandlers;
 
+use Sammlungen\Service\MedienPfad;
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\DB;
 use Fisharebest\Webtrees\Validator;
@@ -49,7 +50,7 @@ final class MediaDateiUmbenennen implements RequestHandlerInterface
             return $this->json(['ok' => false, 'fehler' => 'Ungültiger Dateiname.'], 400);
         }
 
-        $mediaBase = Webtrees::DATA_DIR . $tree->getPreference('MEDIA_DIRECTORY', 'media/');
+        $mediaBase = MedienPfad::wurzel($tree);
         $altVoll   = realpath($mediaBase . $altPfad);
         $realBase  = realpath($mediaBase);
 

@@ -8,6 +8,7 @@ use Sammlungen\Dto\SammlungDto;
 use Sammlungen\Repository\SammlungenRepository;
 use Sammlungen\Service\CollectionService;
 use Sammlungen\Service\ExifService;
+use Sammlungen\Service\MedienPfad;
 use Sammlungen\SammlungenModule;
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\I18N;
@@ -315,7 +316,7 @@ final class SammlungenViewModel
         $seite    = min($seite, $seiten);
         $pfade    = $this->collectionService->pfadeDerSammlung($tree, $s->id, ($seite - 1) * $perSeite, $perSeite);
 
-        $mediaBase = Webtrees::DATA_DIR . $tree->getPreference('MEDIA_DIRECTORY', 'media/');
+        $mediaBase = MedienPfad::wurzel($tree);
 
         $bilder = [];
         foreach ($pfade as $eintrag) {
@@ -404,7 +405,7 @@ final class SammlungenViewModel
             static fn ($d) => in_array($d['format'], ['jpg', 'jpeg', 'png', 'gif', 'webp'], true)
         ));
 
-        $mediaBase = Webtrees::DATA_DIR . $tree->getPreference('MEDIA_DIRECTORY', 'media/');
+        $mediaBase = MedienPfad::wurzel($tree);
         foreach ($bilder as &$bild) {
             $bild['exif'] = $this->exifService->leseMeta($mediaBase . $bild['pfad']);
         }

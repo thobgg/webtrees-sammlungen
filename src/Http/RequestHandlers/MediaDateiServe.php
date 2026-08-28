@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Sammlungen\Http\RequestHandlers;
 
 use Fig\Http\Message\StatusCodeInterface;
+use Sammlungen\Service\MedienPfad;
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Validator;
@@ -105,7 +106,7 @@ final class MediaDateiServe implements RequestHandlerInterface
         $pfad = preg_replace('/\.\.+/', '', $pfad) ?? '';
         $pfad = ltrim($pfad, '/');
 
-        $mediaBase = Webtrees::DATA_DIR . $tree->getPreference('MEDIA_DIRECTORY', 'media/');
+        $mediaBase = MedienPfad::wurzel($tree);
         $fullPath  = $mediaBase . $pfad;
 
         $realBase = realpath($mediaBase);
