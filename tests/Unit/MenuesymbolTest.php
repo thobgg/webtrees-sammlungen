@@ -72,4 +72,41 @@ final class MenuesymbolTest extends TestCase
         self::assertFileExists($wurzel . '/resources/menu-icon.svg');
         self::assertStringContainsString('menu-icon.svg', self::quelle());
     }
+
+    /**
+     * Ein Aufklappmenue klappt beim Klick auf, statt zu springen - ohne einen
+     * eigenen Eintrag waere der kurze Weg zur Galerie verloren. Und der Eintrag
+     * heisst nicht noch einmal "Collections", sonst stuende dasselbe Wort
+     * zweimal fast gleich untereinander.
+     */
+    public function testUntermenueBehaeltDenWegZurGalerie(): void
+    {
+        $quelle = self::quelle();
+
+        self::assertStringContainsString("I18N::translate('Overview')", $quelle);
+        self::assertStringContainsString("I18N::translate('Manage collections')", $quelle);
+        self::assertStringContainsString("I18N::translate('Settings')", $quelle);
+    }
+
+    /** Nur Verwalter bekommen das Aufklappmenue; fuer alle anderen ein Klick. */
+    public function testNurVerwalterBekommenDasUntermenue(): void
+    {
+        self::assertMatchesRegularExpression(
+            '/if \(!Auth::isAdmin\(\)\) \{\s*return new Menu\(/',
+            self::quelle(),
+            'Das Untermenue erscheint auch fuer normale Mitglieder.'
+        );
+    }
+
+    /**
+     * Im Aufklappmenue fuehren die Kernmenues kleinere Symbole - und Colors und
+     * Clouds gar keine. Gemessen an der Instanz.
+     */
+    public function testUntermenueSymboleNurWoDasThemeWelcheHat(): void
+    {
+        $groessen = (new ReflectionClass(SammlungenModule::class))
+            ->getConstant('SYMBOLGROESSE_UNTERMENUE');
+
+        self::assertSame(['webtrees' => 24, 'xenea' => 22], $groessen);
+    }
 }

@@ -9,6 +9,18 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+### Hinzugefügt
+- **Verwaltung direkt aus dem Menü erreichbar** (Issue #23, vorgeschlagen von
+  **@ro-la**). Für Administratoren klappt der Menüpunkt jetzt auf: Übersicht,
+  Sammlungen verwalten, Einstellungen. Bisher führte der Weg dorthin nur über
+  die Schaltfläche auf der Übersichtsseite oder über die Steuerleiste.
+
+  Für alle anderen bleibt es ein einzelner Verweis – ein Klick, Galerie. Ein
+  Aufklappmenü kostet dort einen Handgriff und bringt nichts. Die Übersicht
+  steht deshalb auch als erster Untereintrag drin: ein Menü mit Untereinträgen
+  klappt beim Klick auf, statt zu springen, sonst wäre der kurze Weg zur
+  Galerie verloren.
+
 ## [1.4.1] – 2026-08-27
 
 Ein Anzeigefehler, gemeldet von **@ro-la** – und weil Meldungen selten kommen,

@@ -465,3 +465,6 @@ msgid "%s of them is a media object in webtrees"
 msgid_plural "%s of them are media objects in webtrees"
 msgstr[0] "%s of them is a media object in webtrees"
 msgstr[1] "%s of them are media objects in webtrees"
+
+msgid "Overview"
+msgstr "Overview"

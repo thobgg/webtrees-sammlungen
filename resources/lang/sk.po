@@ -474,3 +474,6 @@ msgid_plural "%s of them are media objects in webtrees"
 msgstr[0] "%s z nich je mediálny objekt vo webtrees"
 msgstr[1] "%s z nich sú mediálne objekty vo webtrees"
 msgstr[2] "%s z nich je mediálnych objektov vo webtrees"
+
+msgid "Overview"
+msgstr "Prehľad"

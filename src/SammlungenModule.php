@@ -166,6 +166,18 @@ class SammlungenModule extends AbstractModule implements
     ];
 
     /**
+     * Dasselbe fuer die Eintraege im Aufklappmenue - dort sind die Symbole
+     * kleiner, und nicht jedes Theme hat ueberhaupt welche. Colors und Clouds
+     * zeigen im Untermenue keine; dort bleibt es auch bei uns dabei.
+     *
+     * @var array<string,int>
+     */
+    private const SYMBOLGROESSE_UNTERMENUE = [
+        'webtrees' => 24,
+        'xenea'    => 22,
+    ];
+
+    /**
      * Menuesymbol, das sich dem Theme fuegt statt es zu ueberstimmen.
      *
      * Vorher stand hier ein auf 50 Pixel skaliertes Foto, eingesetzt ueber
@@ -202,6 +214,20 @@ class SammlungenModule extends AbstractModule implements
                 . 'background:url("' . $symbol . '") center/contain no-repeat}';
         }
 
+        // Eintraege im Aufklappmenue: dort fuehren die Kernmenues ein kleineres
+        // Symbol, und ohne eines steht unser Untermenue als nackter Text neben
+        // bebilderten - das sieht nach Halbfertigem aus.
+        $unten = '.menu-sammlungen .dropdown-item::before';
+        $css .= $unten . '{content:none}';
+
+        foreach (self::SYMBOLGROESSE_UNTERMENUE as $theme => $px) {
+            $css .= '.wt-theme-' . $theme . ' ' . $unten . '{'
+                . 'content:"";display:inline-block;vertical-align:middle;'
+                . 'margin-inline-end:.5rem;'
+                . 'width:' . $px . 'px;height:' . $px . 'px;'
+                . 'background:url("' . $symbol . '") center/contain no-repeat}';
+        }
+
         return '<style>' . $css . '</style>';
     }
 
@@ -212,11 +238,53 @@ class SammlungenModule extends AbstractModule implements
             return null;
         }
 
+        $galerie = route('sammlungen.sammlungen', ['tree' => $tree->name()]);
+
+        // Für alle anderen bleibt es ein einzelner Verweis: ein Klick, Galerie.
+        // Ein Aufklappmenü kostet dort einen Handgriff und bringt nichts.
+        if (!Auth::isAdmin()) {
+            return new Menu(
+                I18N::translate('Collections'),
+                $galerie,
+                'menu-sammlungen',
+                ['rel' => 'nofollow'],
+            );
+        }
+
+        // Verwalter kamen bisher nur über die Schaltfläche auf der Übersicht in
+        // die Verwaltung oder über die Steuerleiste. Als Aufklappmenü ist sie
+        // von jeder Seite aus erreichbar.
+        //
+        // Die Galerie steht dabei als erster Eintrag drin: ein Menü mit
+        // Untereinträgen klappt beim Klick auf, statt zu springen - ohne sie
+        // wäre der kurze Weg zur Galerie verloren.
         return new Menu(
             I18N::translate('Collections'),
-            route('sammlungen.sammlungen', ['tree' => $tree->name()]),
+            $galerie,
             'menu-sammlungen',
             ['rel' => 'nofollow'],
+            [
+                // Nicht noch einmal "Sammlungen": der Eintrag stuende dann
+                // zweimal fast gleich untereinander.
+                new Menu(
+                    I18N::translate('Overview'),
+                    $galerie,
+                    'menu-sammlungen-galerie',
+                    ['rel' => 'nofollow'],
+                ),
+                new Menu(
+                    I18N::translate('Manage collections'),
+                    route('sammlungen.admin.sammlungen', ['tree' => $tree->name()]),
+                    'menu-sammlungen-verwalten',
+                    ['rel' => 'nofollow'],
+                ),
+                new Menu(
+                    I18N::translate('Settings'),
+                    route('sammlungen.admin.config'),
+                    'menu-sammlungen-einstellungen',
+                    ['rel' => 'nofollow'],
+                ),
+            ],
         );
     }
 
