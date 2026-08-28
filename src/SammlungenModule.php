@@ -280,7 +280,9 @@ class SammlungenModule extends AbstractModule implements
                 ),
                 new Menu(
                     I18N::translate('Settings'),
-                    route('sammlungen.admin.config'),
+                    // Der Baum wird mitgegeben, damit die baumuebergreifende
+                    // Seite einen Rueckweg genau hierher anbieten kann.
+                    route('sammlungen.admin.config', ['tree' => $tree->name()]),
                     'menu-sammlungen-einstellungen',
                     ['rel' => 'nofollow'],
                 ),

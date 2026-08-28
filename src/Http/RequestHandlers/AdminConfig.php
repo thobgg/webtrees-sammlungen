@@ -11,6 +11,8 @@ use Fisharebest\Webtrees\Http\Exceptions\HttpAccessDeniedException;
 use Fisharebest\Webtrees\Http\ViewResponseTrait;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Services\TreeService;
+use Fisharebest\Webtrees\Tree;
+use Fisharebest\Webtrees\Validator;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -49,18 +51,42 @@ class AdminConfig implements RequestHandlerInterface
             return $this->save($request);
         }
 
-        return $this->showForm();
+        return $this->showForm($request);
     }
 
-    private function showForm(): ResponseInterface
+    /**
+     * Der Baum, aus dem der Aufruf kam - oder null.
+     *
+     * Die Einstellungen gelten baumuebergreifend, die Route kennt deshalb
+     * keinen Baum. Wer aus dem Menue eines Baums kommt, gibt ihn als
+     * Abfrageparameter mit, damit die Seite einen Rueckweg genau in dessen
+     * Galerie anbieten kann. Nachgeschlagen wird gegen die vorhandenen
+     * Baeume - ein erfundener Name fuehrt zu keinem Verweis, nicht zu einem
+     * falschen.
+     */
+    private function baumAusDerAnfrage(ServerRequestInterface $request): ?Tree
+    {
+        $name = Validator::queryParams($request)->string('tree', '');
+
+        return $name === '' ? null : $this->treeService->all()->get($name);
+    }
+
+    private function showForm(ServerRequestInterface $request): ResponseInterface
     {
         // Alle vorhandenen Bäume – für den "Sammlungen verwalten"-Link in der View.
         $trees = $this->treeService->all();
+        $baum  = $this->baumAusDerAnfrage($request);
 
         return $this->viewResponse(
             '_sammlungen_::admin-config',
             [
                 'title'         => I18N::translate('Collections – settings'),
+                'zurueck'       => $baum === null
+                    ? ''
+                    : route('sammlungen.sammlungen', ['tree' => $baum->name()]),
+                'formularZiel'  => $baum === null
+                    ? route('sammlungen.admin.config')
+                    : route('sammlungen.admin.config', ['tree' => $baum->name()]),
                 'module'        => $this->module,
                 'cacheTtl'      => $this->module->cacheTtl(),
                 'perPage'       => $this->module->perPage(),
@@ -82,6 +108,10 @@ class AdminConfig implements RequestHandlerInterface
 
         $this->cache->flush();
 
-        return redirect(route('sammlungen.admin.config'));
+        $baum = $this->baumAusDerAnfrage($request);
+
+        return redirect($baum === null
+            ? route('sammlungen.admin.config')
+            : route('sammlungen.admin.config', ['tree' => $baum->name()]));
     }
 }

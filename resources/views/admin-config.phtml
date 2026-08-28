@@ -5,6 +5,8 @@
  * Route: GET /archiv/admin/config
  *
  * @var string                                           $title
+ * @var string                                           $zurueck
+ * @var string                                           $formularZiel
  * @var \Sammlungen\SammlungenModule             $module
  * @var int                                              $cacheTtl
  * @var int                                              $perPage
@@ -26,6 +28,14 @@ use Fisharebest\Webtrees\I18N;
 
     <h1><?= e($title) ?></h1>
 
+    <?php if ($zurueck !== '') : ?>
+        <p class="mb-3">
+            <a href="<?= e($zurueck) ?>" class="text-decoration-none">
+                ← <?= I18N::translate('Overview') ?>
+            </a>
+        </p>
+    <?php endif ?>
+
     <!-- APCu-Status -->
     <div class="alert alert-<?= $apcuAvailable ? 'success' : 'warning' ?> d-flex align-items-center gap-2 mb-4">
         <i class="fas <?= $apcuAvailable ? 'fa-check' : 'fa-exclamation-triangle' ?> fs-5"></i>
@@ -44,7 +54,7 @@ use Fisharebest\Webtrees\I18N;
     </div>
 
     <!-- Einstellungsformular -->
-    <form method="post" action="<?= e(route('sammlungen.admin.config')) ?>">
+    <form method="post" action="<?= e($formularZiel) ?>">
         <?= csrf_field() ?>
 
         <div class="card mb-4">
