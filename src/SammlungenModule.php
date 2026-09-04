@@ -156,13 +156,18 @@ class SammlungenModule extends AbstractModule implements
      * Themes, die keine Menuesymbole haben - minimal, F.A.B. und die meisten
      * fremden -, stehen absichtlich nicht in der Liste.
      *
+     * Fremde Themes heissen in der Body-Klasse wie ihr Modulordner, von
+     * webtrees in Unterstriche gesetzt: Rural (jon48) liegt in
+     * modules_v4/myartjaub_ruraltheme und wird zu wt-theme-_myartjaub_ruraltheme_.
+     *
      * @var array<string,int>
      */
     private const SYMBOLGROESSE = [
-        'webtrees' => 50,
-        'colors'   => 40,
-        'xenea'    => 28,
-        'clouds'   => 22,
+        'webtrees'               => 50,
+        'colors'                 => 40,
+        'xenea'                  => 28,
+        'clouds'                 => 22,
+        '_myartjaub_ruraltheme_' => 35,
     ];
 
     /**
@@ -173,8 +178,9 @@ class SammlungenModule extends AbstractModule implements
      * @var array<string,int>
      */
     private const SYMBOLGROESSE_UNTERMENUE = [
-        'webtrees' => 24,
-        'xenea'    => 22,
+        'webtrees'               => 24,
+        'xenea'                  => 22,
+        '_myartjaub_ruraltheme_' => 24,
     ];
 
     /**
@@ -203,9 +209,12 @@ class SammlungenModule extends AbstractModule implements
         $symbol = 'data:image/svg+xml;base64,' . base64_encode((string) file_get_contents($pfad));
         $klasse = '.menu-sammlungen .nav-link::before';
 
-        // Grundzustand: kein Symbol. Wer ein Theme ohne Menuesymbole benutzt,
-        // sieht auch bei uns keines.
-        $css = $klasse . '{content:none}';
+        // Kein Grundzustand "kein Inhalt": ohne Regel zeichnet der Browser
+        // auch nichts, Themes ohne Menuesymbole bleiben also sauber. Ein
+        // ausdrueckliches "kein Symbol" haette aber Vorrang vor den generischen
+        // Ersatzsymbolen, die manche Themes (Rural) jedem fremden Menue geben -
+        // dann stuende unser Eintrag als einziger ohne Symbol in der Leiste.
+        $css = '';
 
         foreach (self::SYMBOLGROESSE as $theme => $px) {
             $css .= '.wt-theme-' . $theme . ' ' . $klasse . '{'
@@ -218,7 +227,6 @@ class SammlungenModule extends AbstractModule implements
         // Symbol, und ohne eines steht unser Untermenue als nackter Text neben
         // bebilderten - das sieht nach Halbfertigem aus.
         $unten = '.menu-sammlungen .dropdown-item::before';
-        $css .= $unten . '{content:none}';
 
         foreach (self::SYMBOLGROESSE_UNTERMENUE as $theme => $px) {
             $css .= '.wt-theme-' . $theme . ' ' . $unten . '{'

@@ -20,6 +20,8 @@ use Sammlungen\SammlungenModule;
  *
  * Am Geraet gemessen, Groesse der Symbole des jeweiligen Themes:
  * webtrees 50, Colors 40, Xenea 28, Clouds 22, minimal und F.A.B. keine.
+ * Rural (jon48, Ordner myartjaub_ruraltheme) aus dessen Quellen: 35 im Menue,
+ * 24 im Aufklappmenue.
  */
 final class MenuesymbolTest extends TestCase
 {
@@ -39,10 +41,16 @@ final class MenuesymbolTest extends TestCase
         self::assertStringContainsString('background:url(', $quelle);
     }
 
-    /** Wer ein Theme ohne Menuesymbole benutzt, soll auch bei uns keines sehen. */
-    public function testGrundzustandIstOhneSymbol(): void
+    /**
+     * Kein ausdrueckliches "kein Symbol" als Grundzustand. Ohne Regel zeichnet
+     * der Browser ohnehin nichts - Themes ohne Symbole bleiben sauber. Ein
+     * `content:none` haette aber Vorrang vor den generischen Ersatzsymbolen,
+     * die Rural (jon48) jedem fremden Menue gibt: dort stand unser Eintrag als
+     * einziger ohne Symbol in der Leiste (Rueckmeldung von Bernat Banyuls).
+     */
+    public function testKeinGrundzustandDerFremdeErsatzsymboleUeberstimmt(): void
     {
-        self::assertMatchesRegularExpression('/\{content:none\}/', self::quelle());
+        self::assertStringNotContainsString('content:none', self::quelle());
     }
 
     /** Je Theme dessen eigene Groesse - die Zahlen stammen aus deren CSS. */
@@ -53,7 +61,7 @@ final class MenuesymbolTest extends TestCase
         $groessen = $reflexion->getConstant('SYMBOLGROESSE');
 
         self::assertSame(
-            ['webtrees' => 50, 'colors' => 40, 'xenea' => 28, 'clouds' => 22],
+            ['webtrees' => 50, 'colors' => 40, 'xenea' => 28, 'clouds' => 22, '_myartjaub_ruraltheme_' => 35],
             $groessen
         );
     }
@@ -107,6 +115,6 @@ final class MenuesymbolTest extends TestCase
         $groessen = (new ReflectionClass(SammlungenModule::class))
             ->getConstant('SYMBOLGROESSE_UNTERMENUE');
 
-        self::assertSame(['webtrees' => 24, 'xenea' => 22], $groessen);
+        self::assertSame(['webtrees' => 24, 'xenea' => 22, '_myartjaub_ruraltheme_' => 24], $groessen);
     }
 }

@@ -9,6 +9,26 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+Zwei Rückmeldungen von Bernat Banyuls, per Mail statt als Issue.
+
+### Behoben
+- **Im Rural-Theme (jon48) fehlte das Menüsymbol ganz.** Rural gibt jedem
+  Menü ohne eigenes Symbol ein generisches – mit einer Regel ohne Gewicht, die
+  jede andere überstimmt. Unsere Grundregel „kein Symbol“ für unbekannte Themes
+  tat genau das: alle Menüs hatten ein Symbol, nur unseres nicht. Die Grundregel
+  ist gestrichen – ohne Regel zeichnet der Browser ohnehin nichts, Themes ohne
+  Symbole bleiben also sauber – und Rural steht mit seinen Maßen (35 Pixel im
+  Menü, 24 im Aufklappmenü) in der Größentabelle, sodass dort unser Symbol
+  erscheint statt des generischen.
+
+### Geändert
+- **Thematische Sammlungen ohne gestrichelten Rand.** Der gestrichelte Rahmen
+  sollte sie von den Ordner-Sammlungen abheben, wurde aber als „noch nicht
+  fertig eingerichtet“ gelesen – gestrichelt heißt im Web fast überall
+  Platzhalter. Jetzt tragen sie denselben Farbbalken links wie die
+  Ordner-Sammlungen; die Unterscheidung leistet die Überschrift mit der
+  Reißzwecke.
+
 ## [1.5.0] – 2026-08-28
 
 **Vier Anregungen aus Issue #23 von @ro-la** – die erste Rückmeldung, die nicht
