@@ -9,7 +9,11 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
-Zwei Rückmeldungen von Bernat Banyuls, per Mail statt als Issue.
+## [1.5.1] – 2026-09-04
+
+**Zwei Rückmeldungen von Bernat Banyuls**, per Mail statt als Issue – und
+als eigenes kleines Release, weil die erste davon in v1.5.0 ein Symbol
+verschwinden lässt, das vorher wenigstens da war.
 
 ### Behoben
 - **Im Rural-Theme (jon48) fehlte das Menüsymbol ganz.** Rural gibt jedem
