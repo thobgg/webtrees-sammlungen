@@ -117,7 +117,7 @@ The largest remaining border isn't the module's, it's the browser's: a web page
 cannot hide the address bar, only ask for full screen – and every entry into it
 is announced by a notice no script can switch off. Measured, the browser bars
 cost about 86 of 384 pixels of height in landscape. An installed shell doesn't
-have that problem; [WebtreesAnd](https://github.com/thobgg/WebtreesAnd) (same
+have that problem; [WebtreesAnd-wrapper](https://github.com/thobgg/WebtreesAnd-wrapper) (same
 author, GPL) is one: a WebView around your own instance with the status and
 navigation bars permanently hidden, a swipe from the edge brings them back. It
 isn't required – the module works fully in a browser.
