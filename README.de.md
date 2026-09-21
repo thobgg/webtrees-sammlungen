@@ -103,7 +103,7 @@ Adressleiste lässt sich aus einer Webseite heraus nicht ausblenden, nur über d
 Vollbild-API – und die quittiert jedes Betreten mit einem Hinweis, den kein
 Skript abschalten kann. Gemessen kosten die Browserleisten quer rund 86 von 384
 Pixeln Höhe. Eine installierte Hülle hat das Problem nicht;
-[WebtreesAnd-wrapper](https://github.com/thobgg/WebtreesAnd-wrapper) (vom selben Autor, GPL) ist
+[wtAnd-wrapper](https://github.com/thobgg/wtAnd-wrapper) (vom selben Autor, GPL) ist
 so eine: ein WebView um die eigene Instanz, Status- und Navigationsleiste
 dauerhaft ausgeblendet, ein Wischen vom Rand holt sie zurück. Nötig ist das
 nicht – das Modul funktioniert im Browser vollständig.
