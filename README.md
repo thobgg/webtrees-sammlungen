@@ -290,6 +290,8 @@ All URLs live under `/tree/{tree}/archiv/…`:
 | `sammlungen.media-datei` | `/media-datei` | GET |
 | `sammlungen.api.sammlungen` | `/api/sammlungen` | GET (JSON) |
 | `sammlungen.api.sammlung` | `/api/sammlung?kategorie=slug` | GET (JSON) |
+| `sammlungen.api.hochladen` | `/api/hochladen` | POST (JSON) |
+| `sammlungen.api.exif` | `/api/exif` | POST (JSON) |
 | `sammlungen.admin.sammlungen` | `/admin/sammlungen` | GET |
 | `sammlungen.admin.sammlungen.edit` | `/admin/sammlungen/edit` | POST |
 | `sammlungen.admin.sammlungen.toggle-aktiv` | `/admin/sammlungen/toggle-aktiv` | POST |
@@ -297,31 +299,21 @@ All URLs live under `/tree/{tree}/archiv/…`:
 
 ## Interface for apps
 
-Two read-only routes deliver the archive as JSON – the same data as the
-gallery, from the same preparation. Made for the Android app
-[wtAnd](https://github.com/thobgg/wtAnd), open to any client that comes with
-the session cookie of a tree member. There is nothing to set up; whoever may
-see the gallery may call the interface.
+JSON routes under `/tree/{tree}/archiv/api/`, made for [wtAnd](https://github.com/thobgg/wtAnd).
+Access with the session cookie, permissions as in the gallery; every answer carries `api` (level, currently 2),
+`modul` and `baum`. Field names are German.
 
-| Call | returns |
+| Call | |
 |---|---|
-| `GET /tree/{tree}/archiv/api/sammlungen` | the overview: `sammlungen` (folder collections, thematic collections and collections by media type, each with `slug`, `art`, `name`, `farbe`, `icon`, `ansicht`, `anzahl` and up to three `vorschau` URLs), `unverknuepft` (media objects without an individual or family, by type) and `frei` (files that appear nowhere in the tree, per folder) |
-| `GET /tree/{tree}/archiv/api/sammlung?kategorie=<slug>` | the entries of one collection, paged (`seite`, `pro_seite`): per entry path, file name, format, webtrees title and linked individuals, EXIF description, date and keywords, plus ready-made URLs `kachel` (400 px), `vollbild` (1600 px) and `original`. Unlinked media: `kategorie=__unlinked__&typ=<media type>` |
+| `GET …/sammlungen` | overview: collections with previews, unlinked media, free holdings, `darfHochladen`, `darfExif`, `ordnerListe` |
+| `GET …/sammlung?kategorie=<slug>&seite=&pro_seite=` | entries of a collection with URLs for tile, full size and original; `kategorie=__unlinked__&typ=` for unlinked media |
+| `POST …/hochladen` (multipart) | store `file` in `ordner` – as a file, not a media object; `beschreibung`, `datum`, `personen`, `keywords` as EXIF, `sammlung` assigns. Anyone allowed to upload in webtrees |
+| `POST …/exif` | write `beschreibung`, `datum`, `personen`, `keywords` into `pfad`. Managers only |
 
-Every answer carries `api` (level of the interface, currently 1), `modul`
-(version) and `baum`. When the level rises, fields are added; existing ones
-stay. `pro_seite` and `lang` (language of the labels, e.g. `de` or `en-GB`)
-apply to that one answer only and are not remembered for the user – the
-choice the same user made in the browser is left alone. Anyone not signed in
-or not a member of the tree gets `{"ok":false,"error":"not-logged-in"}` or
-`"not-member"` with status 403 instead of the login page; an unknown
-collection answers 404. If the module is missing, webtrees answers with its
-own 404 page – that is how an app tells there is no archive here.
-
-Images of media objects are served by webtrees itself (with its privacy rules
-and watermarks), files without a media object by the module's `media-datei`
-route, resized on request (`w`). Field names are German, like the rest of
-the module.
+POST needs the session's CSRF token (`X-CSRF-TOKEN`). `pro_seite` and `lang` apply to that answer only.
+Errors: `{"ok":false,"error":"…"}` with 403 (`not-logged-in`, `not-member`, `upload-not-allowed`, `not-manager`),
+404 (`unknown-collection`, `folder-not-found`, `file-not-found`), 400 (`bad-filename`, `blocked-extension`,
+`bad-date`, `not-image`) or 500 (`exif-failed`). Existing files are never overwritten (`foto-2.jpg`).
 
 ## Data model
 

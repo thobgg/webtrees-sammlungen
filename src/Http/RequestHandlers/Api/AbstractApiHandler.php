@@ -53,9 +53,9 @@ abstract class AbstractApiHandler implements RequestHandlerInterface
     abstract protected function antworten(ServerRequestInterface $request, Tree $tree): ResponseInterface;
 
     /** @param array<string,mixed> $daten */
-    protected function json(array $daten): ResponseInterface
+    protected function json(array $daten, int $status = StatusCodeInterface::STATUS_OK): ResponseInterface
     {
-        return response($daten, StatusCodeInterface::STATUS_OK, ['Cache-Control' => 'private, no-store']);
+        return response($daten, $status, ['Cache-Control' => 'private, no-store']);
     }
 
     protected function fehler(int $status, string $code): ResponseInterface

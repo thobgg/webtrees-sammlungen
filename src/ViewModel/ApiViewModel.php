@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Sammlungen\ViewModel;
 
+use Fisharebest\Webtrees\Auth;
+use Fisharebest\Webtrees\DB;
 use Fisharebest\Webtrees\Http\RequestHandlers\MediaPage;
 use Fisharebest\Webtrees\Media;
 use Fisharebest\Webtrees\MediaFile;
@@ -127,10 +129,18 @@ final class ApiViewModel
             $jeOrdner[] = ['ordner' => (string) $ordner, 'anzahl' => (int) $anzahl];
         }
 
+        // Was dieser Nutzer schreiben darf - die App zeigt Knoepfe nur, wo der Server sie annaehme.
+        $user          = Auth::user();
+        $darfHochladen = Auth::canUploadMedia($tree, $user);
+
         return $this->kopf($tree) + [
-            'proSeite'     => $this->module->perPage(),
-            'galerie'      => route('sammlungen.sammlungen', ['tree' => $tree->name()]),
-            'sammlungen'   => $sammlungen,
+            'proSeite'      => $this->module->perPage(),
+            'galerie'       => route('sammlungen.sammlungen', ['tree' => $tree->name()]),
+            'darfHochladen' => $darfHochladen,
+            'darfExif'      => Auth::isManager($tree, $user),
+            // Ziele fuer das Hochladen: die Unterordner des Medienordners; der Hauptordner ist immer moeglich.
+            'ordnerListe'   => $darfHochladen ? $this->collectionService->verfuegbareOrdner($tree) : [],
+            'sammlungen'    => $sammlungen,
             'unverknuepft' => $unverknuepft,
             'frei'         => [
                 'gesamt'   => (int) $frei['gesamt'],
@@ -340,6 +350,43 @@ final class ApiViewModel
     // ---------------------------------------------------------------
     // Eintraege
     // ---------------------------------------------------------------
+
+    /**
+     * Ein einzelner Eintrag fuer eine Datei des Medienordners - die Antwort nach dem Hochladen oder Schreiben,
+     * in derselben Form wie in einer Sammlung, damit die App ihn direkt einreihen kann.
+     *
+     * @return array<string,mixed>
+     */
+    public function eintrag(Tree $tree, string $pfad): array
+    {
+        $mId = DB::table('media_file')
+            ->where('m_file', '=', $tree->id())
+            ->where('multimedia_file_refn', '=', $pfad)
+            ->value('m_id');
+        $mId = $mId !== null ? (string) $mId : null;
+
+        $datei = [
+            'pfad'   => $pfad,
+            'datei'  => basename($pfad),
+            'format' => strtolower(pathinfo($pfad, PATHINFO_EXTENSION)),
+            'm_id'   => $mId,
+            'titel'  => '',
+            'exif'   => $this->exifService->leseMeta(MedienPfad::wurzel($tree) . $pfad),
+            'in_sammlungen' => $this->collectionService->sammlungenFuerPfade($tree, [$pfad])[$pfad] ?? [],
+        ];
+
+        if ($mId !== null) {
+            $wt = $this->collectionService->webtreesDatenFuerMediaIds($tree, [$mId])[$mId] ?? null;
+
+            if ($wt !== null) {
+                $datei['personen_gesamt'] = count($wt['personen']);
+                $wt['personen']           = array_slice($wt['personen'], 0, SammlungenViewModel::MAX_PERSONEN_JE_BILD);
+                $datei['wt']              = $wt;
+            }
+        }
+
+        return $this->pfadEintraege($tree, [$datei], $this->slugsJeId($tree))[0];
+    }
 
     /**
      * Eintraege aus Dateien des Medienordners - mit oder ohne Medienobjekt.

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Sammlungen;
 
+use Sammlungen\Http\RequestHandlers\Api\ApiExif;
+use Sammlungen\Http\RequestHandlers\Api\ApiHochladen;
 use Sammlungen\Http\RequestHandlers\Api\ApiSammlung;
 use Sammlungen\Http\RequestHandlers\Api\ApiSammlungen;
 use Sammlungen\Http\RequestHandlers\AdminConfig;
@@ -57,7 +59,7 @@ class SammlungenModule extends AbstractModule implements
      * neue Felder bekommt; bestehende Felder bleiben, damit eine aeltere App
      * mit einem neueren Modul weiterlaeuft.
      */
-    public const API_VERSION = 1;
+    public const API_VERSION = 2;
     public const SETTING_CACHE_TTL = 'cache_ttl';
     public const SETTING_PER_PAGE  = 'per_page';
     public const DEFAULT_CACHE_TTL = 900;
@@ -130,6 +132,11 @@ class SammlungenModule extends AbstractModule implements
         // App-Schnittstelle (wtAnd): dieselben Daten als JSON, nur lesend.
         $router->get('sammlungen.api.sammlungen', '/tree/{tree}/archiv/api/sammlungen', ApiSammlungen::class);
         $router->get('sammlungen.api.sammlung',   '/tree/{tree}/archiv/api/sammlung',   ApiSammlung::class);
+        // Stufe 2: schreiben - eine Datei ins Archiv legen, EXIF an einem Bild setzen (POST mit CSRF-Token).
+        $router->get('sammlungen.api.hochladen', '/tree/{tree}/archiv/api/hochladen', ApiHochladen::class)
+               ->allows('POST');
+        $router->get('sammlungen.api.exif',      '/tree/{tree}/archiv/api/exif',      ApiExif::class)
+               ->allows('POST');
         $router->get('sammlungen.exif-schreiben', '/tree/{tree}/archiv/exif-schreiben', ExifSchreiben::class)
                ->allows('POST');
         $router->get('sammlungen.datei-umbenennen', '/tree/{tree}/archiv/datei-umbenennen', MediaDateiUmbenennen::class)

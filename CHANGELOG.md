@@ -9,6 +9,22 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+### Neu
+- **Schnittstelle für Apps, Stufe 2: schreiben.** Zwei POST-Routen für
+  „unterwegs festhalten“ – ein Foto aus der Schublade abfotografieren, sagen
+  wer drauf ist, fertig:
+  `/tree/{tree}/archiv/api/hochladen` legt eine Datei in einem Ordner des
+  Medienordners ab, als Datei im Archiv, nicht als Medienobjekt; Beschreibung,
+  Datum und Personen gehen bei Bildern als EXIF/XMP mit, auf Wunsch wird die
+  Datei gleich einer thematischen Sammlung zugeordnet. Darf, wer in webtrees
+  Medien hochladen darf. `/tree/{tree}/archiv/api/exif` schreibt dieselben
+  Felder an eine vorhandene Bilddatei, mit der Regel der Lightbox: nur
+  Verwalter. Die Übersicht nennt jetzt, was der Nutzer darf (`darfHochladen`,
+  `darfExif`) und die Ordner, in die er hochladen kann (`ordnerListe`).
+  Anders als beim Hochladen in webtrees wird eine vorhandene Datei nicht
+  überschrieben und der Upload nicht still in den Hauptordner verschoben: der
+  Name bekommt eine Nummer, der Ordner bleibt. `api: 2`.
+
 ## [1.6.0] – 2026-09-22
 
 **Das Archiv kommt in die App.** Die Android-App [wtAnd](https://github.com/thobgg/wtAnd)

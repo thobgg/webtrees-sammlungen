@@ -290,6 +290,8 @@ Alle URLs sind unter `/tree/{tree}/archiv/…` erreichbar:
 | `sammlungen.media-datei` | `/media-datei` | GET |
 | `sammlungen.api.sammlungen` | `/api/sammlungen` | GET (JSON) |
 | `sammlungen.api.sammlung` | `/api/sammlung?kategorie=slug` | GET (JSON) |
+| `sammlungen.api.hochladen` | `/api/hochladen` | POST (JSON) |
+| `sammlungen.api.exif` | `/api/exif` | POST (JSON) |
 | `sammlungen.admin.sammlungen` | `/admin/sammlungen` | GET |
 | `sammlungen.admin.sammlungen.edit` | `/admin/sammlungen/edit` | POST |
 | `sammlungen.admin.sammlungen.toggle-aktiv` | `/admin/sammlungen/toggle-aktiv` | POST |
@@ -297,31 +299,21 @@ Alle URLs sind unter `/tree/{tree}/archiv/…` erreichbar:
 
 ## Schnittstelle für Apps
 
-Zwei lesende Routen liefern das Archiv als JSON – dieselben Daten wie die
-Galerie, aus derselben Aufbereitung. Gedacht für die Android-App
-[wtAnd](https://github.com/thobgg/wtAnd), offen für jeden Client, der mit dem
-Sitzungs-Cookie eines Baummitglieds kommt. Es gibt nichts einzurichten; wer
-die Galerie sehen darf, darf auch die Schnittstelle abrufen.
+JSON-Routen unter `/tree/{tree}/archiv/api/`, gedacht für [wtAnd](https://github.com/thobgg/wtAnd).
+Zugriff mit dem Sitzungs-Cookie, Rechte wie in der Galerie; jede Antwort trägt `api` (Stufe, derzeit 2),
+`modul` und `baum`. Feldnamen sind deutsch.
 
-| Aufruf | liefert |
+| Aufruf | |
 |---|---|
-| `GET /tree/{tree}/archiv/api/sammlungen` | die Übersicht: `sammlungen` (Ordner-Sammlungen, thematische Sammlungen und Sammlungen nach Medientyp, je mit `slug`, `art`, `name`, `farbe`, `icon`, `ansicht`, `anzahl` und bis zu drei `vorschau`-Adressen), `unverknuepft` (Medienobjekte ohne Person oder Familie, nach Typ) und `frei` (Dateien, die im Stammbaum nirgends auftauchen, je Ordner) |
-| `GET /tree/{tree}/archiv/api/sammlung?kategorie=<slug>` | die Einträge einer Sammlung, seitenweise (`seite`, `pro_seite`): je Eintrag Pfad, Dateiname, Format, webtrees-Titel und verknüpfte Personen, EXIF-Beschreibung, Datum und Schlagwörter sowie fertige Adressen `kachel` (400 px), `vollbild` (1600 px) und `original`. Nicht eingebundene Medien: `kategorie=__unlinked__&typ=<Medientyp>` |
+| `GET …/sammlungen` | Übersicht: Sammlungen mit Vorschau, nicht eingebundene Medien, freier Bestand, `darfHochladen`, `darfExif`, `ordnerListe` |
+| `GET …/sammlung?kategorie=<slug>&seite=&pro_seite=` | Einträge einer Sammlung mit Adressen für Kachel, Vollbild und Original; `kategorie=__unlinked__&typ=` für nicht eingebundene Medien |
+| `POST …/hochladen` (multipart) | `file` in `ordner` ablegen – als Datei, nicht als Medienobjekt; `beschreibung`, `datum`, `personen`, `keywords` als EXIF, `sammlung` ordnet zu. Wer in webtrees hochladen darf |
+| `POST …/exif` | `beschreibung`, `datum`, `personen`, `keywords` an `pfad` schreiben. Nur Verwalter |
 
-Jede Antwort trägt `api` (Stufe der Schnittstelle, derzeit 1), `modul`
-(Version) und `baum`. Steigt die Stufe, kommen Felder hinzu; bestehende
-bleiben. `pro_seite` und `lang` (Sprache der Bezeichnungen, etwa `de` oder
-`en-GB`) gelten nur für die eine Antwort und werden nicht beim Nutzer
-gemerkt – die Wahl, die derselbe Nutzer im Browser getroffen hat, bleibt
-unberührt. Wer nicht angemeldet oder kein Mitglied des Baums ist, bekommt
-statt der Anmeldeseite `{"ok":false,"error":"not-logged-in"}` bzw.
-`"not-member"` mit Status 403; eine unbekannte Sammlung antwortet mit 404.
-Fehlt das Modul, antwortet webtrees mit seiner eigenen 404-Seite – daran
-erkennt eine App, dass es hier kein Archiv gibt.
-
-Bilder aus Medienobjekten liefert webtrees selbst aus (mit seinen
-Datenschutzregeln und Wasserzeichen), Dateien ohne Medienobjekt die Route
-`media-datei` des Moduls, auf Wunsch verkleinert (`w`).
+POST braucht den CSRF-Token der Sitzung (`X-CSRF-TOKEN`). `pro_seite` und `lang` gelten nur für die Antwort.
+Fehler: `{"ok":false,"error":"…"}` mit 403 (`not-logged-in`, `not-member`, `upload-not-allowed`, `not-manager`),
+404 (`unknown-collection`, `folder-not-found`, `file-not-found`), 400 (`bad-filename`, `blocked-extension`,
+`bad-date`, `not-image`) oder 500 (`exif-failed`). Vorhandene Dateien werden nicht überschrieben (`foto-2.jpg`).
 
 ## Datenmodell
 
