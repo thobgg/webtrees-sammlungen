@@ -58,11 +58,17 @@ abstract class AbstractApiHandler implements RequestHandlerInterface
         return response($daten, $status, ['Cache-Control' => 'private, no-store']);
     }
 
+    /**
+     * Fehler kommen mit HTTP 200 und `ok:false`, der gemeinte Status steht im Feld `status` - dieselbe Konvention
+     * wie api4webtrees. Ein echter 4xx-Status kommt beim Client nicht als JSON an: der Webserver davor (nginx auf
+     * der Synology, geprueft 22.09.2026) ersetzt bei 4xx den Antworttext durch seine eigene Fehlerseite, und die
+     * App haelt HTML statt JSON fuer eine abgelaufene Sitzung.
+     */
     protected function fehler(int $status, string $code): ResponseInterface
     {
         return response(
             ['ok' => false, 'error' => $code, 'status' => $status],
-            $status,
+            StatusCodeInterface::STATUS_OK,
             ['Cache-Control' => 'private, no-store']
         );
     }
