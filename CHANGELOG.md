@@ -9,6 +9,16 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+## [1.7.1] – 2026-09-22
+
+### Behoben
+- **Fehler der App-Schnittstelle kamen auf der NAS als HTML an.** Die Routen
+  antworteten mit echten Statuscodes (403, 404, 400), und der nginx davor
+  ersetzt bei 4xx den Antworttext durch seine eigene Fehlerseite – das JSON
+  mit dem Fehlercode ging verloren, und wtAnd hielt jeden abgelehnten Upload
+  für eine abgelaufene Sitzung. Jetzt kommen Fehler wie bei api4webtrees mit
+  HTTP 200 und `ok:false`; der gemeinte Status steht im Feld `status`.
+
 ## [1.7.0] – 2026-09-22
 
 ### Neu

@@ -7,7 +7,7 @@
 | | |
 |---|---|
 | Modul-Name | `sammlungen` |
-| Version | 1.7.0 |
+| Version | 1.7.1 |
 | webtrees | 2.2.x |
 | PHP | 8.2 – 8.4 |
 | Lizenz | GPL-3.0-or-later |
@@ -311,9 +311,10 @@ Zugriff mit dem Sitzungs-Cookie, Rechte wie in der Galerie; jede Antwort trägt 
 | `POST …/exif` | `beschreibung`, `datum`, `personen`, `keywords` an `pfad` schreiben. Nur Verwalter |
 
 POST braucht den CSRF-Token der Sitzung (`X-CSRF-TOKEN`). `pro_seite` und `lang` gelten nur für die Antwort.
-Fehler: `{"ok":false,"error":"…"}` mit 403 (`not-logged-in`, `not-member`, `upload-not-allowed`, `not-manager`),
-404 (`unknown-collection`, `folder-not-found`, `file-not-found`), 400 (`bad-filename`, `blocked-extension`,
-`bad-date`, `not-image`) oder 500 (`exif-failed`). Vorhandene Dateien werden nicht überschrieben (`foto-2.jpg`).
+Fehler: `{"ok":false,"error":"…","status":…}` mit HTTP 200 (wie bei api4webtrees; ein echter 4xx-Status käme
+durch manche Webserver nicht als JSON an). Codes: `not-logged-in`, `not-member`, `upload-not-allowed`,
+`not-manager`, `unknown-collection`, `folder-not-found`, `file-not-found`, `bad-filename`, `blocked-extension`,
+`bad-date`, `not-image`, `exif-failed`. Vorhandene Dateien werden nicht überschrieben (`foto-2.jpg`).
 
 ## Datenmodell
 
