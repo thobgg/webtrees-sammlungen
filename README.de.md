@@ -7,7 +7,7 @@
 | | |
 |---|---|
 | Modul-Name | `sammlungen` |
-| Version | 1.7.1 |
+| Version | 1.8.0 |
 | webtrees | 2.2.x |
 | PHP | 8.2 – 8.4 |
 | Lizenz | GPL-3.0-or-later |
@@ -290,6 +290,7 @@ Alle URLs sind unter `/tree/{tree}/archiv/…` erreichbar:
 | `sammlungen.media-datei` | `/media-datei` | GET |
 | `sammlungen.api.sammlungen` | `/api/sammlungen` | GET (JSON) |
 | `sammlungen.api.sammlung` | `/api/sammlung?kategorie=slug` | GET (JSON) |
+| `sammlungen.api.eintrag` | `/api/eintrag?pfad=…` | GET (JSON) |
 | `sammlungen.api.hochladen` | `/api/hochladen` | POST (JSON) |
 | `sammlungen.api.exif` | `/api/exif` | POST (JSON) |
 | `sammlungen.admin.sammlungen` | `/admin/sammlungen` | GET |
@@ -300,13 +301,14 @@ Alle URLs sind unter `/tree/{tree}/archiv/…` erreichbar:
 ## Schnittstelle für Apps
 
 JSON-Routen unter `/tree/{tree}/archiv/api/`, gedacht für [wtAnd](https://github.com/thobgg/wtAnd).
-Zugriff mit dem Sitzungs-Cookie, Rechte wie in der Galerie; jede Antwort trägt `api` (Stufe, derzeit 2),
+Zugriff mit dem Sitzungs-Cookie, Rechte wie in der Galerie; jede Antwort trägt `api` (Stufe, derzeit 3),
 `modul` und `baum`. Feldnamen sind deutsch.
 
 | Aufruf | |
 |---|---|
 | `GET …/sammlungen` | Übersicht: Sammlungen mit Vorschau, nicht eingebundene Medien, freier Bestand, `darfHochladen`, `darfExif`, `ordnerListe` |
 | `GET …/sammlung?kategorie=<slug>&seite=&pro_seite=` | Einträge einer Sammlung mit Adressen für Kachel, Vollbild und Original; `kategorie=__unlinked__&typ=` für nicht eingebundene Medien |
+| `GET …/eintrag?pfad=<Datei>` | ein einzelner Eintrag in derselben Form, etwa zu einem Foto aus dem Stammbaum |
 | `POST …/hochladen` (multipart) | `file` in `ordner` ablegen – als Datei, nicht als Medienobjekt; `beschreibung`, `datum`, `personen`, `keywords` als EXIF, `sammlung` ordnet zu. Wer in webtrees hochladen darf |
 | `POST …/exif` | `beschreibung`, `datum`, `personen`, `keywords` an `pfad` schreiben. Nur Verwalter |
 

@@ -7,7 +7,7 @@
 | | |
 |---|---|
 | Module name | `sammlungen` |
-| Version | 1.7.1 |
+| Version | 1.8.0 |
 | webtrees | 2.2.x |
 | PHP | 8.2 – 8.4 |
 | License | GPL-3.0-or-later |
@@ -290,6 +290,7 @@ All URLs live under `/tree/{tree}/archiv/…`:
 | `sammlungen.media-datei` | `/media-datei` | GET |
 | `sammlungen.api.sammlungen` | `/api/sammlungen` | GET (JSON) |
 | `sammlungen.api.sammlung` | `/api/sammlung?kategorie=slug` | GET (JSON) |
+| `sammlungen.api.eintrag` | `/api/eintrag?pfad=…` | GET (JSON) |
 | `sammlungen.api.hochladen` | `/api/hochladen` | POST (JSON) |
 | `sammlungen.api.exif` | `/api/exif` | POST (JSON) |
 | `sammlungen.admin.sammlungen` | `/admin/sammlungen` | GET |
@@ -300,13 +301,14 @@ All URLs live under `/tree/{tree}/archiv/…`:
 ## Interface for apps
 
 JSON routes under `/tree/{tree}/archiv/api/`, made for [wtAnd](https://github.com/thobgg/wtAnd).
-Access with the session cookie, permissions as in the gallery; every answer carries `api` (level, currently 2),
+Access with the session cookie, permissions as in the gallery; every answer carries `api` (level, currently 3),
 `modul` and `baum`. Field names are German.
 
 | Call | |
 |---|---|
 | `GET …/sammlungen` | overview: collections with previews, unlinked media, free holdings, `darfHochladen`, `darfExif`, `ordnerListe` |
 | `GET …/sammlung?kategorie=<slug>&seite=&pro_seite=` | entries of a collection with URLs for tile, full size and original; `kategorie=__unlinked__&typ=` for unlinked media |
+| `GET …/eintrag?pfad=<file>` | a single entry in the same form, e.g. for a photo known from the tree |
 | `POST …/hochladen` (multipart) | store `file` in `ordner` – as a file, not a media object; `beschreibung`, `datum`, `personen`, `keywords` as EXIF, `sammlung` assigns. Anyone allowed to upload in webtrees |
 | `POST …/exif` | write `beschreibung`, `datum`, `personen`, `keywords` into `pfad`. Managers only |
 

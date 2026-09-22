@@ -9,6 +9,16 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+## [1.8.0] – 2026-09-22
+
+### Neu
+- **Schnittstelle für Apps, Stufe 3: ein Eintrag zu einer Datei.**
+  `GET /tree/{tree}/archiv/api/eintrag?pfad=…` liefert zu einer Datei im
+  Medienordner denselben Eintrag wie eine Sammlung – EXIF, Personen,
+  Adressen. Damit kann wtAnd ein Foto, das es aus dem Stammbaum oder einem
+  Profil kennt (api4webtrees 1.4 nennt dort den Pfad), vor dem Bearbeiten
+  lesen und dann wie ein Archivbild beschriften. `api: 3`.
+
 ## [1.7.1] – 2026-09-22
 
 ### Behoben
