@@ -9,6 +9,13 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+## [1.6.0] – 2026-09-22
+
+**Das Archiv kommt in die App.** Die Android-App [wtAnd](https://github.com/thobgg/wtAnd)
+soll zeigen, worum es dem Modul geht: die Fotos, die im Stammbaum an niemandem
+hängen. Dafür bekommt das Modul eine lesende Schnittstelle – bewusst hier und
+nicht in api4webtrees, damit kein Modul an den Tabellen eines anderen hängt.
+
 ### Neu
 - **Schnittstelle für Apps.** Zwei lesende Routen liefern das Archiv als JSON,
   gedacht für [wtAnd](https://github.com/thobgg/wtAnd), offen für jeden Client
