@@ -33,6 +33,14 @@ final class SammlungenViewModel
      */
     public const MAX_PERSONEN_JE_BILD = 25;
 
+    /**
+     * Im Dienst der App-Schnittstelle: dann merkt sich das ViewModel nichts
+     * beim Nutzer. Die App bestimmt Seitengroesse und Darstellung selbst und
+     * darf damit nicht die Wahl ueberschreiben, die derselbe Nutzer im
+     * Browser getroffen hat.
+     */
+    private bool $stumm = false;
+
     public function __construct(
         private readonly SammlungenRepository $sammlungenRepository,
         private readonly CollectionService    $collectionService,
@@ -116,6 +124,30 @@ final class SammlungenViewModel
 
 
     /**
+     * Dieselbe Aufbereitung fuer die App-Schnittstelle: Sammlung, Seite und
+     * Seitengroesse kommen aus dem Aufruf, und nichts davon wird beim Nutzer
+     * gemerkt. Alles andere - Zugriffsregeln, EXIF, Personen, Blaettern -
+     * bleibt die eine Fassung, die auch die Galerie zeigt.
+     *
+     * @return array<string,mixed>
+     */
+    public function fuerSchnittstelle(Tree $tree, string $kategorie, string $typ, int $seite, int $proSeite): array
+    {
+        $this->stumm = true;
+
+        try {
+            return $this->aufbauen($tree, [
+                'kategorie' => $kategorie,
+                'typ'       => $typ,
+                'seite'     => (string) $seite,
+                'pro_seite' => (string) $proSeite,
+            ]);
+        } finally {
+            $this->stumm = false;
+        }
+    }
+
+    /**
      * Eintraege je Seite - aus der Adresse, sonst aus der Merkung des Nutzers,
      * sonst die Einstellung des Moduls.
      *
@@ -173,7 +205,7 @@ final class SammlungenViewModel
     {
         $nutzer = Auth::user();
 
-        if ($nutzer->id() !== 0) {
+        if (!$this->stumm && $nutzer->id() !== 0) {
             $nutzer->setPreference('sammlungen-' . $name, $wert);
         }
     }

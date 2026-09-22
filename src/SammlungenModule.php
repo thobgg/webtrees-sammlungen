@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Sammlungen;
 
+use Sammlungen\Http\RequestHandlers\Api\ApiSammlung;
+use Sammlungen\Http\RequestHandlers\Api\ApiSammlungen;
 use Sammlungen\Http\RequestHandlers\AdminConfig;
 use Sammlungen\Http\RequestHandlers\AdminSammlungFotos;
 use Sammlungen\Http\RequestHandlers\AdminSammlungDelete;
@@ -49,6 +51,13 @@ class SammlungenModule extends AbstractModule implements
     use ModuleGlobalTrait;
 
     public const MODULE_NAME = '_sammlungen_';
+
+    /**
+     * Stufe der App-Schnittstelle (/archiv/api/...). Steigt, wenn eine Antwort
+     * neue Felder bekommt; bestehende Felder bleiben, damit eine aeltere App
+     * mit einem neueren Modul weiterlaeuft.
+     */
+    public const API_VERSION = 1;
     public const SETTING_CACHE_TTL = 'cache_ttl';
     public const SETTING_PER_PAGE  = 'per_page';
     public const DEFAULT_CACHE_TTL = 900;
@@ -117,6 +126,10 @@ class SammlungenModule extends AbstractModule implements
         // ── Öffentliche Seiten (mit {tree}) ──────────────────────────
         $router->get('sammlungen.sammlungen',   '/tree/{tree}/archiv/sammlungen',        SammlungenPage::class);
         $router->get('sammlungen.media-datei',  '/tree/{tree}/archiv/media-datei',       MediaDateiServe::class);
+
+        // App-Schnittstelle (wtAnd): dieselben Daten als JSON, nur lesend.
+        $router->get('sammlungen.api.sammlungen', '/tree/{tree}/archiv/api/sammlungen', ApiSammlungen::class);
+        $router->get('sammlungen.api.sammlung',   '/tree/{tree}/archiv/api/sammlung',   ApiSammlung::class);
         $router->get('sammlungen.exif-schreiben', '/tree/{tree}/archiv/exif-schreiben', ExifSchreiben::class)
                ->allows('POST');
         $router->get('sammlungen.datei-umbenennen', '/tree/{tree}/archiv/datei-umbenennen', MediaDateiUmbenennen::class)

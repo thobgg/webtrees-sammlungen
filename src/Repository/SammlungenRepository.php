@@ -154,7 +154,7 @@ class SammlungenRepository
         return DB::table('media_file AS mf')
             ->where('mf.m_file', '=', $tree->id())
             ->where('mf.source_media_type', '=', $typ)
-            ->whereIn('mf.multimedia_format', ['jpg', 'jpeg', 'png', 'gif', 'webp'])
+            ->whereIn('mf.multimedia_format', ['jpg', 'jpeg', 'png', 'gif', 'webp', 'JPG', 'JPEG', 'PNG', 'GIF', 'WEBP'])
             ->select('mf.m_id')
             ->groupBy('mf.m_id')
             ->orderByDesc('mf.m_id')
@@ -302,7 +302,7 @@ class SammlungenRepository
                 ->where('m.m_file', '=', $tree->id())
                 ->where('mf.multimedia_file_refn', 'NOT LIKE', 'http:%')
                 ->where('mf.multimedia_file_refn', 'NOT LIKE', 'https:%')
-                ->whereIn('mf.multimedia_format', ['jpg', 'jpeg', 'png', 'gif', 'webp'])
+                ->whereIn('mf.multimedia_format', ['jpg', 'jpeg', 'png', 'gif', 'webp', 'JPG', 'JPEG', 'PNG', 'GIF', 'WEBP'])
         );
 
         if ($typ !== '') {

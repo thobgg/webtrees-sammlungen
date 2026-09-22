@@ -288,10 +288,40 @@ Alle URLs sind unter `/tree/{tree}/archiv/…` erreichbar:
 | `sammlungen.exif-schreiben` | `/exif-schreiben` | POST |
 | `sammlungen.datei-umbenennen` | `/datei-umbenennen` | POST |
 | `sammlungen.media-datei` | `/media-datei` | GET |
+| `sammlungen.api.sammlungen` | `/api/sammlungen` | GET (JSON) |
+| `sammlungen.api.sammlung` | `/api/sammlung?kategorie=slug` | GET (JSON) |
 | `sammlungen.admin.sammlungen` | `/admin/sammlungen` | GET |
 | `sammlungen.admin.sammlungen.edit` | `/admin/sammlungen/edit` | POST |
 | `sammlungen.admin.sammlungen.toggle-aktiv` | `/admin/sammlungen/toggle-aktiv` | POST |
 | `sammlungen.admin.config` | `/admin/config` | POST |
+
+## Schnittstelle für Apps
+
+Zwei lesende Routen liefern das Archiv als JSON – dieselben Daten wie die
+Galerie, aus derselben Aufbereitung. Gedacht für die Android-App
+[wtAnd](https://github.com/thobgg/wtAnd), offen für jeden Client, der mit dem
+Sitzungs-Cookie eines Baummitglieds kommt. Es gibt nichts einzurichten; wer
+die Galerie sehen darf, darf auch die Schnittstelle abrufen.
+
+| Aufruf | liefert |
+|---|---|
+| `GET /tree/{tree}/archiv/api/sammlungen` | die Übersicht: `sammlungen` (Ordner-Sammlungen, thematische Sammlungen und Sammlungen nach Medientyp, je mit `slug`, `art`, `name`, `farbe`, `icon`, `ansicht`, `anzahl` und bis zu drei `vorschau`-Adressen), `unverknuepft` (Medienobjekte ohne Person oder Familie, nach Typ) und `frei` (Dateien, die im Stammbaum nirgends auftauchen, je Ordner) |
+| `GET /tree/{tree}/archiv/api/sammlung?kategorie=<slug>` | die Einträge einer Sammlung, seitenweise (`seite`, `pro_seite`): je Eintrag Pfad, Dateiname, Format, webtrees-Titel und verknüpfte Personen, EXIF-Beschreibung, Datum und Schlagwörter sowie fertige Adressen `kachel` (400 px), `vollbild` (1600 px) und `original`. Nicht eingebundene Medien: `kategorie=__unlinked__&typ=<Medientyp>` |
+
+Jede Antwort trägt `api` (Stufe der Schnittstelle, derzeit 1), `modul`
+(Version) und `baum`. Steigt die Stufe, kommen Felder hinzu; bestehende
+bleiben. `pro_seite` und `lang` (Sprache der Bezeichnungen, etwa `de` oder
+`en-GB`) gelten nur für die eine Antwort und werden nicht beim Nutzer
+gemerkt – die Wahl, die derselbe Nutzer im Browser getroffen hat, bleibt
+unberührt. Wer nicht angemeldet oder kein Mitglied des Baums ist, bekommt
+statt der Anmeldeseite `{"ok":false,"error":"not-logged-in"}` bzw.
+`"not-member"` mit Status 403; eine unbekannte Sammlung antwortet mit 404.
+Fehlt das Modul, antwortet webtrees mit seiner eigenen 404-Seite – daran
+erkennt eine App, dass es hier kein Archiv gibt.
+
+Bilder aus Medienobjekten liefert webtrees selbst aus (mit seinen
+Datenschutzregeln und Wasserzeichen), Dateien ohne Medienobjekt die Route
+`media-datei` des Moduls, auf Wunsch verkleinert (`w`).
 
 ## Datenmodell
 

@@ -937,7 +937,7 @@ class CollectionService
             })
             ->where('mf.m_file', '=', $tree->id())
             ->where('mf.multimedia_file_refn', 'LIKE', $ordner . '/%')
-            ->whereIn('mf.multimedia_format', ['jpg', 'jpeg', 'png', 'gif', 'webp'])
+            ->whereIn('mf.multimedia_format', ['jpg', 'jpeg', 'png', 'gif', 'webp', 'JPG', 'JPEG', 'PNG', 'GIF', 'WEBP'])
             ->groupBy('m.m_id')
             ->orderByRaw('MAX(' . DB::prefix('mf') . '.multimedia_file_refn) DESC')
             ->limit($n)

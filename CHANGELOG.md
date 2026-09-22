@@ -9,6 +9,27 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+### Neu
+- **Schnittstelle für Apps.** Zwei lesende Routen liefern das Archiv als JSON,
+  gedacht für [wtAnd](https://github.com/thobgg/wtAnd), offen für jeden Client
+  mit dem Sitzungs-Cookie eines Baummitglieds:
+  `/tree/{tree}/archiv/api/sammlungen` (die Übersicht: Ordner-Sammlungen,
+  thematische Sammlungen, Sammlungen nach Medientyp, nicht eingebundene Medien,
+  freier Bestand) und `/tree/{tree}/archiv/api/sammlung?kategorie=…` (die
+  Einträge einer Sammlung, seitenweise, mit fertigen Adressen für Kachel,
+  Vollbild und Original). Die Daten kommen aus derselben Aufbereitung wie die
+  Galerie; Seitengröße und Sprache (`pro_seite`, `lang`) gelten nur für die
+  Antwort und werden nicht beim Nutzer gemerkt. Wer kein Mitglied ist, bekommt
+  statt der Anmeldeseite eine JSON-Fehlermeldung (403). Stufe der
+  Schnittstelle: `api: 1`. Beschreibung in der README unter „Schnittstelle für
+  Apps“.
+
+### Behoben
+- **Vorschaubilder fehlten auf SQLite und PostgreSQL**, wenn ein GEDCOM die
+  Dateiendung groß schreibt (`FORM JPG`). Die Vorschau-Abfragen verglichen das
+  Format nur mit Kleinbuchstaben; MySQL sieht darüber hinweg, die anderen
+  nicht. Jetzt zählen beide Schreibweisen.
+
 ## [1.5.1] – 2026-09-04
 
 **Zwei Rückmeldungen von Bernat Banyuls**, per Mail statt als Issue – und
