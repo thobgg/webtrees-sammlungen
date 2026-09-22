@@ -9,6 +9,8 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+## [1.7.0] – 2026-09-22
+
 ### Neu
 - **Schnittstelle für Apps, Stufe 2: schreiben.** Zwei POST-Routen für
   „unterwegs festhalten“ – ein Foto aus der Schublade abfotografieren, sagen
