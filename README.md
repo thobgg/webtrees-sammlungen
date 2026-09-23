@@ -300,7 +300,7 @@ All URLs live under `/tree/{tree}/archiv/…`:
 
 ## Interface for apps
 
-JSON routes under `/tree/{tree}/archiv/api/`, made for [wtAnd](https://github.com/thobgg/wtAnd).
+JSON routes under `/tree/{tree}/archiv/api/`, made for [wtAnd](https://github.com/thobgg/app4webtrees).
 Access with the session cookie, permissions as in the gallery; every answer carries `api` (level, currently 3),
 `modul` and `baum`. Field names are German.
 

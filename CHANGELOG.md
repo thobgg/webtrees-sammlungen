@@ -9,6 +9,12 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+### Geändert
+- **Link zur App:** Das Repo von wtAnd heißt jetzt
+  [app4webtrees](https://github.com/thobgg/app4webtrees) (Android-App wtAnd,
+  Desktop-Client in Arbeit). Die README verweisen dorthin; der alte Name
+  leitet weiter.
+
 ## [1.8.0] – 2026-09-22
 
 ### Neu

@@ -300,7 +300,7 @@ Alle URLs sind unter `/tree/{tree}/archiv/…` erreichbar:
 
 ## Schnittstelle für Apps
 
-JSON-Routen unter `/tree/{tree}/archiv/api/`, gedacht für [wtAnd](https://github.com/thobgg/wtAnd).
+JSON-Routen unter `/tree/{tree}/archiv/api/`, gedacht für [wtAnd](https://github.com/thobgg/app4webtrees).
 Zugriff mit dem Sitzungs-Cookie, Rechte wie in der Galerie; jede Antwort trägt `api` (Stufe, derzeit 3),
 `modul` und `baum`. Feldnamen sind deutsch.
 
