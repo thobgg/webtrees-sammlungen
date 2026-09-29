@@ -25,7 +25,8 @@ document.addEventListener('DOMContentLoaded', function () {
         undWeitere: '… and %s more', insgesamt: '… (%s in total)',
         speichern: 'Saving…', gespeichert: 'Saved',
         umbenennen: 'Renaming…', umbenannt: 'Renamed',
-        fehler: 'Error', netzwerkfehler: 'Network error'
+        fehler: 'Error', netzwerkfehler: 'Network error',
+        vorderseite: 'Front side', rueckseite: 'Reverse side'
     }, cfg.texte || {});
     const platzhalter = (text, wert) => String(text).replace('%s', wert);
     const items = [...document.querySelectorAll('.archiv-gallery-item')];
@@ -46,6 +47,53 @@ document.addEventListener('DOMContentLoaded', function () {
     const editBtn = document.getElementById('archiv-lb-edit-btn');
     const status = document.getElementById('archiv-edit-status');
     const thumbstrip = document.getElementById('archiv-lb-thumbstrip');
+
+    // Postkarten: welche Seite gerade zu sehen ist ('V' oder 'R').
+    const wendenBtn = document.getElementById('archiv-lb-wenden');
+    const wendenText = document.getElementById('archiv-lb-wenden-text');
+    const transkription = document.getElementById('archiv-lb-transkription');
+    const transkriptionText = document.getElementById('archiv-lb-transkription-text');
+    let seite = 'V';
+
+    function postkarte() {
+        const info = JSON.parse(items[current].dataset.info || '{}');
+        return info.postkarte || null;
+    }
+
+    // Die Karte auf eine Seite legen: Bild, Original-Verweis, Transkription
+    // neben der Rueckseite, Beschriftung der Schaltflaeche.
+    function seiteZeigen(neu) {
+        const pk = postkarte();
+        const d = items[current].dataset;
+        seite = (pk && pk.rueckseite && neu === 'R') ? 'R' : 'V';
+        const hinten = seite === 'R';
+        const bild = hinten ? pk.rueckseite : (pk ? pk.vorderseite : null);
+
+        zoomZuruecksetzen();
+        img.src = bild ? bild.full : d.full;
+        if (fullsize) fullsize.href = bild ? bild.original : (d.original || d.full);
+        caption.textContent = d.title + (hinten ? '  ·  ' + T.rueckseite : '');
+
+        if (wendenBtn) {
+            wendenBtn.classList.toggle('d-none', !(pk && pk.rueckseite));
+            if (wendenText) wendenText.textContent = hinten ? T.vorderseite : T.rueckseite;
+        }
+        if (transkription) {
+            const text = hinten && pk ? (pk.transkription || '') : '';
+            transkriptionText.textContent = text;
+            transkription.classList.toggle('d-none', text === '');
+        }
+    }
+
+    function transkription_panel_toggle(weg) {
+        transkription?.classList.toggle('d-none', weg);
+    }
+
+    function wenden() {
+        const pk = postkarte();
+        if (!pk || !pk.rueckseite) return;
+        seiteZeigen(seite === 'V' ? 'R' : 'V');
+    }
 
     // Thumbnail-Streifen aufbauen
     items.forEach((el, idx) => {
@@ -92,6 +140,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // soll die Originaldatei zeigen, sonst käme man an die volle Auflösung
         // gar nicht mehr heran.
         if (fullsize) fullsize.href = d.original || d.full;
+        // Jede Karte liegt zuerst mit der Vorderseite oben.
+        seiteZeigen('V');
 
         // + Zu Sammlung Button: nur für importierte Fotos
         const sammlungBtn = document.getElementById('archiv-lb-sammlung-btn');
@@ -147,6 +197,31 @@ document.addEventListener('DOMContentLoaded', function () {
         const exifBeschr = info.exif_beschreibung || '';
         document.getElementById('archiv-edit-beschreibung').value = exifBeschr;
         document.getElementById('archiv-edit-datum').value = info.datum_iso || '';
+
+        // Postkarte: statt der einen Beschreibung drei Felder, dazu "Datum
+        // unsicher". Die Felder kommen aus den Abschnitten, die der Server
+        // aus der Beschreibung gelesen hat.
+        const pk = info.postkarte || null;
+        const pkFelder = document.getElementById('archiv-edit-postkarte');
+        const beschrFeld = document.getElementById('archiv-edit-beschreibung-feld');
+        const unsicherFeld = document.getElementById('archiv-edit-datum-unsicher-feld');
+        const unsicher = document.getElementById('archiv-edit-datum-unsicher');
+        if (pkFelder && beschrFeld) {
+            pkFelder.classList.toggle('d-none', !pk);
+            beschrFeld.classList.toggle('d-none', !!pk);
+            document.getElementById('archiv-edit-beide')?.classList.toggle('d-none', !(pk && pk.rueckseite));
+            if (pk) {
+                document.getElementById('archiv-edit-motiv').value = pk.motiv || '';
+                document.getElementById('archiv-edit-transkription').value = pk.transkription || '';
+                document.getElementById('archiv-edit-notiz').value = pk.notiz || '';
+            }
+        }
+        if (unsicherFeld && unsicher) {
+            unsicherFeld.classList.toggle('d-none', !pk);
+            unsicher.checked = !!info.datum_unsicher;
+        }
+        // Umbenennen einer Seite wuerde das Paar trennen - bei Karten nicht anbieten.
+        document.getElementById('archiv-datei-rename-btn')?.classList.toggle('d-none', !!(pk && pk.rueckseite));
         document.getElementById('archiv-edit-personen').value = (info.personen || []).join(', ');
         document.getElementById('archiv-edit-keywords').value = (info.keywords || []).join(', ');
         if (status) status.textContent = '';
@@ -500,9 +575,14 @@ document.addEventListener('DOMContentLoaded', function () {
     })();
 
     document.getElementById('archiv-lightbox').addEventListener('keydown', e => {
+        // In der Seitenleiste wird getippt - dort gehoeren die Tasten dem Feld.
+        if (e.target && e.target.matches && e.target.matches('input, textarea, select')) return;
         if (e.key === 'ArrowLeft') show(current - 1);
         if (e.key === 'ArrowRight') show(current + 1);
+        // W wie wenden, F wie flip.
+        if (e.key === 'w' || e.key === 'W' || e.key === 'f' || e.key === 'F') wenden();
     });
+    wendenBtn?.addEventListener('click', wenden);
 
     // + Zu Sammlung Toggle
     document.querySelectorAll('.archiv-sammlung-toggle').forEach(btn => {
@@ -623,13 +703,38 @@ document.addEventListener('DOMContentLoaded', function () {
         const csrfTok = csrfEl ? csrfEl.value : csrf;
         const pfad = pfadAusUrl(items[current].dataset.full);
 
+        const pk = postkarte();
+        let beschreibung = document.getElementById('archiv-edit-beschreibung').value;
+        let motiv = '', transkription = '', notiz = '';
+        if (pk) {
+            // Dieselbe Form wie Postkarten::beschreibung() auf dem Server:
+            // feste Ueberschriften, leere Abschnitte fallen weg, ein Motiv
+            // allein steht ohne Ueberschrift.
+            motiv = document.getElementById('archiv-edit-motiv').value.trim();
+            transkription = document.getElementById('archiv-edit-transkription').value.trim();
+            notiz = document.getElementById('archiv-edit-notiz').value.trim();
+            if (!transkription && !notiz) {
+                beschreibung = motiv;
+            } else {
+                const teile = [];
+                if (motiv) teile.push('Motiv: ' + motiv);
+                if (transkription) teile.push('Transkription:\n' + transkription);
+                if (notiz) teile.push('Notiz: ' + notiz);
+                beschreibung = teile.join('\n');
+            }
+        }
+
         const body = new FormData();
         body.append('_csrf', csrfTok);
         body.append('pfad', pfad);
-        body.append('beschreibung', document.getElementById('archiv-edit-beschreibung').value);
+        body.append('beschreibung', beschreibung);
         body.append('datum', document.getElementById('archiv-edit-datum').value);
         body.append('personen', document.getElementById('archiv-edit-personen').value);
         body.append('keywords', document.getElementById('archiv-edit-keywords').value);
+        if (pk) {
+            if (pk.rueckseite) body.append('partner', pk.rueckseite.pfad);
+            body.append('datum_unsicher', document.getElementById('archiv-edit-datum-unsicher')?.checked ? '1' : '0');
+        }
 
         status.textContent = '⏳ ' + T.speichern;
         status.style.color = 'white';
@@ -640,9 +745,26 @@ document.addEventListener('DOMContentLoaded', function () {
             if (json.ok) {
                 status.textContent = '✓ ' + T.gespeichert;
                 status.style.color = '#90ee90';
-                const neu = document.getElementById('archiv-edit-beschreibung').value;
+                const neu = pk ? motiv : beschreibung;
+                if (pk) {
+                    // Die Kachel und die Lightbox kennen die Karte nur ueber
+                    // data-info - nachziehen, sonst zeigt das naechste Wenden
+                    // die alte Transkription.
+                    const infoObj = JSON.parse(items[current].dataset.info || '{}');
+                    infoObj.exif_beschreibung = beschreibung;
+                    infoObj.datum_iso = document.getElementById('archiv-edit-datum').value;
+                    infoObj.datum_unsicher = !!document.getElementById('archiv-edit-datum-unsicher')?.checked;
+                    infoObj.postkarte = Object.assign({}, infoObj.postkarte, { motiv, transkription, notiz });
+                    items[current].dataset.info = JSON.stringify(infoObj);
+                    if (transkriptionText && seite === 'R') {
+                        transkriptionText.textContent = transkription;
+                        transkription_panel_toggle(transkription === '');
+                    }
+                    const titel = items[current].querySelector('.archiv-pk-titel');
+                    if (titel && neu) titel.textContent = neu;
+                }
                 if (neu) {
-                    caption.textContent = neu;
+                    caption.textContent = neu + (pk && seite === 'R' ? '  ·  ' + T.rueckseite : '');
                     items[current].dataset.title = neu;
                     const card = items[current].closest('.col')?.querySelector('.card-body div');
                     if (card) card.textContent = neu;

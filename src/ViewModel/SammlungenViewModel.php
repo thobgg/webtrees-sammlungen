@@ -9,6 +9,7 @@ use Sammlungen\Repository\SammlungenRepository;
 use Sammlungen\Service\CollectionService;
 use Sammlungen\Service\ExifService;
 use Sammlungen\Service\MedienPfad;
+use Sammlungen\Service\Postkarten;
 use Sammlungen\SammlungenModule;
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\I18N;
@@ -388,19 +389,26 @@ final class SammlungenViewModel
      */
     private function ordnerGalerieAnreichern(Tree $tree, array $aktive, array $queryParams): array
     {
-        $s           = $aktive['sammlung'];
-        $ansicht     = $this->ansichtWaehlen($s->ansicht ?? 'foto', $queryParams);
-        $istBild     = in_array($ansicht, ['foto', 'raster', 'gemischt'], true);
-        $istRaster   = $ansicht === 'raster';
-        $istGemischt = $ansicht === 'gemischt';
-        $perSeite    = $this->proSeite($queryParams);
-        $seite       = max(1, (int) ($queryParams['seite'] ?? 1));
+        $s            = $aktive['sammlung'];
+        $ansicht      = $this->ansichtWaehlen($s->ansicht ?? 'foto', $queryParams);
+        $istPostkarte = $ansicht === Postkarten::ANSICHT;
+        $istBild      = in_array($ansicht, ['foto', 'raster', 'gemischt', Postkarten::ANSICHT], true);
+        $istRaster    = $ansicht === 'raster';
+        $istGemischt  = $ansicht === 'gemischt';
+        $perSeite     = $this->proSeite($queryParams);
+        $seite        = max(1, (int) ($queryParams['seite'] ?? 1));
 
         $bildFormate = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
         // Dateisystem-Scan fuer ALLE Dateien (schnell, kein Imagick)
         $alleDateien   = $this->collectionService->alleDateienInOrdner($tree, $s->ordner);
         $gesamtDateien = count($alleDateien);
+
+        $aktive['istPostkarte'] = $istPostkarte;
+
+        if ($istPostkarte) {
+            return $this->postkartenAnreichern($tree, $aktive, $alleDateien, $perSeite, $seite);
+        }
 
         // Nur die in dieser Ansicht tatsaechlich darstellbaren Dateien zaehlen/paginieren,
         // damit der Zaehler ehrlich ist (sonst werden z. B. Video/Audio als "Fotos" mitgezaehlt).
@@ -437,6 +445,35 @@ final class SammlungenViewModel
             static fn ($d) => in_array($d['format'], ['jpg', 'jpeg', 'png', 'gif', 'webp'], true)
         ));
 
+        $aktive['bilder'] = $this->bilderAnreichern($tree, $bilder);
+
+        // Gemischt: zusaetzlich Nicht-Bilder als Dokumentenliste
+        if ($istGemischt) {
+            $aktive['dokumente'] = array_values(array_filter(
+                $seiteDateien,
+                static fn ($d) => !in_array($d['format'], ['jpg', 'jpeg', 'png', 'gif', 'webp'], true)
+            ));
+        } else {
+            // Foto/Raster: Nicht-Bilder (Video/Audio/Dokumente) als abspielbare Liste
+            // unter der Galerie zeigen, statt sie nur zu zaehlen.
+            $aktive['weitere'] = array_values(array_filter(
+                $alleDateien,
+                static fn ($d) => !in_array($d['format'], $bildFormate, true)
+            ));
+        }
+
+        return $aktive;
+    }
+
+    /**
+     * EXIF, webtrees-Daten und Sammlungszugehoerigkeit fuer die Bilder einer
+     * Seite - in drei Abfragen fuer alle, nicht drei je Bild.
+     *
+     * @param list<array<string,mixed>> $bilder
+     * @return list<array<string,mixed>>
+     */
+    private function bilderAnreichern(Tree $tree, array $bilder): array
+    {
         $mediaBase = MedienPfad::wurzel($tree);
         foreach ($bilder as &$bild) {
             $bild['exif'] = $this->exifService->leseMeta($mediaBase . $bild['pfad']);
@@ -473,22 +510,75 @@ final class SammlungenViewModel
         }
         unset($bild);
 
-        $aktive['bilder'] = $bilder;
+        return $bilder;
+    }
 
-        // Gemischt: zusaetzlich Nicht-Bilder als Dokumentenliste
-        if ($istGemischt) {
-            $aktive['dokumente'] = array_values(array_filter(
-                $seiteDateien,
-                static fn ($d) => !in_array($d['format'], ['jpg', 'jpeg', 'png', 'gif', 'webp'], true)
-            ));
-        } else {
-            // Foto/Raster: Nicht-Bilder (Video/Audio/Dokumente) als abspielbare Liste
-            // unter der Galerie zeigen, statt sie nur zu zaehlen.
-            $aktive['weitere'] = array_values(array_filter(
-                $alleDateien,
-                static fn ($d) => !in_array($d['format'], $bildFormate, true)
-            ));
+    /**
+     * Postkarten: die Dateien des Ordners zu Karten gekoppelt, seitenweise
+     * ueber Karten (nicht Dateien), beide Seiten angereichert.
+     *
+     * Jede Karte traegt zusaetzlich die Abschnitte ihrer Beschreibung (Motiv,
+     * Transkription, Notiz) - die Ansicht soll nicht selbst parsen muessen.
+     * Massgeblich ist die Vorderseite; steht dort nichts, die Rueckseite.
+     *
+     * @param array<string,mixed>       $aktive
+     * @param list<array<string,mixed>> $alleDateien
+     * @return array<string,mixed>
+     */
+    private function postkartenAnreichern(Tree $tree, array $aktive, array $alleDateien, int $perSeite, int $seite): array
+    {
+        $bildFormate = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+
+        $karten       = Postkarten::gruppieren($alleDateien);
+        $gesamtAnzahl = count($karten);
+        $seitenGesamt = max(1, (int) ceil($gesamtAnzahl / $perSeite));
+        $seite        = min($seite, $seitenGesamt);
+        $seiteKarten  = array_slice($karten, ($seite - 1) * $perSeite, $perSeite);
+
+        // Beide Seiten in einem Rutsch anreichern, dann zurueck in die Karten.
+        $flach = [];
+        foreach ($seiteKarten as $karte) {
+            $flach[] = $karte['vorderseite'];
+            if ($karte['rueckseite'] !== null) {
+                $flach[] = $karte['rueckseite'];
+            }
         }
+
+        $jePfad = [];
+        foreach ($this->bilderAnreichern($tree, $flach) as $bild) {
+            $jePfad[$bild['pfad']] = $bild;
+        }
+
+        foreach ($seiteKarten as &$karte) {
+            $karte['vorderseite'] = $jePfad[$karte['vorderseite']['pfad']];
+            if ($karte['rueckseite'] !== null) {
+                $karte['rueckseite'] = $jePfad[$karte['rueckseite']['pfad']];
+            }
+
+            $beschreibung = $karte['vorderseite']['exif']['beschreibung'];
+            if ($beschreibung === '' && $karte['rueckseite'] !== null) {
+                $beschreibung = $karte['rueckseite']['exif']['beschreibung'];
+            }
+            $karte['abschnitte'] = Postkarten::abschnitte($beschreibung);
+        }
+        unset($karte);
+
+        $aktive['anzahl']        = $gesamtAnzahl;
+        $aktive['datei_anzahl']  = count($alleDateien);
+        $aktive['istBild']       = true;
+        $aktive['istRaster']     = false;
+        $aktive['istGemischt']   = false;
+        $aktive['istPostkarte']  = true;
+        $aktive['seite']         = $seite;
+        $aktive['seiten_gesamt'] = $seitenGesamt;
+        $aktive['per_seite']     = $perSeite;
+        $aktive['karten']        = $seiteKarten;
+        // Vorderseiten als 'bilder': was die Lightbox durchblaettert und die App als Eintraege bekommt.
+        $aktive['bilder']        = array_map(static fn (array $k): array => $k['vorderseite'], $seiteKarten);
+        $aktive['weitere']       = array_values(array_filter(
+            $alleDateien,
+            static fn ($d) => !in_array($d['format'], $bildFormate, true)
+        ));
 
         return $aktive;
     }

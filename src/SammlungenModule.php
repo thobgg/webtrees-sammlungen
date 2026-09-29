@@ -60,7 +60,7 @@ class SammlungenModule extends AbstractModule implements
      * neue Felder bekommt; bestehende Felder bleiben, damit eine aeltere App
      * mit einem neueren Modul weiterlaeuft.
      */
-    public const API_VERSION = 3;
+    public const API_VERSION = 4;
     public const SETTING_CACHE_TTL = 'cache_ttl';
     public const SETTING_PER_PAGE  = 'per_page';
     public const DEFAULT_CACHE_TTL = 900;

@@ -8,8 +8,47 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 ## [Unreleased]
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
+_Das Nächste wird 2.0.0: die Postkarten und der verlustfreie Schreibweg ändern, was in die Dateien geschrieben wird._
+
+### Neu
+- **Anzeigetyp „Postkarten“.** Für eine Ordner-Sammlung wie „Großmutters
+  Postkartensammlung“: `PK_0001_V.jpg` und `PK_0001_R.jpg` sind Vorder- und
+  Rückseite einer Karte und werden als ein Eintrag gezeigt. Die Kachel zeigt
+  die Vorderseite und ein Zeichen, wenn es eine Rückseite gibt; in der
+  Lightbox wendet eine Schaltfläche (oder die Taste W) die Karte, neben der
+  Rückseite steht die Transkription. Dateien ohne Gegenstück sind Einzelkarten;
+  zwei Dateien desselben webtrees-Medienobjekts (ein OBJE mit zwei FILE)
+  gelten ebenfalls als Paar. Gezählt und geblättert wird nach Karten.
+- **Editor für Postkarten.** Die Seitenleiste hat für eine Karte drei Felder
+  statt der Beschreibung: Motiv, Transkription, Notiz. Sie landen mit festen
+  Überschriften (`Motiv:`, `Transkription:`, `Notiz:`) in der einen
+  XMP-Beschreibung, damit die Datei in jedem anderen Programm lesbar bleibt.
+  Gespeichert wird in beide Seiten, mit dem bestehenden Tagesbackup; jede
+  Datei bekommt dazu `dc:identifier` (den Kartenschlüssel) und `dc:relation`
+  (den Dateinamen der Gegenseite). Ein Häkchen „Datum unsicher“ kennzeichnet
+  ein erschlossenes Poststempeldatum (`sammlungen:DatumUnsicher` im eigenen
+  XMP-Namensraum; `xmp:CreateDate` bleibt ein sauberes Datum). Die Galerie
+  zeigt es als „um 12.05.1912“.
+- **Schnittstelle Stufe 4.** Einträge tragen `datumUnsicher`; in einer
+  Postkarten-Sammlung außerdem `rueckseite` (ein Eintrag oder null), `motiv`,
+  `transkription`, `notiz`. `api: 4`.
 
 ### Geändert
+- **Metadaten werden verlustfrei geschrieben.** Bisher lud der EXIF-Dienst das
+  Bild mit Imagick und speicherte es mit `writeImage()` – das JPEG wurde bei
+  jedem Speichern der Beschreibung neu komprimiert, die Datei war danach nicht
+  mehr der Scan. Jetzt wird bei JPEG nur das XMP-Segment (APP1) ausgetauscht,
+  alle anderen Segmente und die Bilddaten bleiben Byte für Byte erhalten
+  (`identify -format "%#"` liefert vorher und nachher dieselbe Signatur;
+  Unit-Test über die Scan-Daten). Geschrieben wird in eine Nachbardatei, die
+  das Original ersetzt – ein Abbruch lässt es unversehrt. Imagick wird für
+  JPEG nicht mehr gebraucht, weder zum Schreiben noch zum Lesen. Die
+  EXIF-Felder `ImageDescription`/`DateTimeOriginal`, die bisher zusätzlich
+  gesetzt wurden, entfallen bei JPEG: das hätte einen eigenen TIFF-Schreiber
+  verlangt, der vorhandene Scanner-EXIF-Blöcke beschädigen kann. Gelesen wird
+  XMP ohnehin zuerst. PNG, GIF und WebP gehen weiter über Imagick.
+- **Tasten in der Lightbox** wirken nicht mehr, während in der Seitenleiste
+  getippt wird (vorher blätterten die Pfeiltasten im Textfeld das Bild weiter).
 - **Link zur App:** Das Repo von wtAnd heißt jetzt
   [app4webtrees](https://github.com/thobgg/app4webtrees) (Android-App wtAnd,
   Desktop-Client in Arbeit). Die README verweisen dorthin; der alte Name

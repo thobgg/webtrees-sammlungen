@@ -64,7 +64,7 @@ final class LightboxMarkupTest extends TestCase
      */
     public function testAlleGalerienLiefernDieGesamtzahlDerPersonen(): void
     {
-        foreach (['_detail-ordner.phtml', '_detail-manuell.phtml'] as $datei) {
+        foreach (['_detail-ordner.phtml', '_detail-manuell.phtml', '_detail-postkarten.phtml'] as $datei) {
             $inhalt = self::lies($datei);
 
             // Nur die JSON-Schluessel zaehlen ('personen' => ...), nicht die
@@ -90,7 +90,7 @@ final class LightboxMarkupTest extends TestCase
      */
     public function testEingabefeldWirdAusDenDateiDatenGespeist(): void
     {
-        foreach (['_detail-ordner.phtml', '_detail-manuell.phtml'] as $datei) {
+        foreach (['_detail-ordner.phtml', '_detail-manuell.phtml', '_detail-postkarten.phtml'] as $datei) {
             $inhalt = self::lies($datei);
 
             preg_match_all("/'personen'\s*=>\s*([^,]+),/", $inhalt, $treffer);

@@ -185,7 +185,22 @@ final class ApiViewModel
         $s     = $aktive['sammlung'];
         $slugs = $this->slugsJeId($tree);
 
-        if ($aktive['istBild']) {
+        if ($aktive['istPostkarte'] ?? false) {
+            // Eine Karte ist ein Eintrag: die Vorderseite mit ihren Feldern,
+            // die Rueckseite als eigener Eintrag darunter, dazu die
+            // Abschnitte der Beschreibung.
+            $eintraege = [];
+            foreach ($aktive['karten'] as $karte) {
+                $eintrag = $this->pfadEintraege($tree, [$karte['vorderseite']], $slugs)[0];
+                $eintrag['rueckseite'] = $karte['rueckseite'] !== null
+                    ? $this->pfadEintraege($tree, [$karte['rueckseite']], $slugs)[0]
+                    : null;
+                $eintrag['motiv']         = $karte['abschnitte']['motiv'];
+                $eintrag['transkription'] = $karte['abschnitte']['transkription'];
+                $eintrag['notiz']         = $karte['abschnitte']['notiz'];
+                $eintraege[] = $eintrag;
+            }
+        } elseif ($aktive['istBild']) {
             $eintraege = $this->pfadEintraege($tree, $aktive['bilder'], $slugs);
 
             if ($aktive['istGemischt']) {
@@ -421,6 +436,7 @@ final class ApiViewModel
                 'bildunterschrift' => $this->bildunterschrift((string) ($exif['beschreibung'] ?? ''), $titel, $d['datei'] ?? basename($d['pfad'])),
                 'datum'           => (string) ($exif['datum'] ?? ''),
                 'datumIso'        => (string) ($exif['datum_iso'] ?? ''),
+                'datumUnsicher'   => (bool) ($exif['datum_unsicher'] ?? false),
                 'exifPersonen'    => $exif['personen'] ?? [],
                 'keywords'        => $exif['keywords'] ?? [],
                 'breite'          => (int) ($exif['breite'] ?? 0),
@@ -491,6 +507,7 @@ final class ApiViewModel
                 'bildunterschrift' => $this->bildunterschrift((string) ($exif['beschreibung'] ?? ''), $titel, $name),
                 'datum'           => (string) ($exif['datum'] ?? ''),
                 'datumIso'        => (string) ($exif['datum_iso'] ?? ''),
+                'datumUnsicher'   => (bool) ($exif['datum_unsicher'] ?? false),
                 'exifPersonen'    => $exif['personen'] ?? [],
                 'keywords'        => $exif['keywords'] ?? [],
                 'breite'          => (int) ($exif['breite'] ?? 0),

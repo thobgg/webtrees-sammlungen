@@ -469,3 +469,53 @@ msgstr "Resumen"
 
 msgid "Large pictures"
 msgstr "Imágenes grandes"
+
+msgid "%s postcard"
+msgid_plural "%s postcards"
+msgstr[0] "%s postal"
+msgstr[1] "%s postales"
+
+msgid "Postcards"
+msgstr "Postales"
+
+msgid "Front and back as one entry (PK_0001_V.jpg / PK_0001_R.jpg)"
+msgstr "Anverso y reverso como una sola entrada (PK_0001_V.jpg / PK_0001_R.jpg)"
+
+msgid "around %s"
+msgstr "hacia %s"
+
+msgid "Reverse side available"
+msgstr "Reverso disponible"
+
+msgid "Turn the card (key W)"
+msgstr "Girar la tarjeta (tecla W)"
+
+msgid "Reverse side"
+msgstr "Reverso"
+
+msgid "Front side"
+msgstr "Anverso"
+
+msgid "Transcription"
+msgstr "Transcripción"
+
+msgid "Saved to both sides of the card."
+msgstr "Se guarda en ambas caras de la tarjeta."
+
+msgid "Motif"
+msgstr "Motivo"
+
+msgid "What the picture shows"
+msgstr "Qué muestra la imagen"
+
+msgid "The text on the back, line by line"
+msgstr "El texto del reverso, línea por línea"
+
+msgid "Note"
+msgstr "Nota"
+
+msgid "Printing technique, publisher, condition…"
+msgstr "Técnica de impresión, editorial, estado…"
+
+msgid "Date uncertain (postmark illegible, inferred)"
+msgstr "Fecha incierta (matasellos ilegible, deducida)"

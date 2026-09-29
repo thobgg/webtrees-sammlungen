@@ -92,6 +92,37 @@ The sidebar displays EXIF and XMP, lets you edit description, date, persons and
 keywords, compares the values against the webtrees person links and offers
 one-click "take over" for any differences.
 
+### Postcards – front and back
+
+The display type **"Postcards"** is for a folder collection in which every card
+exists as two scans: `PK_0001_V.jpg` (front) and `PK_0001_R.jpg` (back). Both
+are one entry. The tile shows the front and a ⇄ when a back exists; in the
+lightbox a button or the **W** key turns the card, and the transcription is shown
+next to the back. A file without a counterpart is a single card; two files of the
+same webtrees media object count as a pair too.
+
+For cards the editor has three fields – **Motif**, **Transcription**, **Note** –
+and writes them with fixed headings into the one XMP description of both files
+(so it stays readable in any other program):
+
+```
+Motiv: Marktplatz Lüneburg, Blick nach Osten
+Transkription:
+Liebe Mutter, wir sind gut angekommen …
+Notiz: Stempel unleserlich, Jahr aus Briefmarke
+```
+
+The **date** is the postmark date (`YYYY-MM-DD`); a checkbox "date uncertain"
+marks an inferred date (shown as "around 12.05.1912"). **Individuals** are sender
+and recipient, as far as they are in the tree; **keywords** take places, printing
+technique and people outside the tree. Each file additionally gets `dc:identifier`
+(the card key, `PK_0001`) and `dc:relation` (the file name of the other side).
+
+The scans are the original: for JPEG, metadata is written **losslessly** – only
+the XMP segment is replaced, image data and all other segments stay byte for byte
+(this applies to all JPGs, not only postcards). Cropping and rotating happens
+beforehand in GIMP, not in the module.
+
 ### On phone and tablet
 
 On a phone the module is for **looking, not editing**. Cataloguing, EXIF work and
@@ -301,7 +332,7 @@ All URLs live under `/tree/{tree}/archiv/…`:
 ## Interface for apps
 
 JSON routes under `/tree/{tree}/archiv/api/`, made for [wtAnd](https://github.com/thobgg/app4webtrees).
-Access with the session cookie, permissions as in the gallery; every answer carries `api` (level, currently 3),
+Access with the session cookie, permissions as in the gallery; every answer carries `api` (level, currently 4),
 `modul` and `baum`. Field names are German.
 
 | Call | |

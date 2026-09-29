@@ -138,6 +138,39 @@ Die Sidebar zeigt EXIF und XMP, ermöglicht das Editieren von Beschreibung, Datu
 Personen und Keywords, vergleicht die Werte mit den webtrees-Personen-Verknüpfungen
 und bietet Ein-Klick-Übernahme bei Unterschieden.
 
+### Postkarten – Vorder- und Rückseite
+
+Der Anzeigetyp **„Postkarten"** ist für eine Ordner-Sammlung, in der jede Karte
+als zwei Scans liegt: `PK_0001_V.jpg` (Vorderseite) und `PK_0001_R.jpg`
+(Rückseite). Beide sind ein Eintrag. Die Kachel zeigt die Vorderseite und ein
+⇄, wenn es eine Rückseite gibt; in der Lightbox wendet die Schaltfläche oder die
+Taste **W** die Karte, neben der Rückseite steht die Transkription. Eine Datei
+ohne Gegenstück ist eine Einzelkarte; zwei Dateien desselben webtrees-Medienobjekts
+gelten ebenfalls als Paar.
+
+Der Editor hat für Karten drei Felder – **Motiv**, **Transkription**, **Notiz** –
+und schreibt sie mit festen Überschriften in die eine XMP-Beschreibung beider
+Dateien (so bleibt sie in jedem anderen Programm lesbar):
+
+```
+Motiv: Marktplatz Lüneburg, Blick nach Osten
+Transkription:
+Liebe Mutter, wir sind gut angekommen …
+Notiz: Stempel unleserlich, Jahr aus Briefmarke
+```
+
+Das **Datum** ist das Poststempeldatum (`JJJJ-MM-TT`); ein Häkchen „Datum unsicher"
+kennzeichnet ein erschlossenes Datum (Anzeige „um 12.05.1912"). **Personen** sind
+Absender und Empfänger, soweit im Stammbaum; **Stichwörter** nehmen Orte,
+Drucktechnik und Personen außerhalb des Stammbaums auf. Jede Datei bekommt
+zusätzlich `dc:identifier` (den Kartenschlüssel, `PK_0001`) und `dc:relation`
+(den Dateinamen der anderen Seite).
+
+Die Scans sind das Original: Metadaten werden bei JPEG **verlustfrei**
+geschrieben – nur das XMP-Segment wird getauscht, Bilddaten und alle anderen
+Segmente bleiben Byte für Byte erhalten (gilt für alle JPGs, nicht nur Postkarten).
+Zuschneiden und Drehen passiert vorher in GIMP, nicht im Modul.
+
 ### Dokumenten-Listen
 
 Für Sammlungen mit PDFs/Dokumenten (Kirchenbuch-Akten, Personenstandsregister, …)
@@ -148,7 +181,7 @@ zeigt das Modul automatisch eine Listenansicht statt Foto-Raster:
 ### Admin-Verwaltung
 
 Eigene Sammlungen anlegen mit Name, Icon, Farbe und Ansichts-Typ (Foto-Galerie,
-Dokumenten-Liste, gemischt). Aktiv-Status per Ein-Klick-Toggle:
+Foto-Raster, gemischt, Dokumenten-Liste, Postkarten). Aktiv-Status per Ein-Klick-Toggle:
 
 ![Sammlungen verwalten](docs/images/03-admin.png)
 
@@ -301,8 +334,9 @@ Alle URLs sind unter `/tree/{tree}/archiv/…` erreichbar:
 ## Schnittstelle für Apps
 
 JSON-Routen unter `/tree/{tree}/archiv/api/`, gedacht für [wtAnd](https://github.com/thobgg/app4webtrees).
-Zugriff mit dem Sitzungs-Cookie, Rechte wie in der Galerie; jede Antwort trägt `api` (Stufe, derzeit 3),
-`modul` und `baum`. Feldnamen sind deutsch.
+Zugriff mit dem Sitzungs-Cookie, Rechte wie in der Galerie; jede Antwort trägt `api` (Stufe, derzeit 4),
+`modul` und `baum`. Feldnamen sind deutsch. Seit Stufe 4 trägt jeder Eintrag `datumUnsicher`; in einer
+Postkarten-Sammlung außerdem `rueckseite` (Eintrag oder null), `motiv`, `transkription`, `notiz`.
 
 | Aufruf | |
 |---|---|

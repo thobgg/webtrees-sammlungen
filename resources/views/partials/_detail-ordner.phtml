@@ -46,6 +46,9 @@ use Fisharebest\Webtrees\I18N;
                 <?= I18N::translate('No files found in this folder.') ?>
             </div>
 
+        <?php elseif ($aktive['istBild'] && ($aktive['istPostkarte'] ?? false)) : ?>
+            <?php include __DIR__ . '/_detail-postkarten.phtml'; ?>
+
         <?php elseif ($aktive['istBild'] && $aktive['istRaster']) : ?>
             <!-- Foto-Raster: gleichförmiges Grid, sachlich -->
             <div class="row row-cols-3 row-cols-sm-4 row-cols-lg-5 row-cols-xl-6 g-2" id="archiv-galerie">

@@ -140,7 +140,7 @@ class AdminSammlungEdit implements RequestHandlerInterface
         $reihenfolge  = (int) ($body['reihenfolge'] ?? 0);
         $aktiv        = isset($body['aktiv']);
         $ordner       = trim((string) ($body['ordner'] ?? ''));
-        $ansicht      = in_array($body['ansicht'] ?? '', ['foto', 'raster', 'gemischt', 'dokument'], true)
+        $ansicht      = in_array($body['ansicht'] ?? '', CollectionService::ANSICHTEN, true)
                         ? (string) $body['ansicht'] : 'foto';
 
         if ($name === '') {

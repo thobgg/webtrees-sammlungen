@@ -23,6 +23,9 @@ use Fisharebest\Webtrees\I18N;
                                         <div id="archiv-lb-meta" class="text-white-50 small text-truncate"></div>
                                     </div>
                                     <div class="d-flex gap-2 flex-shrink-0 align-items-center">
+                                        <button id="archiv-lb-wenden" type="button"
+                                                class="btn btn-sm btn-outline-light d-none"
+                                                title="<?= I18N::translate('Turn the card (key W)') ?>">&#8644; <span id="archiv-lb-wenden-text"><?= I18N::translate('Reverse side') ?></span></button>
                                         <a id="archiv-lb-fullsize" href="#" target="_blank"
                                            class="btn btn-sm btn-outline-light"
                                            title="<?= I18N::translate('Full screen in a new tab') ?>">↗</a>
@@ -61,6 +64,11 @@ use Fisharebest\Webtrees\I18N;
                                 <div class="flex-grow-1 d-flex align-items-center justify-content-center position-relative" style="min-height:0;overflow:hidden">
                                     <img id="archiv-lb-img" src="" alt=""
                                          style="max-height:78vh;max-width:100%;object-fit:contain">
+                                    <!-- Postkarten: neben der Rueckseite steht, was darauf geschrieben ist. -->
+                                    <div id="archiv-lb-transkription" class="archiv-lb-transkription d-none">
+                                        <div class="archiv-lb-transkription-titel"><?= I18N::translate('Transcription') ?></div>
+                                        <div id="archiv-lb-transkription-text"></div>
+                                    </div>
                                     <button id="archiv-lb-prev"
                                             class="btn btn-dark bg-opacity-50 position-absolute start-0 top-50 translate-middle-y ms-2 fs-3 px-3">&#8249;</button>
                                     <button id="archiv-lb-next"
@@ -90,11 +98,38 @@ use Fisharebest\Webtrees\I18N;
                                                 title="<?= I18N::translate('Close') ?>"></button>
                                     </div>
 
-                                    <div class="mb-3">
+                                    <div class="mb-3" id="archiv-edit-beschreibung-feld">
                                         <label class="form-label text-white-50 small mb-1"><?= I18N::translate('Description') ?></label>
                                         <textarea id="archiv-edit-beschreibung" rows="4"
                                                   class="form-control form-control-sm bg-dark text-white border-secondary"
                                                   placeholder="<?= I18N::translate('Who, what, when, where…') ?>"></textarea>
+                                    </div>
+
+                                    <!-- Postkarten: drei Felder, die zusammen die eine Beschreibung
+                                         ergeben (feste Ueberschriften Motiv/Transkription/Notiz).
+                                         Gespeichert wird in Vorder- UND Rueckseite. -->
+                                    <div id="archiv-edit-postkarte" class="d-none">
+                                        <div class="text-white-50 small mb-2 fst-italic" id="archiv-edit-beide">
+                                            <?= I18N::translate('Saved to both sides of the card.') ?>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label text-white-50 small mb-1"><?= I18N::translate('Motif') ?></label>
+                                            <input id="archiv-edit-motiv" type="text"
+                                                   class="form-control form-control-sm bg-dark text-white border-secondary"
+                                                   placeholder="<?= I18N::translate('What the picture shows') ?>">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label text-white-50 small mb-1"><?= I18N::translate('Transcription') ?></label>
+                                            <textarea id="archiv-edit-transkription" rows="6"
+                                                      class="form-control form-control-sm bg-dark text-white border-secondary"
+                                                      placeholder="<?= I18N::translate('The text on the back, line by line') ?>"></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label text-white-50 small mb-1"><?= I18N::translate('Note') ?></label>
+                                            <textarea id="archiv-edit-notiz" rows="2"
+                                                      class="form-control form-control-sm bg-dark text-white border-secondary"
+                                                      placeholder="<?= I18N::translate('Printing technique, publisher, condition…') ?>"></textarea>
+                                        </div>
                                     </div>
 
                                     <div class="mb-3">
@@ -103,6 +138,12 @@ use Fisharebest\Webtrees\I18N;
                                                class="form-control form-control-sm bg-dark text-white border-secondary"
                                                placeholder="<?= I18N::translate('YYYY-MM-DD  or  YYYY') ?>">
                                         <div class="form-text text-white-50 small"><?= I18N::translate('e.g. 1923-06-15 or 1923') ?></div>
+                                        <div class="form-check mt-1 d-none" id="archiv-edit-datum-unsicher-feld">
+                                            <input class="form-check-input" type="checkbox" id="archiv-edit-datum-unsicher">
+                                            <label class="form-check-label text-white-50 small" for="archiv-edit-datum-unsicher">
+                                                <?= I18N::translate('Date uncertain (postmark illegible, inferred)') ?>
+                                            </label>
+                                        </div>
                                     </div>
 
                                     <div class="mb-3">
@@ -218,7 +259,9 @@ use Fisharebest\Webtrees\I18N;
                     umbenennen:        <?= json_encode(I18N::translate('Renaming…')) ?>,
                     umbenannt:         <?= json_encode(I18N::translate('Renamed')) ?>,
                     fehler:            <?= json_encode(I18N::translate('Error')) ?>,
-                    netzwerkfehler:    <?= json_encode(I18N::translate('Network error')) ?>
+                    netzwerkfehler:    <?= json_encode(I18N::translate('Network error')) ?>,
+                    vorderseite:       <?= json_encode(I18N::translate('Front side')) ?>,
+                    rueckseite:        <?= json_encode(I18N::translate('Reverse side')) ?>
                 }
             };
             </script>

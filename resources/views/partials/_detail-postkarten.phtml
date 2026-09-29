@@ -1,0 +1,124 @@
+<?php
+
+/**
+ * Partial: Postkarten-Galerie einer ordner-basierten Sammlung.
+ *
+ * Eine Kachel je Karte: die Vorderseite, dazu ein Zeichen, wenn es eine
+ * Rueckseite gibt. Die Lightbox wendet die Karte (Schaltflaeche oder Taste W)
+ * und zeigt neben der Rueckseite die Transkription.
+ *
+ * Erwartet aus Parent-Scope:
+ *   $aktive (mit sammlung, karten, seite, seiten_gesamt, anzahl)
+ *   $tree, $treeName, $istAdmin
+ */
+
+use Fisharebest\Webtrees\I18N;
+
+$dateiUrl = static fn (string $pfad, ?int $breite = null): string => route('sammlungen.media-datei', [
+    'tree' => $treeName,
+    'pfad' => $pfad,
+] + ($breite !== null ? ['w' => $breite] : []));
+
+?>
+            <div class="row row-cols-2 row-cols-md-3 row-cols-xl-4 g-3" id="archiv-galerie">
+                <?php foreach ($aktive['karten'] as $idx => $karte) : ?>
+                    <?php
+                    $vorne  = $karte['vorderseite'];
+                    $hinten = $karte['rueckseite'];
+                    $exif   = $vorne['exif'];
+
+                    $kachelUrl = $dateiUrl($vorne['pfad'], 400);
+                    $mediaUrl  = $vorne['m_id'] !== null
+                        ? route(\Fisharebest\Webtrees\Http\RequestHandlers\MediaPage::class, ['tree' => $tree->name(), 'xref' => $vorne['m_id']])
+                        : '';
+
+                    $motiv   = $karte['abschnitte']['motiv'];
+                    $caption = $motiv !== '' ? $motiv : ($vorne['titel'] !== '' ? $vorne['titel'] : $karte['schluessel']);
+                    $datum   = $exif['datum'] !== '' && ($exif['datum_unsicher'] ?? false)
+                        ? I18N::translate('around %s', $exif['datum'])
+                        : $exif['datum'];
+
+                    // 'personen' = die im Dateikopf hinterlegten Namen (Seitenleiste,
+                    // wird zurueckgeschrieben); webtrees-Verknuepfungen in wt_personen.
+                    $exifPersonen = $exif['personen'] ?? [];
+                    $lbData = json_encode([
+                        'datum'             => $datum,
+                        'datum_iso'         => $exif['datum_iso'],
+                        'datum_unsicher'    => (bool) ($exif['datum_unsicher'] ?? false),
+                        'exif_beschreibung' => $exif['beschreibung'],
+                        'personen'          => $exifPersonen,
+                        'personen_gesamt'   => $vorne['personen_gesamt'] ?? count($vorne['personen']),
+                        'keywords'          => $exif['keywords'] ?? [],
+                        'media'             => $mediaUrl,
+                        'wt_titel'          => $vorne['wt']['titel'] ?? '',
+                        'wt_notiz'          => $vorne['wt']['notiz'] ?? '',
+                        'wt_personen'       => $vorne['wt']['personen'] ?? [],
+                        'wt_edit'           => $mediaUrl,
+                        'in_sammlungen'     => $vorne['in_sammlungen'] ?? [],
+                        'breite'            => $exif['breite'],
+                        'hoehe'             => $exif['hoehe'],
+                        'groesse_kb'        => $exif['groesse_kb'],
+                        'format'            => strtoupper($vorne['format']),
+                        'thumb'             => $kachelUrl,
+                        'postkarte'         => [
+                            'schluessel'    => $karte['schluessel'],
+                            'motiv'         => $motiv,
+                            'transkription' => $karte['abschnitte']['transkription'],
+                            'notiz'         => $karte['abschnitte']['notiz'],
+                            'vorderseite'   => [
+                                'pfad'     => $vorne['pfad'],
+                                'full'     => $dateiUrl($vorne['pfad'], 1600),
+                                'original' => $dateiUrl($vorne['pfad']),
+                            ],
+                            'rueckseite'    => $hinten !== null ? [
+                                'pfad'     => $hinten['pfad'],
+                                'full'     => $dateiUrl($hinten['pfad'], 1600),
+                                'original' => $dateiUrl($hinten['pfad']),
+                            ] : null,
+                        ],
+                    ], JSON_UNESCAPED_UNICODE);
+                    ?>
+                    <div class="col">
+                        <a href="#"
+                           class="archiv-gallery-item archiv-pk-karte d-block text-decoration-none position-relative"
+                           data-idx="<?= $idx ?>"
+                           data-full="<?= e($dateiUrl($vorne['pfad'], 1600)) ?>"
+                           data-original="<?= e($dateiUrl($vorne['pfad'])) ?>"
+                           data-title="<?= e($caption) ?>"
+                           data-info="<?= e($lbData) ?>">
+                            <div class="archiv-pk-bild">
+                                <img src="<?= e($kachelUrl) ?>"
+                                     alt="<?= e($caption) ?>"
+                                     loading="lazy"
+                                     onerror="this.closest('.col').style.display='none'">
+                            </div>
+                            <?php if ($hinten !== null) : ?>
+                                <span class="archiv-pk-rueck badge rounded-pill"
+                                      title="<?= I18N::translate('Reverse side available') ?>">&#8644;</span>
+                            <?php endif ?>
+                            <div class="archiv-pk-text">
+                                <div class="archiv-pk-titel text-truncate"><?= e($caption) ?></div>
+                                <div class="archiv-pk-meta text-truncate">
+                                    <?= $datum !== '' ? '📅 ' . e($datum) : '&nbsp;' ?>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                <?php endforeach ?>
+            </div>
+
+            <?php
+            $seiteUrl = fn (int $s): string => route('sammlungen.sammlungen', [
+                'tree'      => $treeName,
+                'kategorie' => $aktive['sammlung']->slug,
+                'seite'     => $s,
+            ]);
+            ?>
+            <p class="text-muted small mt-3 mb-2">
+                <?= I18N::plural('%s postcard', '%s postcards', $aktive['anzahl'], I18N::number($aktive['anzahl'])) ?>
+                · <?= I18N::translate('Page %s of %s', $aktive['seite'], $aktive['seiten_gesamt']) ?>
+                · <?= I18N::translate('Click to enlarge') ?>
+            </p>
+            <?php include __DIR__ . '/_seitennavigation.phtml'; ?>
+
+            <?php include __DIR__ . '/_weitere-medien.phtml'; ?>

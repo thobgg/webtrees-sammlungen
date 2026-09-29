@@ -471,3 +471,53 @@ msgstr "Overzicht"
 
 msgid "Large pictures"
 msgstr "Grote afbeeldingen"
+
+msgid "%s postcard"
+msgid_plural "%s postcards"
+msgstr[0] "%s ansichtkaart"
+msgstr[1] "%s ansichtkaarten"
+
+msgid "Postcards"
+msgstr "Ansichtkaarten"
+
+msgid "Front and back as one entry (PK_0001_V.jpg / PK_0001_R.jpg)"
+msgstr "Voor- en achterkant als één item (PK_0001_V.jpg / PK_0001_R.jpg)"
+
+msgid "around %s"
+msgstr "rond %s"
+
+msgid "Reverse side available"
+msgstr "Achterkant beschikbaar"
+
+msgid "Turn the card (key W)"
+msgstr "Kaart omdraaien (toets W)"
+
+msgid "Reverse side"
+msgstr "Achterkant"
+
+msgid "Front side"
+msgstr "Voorkant"
+
+msgid "Transcription"
+msgstr "Transcriptie"
+
+msgid "Saved to both sides of the card."
+msgstr "Wordt op beide kanten van de kaart opgeslagen."
+
+msgid "Motif"
+msgstr "Motief"
+
+msgid "What the picture shows"
+msgstr "Wat de afbeelding toont"
+
+msgid "The text on the back, line by line"
+msgstr "De tekst op de achterkant, regel voor regel"
+
+msgid "Note"
+msgstr "Notitie"
+
+msgid "Printing technique, publisher, condition…"
+msgstr "Druktechniek, uitgever, staat…"
+
+msgid "Date uncertain (postmark illegible, inferred)"
+msgstr "Datum onzeker (poststempel onleesbaar, afgeleid)"

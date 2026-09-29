@@ -30,6 +30,14 @@ use const PATHINFO_EXTENSION;
  */
 class CollectionService
 {
+    /**
+     * Die Anzeigetypen einer Sammlung. 'postkarte': Vorder- und Rueckseite
+     * einer Datei-Paarung als ein Eintrag (siehe Postkarten).
+     *
+     * @var list<string>
+     */
+    public const ANSICHTEN = ['foto', 'raster', 'gemischt', 'dokument', Postkarten::ANSICHT];
+
     public function __construct(
         private readonly ApcuCacheService $cache
     ) {}
@@ -118,7 +126,7 @@ class CollectionService
             'reihenfolge'  => $reihenfolge,
             'aktiv'        => $aktiv ? 1 : 0,
             'ordner'       => $ordner !== '' ? $ordner : null,
-            'ansicht'      => in_array($ansicht, ['foto', 'raster', 'gemischt', 'dokument'], true) ? $ansicht : 'foto',
+            'ansicht'      => in_array($ansicht, self::ANSICHTEN, true) ? $ansicht : 'foto',
             'created_at'   => date('Y-m-d H:i:s'),
             'updated_at'   => date('Y-m-d H:i:s'),
         ]);
@@ -149,7 +157,7 @@ class CollectionService
                 'reihenfolge'  => $reihenfolge,
                 'aktiv'        => $aktiv ? 1 : 0,
                 'ordner'       => $ordner !== '' ? $ordner : null,
-                'ansicht'      => in_array($ansicht, ['foto', 'raster', 'gemischt', 'dokument'], true) ? $ansicht : 'foto',
+                'ansicht'      => in_array($ansicht, self::ANSICHTEN, true) ? $ansicht : 'foto',
                 'updated_at'   => date('Y-m-d H:i:s'),
             ]);
 

@@ -98,6 +98,91 @@ final class ExifServiceTest extends TestCase
         self::assertStringNotContainsString('<Sohn>', $xmp);
     }
 
+    public function testBaueXmpPacketMitKopplungUndUnsicheremDatum(): void
+    {
+        $xmp = $this->call('baueXmpPacket', 'Motiv: Kirche', '1912-05-12', [], [], true, 'PK_0001', 'PK_0001_R.jpg');
+
+        self::assertStringContainsString('<dc:identifier>PK_0001</dc:identifier>', $xmp);
+        self::assertStringContainsString('<dc:relation><rdf:Bag><rdf:li>PK_0001_R.jpg</rdf:li></rdf:Bag></dc:relation>', $xmp);
+        self::assertStringContainsString('<sammlungen:DatumUnsicher>True</sammlungen:DatumUnsicher>', $xmp);
+        self::assertStringContainsString('xmlns:sammlungen="' . ExifService::NS_SAMMLUNGEN . '"', $xmp);
+
+        // Ohne Datum gibt es auch kein "unsicher".
+        $ohne = $this->call('baueXmpPacket', '', '', [], [], true, '', '');
+        self::assertStringNotContainsString('DatumUnsicher', $ohne);
+        self::assertStringNotContainsString('<dc:identifier>', $ohne);
+        self::assertStringNotContainsString('<dc:relation>', $ohne);
+    }
+
+    /**
+     * Das Paket muss sich mit denselben XPath-Ausdruecken wieder lesen lassen,
+     * mit denen leseMeta() arbeitet - sonst schreibt das Modul, was es selbst
+     * nicht mehr findet.
+     */
+    public function testGeschriebenesPaketWirdWiederGelesen(): void
+    {
+        $xmp = $this->call(
+            'baueXmpPacket',
+            "Motiv: Kirche\nTranskription:\nGruss aus Kiel",
+            '1912-05-12',
+            ['Anna Bugge'],
+            ['Kiel', 'Lichtdruck'],
+            true,
+            'PK_0001',
+            'PK_0001_R.jpg'
+        );
+
+        $result = [
+            'beschreibung' => '', 'datum' => '', 'datum_iso' => '', 'datum_unsicher' => false,
+            'personen' => [], 'keywords' => [], 'identifier' => '', 'relation' => '',
+        ];
+        $m = new ReflectionMethod(ExifService::class, 'parseXmp');
+        $m->invokeArgs($this->service, [$xmp, &$result]);
+
+        self::assertSame("Motiv: Kirche\nTranskription:\nGruss aus Kiel", $result['beschreibung']);
+        self::assertSame('1912-05-12', $result['datum_iso']);
+        self::assertSame('12.05.1912', $result['datum']);
+        self::assertTrue($result['datum_unsicher']);
+        self::assertSame(['Anna Bugge'], $result['personen']);
+        self::assertSame(['Kiel', 'Lichtdruck'], $result['keywords']);
+        self::assertSame('PK_0001', $result['identifier']);
+        self::assertSame('PK_0001_R.jpg', $result['relation']);
+    }
+
+    /**
+     * Ohne Imagick liest leseMeta() ein JPEG ueber den eigenen Segmentleser -
+     * und was schreibeMeta() geschrieben hat, kommt so zurueck. Laeuft nur
+     * dort, wo Imagick fehlt (dann nimmt leseMeta den anderen Weg), und
+     * braucht GD fuer das Testbild.
+     */
+    public function testJpegRundlaufOhneImagick(): void
+    {
+        if (class_exists('Imagick') || !function_exists('imagejpeg')) {
+            self::markTestSkipped('Nur ohne Imagick und mit GD.');
+        }
+
+        $datei = tempnam(sys_get_temp_dir(), 'pk') . '.jpg';
+        $bild  = imagecreatetruecolor(40, 30);
+        imagejpeg($bild, $datei, 95);
+
+        try {
+            $xmp = $this->call('baueXmpPacket', 'Kirche', '1912', ['Anna'], ['Kiel'], false, 'PK_0001', 'PK_0001_R.jpg');
+            \Sammlungen\Service\JpegXmp::schreibe($datei, $xmp);
+
+            $meta = $this->service->leseMeta($datei);
+
+            self::assertSame('Kirche', $meta['beschreibung']);
+            self::assertSame('1912', $meta['datum_iso']);
+            self::assertSame(['Anna'], $meta['personen']);
+            self::assertSame('PK_0001', $meta['identifier']);
+            self::assertSame(40, $meta['breite']);
+            self::assertSame(30, $meta['hoehe']);
+        } finally {
+            @unlink($datei);
+            @unlink(substr($datei, 0, -4));
+        }
+    }
+
     public function testBaueXmpPacketLaesstLeereFelderWeg(): void
     {
         $xmp = $this->call('baueXmpPacket', '', '', [], []);

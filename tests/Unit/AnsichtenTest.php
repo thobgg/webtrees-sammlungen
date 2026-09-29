@@ -37,6 +37,7 @@ final class AnsichtenTest extends TestCase
         return [
             ['partials/_detail-ordner.phtml'],
             ['partials/_detail-manuell.phtml'],
+            ['partials/_detail-postkarten.phtml'],
         ];
     }
 

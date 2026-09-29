@@ -477,3 +477,54 @@ msgstr "Prehľad"
 
 msgid "Large pictures"
 msgstr "Veľké obrázky"
+
+msgid "%s postcard"
+msgid_plural "%s postcards"
+msgstr[0] "%s pohľadnica"
+msgstr[1] "%s pohľadnice"
+msgstr[2] "%s pohľadníc"
+
+msgid "Postcards"
+msgstr "Pohľadnice"
+
+msgid "Front and back as one entry (PK_0001_V.jpg / PK_0001_R.jpg)"
+msgstr "Predná a zadná strana ako jeden záznam (PK_0001_V.jpg / PK_0001_R.jpg)"
+
+msgid "around %s"
+msgstr "okolo %s"
+
+msgid "Reverse side available"
+msgstr "Zadná strana k dispozícii"
+
+msgid "Turn the card (key W)"
+msgstr "Otočiť pohľadnicu (kláves W)"
+
+msgid "Reverse side"
+msgstr "Zadná strana"
+
+msgid "Front side"
+msgstr "Predná strana"
+
+msgid "Transcription"
+msgstr "Prepis"
+
+msgid "Saved to both sides of the card."
+msgstr "Uloží sa na obe strany pohľadnice."
+
+msgid "Motif"
+msgstr "Motív"
+
+msgid "What the picture shows"
+msgstr "Čo obrázok zobrazuje"
+
+msgid "The text on the back, line by line"
+msgstr "Text na zadnej strane, riadok po riadku"
+
+msgid "Note"
+msgstr "Poznámka"
+
+msgid "Printing technique, publisher, condition…"
+msgstr "Tlačová technika, vydavateľ, stav…"
+
+msgid "Date uncertain (postmark illegible, inferred)"
+msgstr "Dátum neistý (poštová pečiatka nečitateľná, odvodený)"

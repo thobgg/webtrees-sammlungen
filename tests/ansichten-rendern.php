@@ -158,11 +158,23 @@ namespace {
     ];
     $dok = ['pfad' => 'a/c.pdf', 'datei' => 'c.pdf', 'format' => 'pdf', 'm_id' => null, 'titel' => ''];
 
+    // Postkarte: Vorderseite mit Rueckseite, dazu eine Einzelkarte - beide
+    // Zweige der Kachel (mit und ohne Wende-Zeichen) sollen rendern.
+    $bildUnsicher = $bild;
+    $bildUnsicher['exif']['datum_unsicher'] = true;
+    $karten = [
+        ['schluessel' => 'PK_0001', 'vorderseite' => $bildUnsicher, 'rueckseite' => $bild,
+         'abschnitte' => ['motiv' => 'Marktplatz', 'transkription' => "Liebe Mutter,\nwir sind da.", 'notiz' => 'Stempel unleserlich']],
+        ['schluessel' => 'PK_0002', 'vorderseite' => $bild, 'rueckseite' => null,
+         'abschnitte' => ['motiv' => '', 'transkription' => '', 'notiz' => '']],
+    ];
+
     $ansichten = [
         'ordner/raster'   => ['istRaster' => true,  'istGemischt' => false, 'istBild' => true],
         'ordner/gemischt' => ['istRaster' => false, 'istGemischt' => true,  'istBild' => true],
         'ordner/foto'     => ['istRaster' => false, 'istGemischt' => false, 'istBild' => true],
         'ordner/dokument' => ['istRaster' => false, 'istGemischt' => false, 'istBild' => false],
+        'ordner/postkarte' => ['istRaster' => false, 'istGemischt' => false, 'istBild' => true, 'istPostkarte' => true],
     ];
 
     $fehler = 0;
@@ -173,6 +185,7 @@ namespace {
                 'typ' => 'ordner', 'sammlung' => $sammlung, 'anzahl' => 24, 'datei_anzahl' => 24,
                 'seite' => 1, 'seiten_gesamt' => $seiten, 'per_seite' => 10,
                 'bilder' => [$bild], 'weitere' => [$dok], 'dokumente' => [$dok], 'alle' => [$dok],
+                'karten' => $karten,
             ], $flags);
 
             ob_start();

@@ -111,7 +111,7 @@ $fAnsicht      = $isNeu ? 'foto' : ($sammlung->ansicht ?? 'foto');
                         <!-- Anzeigetyp -->
                         <div class="mb-3 mt-3">
                             <label class="form-label fw-semibold"><?= I18N::translate('Display type') ?></label>
-                            <div class="d-flex gap-3">
+                            <div class="d-flex gap-3 flex-wrap">
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="ansicht"
                                            id="ansicht-foto" value="foto" <?= $fAnsicht === 'foto' ? 'checked' : '' ?>>
@@ -142,6 +142,14 @@ $fAnsicht      = $isNeu ? 'foto' : ($sammlung->ansicht ?? 'foto');
                                     <label class="form-check-label" for="ansicht-dokument">
                                         📄 <?= I18N::translate('Document list') ?>
                                         <small class="text-muted d-block"><?= I18N::translate('List, also for JPG scans') ?></small>
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="ansicht"
+                                           id="ansicht-postkarte" value="postkarte" <?= $fAnsicht === 'postkarte' ? 'checked' : '' ?>>
+                                    <label class="form-check-label" for="ansicht-postkarte">
+                                        📮 <?= I18N::translate('Postcards') ?>
+                                        <small class="text-muted d-block"><?= I18N::translate('Front and back as one entry (PK_0001_V.jpg / PK_0001_R.jpg)') ?></small>
                                     </label>
                                 </div>
                             </div>
