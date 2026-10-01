@@ -52,7 +52,7 @@ lo que eso conlleva:
   propio control de acceso – lo hace por ti el modelo de permisos por niveles, ya
   probado, de webtrees.
 - **Tus datos siguen siendo tuyos – sin dependencia de un proveedor:** a diferencia
-  de los "álbumes" de MyHeritage o Google Photos, tus fotos y sus descripciones
+  de los "álbumes" de Google Photos, tus fotos y sus descripciones
   siguen siendo enteramente tuyas. La **sincronización EXIF/XMP bidireccional**
   incluso vuelve a escribir la descripción, la fecha y las personas **dentro de los
   archivos de imagen** – los metadatos no viven solo en la base de datos, viajan con

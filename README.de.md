@@ -38,8 +38,7 @@ und vor allem **in webtrees integriert**, mit allem, was daran hängt:
   durchstöbern die Galerien; anonyme Besucher sehen den (datengeschützten) Stammbaum,
   aber **nicht** die Sammlungen. Du baust keine eigene Zugriffskontrolle – das erprobte,
   abgestufte Rechtemodell von webtrees übernimmt das.
-- **Deine Daten gehören dir – kein Vendor-Lock-in:** Anders als bei MyHeritage- oder
-  Google-Fotos-„Alben" bleiben deine Fotos und ihre Beschreibungen vollständig deine.
+- **Deine Daten gehören dir – kein Vendor-Lock-in:** Anders als bei Google-Fotos-„Alben" bleiben deine Fotos und ihre Beschreibungen vollständig deine.
   Der **bidirektionale EXIF/XMP-Abgleich** schreibt Beschreibung, Datum und Personen sogar
   **in die Bilddateien zurück** – die Metadaten liegen nicht nur in der Datenbank, sondern
   reisen mit den Fotos.

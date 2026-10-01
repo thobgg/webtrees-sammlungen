@@ -408,7 +408,7 @@ class CollectionService
     public function verfuegbareOrdner(Tree $tree): array
     {
         // Direkt vom Dateisystem lesen – zuverlässig, unabhängig von
-        // ggf. falschen Windows-Pfaden in der DB (Ahnenblatt-Migration).
+        // ggf. falschen Windows-Pfaden in der DB (Migration aus einem Desktop-Programm).
         $mediaBase = MedienPfad::wurzel($tree);
 
         if (!is_dir($mediaBase)) {
