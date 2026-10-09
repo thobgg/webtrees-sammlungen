@@ -42,7 +42,7 @@ class ExifService
     /**
      * Liest XMP-Metadaten aus einer Bilddatei.
      *
-     * @return array{beschreibung:string, datum:string, datum_iso:string, datum_unsicher:bool, personen:list<string>, keywords:list<string>, identifier:string, relation:string, breite:int, hoehe:int, groesse_kb:int}
+     * @return array{beschreibung:string, datum:string, datum_iso:string, datum_unsicher:bool, datum_aus_exif:bool, personen:list<string>, keywords:list<string>, identifier:string, relation:string, breite:int, hoehe:int, groesse_kb:int}
      */
     public function leseMeta(string $fullPath): array
     {
@@ -51,6 +51,11 @@ class ExifService
             'datum'          => '',
             'datum_iso'      => '',
             'datum_unsicher' => false,
+            // true: das Datum stammt aus dem klassischen EXIF und nicht aus
+            // dem XMP. Bei Scans ist das meist der Tag, an dem das Bild
+            // gespeichert wurde (GIMP setzt DateTime), nicht der Tag der
+            // Aufnahme - Postkarten uebernehmen so ein Datum nicht.
+            'datum_aus_exif' => false,
             'personen'       => [],
             'keywords'       => [],
             'identifier'     => '',
@@ -115,8 +120,9 @@ class ExifService
                 if ($exifDateOriginal !== '') {
                     // EXIF-Format: "YYYY:MM:DD HH:MM:SS" → ISO YYYY-MM-DD
                     if (preg_match('/^(\d{4}):(\d{2}):(\d{2})/', $exifDateOriginal, $m)) {
-                        $result['datum_iso'] = "$m[1]-$m[2]-$m[3]";
-                        $result['datum']     = $this->formatiereDatumAnzeige($result['datum_iso']);
+                        $result['datum_iso']      = "$m[1]-$m[2]-$m[3]";
+                        $result['datum']          = $this->formatiereDatumAnzeige($result['datum_iso']);
+                        $result['datum_aus_exif'] = true;
                     }
                 }
 
@@ -267,8 +273,9 @@ class ExifService
         $date = $xml->xpath('//xmp:CreateDate');
         if (!empty($date)) {
             $raw = trim((string) $date[0]);
-            $result['datum_iso'] = $raw;
-            $result['datum']     = $this->formatiereDatumAnzeige($raw);
+            $result['datum_iso']      = $raw;
+            $result['datum']          = $this->formatiereDatumAnzeige($raw);
+            $result['datum_aus_exif'] = false;
         }
 
         // Datum unsicher (eigener Namensraum)

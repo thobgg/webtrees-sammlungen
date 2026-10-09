@@ -546,6 +546,14 @@ final class SammlungenViewModel
 
         $jePfad = [];
         foreach ($this->bilderAnreichern($tree, $flach) as $bild) {
+            // Das Datum einer Karte ist der Poststempel, und den traegt nur
+            // jemand von Hand ein (XMP). Ein Datum aus dem klassischen EXIF
+            // ist bei Scans der Speichertag - stuende es hier, landete es
+            // beim naechsten Speichern als Poststempel in beiden Dateien.
+            if ($bild['exif']['datum_aus_exif'] ?? false) {
+                $bild['exif']['datum']     = '';
+                $bild['exif']['datum_iso'] = '';
+            }
             $jePfad[$bild['pfad']] = $bild;
         }
 

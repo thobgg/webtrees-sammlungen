@@ -35,8 +35,11 @@ $stufen = [10, 20, 50, 100, 200];
 // Umschalten zwischen Raster und großen Einzelbildern nur, wo beides Sinn
 // ergibt. In einer Dokumentensammlung wäre ein Foto-Raster ein Gitter aus
 // PDF-Symbolen.
+// Postkarten haben ihre eigene Darstellung; der Umschalter waere dort ohne
+// Wirkung und wuerde nur verwirren.
 $darstellungWaehlbar = ($aktive['istBild'] ?? false)
     && !($aktive['istGemischt'] ?? false)
+    && !($aktive['istPostkarte'] ?? false)
     && ($aktive['typ'] ?? '') === 'ordner';
 
 $von = max(1, ($aktive['seite'] ?? 1) - 2);

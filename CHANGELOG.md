@@ -19,6 +19,10 @@ _Das Nächste wird 2.0.0: die Postkarten und der verlustfreie Schreibweg ändern
   Rückseite steht die Transkription. Dateien ohne Gegenstück sind Einzelkarten;
   zwei Dateien desselben webtrees-Medienobjekts (ein OBJE mit zwei FILE)
   gelten ebenfalls als Paar. Gezählt und geblättert wird nach Karten.
+  Der Ordner gehört in den Medienordner des Stammbaums (etwa
+  `media/falkenrath/postkarten`), sonst bietet ihn die Verwaltung nicht an.
+  Ein Datum aus dem klassischen EXIF übernimmt eine Postkarte nicht: bei
+  Scans ist das der Speichertag des Bildprogramms, nicht der Poststempel.
 - **Editor für Postkarten.** Die Seitenleiste hat für eine Karte drei Felder
   statt der Beschreibung: Motiv, Transkription, Notiz. Sie landen mit festen
   Überschriften (`Motiv:`, `Transkription:`, `Notiz:`) in der einen

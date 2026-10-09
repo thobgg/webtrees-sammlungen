@@ -262,6 +262,12 @@ $unverknuepftGesamt = array_sum($unverknuepft_typen ?? []);
 .archiv-pk-titel { font-size: .82rem; font-weight: 600; color: #212529; }
 .archiv-pk-meta  { font-size: .72rem; color: #6c757d; }
 
+/* Neben der Transkription muss das Bild schmaler werden duerfen. Als
+   Flex-Element schrumpft es sonst nicht unter seine eigene Breite, und die
+   Flaeche schneidet es links und rechts ab - bei einer quer liegenden
+   Rueckseite war der Kopf des Kartentexts nicht mehr zu lesen. */
+#archiv-lb-img { min-width: 0; flex: 0 1 auto; }
+
 /* Transkription neben der Rueckseite in der Lightbox. Auf dem Telefon
    unter dem Bild, weil daneben kein Platz ist. */
 .archiv-lb-transkription {
