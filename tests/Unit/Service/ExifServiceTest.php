@@ -85,7 +85,7 @@ final class ExifServiceTest extends TestCase
         self::assertStringContainsString('<xmp:CreateDate>1985-07-23</xmp:CreateDate>', $xmp);
         self::assertStringContainsString('Max Mustermann', $xmp);
         self::assertStringContainsString('Erika Musterfrau', $xmp);
-        self::assertStringContainsString('<iptcExt:PersonInImage>', $xmp);
+        self::assertStringContainsString('<Iptc4xmpExt:PersonInImage>', $xmp);
         self::assertStringContainsString('<dc:subject>', $xmp);
     }
 
@@ -189,7 +189,7 @@ final class ExifServiceTest extends TestCase
 
         self::assertStringNotContainsString('<dc:description>', $xmp);
         self::assertStringNotContainsString('<xmp:CreateDate>', $xmp);
-        self::assertStringNotContainsString('<iptcExt:PersonInImage>', $xmp);
+        self::assertStringNotContainsString('<Iptc4xmpExt:PersonInImage>', $xmp);
         self::assertStringNotContainsString('<dc:subject>', $xmp);
     }
 }

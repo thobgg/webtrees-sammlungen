@@ -521,3 +521,6 @@ msgstr "Druktechniek, uitgever, staat…"
 
 msgid "Date uncertain (postmark illegible, inferred)"
 msgstr "Datum onzeker (poststempel onleesbaar, afgeleid)"
+
+msgid "Fill the screen (key F)"
+msgstr "Schermvullend (toets F)"

@@ -51,6 +51,23 @@ _Das Nächste wird 2.0.0: die Postkarten und der verlustfreie Schreibweg ändern
   gesetzt wurden, entfallen bei JPEG: das hätte einen eigenen TIFF-Schreiber
   verlangt, der vorhandene Scanner-EXIF-Blöcke beschädigen kann. Gelesen wird
   XMP ohnehin zuerst. PNG, GIF und WebP gehen weiter über Imagick.
+- **Fremde Metadaten bleiben erhalten.** Bisher baute das Modul das
+  XMP-Paket bei jedem Speichern neu, nur aus seinen eigenen Feldern – was
+  andere Programme hineingeschrieben hatten, war danach weg: Gesichtsregionen,
+  Bewertungen, Farbmarkierungen, Stichwort-Hierarchien, Beschreibungen in
+  weiteren Sprachen. Jetzt ersetzt es nur Beschreibung (Fassung x-default),
+  Datum, Personen, Stichwörter und die Postkarten-Felder; alles andere bleibt
+  stehen, ebenso die Fortsetzungs-Segmente großer XMP-Pakete. Felder in
+  Kurzschreibweise (als Attribut) liest und ersetzt es ebenfalls. Ein
+  vorhandenes Paket, das kein lesbares XML ist oder eine DTD enthält, wird
+  nicht überschrieben; die Lightbox meldet dann einen Fehler.
+- **Lightbox bildschirmfüllend** am Rechner: Schaltfläche ⛶ oder Taste F.
+  Kopfzeile, Wenden und Seitenleiste bleiben bedienbar. Am Telefon füllt wie
+  bisher ein Antippen des Bildes den Schirm. Die Karte wenden geht nur noch
+  mit W.
+- **Galerie-Skript nach Updates neu geladen.** Es wurde einen Tag
+  zwischengespeichert, der Versionszusatz beim Einbinden fehlte – nach einem
+  Update standen neue Knöpfe da und taten nichts.
 - **Tasten in der Lightbox** wirken nicht mehr, während in der Seitenleiste
   getippt wird (vorher blätterten die Pfeiltasten im Textfeld das Bild weiter).
 - **Link zur App:** Das Repo von wtAnd heißt jetzt

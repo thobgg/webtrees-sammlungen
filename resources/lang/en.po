@@ -518,3 +518,6 @@ msgstr "Printing technique, publisher, condition…"
 
 msgid "Date uncertain (postmark illegible, inferred)"
 msgstr "Date uncertain (postmark illegible, inferred)"
+
+msgid "Fill the screen (key F)"
+msgstr "Fill the screen (key F)"

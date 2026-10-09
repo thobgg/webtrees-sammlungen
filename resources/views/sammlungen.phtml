@@ -175,6 +175,9 @@ $unverknuepftGesamt = array_sum($unverknuepft_typen ?? []);
    und soll die Pfeile behalten. */
 @media (hover: none) and (pointer: coarse) {
   #archiv-lb-prev, #archiv-lb-next { display: none; }
+  /* Am Telefon fuellt schon ein Antippen des Bildes den Schirm (kahler
+     Zustand); der Knopf fuer den Rechner wuerde dort nur Platz kosten. */
+  #archiv-lb-voll { display: none; }
 }
 
 /* ---------------------------------------------------------------------
@@ -261,6 +264,24 @@ $unverknuepftGesamt = array_sum($unverknuepft_typen ?? []);
 .archiv-pk-text  { padding: .4rem .1rem 0; }
 .archiv-pk-titel { font-size: .82rem; font-weight: 600; color: #212529; }
 .archiv-pk-meta  { font-size: .72rem; color: #6c757d; }
+
+/* ---------------------------------------------------------------------
+   Bildschirmfuellend (Schaltflaeche oder Taste F): der Dialog nimmt das
+   ganze Fenster, das Bild den ganzen Platz zwischen Kopfzeile und
+   Vorschauleiste. Kopfzeile und Seitenleiste bleiben - anders als im
+   kahlen Zustand des Telefons -, damit Wenden und Bearbeiten weiter gehen.
+   Der Browser geht dazu ins Vollbild, wo er darf.
+   --------------------------------------------------------------------- */
+#archiv-lightbox.archiv-voll { --bs-modal-margin: 0; }
+#archiv-lightbox.archiv-voll .archiv-lb-dialog { max-width: 100vw; width: 100vw; }
+#archiv-lightbox.archiv-voll .modal-content {
+    height: 100vh; height: 100dvh;
+    max-height: 100dvh !important;
+    border-radius: 0;
+}
+#archiv-lightbox.archiv-voll #archiv-lb-img,
+#archiv-lightbox.archiv-voll .archiv-lb-transkription { max-height: 100% !important; }
+#archiv-lightbox.archiv-voll #archiv-lb-voll { background: #f8f9fa; color: #000; }
 
 /* Neben der Transkription muss das Bild schmaler werden duerfen. Als
    Flex-Element schrumpft es sonst nicht unter seine eigene Breite, und die

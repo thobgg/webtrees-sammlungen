@@ -519,3 +519,6 @@ msgstr "Técnica de impresión, editorial, estado…"
 
 msgid "Date uncertain (postmark illegible, inferred)"
 msgstr "Fecha incierta (matasellos ilegible, deducida)"
+
+msgid "Fill the screen (key F)"
+msgstr "Pantalla completa (tecla F)"

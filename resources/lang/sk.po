@@ -528,3 +528,6 @@ msgstr "Tlačová technika, vydavateľ, stav…"
 
 msgid "Date uncertain (postmark illegible, inferred)"
 msgstr "Dátum neistý (poštová pečiatka nečitateľná, odvodený)"
+
+msgid "Fill the screen (key F)"
+msgstr "Na celú obrazovku (kláves F)"

@@ -26,6 +26,10 @@ use Fisharebest\Webtrees\I18N;
                                         <button id="archiv-lb-wenden" type="button"
                                                 class="btn btn-sm btn-outline-light d-none"
                                                 title="<?= I18N::translate('Turn the card (key W)') ?>">&#8644; <span id="archiv-lb-wenden-text"><?= I18N::translate('Reverse side') ?></span></button>
+                                        <button id="archiv-lb-voll" type="button"
+                                                class="btn btn-sm btn-outline-light"
+                                                aria-pressed="false"
+                                                title="<?= I18N::translate('Fill the screen (key F)') ?>">&#x26F6;</button>
                                         <a id="archiv-lb-fullsize" href="#" target="_blank"
                                            class="btn btn-sm btn-outline-light"
                                            title="<?= I18N::translate('Full screen in a new tab') ?>">↗</a>
@@ -265,4 +269,10 @@ use Fisharebest\Webtrees\I18N;
                 }
             };
             </script>
-            <script src="<?= e(route('sammlungen.asset', ['datei' => 'sammlung-galerie.js'])) ?>"></script>
+            <?php
+            // Das Skript wird einen Tag zwischengespeichert. Ohne Versionszusatz
+            // behielt der Browser nach einem Update die alte Fassung - neue
+            // Knoepfe standen da und taten nichts.
+            $skriptStand = @filemtime(dirname(__DIR__, 2) . '/js/sammlung-galerie.js') ?: 0;
+            ?>
+            <script src="<?= e(route('sammlungen.asset', ['datei' => 'sammlung-galerie.js', 'v' => $skriptStand])) ?>"></script>

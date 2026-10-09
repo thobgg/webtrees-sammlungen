@@ -518,3 +518,6 @@ msgstr "Drucktechnik, Verlag, Zustand…"
 
 msgid "Date uncertain (postmark illegible, inferred)"
 msgstr "Datum unsicher (Poststempel unleserlich, erschlossen)"
+
+msgid "Fill the screen (key F)"
+msgstr "Bildschirmfüllend (Taste F)"

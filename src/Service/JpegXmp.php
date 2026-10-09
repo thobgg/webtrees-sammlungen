@@ -58,8 +58,13 @@ final class JpegXmp
 {
     public const XMP_KOPF = "http://ns.adobe.com/xap/1.0/\0";
 
-    /** Fortsetzungs-Segmente eines zu langen XMP-Pakets - haengen am Hauptpaket und gehen mit ihm. */
-    private const XMP_ERWEITERUNG_KOPF = "http://ns.adobe.com/xmp/extension/\0";
+    /**
+     * Fortsetzungs-Segmente eines zu langen XMP-Pakets (Lightroom, Kameras mit
+     * Tiefenkarte). Das Hauptpaket verweist per xmpNote:HasExtendedXMP auf
+     * sie; da das Modul nur seine eigenen Felder im Hauptpaket ersetzt und
+     * diesen Verweis stehen laesst, bleiben auch sie unangetastet.
+     */
+    public const XMP_ERWEITERUNG_KOPF = "http://ns.adobe.com/xmp/extension/\0";
 
     private const EXIF_KOPF = "Exif\0\0";
 
@@ -125,14 +130,14 @@ final class JpegXmp
                 throw new \RuntimeException('Position nicht lesbar.');
             }
 
-            // Altes XMP samt Fortsetzungen raus, Position fuers neue merken.
+            // Altes Hauptpaket raus, Position fuers neue merken.
             $behalten = [];
             $einfuegen = null;
 
             foreach ($segmente as $i => $segment) {
+                // Nur das Hauptpaket - Fortsetzungen (XMP_ERWEITERUNG_KOPF) bleiben.
                 $istXmp = $segment['marker'] === self::APP1
-                    && (str_starts_with($segment['daten'], self::XMP_KOPF)
-                        || str_starts_with($segment['daten'], self::XMP_ERWEITERUNG_KOPF));
+                    && str_starts_with($segment['daten'], self::XMP_KOPF);
 
                 if ($istXmp) {
                     $einfuegen ??= count($behalten);

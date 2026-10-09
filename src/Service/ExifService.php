@@ -37,7 +37,7 @@ class ExifService
      * Stichwort dafuer stuende in jeder Stichwortliste im Weg. Spaeter
      * kommen hier die Rollen Absender/Empfaenger dazu.
      */
-    public const NS_SAMMLUNGEN = 'https://github.com/thobgg/webtrees-sammlungen/ns/1.0/';
+    public const NS_SAMMLUNGEN = XmpPaket::NS_SAMMLUNGEN;
 
     /**
      * Liest XMP-Metadaten aus einer Bilddatei.
@@ -185,12 +185,18 @@ class ExifService
             throw new \RuntimeException("Nicht unterstütztes Format: {$ext}");
         }
 
-        $xmp = $this->baueXmpPacket($beschreibung, $datumIso, $personen, $keywords, $datumUnsicher, $identifier, $relation);
+        $istJpeg = in_array($ext, ['jpg', 'jpeg'], true);
+
+        // Vorhandenes XMP lesen und nur die eigenen Felder darin ersetzen -
+        // was andere Programme hineingeschrieben haben, bleibt stehen.
+        // Vor dem Backup, damit ein unlesbares Paket gar nichts anfasst.
+        $alt = $istJpeg ? JpegXmp::lies($fullPath) : $this->xmpUeberImagick($fullPath);
+        $xmp = $this->baueXmpPacket($beschreibung, $datumIso, $personen, $keywords, $datumUnsicher, $identifier, $relation, $alt);
 
         // Backup vor destruktiver Operation (pro Datei max. 1× pro Tag)
         $this->erstelleBackup($fullPath, $tree);
 
-        if (in_array($ext, ['jpg', 'jpeg'], true)) {
+        if ($istJpeg) {
             // Verlustfrei: nur das XMP-Segment wird getauscht. Kein Imagick noetig.
             if (!is_writable(dirname($fullPath))) {
                 throw new \RuntimeException("Ordner nicht schreibbar: " . dirname($fullPath));
@@ -264,13 +270,15 @@ class ExifService
         $xml->registerXPathNamespace('sammlungen', self::NS_SAMMLUNGEN);
 
         // Beschreibung
-        $desc = $xml->xpath('//dc:description/rdf:Alt/rdf:li[1]');
+        // Die Fassung x-default, sonst die erste
+        $desc = $xml->xpath('//dc:description/rdf:Alt/rdf:li[@xml:lang="x-default"]')
+            ?: $xml->xpath('//dc:description/rdf:Alt/rdf:li[1]');
         if (!empty($desc)) {
             $result['beschreibung'] = trim((string) $desc[0]);
         }
 
-        // Datum
-        $date = $xml->xpath('//xmp:CreateDate');
+        // Datum - als Element oder in Kurzschreibweise als Attribut
+        $date = $xml->xpath('//xmp:CreateDate') ?: $xml->xpath('//rdf:Description/@xmp:CreateDate');
         if (!empty($date)) {
             $raw = trim((string) $date[0]);
             $result['datum_iso']      = $raw;
@@ -279,7 +287,7 @@ class ExifService
         }
 
         // Datum unsicher (eigener Namensraum)
-        $unsicher = $xml->xpath('//sammlungen:DatumUnsicher');
+        $unsicher = $xml->xpath('//sammlungen:DatumUnsicher') ?: $xml->xpath('//rdf:Description/@sammlungen:DatumUnsicher');
         if (!empty($unsicher)) {
             $result['datum_unsicher'] = in_array(strtolower(trim((string) $unsicher[0])), ['true', '1'], true);
         }
@@ -303,7 +311,7 @@ class ExifService
         }
 
         // Kopplung: Kartenschluessel und Gegenseite
-        $ident = $xml->xpath('//dc:identifier');
+        $ident = $xml->xpath('//dc:identifier') ?: $xml->xpath('//rdf:Description/@dc:identifier');
         if (!empty($ident)) {
             $result['identifier'] = trim((string) $ident[0]);
         }
@@ -314,6 +322,9 @@ class ExifService
     }
 
     /**
+     * Das zu schreibende XMP-Paket: das vorhandene, nur mit den Feldern des
+     * Moduls ersetzt (siehe XmpPaket).
+     *
      * @param list<string> $personen
      * @param list<string> $keywords
      */
@@ -325,64 +336,28 @@ class ExifService
         bool   $datumUnsicher = false,
         string $identifier = '',
         string $relation = '',
+        string $alt = '',
     ): string {
-        $e = fn (string $s): string => htmlspecialchars($s, ENT_XML1 | ENT_QUOTES, 'UTF-8');
+        return XmpPaket::mischen($alt, $beschreibung, $datumIso, $personen, $keywords, $datumUnsicher, $identifier, $relation);
+    }
 
-        $descXml = $beschreibung !== ''
-            ? "<dc:description><rdf:Alt><rdf:li xml:lang=\"x-default\">{$e($beschreibung)}</rdf:li></rdf:Alt></dc:description>"
-            : '';
-
-        $dateXml = $datumIso !== ''
-            ? "<xmp:CreateDate>{$e($datumIso)}</xmp:CreateDate>"
-            : '';
-
-        $unsicherXml = $datumUnsicher && $datumIso !== ''
-            ? '<sammlungen:DatumUnsicher>True</sammlungen:DatumUnsicher>'
-            : '';
-
-        $personenXml = '';
-        if ($personen !== []) {
-            $items = implode('', array_map(fn ($p) => "<rdf:li>{$e($p)}</rdf:li>", $personen));
-            $personenXml = "<iptcExt:PersonInImage><rdf:Bag>{$items}</rdf:Bag></iptcExt:PersonInImage>";
+    /** Das XMP-Paket einer Nicht-JPEG-Datei, oder '' wenn keines drin ist. */
+    private function xmpUeberImagick(string $fullPath): string
+    {
+        if (!class_exists('Imagick')) {
+            return '';
         }
 
-        $keywordsXml = '';
-        if ($keywords !== []) {
-            $items = implode('', array_map(fn ($k) => "<rdf:li>{$e($k)}</rdf:li>", $keywords));
-            $keywordsXml = "<dc:subject><rdf:Bag>{$items}</rdf:Bag></dc:subject>";
+        try {
+            $imagick = new \Imagick();
+            $imagick->pingImage($fullPath);
+            $profile = $imagick->getImageProfiles('xmp', true);
+            $imagick->destroy();
+
+            return (string) ($profile['xmp'] ?? '');
+        } catch (\Throwable) {
+            return '';
         }
-
-        $identXml = $identifier !== ''
-            ? "<dc:identifier>{$e($identifier)}</dc:identifier>"
-            : '';
-
-        $relationXml = $relation !== ''
-            ? "<dc:relation><rdf:Bag><rdf:li>{$e($relation)}</rdf:li></rdf:Bag></dc:relation>"
-            : '';
-
-        $nsSammlungen = self::NS_SAMMLUNGEN;
-
-        return <<<XML
-<?xpacket begin="\xEF\xBB\xBF" id="W5M0MpCehiHzreSzNTczkc9d"?>
-<x:xmpmeta xmlns:x="adobe:ns:meta/">
-  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-    <rdf:Description rdf:about=""
-      xmlns:dc="http://purl.org/dc/elements/1.1/"
-      xmlns:xmp="http://ns.adobe.com/xap/1.0/"
-      xmlns:iptcExt="http://iptc.org/std/Iptc4xmpExt/2008-02-29/"
-      xmlns:sammlungen="{$nsSammlungen}">
-      {$descXml}
-      {$dateXml}
-      {$unsicherXml}
-      {$personenXml}
-      {$keywordsXml}
-      {$identXml}
-      {$relationXml}
-    </rdf:Description>
-  </rdf:RDF>
-</x:xmpmeta>
-<?xpacket end="w"?>
-XML;
     }
 
     private function formatiereDatumAnzeige(string $iso): string

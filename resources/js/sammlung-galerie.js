@@ -580,9 +580,36 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.key === 'ArrowLeft') show(current - 1);
         if (e.key === 'ArrowRight') show(current + 1);
         // W wie wenden, F wie flip.
-        if (e.key === 'w' || e.key === 'W' || e.key === 'f' || e.key === 'F') wenden();
+        if (e.key === 'w' || e.key === 'W') wenden();
+        // F wie Vollbild - wie in den meisten Bildbetrachtern.
+        if (e.key === 'f' || e.key === 'F') vollUmschalten();
     });
     wendenBtn?.addEventListener('click', wenden);
+
+    // Bildschirmfuellend: der Dialog nimmt das ganze Fenster, und der
+    // Browser geht ins Vollbild, wo er darf. Verlaesst der Nutzer das
+    // Vollbild mit Esc, bleibt der Dialog gross - Esc schliesst ihn danach
+    // wie gewohnt.
+    const vollBtn = document.getElementById('archiv-lb-voll');
+    const lightboxEl = document.getElementById('archiv-lightbox');
+    function vollUmschalten() {
+        const an = lightboxEl.classList.toggle('archiv-voll');
+        vollBtn?.setAttribute('aria-pressed', an ? 'true' : 'false');
+        try {
+            if (an && !document.fullscreenElement && document.documentElement.requestFullscreen) {
+                const p = document.documentElement.requestFullscreen();
+                if (p && p.catch) p.catch(() => {});
+            } else if (!an && document.fullscreenElement && document.exitFullscreen) {
+                const p = document.exitFullscreen();
+                if (p && p.catch) p.catch(() => {});
+            }
+        } catch (e) { /* Vollbild ist Zugabe */ }
+    }
+    vollBtn?.addEventListener('click', vollUmschalten);
+    lightboxEl.addEventListener('hidden.bs.modal', () => {
+        lightboxEl.classList.remove('archiv-voll');
+        vollBtn?.setAttribute('aria-pressed', 'false');
+    });
 
     // + Zu Sammlung Toggle
     document.querySelectorAll('.archiv-sammlung-toggle').forEach(btn => {
