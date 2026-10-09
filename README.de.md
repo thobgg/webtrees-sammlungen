@@ -147,6 +147,8 @@ Taste **W** die Karte, neben der Rückseite steht die Transkription. Eine Datei
 ohne Gegenstück ist eine Einzelkarte; zwei Dateien desselben webtrees-Medienobjekts
 gelten ebenfalls als Paar.
 
+![Postkarten-Galerie](docs/images/05-postkarten.jpg)
+
 Der Editor hat für Karten drei Felder – **Motiv**, **Transkription**, **Notiz** –
 und schreibt sie mit festen Überschriften in die eine XMP-Beschreibung beider
 Dateien (so bleibt sie in jedem anderen Programm lesbar):
@@ -157,6 +159,8 @@ Transkription:
 Liebe Mutter, wir sind gut angekommen …
 Notiz: Stempel unleserlich, Jahr aus Briefmarke
 ```
+
+![Rückseite mit Transkription und Editor](docs/images/06-postkarte-rueckseite.jpg)
 
 Das **Datum** ist das Poststempeldatum (`JJJJ-MM-TT`); ein Häkchen „Datum unsicher"
 kennzeichnet ein erschlossenes Datum (Anzeige „um 12.05.1912"). **Personen** sind

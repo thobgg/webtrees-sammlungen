@@ -101,6 +101,8 @@ lightbox a button or the **W** key turns the card, and the transcription is show
 next to the back. A file without a counterpart is a single card; two files of the
 same webtrees media object count as a pair too.
 
+![Postcard gallery](docs/images/05-postkarten.jpg)
+
 For cards the editor has three fields – **Motif**, **Transcription**, **Note** –
 and writes them with fixed headings into the one XMP description of both files
 (so it stays readable in any other program):
@@ -111,6 +113,8 @@ Transkription:
 Liebe Mutter, wir sind gut angekommen …
 Notiz: Stempel unleserlich, Jahr aus Briefmarke
 ```
+
+![Reverse side with transcription and editor](docs/images/06-postkarte-rueckseite.jpg)
 
 The **date** is the postmark date (`YYYY-MM-DD`); a checkbox "date uncertain"
 marks an inferred date (shown as "around 12.05.1912"). **Individuals** are sender

@@ -8,7 +8,22 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 ## [Unreleased]
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
-_Das Nächste wird 2.0.0: die Postkarten und der verlustfreie Schreibweg ändern, was in die Dateien geschrieben wird._
+
+## [1.9.0] – 2026-10-09
+
+**Postkarten.** Vorder- und Rückseite als ein Eintrag, wenden per Klick oder
+Taste, die Transkription neben der Rückseite – und ein Schreibweg, der die
+Scans nicht mehr anfasst.
+
+![Postkarten-Galerie](https://raw.githubusercontent.com/thobgg/webtrees-sammlungen/v1.9.0/docs/images/05-postkarten.jpg)
+
+![Rückseite mit Transkription und Editor](https://raw.githubusercontent.com/thobgg/webtrees-sammlungen/v1.9.0/docs/images/06-postkarte-rueckseite.jpg)
+
+> **Bitte beachten:** Bei JPEG schreibt das Modul Beschreibung und Datum nur
+> noch ins XMP, nicht mehr zusätzlich in die klassischen EXIF-Felder
+> (`ImageDescription`, `DateTimeOriginal`). Das Modul selbst, digiKam,
+> Lightroom und die Windows-Fotoanzeige lesen XMP; ein Betrachter, der nur
+> das klassische EXIF kennt, zeigt neue Beschriftungen nicht an.
 
 ### Neu
 - **Anzeigetyp „Postkarten“.** Für eine Ordner-Sammlung wie „Großmutters
