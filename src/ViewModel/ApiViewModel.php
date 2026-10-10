@@ -7,6 +7,7 @@ namespace Sammlungen\ViewModel;
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\DB;
 use Fisharebest\Webtrees\Http\RequestHandlers\MediaPage;
+use Fisharebest\Webtrees\Individual;
 use Fisharebest\Webtrees\Media;
 use Fisharebest\Webtrees\MediaFile;
 use Fisharebest\Webtrees\Registry;
@@ -15,6 +16,8 @@ use Sammlungen\Dto\SammlungDto;
 use Sammlungen\Dto\Symbole;
 use Sammlungen\Repository\SammlungenRepository;
 use Sammlungen\SammlungenModule;
+use Sammlungen\Service\BereichIndex;
+use Sammlungen\Service\BereichSicht;
 use Sammlungen\Service\CollectionService;
 use Sammlungen\Service\ExifService;
 use Sammlungen\Service\MedienPfad;
@@ -31,6 +34,7 @@ use function max;
 use function min;
 use function pathinfo;
 use function route;
+use function strip_tags;
 use function strtolower;
 
 use const PATHINFO_EXTENSION;
@@ -56,6 +60,7 @@ final class ApiViewModel
     private const VOLLBILD_BREITE = 1600;
 
     private const SLUG_UNLINKED = '__unlinked__';
+    private const SLUG_PERSON   = '__person__';
 
     public function __construct(
         private readonly SammlungenViewModel  $viewModel,
@@ -63,6 +68,7 @@ final class ApiViewModel
         private readonly CollectionService    $collectionService,
         private readonly ExifService          $exifService,
         private readonly SammlungenModule     $module,
+        private readonly BereichIndex         $bereichIndex,
     ) {}
 
     // ---------------------------------------------------------------
@@ -138,6 +144,10 @@ final class ApiViewModel
             'galerie'       => route('sammlungen.sammlungen', ['tree' => $tree->name()]),
             'darfHochladen' => $darfHochladen,
             'darfExif'      => Auth::isManager($tree, $user),
+            // Stufe 5: Gesichter markieren (schreiben ueber api/exif, Feld bereiche) und
+            // Bilder einer Person finden (api/sammlung?person=…).
+            'darfBereiche'   => Auth::isManager($tree, $user),
+            'personenFilter' => true,
             // Ziele fuer das Hochladen: die Unterordner des Medienordners; der Hauptordner ist immer moeglich.
             'ordnerListe'   => $darfHochladen ? $this->collectionService->verfuegbareOrdner($tree) : [],
             'sammlungen'    => $sammlungen,
@@ -363,6 +373,62 @@ final class ApiViewModel
     }
 
     // ---------------------------------------------------------------
+    // Bilder einer Person
+    // ---------------------------------------------------------------
+
+    /**
+     * Alle Bilder des Archivs, auf denen diese Person als Gesicht markiert
+     * ist (sammlungen:Xref in den Bereichen) - mit oder ohne Medienobjekt,
+     * seitenweise wie eine Sammlung. Fuer "Auf Gruppenbildern" im
+     * Personenblatt der Apps.
+     *
+     * @return array<string,mixed>|null  null: keine Person, die dieser Nutzer sehen darf
+     */
+    public function person(Tree $tree, string $xref, int $seite, int $proSeite): ?array
+    {
+        $person = Registry::individualFactory()->make($xref, $tree);
+
+        if (!$person instanceof Individual || !$person->canShow()) {
+            return null;
+        }
+
+        $vollstaendig = $this->bereichIndex->auffrischen($tree);
+
+        $proSeite = $proSeite > 0 ? SammlungenModule::normalisierePerPage($proSeite) : $this->module->perPage();
+        $pfade    = $this->bereichIndex->pfadeMitPerson($tree, $person->xref());
+        $anzahl   = count($pfade);
+        $seiten   = max(1, (int) ceil($anzahl / $proSeite));
+        $seite    = min(max(1, $seite), $seiten);
+
+        $eintraege = array_map(
+            fn (string $pfad): array => $this->eintrag($tree, $pfad),
+            array_slice($pfade, ($seite - 1) * $proSeite, $proSeite)
+        );
+
+        return $this->kopf($tree) + [
+            'slug'         => self::SLUG_PERSON,
+            'art'          => 'person',
+            'person'       => $person->xref(),
+            'name'         => strip_tags($person->fullName()),
+            'beschreibung' => '',
+            'farbe'        => null,
+            'icon'         => 'fa-user',
+            'ansicht'      => 'foto',
+            'ordner'       => null,
+            'anzahl'       => $anzahl,
+            'dateien'      => $anzahl,
+            'seite'        => $seite,
+            'seiten'       => $seiten,
+            'proSeite'     => $proSeite,
+            'eintraege'    => $eintraege,
+            'weitere'      => [],
+            // false: der Index war beim ersten Durchlauf eines grossen Archivs
+            // noch nicht fertig - spaeter noch einmal fragen.
+            'vollstaendig' => $vollstaendig,
+        ];
+    }
+
+    // ---------------------------------------------------------------
     // Eintraege
     // ---------------------------------------------------------------
 
@@ -439,6 +505,7 @@ final class ApiViewModel
                 'datumUnsicher'   => (bool) ($exif['datum_unsicher'] ?? false),
                 'exifPersonen'    => $exif['personen'] ?? [],
                 'keywords'        => $exif['keywords'] ?? [],
+                'bereiche'        => BereichSicht::fuer($tree, $exif['bereiche'] ?? []),
                 'breite'          => (int) ($exif['breite'] ?? 0),
                 'hoehe'           => (int) ($exif['hoehe'] ?? 0),
                 'groesseKb'       => (int) ($exif['groesse_kb'] ?? 0),
@@ -510,6 +577,7 @@ final class ApiViewModel
                 'datumUnsicher'   => (bool) ($exif['datum_unsicher'] ?? false),
                 'exifPersonen'    => $exif['personen'] ?? [],
                 'keywords'        => $exif['keywords'] ?? [],
+                'bereiche'        => BereichSicht::fuer($tree, $exif['bereiche'] ?? []),
                 'breite'          => (int) ($exif['breite'] ?? 0),
                 'hoehe'           => (int) ($exif['hoehe'] ?? 0),
                 'groesseKb'       => (int) ($exif['groesse_kb'] ?? 0),

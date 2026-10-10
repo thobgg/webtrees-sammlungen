@@ -8,10 +8,13 @@ use DOMDocument;
 use DOMElement;
 use DOMNode;
 
+use function array_key_exists;
 use function in_array;
 use function libxml_clear_errors;
 use function libxml_use_internal_errors;
 use function rtrim;
+use function sprintf;
+use function strcasecmp;
 use function trim;
 
 /**
@@ -26,7 +29,8 @@ use function trim;
  *
  *   dc:description (nur die Fassung x-default), xmp:CreateDate,
  *   sammlungen:DatumUnsicher, Iptc4xmpExt:PersonInImage, dc:subject,
- *   dc:identifier, dc:relation
+ *   dc:identifier, dc:relation, und die Gesichter in mwg-rs:Regions
+ *   (nur Bereiche vom Typ Face, siehe Bereiche)
  *
  * Ein Feld ohne Wert wird entfernt - leert jemand im Editor das Datum, ist es
  * danach auch in der Datei weg. Felder in Kurzschreibweise (als Attribut am
@@ -55,6 +59,16 @@ final class XmpPaket
         self::NS_DC         => ['subject', 'identifier', 'relation'],
     ];
 
+    /** Schluessel von aendern() => das Feld im XMP (dc:description wird eigens behandelt). */
+    private const FELDER = [
+        'datum'         => [self::NS_XMP, 'CreateDate'],
+        'datumUnsicher' => [self::NS_SAMMLUNGEN, 'DatumUnsicher'],
+        'personen'      => [self::NS_IPTCEX, 'PersonInImage'],
+        'keywords'      => [self::NS_DC, 'subject'],
+        'identifier'    => [self::NS_DC, 'identifier'],
+        'relation'      => [self::NS_DC, 'relation'],
+    ];
+
     /** Bevorzugte Praefixe, falls das Paket noch keinen fuer den Namensraum kennt. */
     private const PRAEFIX = [
         self::NS_DC         => 'dc',
@@ -64,6 +78,8 @@ final class XmpPaket
     ];
 
     /**
+     * Alle Felder des Moduls auf einmal setzen - der Weg der Lightbox.
+     *
      * @param string       $alt           das vorhandene Paket ('' = keines)
      * @param list<string> $personen
      * @param list<string> $keywords
@@ -80,6 +96,35 @@ final class XmpPaket
         string $identifier = '',
         string $relation = '',
     ): string {
+        return self::aendern($alt, [
+            'beschreibung'  => $beschreibung,
+            'datum'         => $datumIso,
+            'datumUnsicher' => $datumUnsicher,
+            'personen'      => $personen,
+            'keywords'      => $keywords,
+            'identifier'    => $identifier,
+            'relation'      => $relation,
+        ]);
+    }
+
+    /**
+     * Nur die mitgegebenen Felder setzen; was fehlt, bleibt, wie es in der
+     * Datei steht. Ein mitgegebenes leeres Feld leert.
+     *
+     * Schluessel: beschreibung, datum, datumUnsicher, personen, keywords,
+     * identifier, relation, bereiche (Gesichter, siehe Bereiche). Ein leeres
+     * Datum nimmt "Datum unsicher" mit. Neue Gesichter mit Namen ergaenzen
+     * Iptc4xmpExt:PersonInImage, falls der Name dort fehlt - entfernt wird
+     * daraus nie etwas, sonst verschwaende ein Name aus Programmen, die keine
+     * Bereiche kennen, nur weil sein Rahmen geloescht wurde.
+     *
+     * @param array{beschreibung?:string, datum?:string, datumUnsicher?:bool, personen?:list<string>, keywords?:list<string>, identifier?:string, relation?:string, bereiche?:list<array{x:float, y:float, w:float, h:float, name:string, xref:string|null, typ:string}>} $felder
+     * @param int $breite  Pixelmasse des Bildes, fuer mwg-rs:AppliedToDimensions
+     *
+     * @throws \RuntimeException wenn das vorhandene Paket nicht lesbar ist
+     */
+    public static function aendern(string $alt, array $felder, int $breite = 0, int $hoehe = 0): string
+    {
         $doc = self::laden($alt);
         $rdf = $doc->getElementsByTagNameNS(self::NS_RDF, 'RDF')->item(0);
 
@@ -101,19 +146,42 @@ final class XmpPaket
             $beschreibungen[] = $neu;
         }
 
-        // 1. Eigene Felder entfernen - als Element wie als Attribut, in allen Beschreibungen.
-        foreach ($beschreibungen as $d) {
-            foreach (self::EIGENE as $ns => $namen) {
-                foreach ($namen as $name) {
-                    if ($d->hasAttributeNS($ns, $name)) {
-                        $d->removeAttributeNS($ns, $name);
-                    }
-                    foreach (self::kinder($d, $ns, $name) as $alterWert) {
-                        $d->removeChild($alterWert);
-                    }
+        // Namen neuer Gesichter, die in PersonInImage noch fehlen. Vor dem
+        // Entfernen lesen - danach waere die vorhandene Liste weg.
+        if (isset($felder['bereiche'])) {
+            $liste  = $felder['personen'] ?? self::personenLesen($beschreibungen);
+            $fehlen = [];
+            foreach ($felder['bereiche'] as $b) {
+                if ($b['name'] !== '' && !in_array($b['name'], $liste, true) && !in_array($b['name'], $fehlen, true)) {
+                    $fehlen[] = $b['name'];
                 }
             }
-            self::beschreibungEntfernen($d);
+            if ($fehlen !== [] || array_key_exists('personen', $felder)) {
+                $felder['personen'] = [...$liste, ...$fehlen];
+            }
+        }
+
+        // "Datum unsicher" gehoert zum Datum: wird das Datum geleert, geht es mit.
+        if (($felder['datum'] ?? null) === '') {
+            $felder['datumUnsicher'] = false;
+        }
+
+        // 1. Die mitgegebenen Felder entfernen - als Element wie als Attribut, in allen Beschreibungen.
+        foreach ($beschreibungen as $d) {
+            foreach (self::FELDER as $schluessel => [$ns, $name]) {
+                if (!array_key_exists($schluessel, $felder)) {
+                    continue;
+                }
+                if ($d->hasAttributeNS($ns, $name)) {
+                    $d->removeAttributeNS($ns, $name);
+                }
+                foreach (self::kinder($d, $ns, $name) as $alterWert) {
+                    $d->removeChild($alterWert);
+                }
+            }
+            if (array_key_exists('beschreibung', $felder)) {
+                self::beschreibungEntfernen($d);
+            }
         }
 
         // 2. Neue Werte in die erste Beschreibung. Namensraeume, die das
@@ -123,28 +191,31 @@ final class XmpPaket
         foreach (self::PRAEFIX as $ns => $wunsch) {
             self::anmelden($ziel, $ns, $wunsch);
         }
-        $beschreibung = trim($beschreibung);
+        $beschreibung = trim($felder['beschreibung'] ?? '');
 
         if ($beschreibung !== '') {
             self::beschreibungSetzen($doc, $beschreibungen, $beschreibung);
         }
-        if ($datumIso !== '') {
-            self::einfach($doc, $ziel, self::NS_XMP, 'CreateDate', $datumIso);
-            if ($datumUnsicher) {
-                self::einfach($doc, $ziel, self::NS_SAMMLUNGEN, 'DatumUnsicher', 'True');
-            }
+        if (($felder['datum'] ?? '') !== '') {
+            self::einfach($doc, $ziel, self::NS_XMP, 'CreateDate', $felder['datum']);
         }
-        if ($personen !== []) {
-            self::liste($doc, $ziel, self::NS_IPTCEX, 'PersonInImage', $personen);
+        if ($felder['datumUnsicher'] ?? false) {
+            self::einfach($doc, $ziel, self::NS_SAMMLUNGEN, 'DatumUnsicher', 'True');
         }
-        if ($keywords !== []) {
-            self::liste($doc, $ziel, self::NS_DC, 'subject', $keywords);
+        if (($felder['personen'] ?? []) !== []) {
+            self::liste($doc, $ziel, self::NS_IPTCEX, 'PersonInImage', $felder['personen']);
         }
-        if ($identifier !== '') {
-            self::einfach($doc, $ziel, self::NS_DC, 'identifier', $identifier);
+        if (($felder['keywords'] ?? []) !== []) {
+            self::liste($doc, $ziel, self::NS_DC, 'subject', $felder['keywords']);
         }
-        if ($relation !== '') {
-            self::liste($doc, $ziel, self::NS_DC, 'relation', [$relation]);
+        if (($felder['identifier'] ?? '') !== '') {
+            self::einfach($doc, $ziel, self::NS_DC, 'identifier', $felder['identifier']);
+        }
+        if (($felder['relation'] ?? '') !== '') {
+            self::liste($doc, $ziel, self::NS_DC, 'relation', [$felder['relation']]);
+        }
+        if (isset($felder['bereiche'])) {
+            self::bereicheSetzen($doc, $beschreibungen, $felder['bereiche'], $breite, $hoehe);
         }
 
         // Neu angelegte Elemente tragen ihre Namensraum-Angabe einzeln mit
@@ -156,6 +227,155 @@ final class XmpPaket
         return "<?xpacket begin=\"\xEF\xBB\xBF\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?>\n"
             . $sauber->saveXML($sauber->documentElement)
             . "\n<?xpacket end=\"w\"?>";
+    }
+
+    /**
+     * PersonInImage, wie es im Paket steht.
+     *
+     * @param list<DOMElement> $beschreibungen
+     * @return list<string>
+     */
+    private static function personenLesen(array $beschreibungen): array
+    {
+        $namen = [];
+
+        foreach ($beschreibungen as $d) {
+            foreach (self::kinder($d, self::NS_IPTCEX, 'PersonInImage') as $feld) {
+                foreach (Bereiche::eintraege($feld) as $li) {
+                    $name = trim($li->textContent);
+                    if ($name !== '' && !in_array($name, $namen, true)) {
+                        $namen[] = $name;
+                    }
+                }
+            }
+        }
+
+        return $namen;
+    }
+
+    /**
+     * Die Gesichter ersetzen (mwg-rs:Type = Face). Bereiche anderer Art
+     * (Haustier, Fokus, Barcode) und fremde Felder in ihnen bleiben stehen.
+     * Bleibt gar kein Bereich uebrig, verschwindet mwg-rs:Regions.
+     *
+     * @param list<DOMElement> $beschreibungen
+     * @param list<array{x:float, y:float, w:float, h:float, name:string, xref:string|null, typ:string}> $bereiche
+     */
+    private static function bereicheSetzen(DOMDocument $doc, array $beschreibungen, array $bereiche, int $breite, int $hoehe): void
+    {
+        $regions = null;
+        $traeger = $beschreibungen[0];
+        foreach ($beschreibungen as $d) {
+            $regions = self::kinder($d, Bereiche::NS_MWG_RS, 'Regions')[0] ?? null;
+            if ($regions !== null) {
+                $traeger = $d;
+                break;
+            }
+        }
+
+        if ($regions === null && $bereiche === []) {
+            return;
+        }
+
+        foreach ([Bereiche::NS_MWG_RS => 'mwg-rs', Bereiche::NS_STAREA => 'stArea', Bereiche::NS_STDIM => 'stDim'] as $ns => $wunsch) {
+            self::anmelden($traeger, $ns, $wunsch);
+        }
+        $rdf = self::praefixFuer($traeger, self::NS_RDF);
+        $mwg = self::praefixFuer($traeger, Bereiche::NS_MWG_RS);
+
+        if ($regions === null) {
+            $regions = $doc->createElementNS(Bereiche::NS_MWG_RS, $mwg . ':Regions');
+            $regions->setAttributeNS(self::NS_RDF, $rdf . ':parseType', 'Resource');
+            $traeger->appendChild($regions);
+        }
+
+        $res   = Bereiche::ressource($regions);
+        $liste = Bereiche::kind($res, Bereiche::NS_MWG_RS, 'RegionList');
+        if ($liste === null) {
+            $liste = $doc->createElementNS(Bereiche::NS_MWG_RS, $mwg . ':RegionList');
+            $res->appendChild($liste);
+        }
+        $bag = Bereiche::kind($liste, self::NS_RDF, 'Bag') ?? Bereiche::kind($liste, self::NS_RDF, 'Seq');
+        if ($bag === null) {
+            $bag = $doc->createElementNS(self::NS_RDF, $rdf . ':Bag');
+            $liste->appendChild($bag);
+        }
+
+        // Alte Gesichter raus.
+        foreach (Bereiche::eintraege($liste) as $li) {
+            $typ = trim((string) Bereiche::wert(Bereiche::ressource($li), Bereiche::NS_MWG_RS, 'Type'));
+            if (strcasecmp($typ, Bereiche::GESICHT) === 0) {
+                $bag->removeChild($li);
+            }
+        }
+
+        foreach ($bereiche as $b) {
+            $bag->appendChild(self::bereichElement($doc, $traeger, $b));
+        }
+
+        if (Bereiche::eintraege($liste) === []) {
+            $regions->parentNode?->removeChild($regions);
+
+            return;
+        }
+
+        // Die Masse, auf die sich die normierten Werte beziehen. Stehen schon
+        // welche da, bleiben sie: normierte Werte gelten unabhaengig davon,
+        // und fremde Bereiche wurden dagegen gemessen.
+        if ($breite > 0 && $hoehe > 0 && Bereiche::kind($res, Bereiche::NS_MWG_RS, 'AppliedToDimensions') === null) {
+            $stDim = self::praefixFuer($traeger, Bereiche::NS_STDIM);
+            $dim   = $doc->createElementNS(Bereiche::NS_MWG_RS, $mwg . ':AppliedToDimensions');
+            $dim->setAttributeNS(Bereiche::NS_STDIM, $stDim . ':w', (string) $breite);
+            $dim->setAttributeNS(Bereiche::NS_STDIM, $stDim . ':h', (string) $hoehe);
+            $dim->setAttributeNS(Bereiche::NS_STDIM, $stDim . ':unit', 'pixel');
+            $res->insertBefore($dim, $res->firstChild);
+        }
+    }
+
+    /** @param array{x:float, y:float, w:float, h:float, name:string, xref:string|null, typ:string} $b */
+    private static function bereichElement(DOMDocument $doc, DOMElement $traeger, array $b): DOMElement
+    {
+        $rdf    = self::praefixFuer($traeger, self::NS_RDF);
+        $mwg    = self::praefixFuer($traeger, Bereiche::NS_MWG_RS);
+        $stArea = self::praefixFuer($traeger, Bereiche::NS_STAREA);
+
+        $li = $doc->createElementNS(self::NS_RDF, $rdf . ':li');
+        $li->setAttributeNS(self::NS_RDF, $rdf . ':parseType', 'Resource');
+
+        $typ = $doc->createElementNS(Bereiche::NS_MWG_RS, $mwg . ':Type');
+        $typ->appendChild($doc->createTextNode(Bereiche::GESICHT));
+        $li->appendChild($typ);
+
+        if ($b['name'] !== '') {
+            $name = $doc->createElementNS(Bereiche::NS_MWG_RS, $mwg . ':Name');
+            $name->appendChild($doc->createTextNode($b['name']));
+            $li->appendChild($name);
+        }
+
+        // MWG zaehlt von der Mitte des Rahmens aus.
+        $area = $doc->createElementNS(Bereiche::NS_MWG_RS, $mwg . ':Area');
+        $area->setAttributeNS(Bereiche::NS_STAREA, $stArea . ':x', self::dezimal($b['x'] + $b['w'] / 2));
+        $area->setAttributeNS(Bereiche::NS_STAREA, $stArea . ':y', self::dezimal($b['y'] + $b['h'] / 2));
+        $area->setAttributeNS(Bereiche::NS_STAREA, $stArea . ':w', self::dezimal($b['w']));
+        $area->setAttributeNS(Bereiche::NS_STAREA, $stArea . ':h', self::dezimal($b['h']));
+        $area->setAttributeNS(Bereiche::NS_STAREA, $stArea . ':unit', 'normalized');
+        $li->appendChild($area);
+
+        if ($b['xref'] !== null) {
+            $xref = $doc->createElementNS(self::NS_SAMMLUNGEN, self::praefixFuer($traeger, self::NS_SAMMLUNGEN) . ':Xref');
+            $xref->appendChild($doc->createTextNode($b['xref']));
+            $li->appendChild($xref);
+        }
+
+        return $li;
+    }
+
+    /** Vier bis sechs Stellen reichen fuer jedes Foto; ohne Exponent und mit Punkt. */
+    private static function dezimal(float $wert): string
+    {
+        $text = rtrim(rtrim(sprintf('%.6F', $wert), '0'), '.');
+
+        return $text === '' || $text === '-0' ? '0' : $text;
     }
 
     /** Das vorhandene Paket als DOM, oder ein leeres Grundgeruest. */

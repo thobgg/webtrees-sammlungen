@@ -307,4 +307,25 @@ $unverknuepftGesamt = array_sum($unverknuepft_typen ?? []);
     margin: 0; border-left: 0; border-top: 1px solid #333; background: rgba(0,0,0,.85);
   }
 }
+
+/* Gesichter in der Lightbox: unsichtbar, bis die Maus darueber steht -
+   das Bild soll ein Bild bleiben. Auf Geraeten ohne Maus gar nicht, sonst
+   fuehrte jedes Antippen eines Gesichts vom Bild weg. */
+.archiv-lb-bereiche { position: absolute; pointer-events: none; transform-origin: center center; }
+.archiv-lb-bereich {
+    position: absolute; display: block; box-sizing: border-box; pointer-events: auto;
+    border: 2px solid transparent; border-radius: 3px;
+}
+.archiv-lb-bereich:hover, .archiv-lb-bereich:focus-visible {
+    border-color: rgba(255,255,255,.9); box-shadow: 0 0 0 1px rgba(0,0,0,.6);
+}
+.archiv-lb-bereich-name {
+    display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+    margin-top: 4px; padding: 1px 6px; border-radius: 3px; white-space: nowrap; pointer-events: none;
+    background: rgba(0,0,0,.75); color: #fff; font-size: .8rem;
+}
+.archiv-lb-bereich:hover .archiv-lb-bereich-name,
+.archiv-lb-bereich:focus-visible .archiv-lb-bereich-name { display: block; }
+a.archiv-lb-bereich .archiv-lb-bereich-name { color: #90cdf4; text-decoration: underline; }
+@media (hover: none) { .archiv-lb-bereiche { display: none; } }
 </style>

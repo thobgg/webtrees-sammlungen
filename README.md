@@ -336,22 +336,29 @@ All URLs live under `/tree/{tree}/archiv/…`:
 ## Interface for apps
 
 JSON routes under `/tree/{tree}/archiv/api/`, made for [wtAnd](https://github.com/thobgg/app4webtrees).
-Access with the session cookie, permissions as in the gallery; every answer carries `api` (level, currently 4),
+Access with the session cookie, permissions as in the gallery; every answer carries `api` (level, currently 5),
 `modul` and `baum`. Field names are German.
+
+Since level 5 every image entry carries `bereiche`: the marked faces (and whatever other programs marked) as
+`[{x, y, w, h, name, xref, typ}]`, **top left** and normalised to 0–1. In the file they are stored as XMP
+"MWG Regions" (as digiKam, Lightroom, ExifTool do; there `stArea:x/y` is the centre), the person in the tree as
+`sammlungen:Xref`. `xref` is only given if the viewer may see the person; if the name is hidden, name and xref
+are left out.
 
 | Call | |
 |---|---|
-| `GET …/sammlungen` | overview: collections with previews, unlinked media, free holdings, `darfHochladen`, `darfExif`, `ordnerListe` |
+| `GET …/sammlungen` | overview: collections with previews, unlinked media, free holdings, `darfHochladen`, `darfExif`, `darfBereiche`, `personenFilter`, `ordnerListe` |
 | `GET …/sammlung?kategorie=<slug>&seite=&pro_seite=` | entries of a collection with URLs for tile, full size and original; `kategorie=__unlinked__&typ=` for unlinked media |
+| `GET …/sammlung?person=<xref>&seite=&pro_seite=` | all images of the archive on which this person is marked as a face (`art: person`); `vollstaendig: false` while the index is still reading for the first time |
 | `GET …/eintrag?pfad=<file>` | a single entry in the same form, e.g. for a photo known from the tree |
 | `POST …/hochladen` (multipart) | store `file` in `ordner` – as a file, not a media object; `beschreibung`, `datum`, `personen`, `keywords` as EXIF, `sammlung` assigns. Anyone allowed to upload in webtrees |
-| `POST …/exif` | write `beschreibung`, `datum`, `personen`, `keywords` into `pfad`. Managers only |
+| `POST …/exif` | write `beschreibung`, `datum`, `datum_unsicher`, `personen`, `keywords`, `bereiche` (JSON, replaces all faces) into `pfad`. Fields not sent stay as they are in the file. Managers only |
 
 POST needs the session's CSRF token (`X-CSRF-TOKEN`). `pro_seite` and `lang` apply to that answer only.
 Errors: `{"ok":false,"error":"…","status":…}` with HTTP 200 (as with api4webtrees; a real 4xx status would not
 reach the client as JSON through some web servers). Codes: `not-logged-in`, `not-member`, `upload-not-allowed`,
-`not-manager`, `unknown-collection`, `folder-not-found`, `file-not-found`, `bad-filename`, `blocked-extension`,
-`bad-date`, `not-image`, `exif-failed`. Existing files are never overwritten (`foto-2.jpg`).
+`not-manager`, `unknown-collection`, `unknown-person`, `folder-not-found`, `file-not-found`, `bad-filename`,
+`blocked-extension`, `bad-date`, `bad-regions`, `not-image`, `exif-failed`. Existing files are never overwritten (`foto-2.jpg`).
 
 ## Data model
 
@@ -359,6 +366,7 @@ reach the client as JSON through some web servers). Codes: `not-logged-in`, `not
 sammlungen_collection           -- Definitions: name, slug, icon, colour, view, folder
 sammlungen_collection_medium    -- M:N webtrees medium ↔ collection (m_id-based)
 sammlungen_collection_pfad      -- M:N path ↔ collection (also non-imported images)
+sammlungen_bereich_index        -- image → marked persons (an index; the data lives in the file)
 ```
 
 ## Configuration

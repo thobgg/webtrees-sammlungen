@@ -60,6 +60,8 @@ $dateiUrl = static fn (string $pfad, ?int $breite = null): string => route('samm
                         'groesse_kb'        => $exif['groesse_kb'],
                         'format'            => strtoupper($vorne['format']),
                         'thumb'             => $kachelUrl,
+                        // Gesichter gehoeren zur Vorderseite.
+                        'bereiche'          => $exif['bereiche'] ?? [],
                         'postkarte'         => [
                             'schluessel'    => $karte['schluessel'],
                             'motiv'         => $motiv,

@@ -61,4 +61,15 @@ final class MetadatenTest extends TestCase
     {
         self::assertNull(Metadaten::ausFormular(['datum' => 'gestern']));
     }
+
+    public function testNurMitgeschickteFelder(): void
+    {
+        self::assertSame([], Metadaten::mitgeschickt(['pfad' => 'a.jpg', 'bereiche' => '[]']));
+        self::assertSame(
+            ['beschreibung' => '', 'datum' => '1924', 'personen' => ['Anna', 'Otto']],
+            Metadaten::mitgeschickt(['beschreibung' => ' ', 'datum' => '1924', 'personen' => 'Anna, Otto'])
+        );
+        self::assertSame(['datumUnsicher' => true], Metadaten::mitgeschickt(['datum_unsicher' => '1']));
+        self::assertNull(Metadaten::mitgeschickt(['datum' => '24.12.1924']));
+    }
 }

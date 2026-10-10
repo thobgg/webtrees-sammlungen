@@ -42,7 +42,7 @@ class ExifService
     /**
      * Liest XMP-Metadaten aus einer Bilddatei.
      *
-     * @return array{beschreibung:string, datum:string, datum_iso:string, datum_unsicher:bool, datum_aus_exif:bool, personen:list<string>, keywords:list<string>, identifier:string, relation:string, breite:int, hoehe:int, groesse_kb:int}
+     * @return array{beschreibung:string, datum:string, datum_iso:string, datum_unsicher:bool, datum_aus_exif:bool, personen:list<string>, keywords:list<string>, identifier:string, relation:string, bereiche:list<array{x:float, y:float, w:float, h:float, name:string, xref:string|null, typ:string}>, breite:int, hoehe:int, groesse_kb:int}
      */
     public function leseMeta(string $fullPath): array
     {
@@ -60,6 +60,8 @@ class ExifService
             'keywords'       => [],
             'identifier'     => '',
             'relation'       => '',
+            // Gesichter und andere markierte Bereiche (siehe Bereiche), links oben normiert.
+            'bereiche'       => [],
             'breite'         => 0,
             'hoehe'          => 0,
             'groesse_kb'     => 0,
@@ -80,7 +82,8 @@ class ExifService
 
         // Cache-Key: Pfad + Änderungsdatum → invalidiert automatisch nach EXIF-Schreiben
         $mtime    = @filemtime($fullPath) ?: 0;
-        $cacheKey = 'exif:' . md5($fullPath) . ':' . $mtime;
+        // "exif2": seit den Bereichen hat das Ergebnis ein Feld mehr.
+        $cacheKey = 'exif2:' . md5($fullPath) . ':' . $mtime;
 
         if (function_exists('apcu_fetch')) {
             $cached = apcu_fetch($cacheKey, $ok);
@@ -140,6 +143,7 @@ class ExifService
 
             if ($xmpRaw !== '') {
                 $this->parseXmp($xmpRaw, $result);
+                $result['bereiche'] = Bereiche::lesen($xmpRaw);
             }
         } catch (\Throwable) {
             // Imagick-Fehler – kein Problem
@@ -176,13 +180,35 @@ class ExifService
         string $identifier = '',
         string $relation = '',
     ): void {
+        $this->aendereMeta($fullPath, [
+            'beschreibung'  => $beschreibung,
+            'datum'         => $datumIso,
+            'datumUnsicher' => $datumUnsicher,
+            'personen'      => $personen,
+            'keywords'      => $keywords,
+            'identifier'    => $identifier,
+            'relation'      => $relation,
+        ], $tree);
+    }
+
+    /**
+     * Schreibt nur die mitgegebenen Felder; alles andere in der Datei bleibt,
+     * wie es ist (Schluessel siehe XmpPaket::aendern). Der Weg der
+     * App-Schnittstelle, die etwa nur die Gesichter schickt.
+     *
+     * @param array{beschreibung?:string, datum?:string, datumUnsicher?:bool, personen?:list<string>, keywords?:list<string>, identifier?:string, relation?:string, bereiche?:list<array{x:float, y:float, w:float, h:float, name:string, xref:string|null, typ:string}>} $felder
+     *
+     * @throws \RuntimeException bei Schreibfehler
+     */
+    public function aendereMeta(string $fullPath, array $felder, Tree $tree): void
+    {
         if (!is_file($fullPath) || !is_writable($fullPath)) {
             throw new \RuntimeException("Datei nicht schreibbar: {$fullPath}");
         }
 
         $ext = strtolower(pathinfo($fullPath, PATHINFO_EXTENSION));
         if (!in_array($ext, self::BILD_FORMATE, true)) {
-            throw new \RuntimeException("Nicht unterstütztes Format: {$ext}");
+            throw new \RuntimeException("Nicht unterstützt: {$ext}");
         }
 
         $istJpeg = in_array($ext, ['jpg', 'jpeg'], true);
@@ -190,8 +216,14 @@ class ExifService
         // Vorhandenes XMP lesen und nur die eigenen Felder darin ersetzen -
         // was andere Programme hineingeschrieben haben, bleibt stehen.
         // Vor dem Backup, damit ein unlesbares Paket gar nichts anfasst.
-        $alt = $istJpeg ? JpegXmp::lies($fullPath) : $this->xmpUeberImagick($fullPath);
-        $xmp = $this->baueXmpPacket($beschreibung, $datumIso, $personen, $keywords, $datumUnsicher, $identifier, $relation, $alt);
+        $alt   = $istJpeg ? JpegXmp::lies($fullPath) : $this->xmpUeberImagick($fullPath);
+        $masse = isset($felder['bereiche']) ? @getimagesize($fullPath) : false;
+        $xmp   = XmpPaket::aendern(
+            $alt,
+            $felder,
+            $masse !== false ? (int) $masse[0] : 0,
+            $masse !== false ? (int) $masse[1] : 0,
+        );
 
         // Backup vor destruktiver Operation (pro Datei max. 1× pro Tag)
         $this->erstelleBackup($fullPath, $tree);
@@ -221,11 +253,11 @@ class ExifService
         $imagick->setImageProfile('xmp', $xmp);
 
         // Auch EXIF-Felder direkt setzen (für ältere Viewer)
-        if ($beschreibung !== '') {
-            $imagick->setImageProperty('exif:ImageDescription', $beschreibung);
+        if (($felder['beschreibung'] ?? '') !== '') {
+            $imagick->setImageProperty('exif:ImageDescription', $felder['beschreibung']);
         }
-        if ($datumIso !== '') {
-            $exifDatum = $this->formatiereDatumExif($datumIso);
+        if (($felder['datum'] ?? '') !== '') {
+            $exifDatum = $this->formatiereDatumExif($felder['datum']);
             $imagick->setImageProperty('exif:DateTimeOriginal', $exifDatum);
             $imagick->setImageProperty('exif:DateTime', $exifDatum);
         }

@@ -68,6 +68,9 @@ use Fisharebest\Webtrees\I18N;
                                 <div class="flex-grow-1 d-flex align-items-center justify-content-center position-relative" style="min-height:0;overflow:hidden">
                                     <img id="archiv-lb-img" src="" alt=""
                                          style="max-height:78vh;max-width:100%;object-fit:contain">
+                                    <!-- Gesichter (XMP, MWG Regions): Rahmen und Name beim Darueberfahren.
+                                         Liegt genau ueber dem Bild und zoomt mit. Markiert wird in den Apps. -->
+                                    <div id="archiv-lb-bereiche" class="archiv-lb-bereiche"></div>
                                     <!-- Postkarten: neben der Rueckseite steht, was darauf geschrieben ist. -->
                                     <div id="archiv-lb-transkription" class="archiv-lb-transkription d-none">
                                         <div class="archiv-lb-transkription-titel"><?= I18N::translate('Transcription') ?></div>

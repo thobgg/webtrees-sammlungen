@@ -337,23 +337,30 @@ Alle URLs sind unter `/tree/{tree}/archiv/…` erreichbar:
 ## Schnittstelle für Apps
 
 JSON-Routen unter `/tree/{tree}/archiv/api/`, gedacht für [wtAnd](https://github.com/thobgg/app4webtrees).
-Zugriff mit dem Sitzungs-Cookie, Rechte wie in der Galerie; jede Antwort trägt `api` (Stufe, derzeit 4),
+Zugriff mit dem Sitzungs-Cookie, Rechte wie in der Galerie; jede Antwort trägt `api` (Stufe, derzeit 5),
 `modul` und `baum`. Feldnamen sind deutsch. Seit Stufe 4 trägt jeder Eintrag `datumUnsicher`; in einer
 Postkarten-Sammlung außerdem `rueckseite` (Eintrag oder null), `motiv`, `transkription`, `notiz`.
 
+Seit Stufe 5 trägt jeder Bild-Eintrag `bereiche`: die markierten Gesichter (und was andere Programme sonst
+markiert haben) als `[{x, y, w, h, name, xref, typ}]`, **links oben** und normiert auf 0–1. In der Datei stehen
+sie als XMP „MWG Regions“ (wie bei digiKam, Lightroom, ExifTool; dort ist `stArea:x/y` die Mitte), die Person
+im Stammbaum als `sammlungen:Xref`. `xref` kommt nur, wenn der Betrachter die Person sehen darf; ist ihr Name
+verborgen, fehlen Name und Kennung.
+
 | Aufruf | |
 |---|---|
-| `GET …/sammlungen` | Übersicht: Sammlungen mit Vorschau, nicht eingebundene Medien, freier Bestand, `darfHochladen`, `darfExif`, `ordnerListe` |
+| `GET …/sammlungen` | Übersicht: Sammlungen mit Vorschau, nicht eingebundene Medien, freier Bestand, `darfHochladen`, `darfExif`, `darfBereiche`, `personenFilter`, `ordnerListe` |
 | `GET …/sammlung?kategorie=<slug>&seite=&pro_seite=` | Einträge einer Sammlung mit Adressen für Kachel, Vollbild und Original; `kategorie=__unlinked__&typ=` für nicht eingebundene Medien |
+| `GET …/sammlung?person=<xref>&seite=&pro_seite=` | alle Bilder des Archivs, auf denen diese Person als Gesicht markiert ist (`art: person`); `vollstaendig: false`, solange der Index beim ersten Mal noch liest |
 | `GET …/eintrag?pfad=<Datei>` | ein einzelner Eintrag in derselben Form, etwa zu einem Foto aus dem Stammbaum |
 | `POST …/hochladen` (multipart) | `file` in `ordner` ablegen – als Datei, nicht als Medienobjekt; `beschreibung`, `datum`, `personen`, `keywords` als EXIF, `sammlung` ordnet zu. Wer in webtrees hochladen darf |
-| `POST …/exif` | `beschreibung`, `datum`, `personen`, `keywords` an `pfad` schreiben. Nur Verwalter |
+| `POST …/exif` | `beschreibung`, `datum`, `datum_unsicher`, `personen`, `keywords`, `bereiche` (JSON, ersetzt alle Gesichter) an `pfad` schreiben. Was nicht mitgeschickt wird, bleibt in der Datei. Nur Verwalter |
 
 POST braucht den CSRF-Token der Sitzung (`X-CSRF-TOKEN`). `pro_seite` und `lang` gelten nur für die Antwort.
 Fehler: `{"ok":false,"error":"…","status":…}` mit HTTP 200 (wie bei api4webtrees; ein echter 4xx-Status käme
 durch manche Webserver nicht als JSON an). Codes: `not-logged-in`, `not-member`, `upload-not-allowed`,
-`not-manager`, `unknown-collection`, `folder-not-found`, `file-not-found`, `bad-filename`, `blocked-extension`,
-`bad-date`, `not-image`, `exif-failed`. Vorhandene Dateien werden nicht überschrieben (`foto-2.jpg`).
+`not-manager`, `unknown-collection`, `unknown-person`, `folder-not-found`, `file-not-found`, `bad-filename`,
+`blocked-extension`, `bad-date`, `bad-regions`, `not-image`, `exif-failed`. Vorhandene Dateien werden nicht überschrieben (`foto-2.jpg`).
 
 ## Datenmodell
 
@@ -361,6 +368,7 @@ durch manche Webserver nicht als JSON an). Codes: `not-logged-in`, `not-member`,
 sammlungen_collection           -- Definitionen: name, slug, icon, farbe, ansicht, ordner
 sammlungen_collection_medium    -- M:N webtrees-Medium ↔ Sammlung (m_id-basiert)
 sammlungen_collection_pfad      -- M:N Pfad ↔ Sammlung (auch nicht-importierte Bilder)
+sammlungen_bereich_index        -- Bild → markierte Personen (Verzeichnis; die Angaben stehen in der Datei)
 ```
 
 ## Konfiguration

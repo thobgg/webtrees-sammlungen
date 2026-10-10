@@ -9,6 +9,33 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+### Neu
+- **Gesichter auf Gruppenbildern.** Rahmen um Gesichter, von Hand in den
+  Apps markiert und einer Person zugeordnet (aus dem Stammbaum, nur ein Name
+  oder unbekannt). Sie stehen in der Bilddatei als XMP „MWG Regions“ – der
+  Standard, den auch digiKam, Lightroom und ExifTool lesen –, die Person im
+  Stammbaum als `sammlungen:Xref`. Ein Gesicht zuzuordnen hängt das Bild
+  nicht an die Person. Ohne MWG-Bereiche liest das Modul die der
+  Windows-Fotogalerie. In der Lightbox zeigt das Darüberfahren mit der Maus
+  Rahmen und Namen, mit Verweis auf die Personenseite; private Personen
+  bleiben verborgen wie überall in webtrees.
+- **Schnittstelle Stufe 5.** Bild-Einträge tragen `bereiche` (links oben,
+  normiert); `POST …/exif` nimmt `bereiche` an (ersetzt alle Gesichter,
+  andere Bereiche bleiben; Fehler `bad-regions`) und auch `datum_unsicher`;
+  `GET …/sammlung?person=I21` liefert alle Bilder, auf denen die Person
+  markiert ist. Dafür führt das Modul ein kleines Verzeichnis (Tabelle
+  `sammlungen_bereich_index`), das sich beim Abfragen mit dem Medienordner
+  abgleicht – auch Rahmen aus digiKam kommen so hinein. Übersicht:
+  `darfBereiche`, `personenFilter`. `api: 5`.
+
+### Geändert
+- **`POST …/exif` lässt Ungesendetes stehen.** Bisher wurden fehlende Felder
+  geleert; jetzt bleibt, was nicht mitgeschickt wird, in der Datei. Ein leer
+  mitgeschicktes Feld leert wie bisher. Apps, die alle Felder schicken,
+  merken keinen Unterschied – außer dass Kartenschlüssel, Gegenseite und
+  „Datum unsicher“ einer Postkarte beim Speichern aus der App nicht mehr
+  verloren gehen.
+
 ## [1.9.0] – 2026-10-09
 
 **Postkarten.** Vorder- und Rückseite als ein Eintrag, wenden per Klick oder

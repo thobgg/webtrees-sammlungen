@@ -435,7 +435,7 @@ class CollectionService
      * @eaDir (Thumbnails), @tmp, #recycle, versteckte Ordner (.)
      * Die Thumbnails in @eaDir können perspektivisch für eine Lightbox genutzt werden.
      */
-    private function medienIterator(string $pfad, bool $nurDateien = true): \RecursiveIteratorIterator
+    public static function medienIterator(string $pfad, bool $nurDateien = true): \RecursiveIteratorIterator
     {
         $filter = new \RecursiveCallbackFilterIterator(
             new \RecursiveDirectoryIterator($pfad, \RecursiveDirectoryIterator::SKIP_DOTS),

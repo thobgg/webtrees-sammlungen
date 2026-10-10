@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Sammlungen\Http\RequestHandlers\Api;
 
 use function array_filter;
+use function array_key_exists;
 use function array_map;
 use function array_values;
 use function explode;
+use function in_array;
 use function preg_match;
 use function trim;
 
@@ -46,6 +48,41 @@ final class Metadaten
             self::liste((string) ($body['personen'] ?? '')),
             self::liste((string) ($body['keywords'] ?? '')),
         );
+    }
+
+    /**
+     * Nur die Felder, die mitgeschickt wurden - fuer ExifService::aendereMeta.
+     * Was fehlt, bleibt in der Datei, wie es ist; ein leer mitgeschicktes Feld
+     * leert. Die Gesichter (`bereiche`) prueft der Aufrufer.
+     *
+     * @param array<string,mixed> $body
+     * @return array{beschreibung?:string, datum?:string, datumUnsicher?:bool, personen?:list<string>, keywords?:list<string>}|null
+     *         null: das Datum ist keins
+     */
+    public static function mitgeschickt(array $body): ?array
+    {
+        $felder = [];
+
+        if (array_key_exists('beschreibung', $body)) {
+            $felder['beschreibung'] = trim((string) $body['beschreibung']);
+        }
+        if (array_key_exists('datum', $body)) {
+            $felder['datum'] = trim((string) $body['datum']);
+            if (!self::datumGueltig($felder['datum'])) {
+                return null;
+            }
+        }
+        if (array_key_exists('datum_unsicher', $body)) {
+            $felder['datumUnsicher'] = in_array((string) $body['datum_unsicher'], ['1', 'true', 'on'], true);
+        }
+        if (array_key_exists('personen', $body)) {
+            $felder['personen'] = self::liste((string) $body['personen']);
+        }
+        if (array_key_exists('keywords', $body)) {
+            $felder['keywords'] = self::liste((string) $body['keywords']);
+        }
+
+        return $felder;
     }
 
     public function leer(): bool

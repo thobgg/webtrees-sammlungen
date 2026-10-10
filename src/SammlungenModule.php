@@ -60,7 +60,7 @@ class SammlungenModule extends AbstractModule implements
      * neue Felder bekommt; bestehende Felder bleiben, damit eine aeltere App
      * mit einem neueren Modul weiterlaeuft.
      */
-    public const API_VERSION = 4;
+    public const API_VERSION = 5;
     public const SETTING_CACHE_TTL = 'cache_ttl';
     public const SETTING_PER_PAGE  = 'per_page';
     public const DEFAULT_CACHE_TTL = 900;
@@ -459,6 +459,22 @@ class SammlungenModule extends AbstractModule implements
 
                 $table->unique(['collection_id', 'gedcom_id', 'pfad'], 'sml_col_pfad_unique');
                 $table->index(['gedcom_id', 'collection_id'], 'sml_col_pfad_gid_cid');
+            });
+        }
+
+        // Tabelle 4: Welche Personen auf welchem Bild markiert sind (Gesichter
+        // im XMP, sammlungen:Xref). Nur ein Verzeichnis der Dateien - die
+        // Angaben selbst stehen in der Bilddatei. Die Aenderungszeit sagt,
+        // ob eine Datei neu gelesen werden muss.
+        if (!$schema->hasTable('sammlungen_bereich_index')) {
+            $schema->create('sammlungen_bereich_index', static function (Blueprint $table): void {
+                $table->increments('id');
+                $table->unsignedInteger('gedcom_id');
+                $table->string('pfad', 500);
+                $table->unsignedInteger('mtime');
+                $table->text('xrefs');              // "|I21|I3|", leer ohne markierte Personen
+
+                $table->unique(['gedcom_id', 'pfad'], 'sml_bereich_pfad_unique');
             });
         }
     }

@@ -6,6 +6,7 @@ namespace Sammlungen\ViewModel;
 
 use Sammlungen\Dto\SammlungDto;
 use Sammlungen\Repository\SammlungenRepository;
+use Sammlungen\Service\BereichSicht;
 use Sammlungen\Service\CollectionService;
 use Sammlungen\Service\ExifService;
 use Sammlungen\Service\MedienPfad;
@@ -359,7 +360,7 @@ final class SammlungenViewModel
                 'format'        => strtolower(pathinfo($eintrag['pfad'], PATHINFO_EXTENSION)),
                 'm_id'          => $eintrag['m_id'],
                 'titel'         => '',
-                'exif'          => $this->exifService->leseMeta($mediaBase . $eintrag['pfad']),
+                'exif'          => $this->exifMitSicht($tree, $mediaBase . $eintrag['pfad']),
                 'personen'        => [],
                 'personen_gesamt' => 0,
                 'wt'              => null,
@@ -476,7 +477,7 @@ final class SammlungenViewModel
     {
         $mediaBase = MedienPfad::wurzel($tree);
         foreach ($bilder as &$bild) {
-            $bild['exif'] = $this->exifService->leseMeta($mediaBase . $bild['pfad']);
+            $bild['exif'] = $this->exifMitSicht($tree, $mediaBase . $bild['pfad']);
         }
         unset($bild);
 
@@ -511,6 +512,21 @@ final class SammlungenViewModel
         unset($bild);
 
         return $bilder;
+    }
+
+    /**
+     * EXIF/XMP einer Datei fuer die Galerie. Die Gesichter darin sind schon
+     * nach den Regeln von webtrees gefiltert und tragen die Adresse der
+     * Personenseite - die Lightbox zeigt sie beim Darueberfahren.
+     *
+     * @return array<string,mixed>
+     */
+    private function exifMitSicht(Tree $tree, string $voll): array
+    {
+        $exif = $this->exifService->leseMeta($voll);
+        $exif['bereiche'] = BereichSicht::fuer($tree, $exif['bereiche'], true);
+
+        return $exif;
     }
 
     /**

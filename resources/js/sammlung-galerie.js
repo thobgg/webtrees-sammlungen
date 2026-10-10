@@ -55,6 +55,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const transkriptionText = document.getElementById('archiv-lb-transkription-text');
     let seite = 'V';
 
+    // Gesichter: eine Ebene genau ueber dem Bild, mit Rahmen in Prozent.
+    const bereicheEbene = document.getElementById('archiv-lb-bereiche');
+
     function postkarte() {
         const info = JSON.parse(items[current].dataset.info || '{}');
         return info.postkarte || null;
@@ -83,7 +86,54 @@ document.addEventListener('DOMContentLoaded', function () {
             transkriptionText.textContent = text;
             transkription.classList.toggle('d-none', text === '');
         }
+        bereicheZeigen();
     }
+
+    // Die Gesichter des aktuellen Bildes. Bei Postkarten gehoeren sie zur
+    // Vorderseite. Die Werte kommen links oben und normiert (0-1), schon
+    // nach den Datenschutzregeln von webtrees gefiltert; url nur, wo die
+    // Personenseite gezeigt werden darf.
+    function bereicheZeigen() {
+        if (!bereicheEbene) return;
+        bereicheEbene.replaceChildren();
+        if (seite !== 'V') return;
+        const info = JSON.parse(items[current].dataset.info || '{}');
+        (info.bereiche || [])
+            .filter(b => String(b.typ || 'Face').toLowerCase() === 'face')
+            .forEach(b => {
+                const el = document.createElement(b.url ? 'a' : 'div');
+                el.className = 'archiv-lb-bereich';
+                el.style.left = (b.x * 100) + '%';
+                el.style.top = (b.y * 100) + '%';
+                el.style.width = (b.w * 100) + '%';
+                el.style.height = (b.h * 100) + '%';
+                if (b.url) el.href = b.url;
+                if (b.name) {
+                    const name = document.createElement('span');
+                    name.className = 'archiv-lb-bereich-name';
+                    name.textContent = b.name;
+                    el.appendChild(name);
+                    el.setAttribute('aria-label', b.name);
+                }
+                bereicheEbene.appendChild(el);
+            });
+        bereicheLage();
+    }
+
+    // Die Ebene deckt das Bild, wie es gerade dasteht: gleiche Box, gleiche
+    // Verschiebung und Vergroesserung.
+    function bereicheLage() {
+        if (!bereicheEbene) return;
+        bereicheEbene.style.left = img.offsetLeft + 'px';
+        bereicheEbene.style.top = img.offsetTop + 'px';
+        bereicheEbene.style.width = img.offsetWidth + 'px';
+        bereicheEbene.style.height = img.offsetHeight + 'px';
+        bereicheEbene.style.transition = img.style.transition;
+        bereicheEbene.style.transform = img.style.transform;
+    }
+    img.addEventListener('load', bereicheLage);
+    window.addEventListener('resize', bereicheLage);
+    if (window.ResizeObserver) new ResizeObserver(bereicheLage).observe(img);
 
     function transkription_panel_toggle(weg) {
         transkription?.classList.toggle('d-none', weg);
@@ -461,12 +511,14 @@ document.addEventListener('DOMContentLoaded', function () {
             grenzenEinhalten();
             img.style.transition = weich ? 'transform .18s ease-out' : '';
             img.style.transform  = `translate(${vx}px, ${vy}px) scale(${skala})`;
+            bereicheLage();
         }
 
         zoomZuruecksetzen = function () {
             skala = 1; vx = 0; vy = 0;
             img.style.transition = '';
             img.style.transform = '';
+            bereicheLage();
         };
 
         function umschalten(punktX, punktY) {
