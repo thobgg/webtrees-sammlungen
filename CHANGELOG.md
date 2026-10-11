@@ -9,13 +9,36 @@ und das Projekt nutzt [Semantic Versioning](https://semver.org/lang/de/).
 
 _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Blockern (500er/Datenfehler)._
 
+## [1.10.0] – 2026-10-11
+
+**Gesichter auf Gruppenbildern – wer ist wer.** In den Apps wtWin und wtTux
+zieht man einen Rahmen um ein Gesicht und wählt im Auswahlfenster die Person:
+aus dem Stammbaum (mit Suche), nur als Name oder als „unbekannt“. Die
+Zuordnung steht in der Bilddatei selbst, im Standard, den auch digiKam und
+Lightroom lesen. Das Modul zeigt die Rahmen in der Lightbox beim Darüberfahren
+mit Namen und Verweis zur Person; im Personenblatt der Apps sammeln sich alle
+Gruppenbilder einer Person.
+
+![Personenauswahl für ein markiertes Gesicht](https://raw.githubusercontent.com/thobgg/webtrees-sammlungen/v1.10.0/docs/images/07-gesichter-personenauswahl.jpg)
+
+![Gruppenbild mit zugeordneten Gesichtern](https://raw.githubusercontent.com/thobgg/webtrees-sammlungen/v1.10.0/docs/images/08-gesichter-gruppenbild.jpg)
+
+Dazu: das ganze Archiv lässt sich jetzt auch aus den Apps verwalten
+(Schnittstelle Stufe 6), und in der Lightbox lassen sich Bilder zum Lesen
+drehen.
+
+> **Bitte beachten:** Beim Umbenennen bleibt die Dateiendung jetzt fest, und
+> eine Datei, die zu einem Medienobjekt gehört, wird auch im Stammbaum
+> umbenannt. `POST …/exif` lässt nicht mitgeschickte Felder stehen, statt sie
+> zu leeren.
+
 ### Neu
 - **Gesichter auf Gruppenbildern.** Rahmen um Gesichter, von Hand in den
   Apps markiert und einer Person zugeordnet (aus dem Stammbaum, nur ein Name
   oder unbekannt). Sie stehen in der Bilddatei als XMP „MWG Regions“ – der
   Standard, den auch digiKam, Lightroom und ExifTool lesen –, die Person im
   Stammbaum als `sammlungen:Xref`. Ein Gesicht zuzuordnen hängt das Bild
-  nicht an die Person. Ohne MWG-Bereiche liest das Modul die der
+  nicht an die Person (in der App auf Wunsch per Häkchen doch). Ohne MWG-Bereiche liest das Modul die der
   Windows-Fotogalerie. In der Lightbox zeigt das Darüberfahren mit der Maus
   Rahmen und Namen, mit Verweis auf die Personenseite; private Personen
   bleiben verborgen wie überall in webtrees.
@@ -43,7 +66,6 @@ _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Bl
   Gegenseite, Gesichter nur auf der einen Seite. `GET …/eintrag` trägt bei
   einer Postkarte ebenso `motiv`, `transkription`, `notiz` und `gegenseite`.
   `api: 6`.
-
 - **Drehen zum Lesen.** In der Lightbox dreht ↻ oder die Taste R das Bild um
   90 Grad, Umschalt + R zurück – etwa für quer beschriebene Postkarten. Nur
   zum Ansehen: gespeichert wird nichts, die Lage gilt je Bildseite, solange

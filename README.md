@@ -25,6 +25,7 @@ fills exactly that gap:
 - **EXIF/XMP data read and edited directly in the image files** – no detour via
   GEDCOM tags
 - **Bidirectional sync** between photo metadata and webtrees person links
+- **Faces in group photos** – marked in the apps and assigned to a person, shown on hover in the browser
 - **Path-based collections** also for media that isn't a GEDCOM object in the tree at all (a deliberate part of the archive, not a backlog)
 
 ### Why this module – and not just the webtrees media list?
@@ -131,6 +132,26 @@ The scans are the original: for JPEG, metadata is written **losslessly** – onl
 the XMP segment is replaced, image data and all other segments stay byte for byte
 (this applies to all JPGs, not only postcards). Cropping and rotating happens
 beforehand in GIMP, not in the module.
+
+### Faces in group photos
+
+Who is who in the class photo? In the apps **wtWin** (Windows) and **wtTux**
+(Linux) from [app4webtrees](https://github.com/thobgg/app4webtrees) you draw a
+frame around a face and pick the person in the **selection window**: from the
+tree with search, as a name only if the person is not in the tree, or as
+"unknown". Assigning a face does not attach the image to the person's record –
+the tree stays tidy; tick the box in the window if you do want it there.
+
+![Choosing the person for a marked face](docs/images/07-gesichter-personenauswahl.jpg)
+
+The frames are stored in the image file itself, as XMP "MWG Regions" – the
+standard digiKam, Lightroom and ExifTool read; frames set there show up here too.
+In the module's lightbox, hovering with the mouse shows frames and names with a
+link to the individual's page; private individuals stay hidden as everywhere in
+webtrees. In the apps' person sheet, "In group photos" collects every image on
+which the person is marked.
+
+![Group photo with assigned faces](docs/images/08-gesichter-gruppenbild.jpg)
 
 ### On phone and tablet
 
@@ -342,6 +363,10 @@ All URLs live under `/tree/{tree}/archiv/…`:
 ## Interface for apps
 
 JSON routes under `/tree/{tree}/archiv/api/`, made for [wtAnd](https://github.com/thobgg/app4webtrees).
+Since 1.10.0 the apps can do everything the module does in the browser: wtWin and wtTux mark faces in group
+photos, show "In group photos" in the person sheet, open the archive as a window of its own with full
+management, show and edit postcards, and compare EXIF with webtrees.
+
 Access with the session cookie, permissions as in the gallery; every answer carries `api` (level, currently 6),
 `modul` and `baum`. Field names are German.
 

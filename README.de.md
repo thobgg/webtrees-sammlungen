@@ -25,6 +25,7 @@ ergänzt genau das:
 - **EXIF/XMP-Daten direkt aus den Bilddateien** lesen und editieren – ohne Umweg über
   GEDCOM-Tags
 - **Bidirektionaler Abgleich** zwischen Foto-Metadaten und webtrees-Personenverknüpfungen
+- **Gesichter auf Gruppenbildern** – in den Apps markiert und einer Person zugeordnet, im Browser beim Darüberfahren sichtbar
 - **Pfad-basierte Sammlungen** auch für Medien, die gar nicht als GEDCOM-Objekt im Stammbaum stecken (der „Freie Bestand" des Archivs)
 
 ### Warum dieses Modul – und nicht einfach die webtrees-Medienliste?
@@ -178,6 +179,26 @@ Die Scans sind das Original: Metadaten werden bei JPEG **verlustfrei**
 geschrieben – nur das XMP-Segment wird getauscht, Bilddaten und alle anderen
 Segmente bleiben Byte für Byte erhalten (gilt für alle JPGs, nicht nur Postkarten).
 Zuschneiden und Drehen passiert vorher in GIMP, nicht im Modul.
+
+### Gesichter auf Gruppenbildern
+
+Wer ist wer auf dem Klassenfoto? In den Apps **wtWin** (Windows) und **wtTux**
+(Linux) aus [app4webtrees](https://github.com/thobgg/app4webtrees) zieht man
+einen Rahmen um ein Gesicht und wählt im **Auswahlfenster** die Person: aus dem
+Stammbaum mit Suche, nur als Name, wenn sie nicht im Baum steht, oder als
+„unbekannt“. Ein Gesicht zuzuordnen hängt das Bild nicht an ihren Datensatz – der
+Stammbaum bleibt aufgeräumt; wer es dort doch haben will, kreuzt es im Fenster an.
+
+![Personenauswahl für ein markiertes Gesicht](docs/images/07-gesichter-personenauswahl.jpg)
+
+Die Rahmen stehen in der Bilddatei selbst, als XMP „MWG Regions“ – dem Standard,
+den auch digiKam, Lightroom und ExifTool lesen; dort gesetzte Rahmen erscheinen
+umgekehrt auch hier. In der Lightbox des Moduls zeigt das Darüberfahren mit der
+Maus Rahmen und Namen, mit Verweis auf die Personenseite; private Personen bleiben
+verborgen wie überall in webtrees. Im Personenblatt der Apps sammeln sich unter
+„Auf Gruppenbildern“ alle Bilder, auf denen die Person markiert ist.
+
+![Gruppenbild mit zugeordneten Gesichtern](docs/images/08-gesichter-gruppenbild.jpg)
 
 ### Dokumenten-Listen
 
@@ -343,6 +364,10 @@ Alle URLs sind unter `/tree/{tree}/archiv/…` erreichbar:
 ## Schnittstelle für Apps
 
 JSON-Routen unter `/tree/{tree}/archiv/api/`, gedacht für [wtAnd](https://github.com/thobgg/app4webtrees).
+Seit 1.10.0 können die Apps alles, was das Modul im Browser kann: wtWin und wtTux markieren Gesichter auf
+Gruppenbildern, zeigen im Personenblatt „Auf Gruppenbildern“, öffnen das Archiv als eigenes Fenster mit der
+ganzen Verwaltung, zeigen und bearbeiten Postkarten und gleichen EXIF mit webtrees ab.
+
 Zugriff mit dem Sitzungs-Cookie, Rechte wie in der Galerie; jede Antwort trägt `api` (Stufe, derzeit 6),
 `modul` und `baum`. Feldnamen sind deutsch. Seit Stufe 4 trägt jeder Eintrag `datumUnsicher`; in einer
 Postkarten-Sammlung außerdem `rueckseite` (Eintrag oder null), `motiv`, `transkription`, `notiz`.
