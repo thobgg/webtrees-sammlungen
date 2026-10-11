@@ -519,5 +519,8 @@ msgstr "Printing technique, publisher, condition…"
 msgid "Date uncertain (postmark illegible, inferred)"
 msgstr "Date uncertain (postmark illegible, inferred)"
 
+msgid "Rotate for reading, nothing is saved (key R, Shift+R back)"
+msgstr "Rotate for reading, nothing is saved (key R, Shift+R back)"
+
 msgid "Fill the screen (key F)"
 msgstr "Fill the screen (key F)"

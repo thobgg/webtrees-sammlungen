@@ -519,5 +519,8 @@ msgstr "Drucktechnik, Verlag, Zustand…"
 msgid "Date uncertain (postmark illegible, inferred)"
 msgstr "Datum unsicher (Poststempel unleserlich, erschlossen)"
 
+msgid "Rotate for reading, nothing is saved (key R, Shift+R back)"
+msgstr "Zum Lesen drehen, wird nicht gespeichert (Taste R, Umschalt+R zurück)"
+
 msgid "Fill the screen (key F)"
 msgstr "Bildschirmfüllend (Taste F)"

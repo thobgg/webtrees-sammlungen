@@ -147,6 +147,11 @@ Taste **W** die Karte, neben der Rückseite steht die Transkription. Eine Datei
 ohne Gegenstück ist eine Einzelkarte; zwei Dateien desselben webtrees-Medienobjekts
 gelten ebenfalls als Paar.
 
+Quer beschriebene Rückseiten lassen sich zum Lesen drehen: ↻ oder Taste **R**
+dreht um 90 Grad, **Umschalt + R** zurück. Das gilt für jedes Bild der Lightbox,
+merkt sich die Lage je Seite, solange die Seite offen ist, und speichert nichts –
+die Datei bleibt, wie sie ist.
+
 ![Postkarten-Galerie](docs/images/05-postkarten.jpg)
 
 Der Editor hat für Karten drei Felder – **Motiv**, **Transkription**, **Notiz** –

@@ -44,6 +44,12 @@ _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Bl
   einer Postkarte ebenso `motiv`, `transkription`, `notiz` und `gegenseite`.
   `api: 6`.
 
+- **Drehen zum Lesen.** In der Lightbox dreht ↻ oder die Taste R das Bild um
+  90 Grad, Umschalt + R zurück – etwa für quer beschriebene Postkarten. Nur
+  zum Ansehen: gespeichert wird nichts, die Lage gilt je Bildseite, solange
+  die Seite offen ist. Zoomen und Verschieben funktionieren auch gedreht,
+  Gesichtsrahmen drehen mit.
+
 ### Geändert
 - **`POST …/exif` lässt Ungesendetes stehen.** Bisher wurden fehlende Felder
   geleert; jetzt bleibt, was nicht mitgeschickt wird, in der Datei. Ein leer

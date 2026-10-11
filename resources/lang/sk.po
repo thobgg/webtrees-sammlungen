@@ -529,5 +529,8 @@ msgstr "Tlačová technika, vydavateľ, stav…"
 msgid "Date uncertain (postmark illegible, inferred)"
 msgstr "Dátum neistý (poštová pečiatka nečitateľná, odvodený)"
 
+msgid "Rotate for reading, nothing is saved (key R, Shift+R back)"
+msgstr "Otočiť na čítanie, nič sa neukladá (kláves R, Shift+R späť)"
+
 msgid "Fill the screen (key F)"
 msgstr "Na celú obrazovku (kláves F)"

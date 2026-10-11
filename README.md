@@ -101,6 +101,11 @@ lightbox a button or the **W** key turns the card, and the transcription is show
 next to the back. A file without a counterpart is a single card; two files of the
 same webtrees media object count as a pair too.
 
+Backs written crosswise can be rotated for reading: ↻ or the **R** key turns the
+image by 90 degrees, **Shift + R** back. This works for every image in the
+lightbox, remembers the position per side while the page is open, and saves
+nothing – the file stays as it is.
+
 ![Postcard gallery](docs/images/05-postkarten.jpg)
 
 For cards the editor has three fields – **Motif**, **Transcription**, **Note** –

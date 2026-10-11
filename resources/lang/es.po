@@ -520,5 +520,8 @@ msgstr "Técnica de impresión, editorial, estado…"
 msgid "Date uncertain (postmark illegible, inferred)"
 msgstr "Fecha incierta (matasellos ilegible, deducida)"
 
+msgid "Rotate for reading, nothing is saved (key R, Shift+R back)"
+msgstr "Girar para leer, no se guarda nada (tecla R, Mayús+R hacia atrás)"
+
 msgid "Fill the screen (key F)"
 msgstr "Pantalla completa (tecla F)"

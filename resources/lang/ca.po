@@ -520,5 +520,8 @@ msgstr "Tècnica d’impressió, editorial, estat…"
 msgid "Date uncertain (postmark illegible, inferred)"
 msgstr "Data incerta (mata-segells il·legible, deduïda)"
 
+msgid "Rotate for reading, nothing is saved (key R, Shift+R back)"
+msgstr "Gira per llegir, no es desa res (tecla R, Maj+R enrere)"
+
 msgid "Fill the screen (key F)"
 msgstr "Pantalla completa (tecla F)"

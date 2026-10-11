@@ -74,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         zoomZuruecksetzen();
         img.src = bild ? bild.full : d.full;
+        drehungLaden();
         if (fullsize) fullsize.href = bild ? bild.original : (d.original || d.full);
         caption.textContent = d.title + (hinten ? '  ·  ' + T.rueckseite : '');
 
@@ -431,6 +432,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // weiter. Sonst würde jedes Verschieben zum nächsten Foto springen.
     // ---------------------------------------------------------------
     let zoomZuruecksetzen = () => {};
+    // Drehen nur zum Lesen: um 90 Grad, je Bildseite gemerkt, solange die
+    // Seite offen ist. Gespeichert wird nichts - die Datei bleibt, wie sie ist.
+    let drehen = () => {};
+    let drehungLaden = () => {};
 
     (function () {
         const flaeche = img && img.parentElement;
@@ -438,6 +443,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const MAX = 5;
         let skala = 1, vx = 0, vy = 0;
+        let drehung = 0;                      // 0, 90, 180, 270
+        const drehungJeBild = new Map();      // Bildadresse -> Drehung
         let startAbstand = 0, startSkala = 1;
         let startX = 0, startY = 0, startVx = 0, startVy = 0, startZeit = 0;
         let modus = null;
@@ -499,10 +506,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const abstand = (a, b) => Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
 
+        const quer = () => drehung === 90 || drehung === 270;
+
+        // Hochkant gedreht passt das Bild nicht mehr in seine Box: so weit
+        // verkleinern (oder vergroessern), dass es in die Flaeche passt.
+        function einpassen() {
+            if (!quer() || !img.offsetWidth || !img.offsetHeight) return 1;
+            return Math.min(flaeche.clientWidth / img.offsetHeight, flaeche.clientHeight / img.offsetWidth);
+        }
+
         function grenzenEinhalten() {
             // Das vergrößerte Bild darf nicht aus dem Rahmen geschoben werden.
-            const maxX = Math.max(0, (img.offsetWidth  * skala - flaeche.clientWidth)  / 2);
-            const maxY = Math.max(0, (img.offsetHeight * skala - flaeche.clientHeight) / 2);
+            const k = einpassen() * skala;
+            const breite = quer() ? img.offsetHeight : img.offsetWidth;
+            const hoehe  = quer() ? img.offsetWidth  : img.offsetHeight;
+            const maxX = Math.max(0, (breite * k - flaeche.clientWidth)  / 2);
+            const maxY = Math.max(0, (hoehe  * k - flaeche.clientHeight) / 2);
             vx = Math.min(maxX, Math.max(-maxX, vx));
             vy = Math.min(maxY, Math.max(-maxY, vy));
         }
@@ -510,7 +529,9 @@ document.addEventListener('DOMContentLoaded', function () {
         function anwenden(weich) {
             grenzenEinhalten();
             img.style.transition = weich ? 'transform .18s ease-out' : '';
-            img.style.transform  = `translate(${vx}px, ${vy}px) scale(${skala})`;
+            img.style.transform  = drehung === 0
+                ? `translate(${vx}px, ${vy}px) scale(${skala})`
+                : `translate(${vx}px, ${vy}px) rotate(${drehung}deg) scale(${einpassen() * skala})`;
             bereicheLage();
         }
 
@@ -518,8 +539,34 @@ document.addEventListener('DOMContentLoaded', function () {
             skala = 1; vx = 0; vy = 0;
             img.style.transition = '';
             img.style.transform = '';
+            if (drehung !== 0) anwenden(false);
             bereicheLage();
         };
+
+        drehen = function (schritt) {
+            drehung = (drehung + schritt + 360) % 360;
+            skala = 1; vx = 0; vy = 0;
+            drehungJeBild.set(img.src, drehung);
+            anwenden(true);
+            const btn = document.getElementById('archiv-lb-drehen');
+            btn?.setAttribute('aria-pressed', drehung !== 0 ? 'true' : 'false');
+        };
+
+        // Nach dem Wechsel des Bildes: die Lage, in der es zuletzt lag.
+        drehungLaden = function () {
+            drehung = drehungJeBild.get(img.src) || 0;
+            skala = 1; vx = 0; vy = 0;
+            anwenden(false);
+            document.getElementById('archiv-lb-drehen')
+                ?.setAttribute('aria-pressed', drehung !== 0 ? 'true' : 'false');
+        };
+
+        // Die Groesse fuers Einpassen kennt erst das geladene Bild; und im
+        // Vollbild oder ohne Leisten aendert sich die Flaeche.
+        img.addEventListener('load', () => { if (drehung !== 0) anwenden(false); });
+        if (window.ResizeObserver) {
+            new ResizeObserver(() => { if (drehung !== 0) anwenden(false); }).observe(flaeche);
+        }
 
         function umschalten(punktX, punktY) {
             if (skala > 1) {
@@ -635,8 +682,15 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.key === 'w' || e.key === 'W') wenden();
         // F wie Vollbild - wie in den meisten Bildbetrachtern.
         if (e.key === 'f' || e.key === 'F') vollUmschalten();
+        // R wie rotieren: rechtsherum, mit Umschalttaste zurueck.
+        // Strg/Cmd+R bleibt Neuladen.
+        if (!e.ctrlKey && !e.metaKey && !e.altKey) {
+            if (e.key === 'r') drehen(90);
+            if (e.key === 'R') drehen(-90);
+        }
     });
     wendenBtn?.addEventListener('click', wenden);
+    document.getElementById('archiv-lb-drehen')?.addEventListener('click', e => drehen(e.shiftKey ? -90 : 90));
 
     // Bildschirmfuellend: der Dialog nimmt das ganze Fenster, und der
     // Browser geht ins Vollbild, wo er darf. Verlaesst der Nutzer das
