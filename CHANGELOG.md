@@ -40,7 +40,9 @@ _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Bl
   `darfEinstellungen` und je Sammlung `album` und `bildquelle`.
   `POST …/exif` beschreibt Postkarten wie die Lightbox: `motiv`,
   `transkription`, `notiz` einzeln, beide Seiten mit Kartenschlüssel und
-  Gegenseite, Gesichter nur auf der einen Seite. `api: 6`.
+  Gegenseite, Gesichter nur auf der einen Seite. `GET …/eintrag` trägt bei
+  einer Postkarte ebenso `motiv`, `transkription`, `notiz` und `gegenseite`.
+  `api: 6`.
 
 ### Geändert
 - **`POST …/exif` lässt Ungesendetes stehen.** Bisher wurden fehlende Felder

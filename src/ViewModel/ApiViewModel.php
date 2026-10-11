@@ -32,7 +32,9 @@ use function array_values;
 use function basename;
 use function ceil;
 use function count;
+use function dirname;
 use function in_array;
+use function is_file;
 use function max;
 use function min;
 use function pathinfo;
@@ -626,15 +628,53 @@ final class ApiViewModel
      */
     public function postkartenEintrag(Tree $tree, string $pfad, ?string $partner): array
     {
-        $eintrag = $this->eintrag($tree, $pfad);
-        $teile   = Postkarten::abschnitte((string) $eintrag['beschreibung']);
+        $eintrag    = $this->eintrag($tree, $pfad);
+        $gegenseite = $partner !== null ? $this->eintrag($tree, $partner) : null;
+
+        // Wie die Galerie: steht auf dieser Seite nichts, gilt die Beschreibung der anderen.
+        $text = (string) $eintrag['beschreibung'];
+        if ($text === '' && $gegenseite !== null) {
+            $text = (string) $gegenseite['beschreibung'];
+        }
+
+        $teile = Postkarten::abschnitte($text);
 
         $eintrag['motiv']         = $teile['motiv'];
         $eintrag['transkription'] = $teile['transkription'];
         $eintrag['notiz']         = $teile['notiz'];
-        $eintrag['gegenseite']    = $partner !== null ? $this->eintrag($tree, $partner) : null;
+        $eintrag['gegenseite']    = $gegenseite;
 
         return $eintrag;
+    }
+
+    /**
+     * Ein Eintrag zu einer Datei; liegt sie in einer Postkarten-Sammlung, wie
+     * postkartenEintrag() mit der Gegenseite nach dem Namensmuster _V/_R.
+     *
+     * @return array<string,mixed>
+     */
+    public function eintragOderKarte(Tree $tree, string $pfad): array
+    {
+        if ($this->collectionService->postkartenSammlung($tree, $pfad) === null) {
+            return $this->eintrag($tree, $pfad);
+        }
+
+        return $this->postkartenEintrag($tree, $pfad, $this->gegenseiteNachName($tree, $pfad));
+    }
+
+    /** Die andere Seite einer Karte nach dem Namensmuster, wenn es sie gibt. */
+    public function gegenseiteNachName(Tree $tree, string $pfad): ?string
+    {
+        $name = Postkarten::partnerName($pfad);
+
+        if ($name === null) {
+            return null;
+        }
+
+        $ordner  = dirname($pfad);
+        $partner = ($ordner === '.' ? '' : $ordner . '/') . $name;
+
+        return is_file(MedienPfad::wurzel($tree) . $partner) ? $partner : null;
     }
 
     /**

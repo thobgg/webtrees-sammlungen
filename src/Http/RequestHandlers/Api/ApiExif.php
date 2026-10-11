@@ -218,16 +218,13 @@ final class ApiExif extends AbstractApiHandler
     private function gegenseite(Tree $tree, string $pfad, string $partner, bool $mitgeschickt): string|null|false
     {
         $ordner = dirname($pfad);
-        $praefix = $ordner === '.' ? '' : $ordner . '/';
 
         if (!$mitgeschickt || $partner === '') {
             if ($mitgeschickt) {
                 return null; // ausdruecklich leer: nur diese Seite
             }
 
-            $name = Postkarten::partnerName($pfad);
-
-            return $name !== null && is_file(MedienPfad::wurzel($tree) . $praefix . $name) ? $praefix . $name : null;
+            return $this->viewModel->gegenseiteNachName($tree, $pfad);
         }
 
         $istJpg = static fn (string $p): bool => in_array(strtolower(pathinfo($p, PATHINFO_EXTENSION)), ['jpg', 'jpeg'], true);

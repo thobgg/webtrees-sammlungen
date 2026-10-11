@@ -22,6 +22,9 @@ use function trim;
  * Ein einzelner Eintrag zu einer Datei - in derselben Form wie in einer Sammlung, mit EXIF, Personen und Adressen.
  * Fuer eine App, die ein Foto nicht aus dem Archiv, sondern aus dem Stammbaum oder einem Profil kennt und vor dem
  * Bearbeiten wissen muss, was schon in der Datei steht.
+ *
+ * Liegt die Datei in einer Postkarten-Sammlung, traegt der Eintrag (Stufe 6) wie die Antwort von api/exif
+ * `motiv`, `transkription`, `notiz` und `gegenseite`.
  */
 final class ApiEintrag extends AbstractApiHandler
 {
@@ -48,6 +51,6 @@ final class ApiEintrag extends AbstractApiHandler
             return $this->fehler(StatusCodeInterface::STATUS_NOT_FOUND, 'file-not-found');
         }
 
-        return $this->json(['ok' => true, 'eintrag' => $this->viewModel->eintrag($tree, $pfad)]);
+        return $this->json(['ok' => true, 'eintrag' => $this->viewModel->eintragOderKarte($tree, $pfad)]);
     }
 }
