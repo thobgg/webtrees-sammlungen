@@ -11,6 +11,7 @@ use function array_values;
 use function explode;
 use function in_array;
 use function preg_match;
+use function str_replace;
 use function trim;
 
 /**
@@ -64,7 +65,8 @@ final class Metadaten
         $felder = [];
 
         if (array_key_exists('beschreibung', $body)) {
-            $felder['beschreibung'] = trim((string) $body['beschreibung']);
+            // \r\n aus Textfeldern stuende sonst als &#13; im XMP.
+            $felder['beschreibung'] = trim(str_replace(["\r\n", "\r"], "\n", (string) $body['beschreibung']));
         }
         if (array_key_exists('datum', $body)) {
             $felder['datum'] = trim((string) $body['datum']);

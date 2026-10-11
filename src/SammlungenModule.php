@@ -4,11 +4,18 @@ declare(strict_types=1);
 
 namespace Sammlungen;
 
+use Sammlungen\Http\RequestHandlers\Api\ApiCacheLeeren;
 use Sammlungen\Http\RequestHandlers\Api\ApiEintrag;
+use Sammlungen\Http\RequestHandlers\Api\ApiEinstellungen;
 use Sammlungen\Http\RequestHandlers\Api\ApiExif;
 use Sammlungen\Http\RequestHandlers\Api\ApiHochladen;
 use Sammlungen\Http\RequestHandlers\Api\ApiSammlung;
 use Sammlungen\Http\RequestHandlers\Api\ApiSammlungen;
+use Sammlungen\Http\RequestHandlers\Api\ApiSammlungLoeschen;
+use Sammlungen\Http\RequestHandlers\Api\ApiSammlungSpeichern;
+use Sammlungen\Http\RequestHandlers\Api\ApiSichtbar;
+use Sammlungen\Http\RequestHandlers\Api\ApiUmbenennen;
+use Sammlungen\Http\RequestHandlers\Api\ApiZuordnen;
 use Sammlungen\Http\RequestHandlers\AdminConfig;
 use Sammlungen\Http\RequestHandlers\AdminSammlungFotos;
 use Sammlungen\Http\RequestHandlers\AdminSammlungDelete;
@@ -60,7 +67,7 @@ class SammlungenModule extends AbstractModule implements
      * neue Felder bekommt; bestehende Felder bleiben, damit eine aeltere App
      * mit einem neueren Modul weiterlaeuft.
      */
-    public const API_VERSION = 5;
+    public const API_VERSION = 6;
     public const SETTING_CACHE_TTL = 'cache_ttl';
     public const SETTING_PER_PAGE  = 'per_page';
     public const DEFAULT_CACHE_TTL = 900;
@@ -140,6 +147,20 @@ class SammlungenModule extends AbstractModule implements
                ->allows('POST');
         $router->get('sammlungen.api.exif',      '/tree/{tree}/archiv/api/exif',      ApiExif::class)
                ->allows('POST');
+        // Stufe 6: was die Verwaltung im Browser kann - Dateien umbenennen, Alben bestuecken, Sammlungen
+        // ein-/ausblenden, anlegen, aendern, loeschen, Einstellungen. Antworten wie die uebrige Schnittstelle.
+        foreach ([
+            'umbenennen'         => ApiUmbenennen::class,
+            'zuordnen'           => ApiZuordnen::class,
+            'sichtbar'           => ApiSichtbar::class,
+            'sammlung-speichern' => ApiSammlungSpeichern::class,
+            'sammlung-loeschen'  => ApiSammlungLoeschen::class,
+            'einstellungen'      => ApiEinstellungen::class,
+            'cache-leeren'       => ApiCacheLeeren::class,
+        ] as $name => $handler) {
+            $router->get('sammlungen.api.' . $name, '/tree/{tree}/archiv/api/' . $name, $handler)
+                   ->allows('POST');
+        }
         $router->get('sammlungen.exif-schreiben', '/tree/{tree}/archiv/exif-schreiben', ExifSchreiben::class)
                ->allows('POST');
         $router->get('sammlungen.datei-umbenennen', '/tree/{tree}/archiv/datei-umbenennen', MediaDateiUmbenennen::class)

@@ -4,28 +4,40 @@ declare(strict_types=1);
 
 namespace Sammlungen\Http\RequestHandlers;
 
-use Sammlungen\Service\MedienPfad;
 use Fisharebest\Webtrees\Auth;
-use Fisharebest\Webtrees\DB;
 use Fisharebest\Webtrees\Validator;
-use Fisharebest\Webtrees\Webtrees;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Sammlungen\Service\DateiUmbenennen;
+use Sammlungen\Service\DateiUmbenennenException;
+
+use function basename;
+use function json_encode;
 
 /**
  * POST /tree/{tree}/archiv/datei-umbenennen
  *
- * Benennt eine Mediendatei um. Aktualisiert collection_pfad und media_file.
- * Gibt JSON zurück.
+ * Benennt eine Mediendatei um (siehe DateiUmbenennen). Gibt JSON zurueck,
+ * fuer die Lightbox. Die App nimmt api/umbenennen.
  */
 final class MediaDateiUmbenennen implements RequestHandlerInterface
 {
+    private const MELDUNGEN = [
+        'missing-pfad'      => ['Fehlende Parameter.', 400],
+        'bad-name'          => ['Ungültiger Dateiname.', 400],
+        'extension-changed' => ['Die Endung der Datei lässt sich nicht ändern.', 400],
+        'file-not-found'    => ['Originaldatei nicht gefunden.', 404],
+        'name-exists'       => ['Datei mit diesem Namen existiert bereits.', 409],
+        'rename-failed'     => ['Umbenennen fehlgeschlagen.', 500],
+    ];
+
     public function __construct(
+        private readonly DateiUmbenennen          $umbenennen,
         private readonly ResponseFactoryInterface $responseFactory,
-        private readonly StreamFactoryInterface  $streamFactory,
+        private readonly StreamFactoryInterface   $streamFactory,
     ) {}
 
     public function handle(ServerRequestInterface $request): ResponseInterface
@@ -37,63 +49,32 @@ final class MediaDateiUmbenennen implements RequestHandlerInterface
             return $this->json(['ok' => false, 'fehler' => 'Keine Berechtigung.'], 403);
         }
 
-        $body       = (array) $request->getParsedBody();
-        $altPfad    = trim((string) ($body['pfad']         ?? ''));
-        $neuerName  = trim((string) ($body['neuer_name']   ?? ''));
+        $body = (array) $request->getParsedBody();
 
-        if ($altPfad === '' || $neuerName === '') {
-            return $this->json(['ok' => false, 'fehler' => 'Fehlende Parameter.'], 400);
+        try {
+            $neuPfad = $this->umbenennen->umbenennen(
+                $tree,
+                (string) ($body['pfad'] ?? ''),
+                (string) ($body['neuer_name'] ?? '')
+            );
+        } catch (DateiUmbenennenException $e) {
+            [$text, $status] = self::MELDUNGEN[$e->fehlercode] ?? ['Umbenennen fehlgeschlagen.', 500];
+
+            return $this->json(['ok' => false, 'fehler' => $text], $status);
         }
-
-        // Sicherheits-Check: neuer Name darf keine Pfad-Trenner enthalten
-        if (preg_match('/[\/\\\\]/', $neuerName) || str_starts_with($neuerName, '.')) {
-            return $this->json(['ok' => false, 'fehler' => 'Ungültiger Dateiname.'], 400);
-        }
-
-        $mediaBase = MedienPfad::wurzel($tree);
-        $altVoll   = realpath($mediaBase . $altPfad);
-        $realBase  = realpath($mediaBase);
-
-        if ($altVoll === false || $realBase === false || !str_starts_with($altVoll, $realBase) || !is_file($altVoll)) {
-            return $this->json(['ok' => false, 'fehler' => 'Originaldatei nicht gefunden.'], 404);
-        }
-
-        // Neuer Pfad: gleicher Ordner, neuer Name
-        $ordner   = dirname($altPfad);
-        $neuPfad  = ($ordner === '.' ? '' : $ordner . '/') . $neuerName;
-        $neuVoll  = $mediaBase . $neuPfad;
-
-        if (file_exists($neuVoll)) {
-            return $this->json(['ok' => false, 'fehler' => 'Datei mit diesem Namen existiert bereits.'], 409);
-        }
-
-        // Rename auf Dateisystem
-        if (!@rename($altVoll, $neuVoll)) {
-            return $this->json(['ok' => false, 'fehler' => 'Umbenennen fehlgeschlagen.'], 500);
-        }
-
-        // collection_pfad aktualisieren
-        DB::table('sammlungen_collection_pfad')
-            ->where('pfad', '=', $altPfad)
-            ->where('gedcom_id', '=', $tree->id())
-            ->update(['pfad' => $neuPfad, 'updated_at' => date('Y-m-d H:i:s')]);
-
-        // media_file (webtrees) – falls importiert
-        DB::table('media_file')
-            ->where('m_file', '=', $tree->id())
-            ->where('multimedia_file_refn', '=', $altPfad)
-            ->update(['multimedia_file_refn' => $neuPfad]);
 
         return $this->json([
             'ok'       => true,
             'neu_pfad' => $neuPfad,
-            'neu_name' => $neuerName,
+            'neu_name' => basename($neuPfad),
         ]);
     }
 
+    /** @param array<string,mixed> $data */
     private function json(array $data, int $status = 200): ResponseInterface
     {
-        $body = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
+        $body = (string) json_encode($data, JSON_UNESCAPED_UNICODE);
+
         return $this->responseFactory
             ->createResponse($status)
             ->withHeader('Content-Type', 'application/json; charset=UTF-8')

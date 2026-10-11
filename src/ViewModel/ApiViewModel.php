@@ -7,12 +7,14 @@ namespace Sammlungen\ViewModel;
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\DB;
 use Fisharebest\Webtrees\Http\RequestHandlers\MediaPage;
+use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Individual;
 use Fisharebest\Webtrees\Media;
 use Fisharebest\Webtrees\MediaFile;
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Tree;
 use Sammlungen\Dto\SammlungDto;
+use Sammlungen\Http\RequestHandlers\AdminSammlungEdit;
 use Sammlungen\Dto\Symbole;
 use Sammlungen\Repository\SammlungenRepository;
 use Sammlungen\SammlungenModule;
@@ -21,6 +23,7 @@ use Sammlungen\Service\BereichSicht;
 use Sammlungen\Service\CollectionService;
 use Sammlungen\Service\ExifService;
 use Sammlungen\Service\MedienPfad;
+use Sammlungen\Service\Postkarten;
 
 use function array_filter;
 use function array_map;
@@ -34,6 +37,7 @@ use function max;
 use function min;
 use function pathinfo;
 use function route;
+use function str_contains;
 use function strip_tags;
 use function strtolower;
 
@@ -76,7 +80,7 @@ final class ApiViewModel
     // ---------------------------------------------------------------
 
     /** @return array<string,mixed> */
-    public function uebersicht(Tree $tree): array
+    public function uebersicht(Tree $tree, bool $alle = false): array
     {
         $daten = $this->viewModel->fuerSchnittstelle($tree, '', '', 1, $this->module->perPage());
 
@@ -94,6 +98,10 @@ final class ApiViewModel
                 'icon'         => Symbole::fa($s->icon),
                 'ansicht'      => $s->ansicht,
                 'ordner'       => $istOrdner ? $s->ordner : null,
+                // Stufe 6: Album = nimmt Bilder per "Zu Sammlung" auf; Bildquelle = Ordner, aus dem die
+                // Auswahl im Browser Bilder fuer ein Album anbietet.
+                'album'        => self::istAlbum($s),
+                'bildquelle'   => self::istBildquelle($s),
                 'anzahl'       => $istOrdner ? (int) $s->anzahl : $this->collectionService->anzahlPfadeSammlung($tree, $s->id),
                 'vorschau'     => $istOrdner
                     ? $this->vorschauAusXrefs($tree, $s->vorschau)
@@ -111,6 +119,8 @@ final class ApiViewModel
                 'icon'         => $a->icon(),
                 'ansicht'      => 'foto',
                 'ordner'       => null,
+                'album'        => false,
+                'bildquelle'   => false,
                 'anzahl'       => $a->anzahl,
                 'vorschau'     => $this->vorschauAusXrefs($tree, $a->vorschauXrefs),
             ];
@@ -139,7 +149,9 @@ final class ApiViewModel
         $user          = Auth::user();
         $darfHochladen = Auth::canUploadMedia($tree, $user);
 
-        return $this->kopf($tree) + [
+        $istVerwalter = Auth::isManager($tree, $user);
+
+        $antwort = $this->kopf($tree) + [
             'proSeite'      => $this->module->perPage(),
             'galerie'       => route('sammlungen.sammlungen', ['tree' => $tree->name()]),
             'darfHochladen' => $darfHochladen,
@@ -148,6 +160,12 @@ final class ApiViewModel
             // Bilder einer Person finden (api/sammlung?person=…).
             'darfBereiche'   => Auth::isManager($tree, $user),
             'personenFilter' => true,
+            // Stufe 6: Dateien umbenennen, Bilder einem Album zuordnen, Sammlungen ein-/ausblenden
+            // (Verwalter des Baums, wie die Knoepfe in der Galerie) - und Sammlungen anlegen, bearbeiten,
+            // loeschen sowie die Einstellungen (Administrator, wie die Verwaltung im Browser).
+            'darfOrdnen'       => $istVerwalter,
+            'darfVerwalten'    => Auth::isAdmin($user),
+            'darfEinstellungen' => Auth::isAdmin($user),
             // Ziele fuer das Hochladen: die Unterordner des Medienordners; der Hauptordner ist immer moeglich.
             'ordnerListe'   => $darfHochladen ? $this->collectionService->verfuegbareOrdner($tree) : [],
             'sammlungen'    => $sammlungen,
@@ -158,6 +176,135 @@ final class ApiViewModel
                 'jeOrdner' => $jeOrdner,
             ],
         ];
+
+        // ?alle=1: auch die ausgeblendeten Sammlungen, mit allen Feldern der Maske und den Auswahllisten.
+        if ($alle && $istVerwalter) {
+            $antwort['verwaltung'] = $this->verwaltung($tree);
+        }
+
+        return $antwort;
+    }
+
+    // ---------------------------------------------------------------
+    // Verwaltung (Stufe 6)
+    // ---------------------------------------------------------------
+
+    /**
+     * Alle Sammlungen des Baums, sichtbar oder nicht, mit den Feldern der Maske
+     * im Browser - und was man dort auswaehlen kann.
+     *
+     * @return array<string,mixed>
+     */
+    public function verwaltung(Tree $tree): array
+    {
+        $symbole = [];
+        foreach (AdminSammlungEdit::ICON_AUSWAHL as $wert => $name) {
+            $symbole[] = ['wert' => $wert, 'name' => $name, 'icon' => Symbole::fa($wert)];
+        }
+
+        $ansichten = [];
+        foreach (self::ansichtNamen() as $wert => $name) {
+            $ansichten[] = ['wert' => $wert, 'name' => $name];
+        }
+
+        return [
+            'sammlungen' => array_map(
+                fn (object $s): array => $this->verwaltungsEintrag($tree, $s),
+                $this->collectionService->alle($tree)
+            ),
+            'auswahl' => [
+                'symbole'   => $symbole,
+                'ansichten' => $ansichten,
+                'ordner'    => $this->collectionService->verfuegbareOrdner($tree),
+            ],
+        ];
+    }
+
+    /**
+     * Eine Sammlung mit allen Feldern der Maske - die Antwort nach dem Speichern
+     * und Ein-/Ausblenden. `symbol` ist der Wert fuers Formular, `icon` die
+     * FontAwesome-Klasse wie in der Uebersicht.
+     *
+     * @return array<string,mixed>
+     */
+    public function verwaltungsEintrag(Tree $tree, object $s): array
+    {
+        $istOrdner = $s->ordner !== null && $s->ordner !== '';
+
+        return [
+            'slug'         => (string) $s->slug,
+            'art'          => $istOrdner ? 'ordner' : 'thematisch',
+            'name'         => (string) $s->name,
+            'beschreibung' => (string) ($s->beschreibung ?? ''),
+            'symbol'       => (string) $s->icon,
+            'icon'         => Symbole::fa((string) $s->icon),
+            'farbe'        => (string) $s->farbe,
+            'ansicht'      => (string) $s->ansicht,
+            'ordner'       => $istOrdner ? (string) $s->ordner : '',
+            'aktiv'        => (bool) $s->aktiv,
+            'reihenfolge'  => (int) $s->reihenfolge,
+            'album'        => self::istAlbum($s),
+            'bildquelle'   => self::istBildquelle($s),
+            'anzahl'       => $istOrdner
+                ? $this->collectionService->anzahlDateienImOrdner($tree, (string) $s->ordner)
+                : $this->collectionService->anzahlPfadeSammlung($tree, (int) $s->id),
+        ];
+    }
+
+    /** Nimmt Bilder per "Zu Sammlung" auf: jede Sammlung ohne Ordner (wie die Auswahl im Browser). */
+    public static function istAlbum(object $s): bool
+    {
+        return $s->ordner === null || $s->ordner === '';
+    }
+
+    /**
+     * Aus dieser Sammlung bietet der Browser Bilder fuer ein Album an: sichtbare
+     * Ordner-Sammlung direkt unter dem Medienordner, Fotogalerie oder Raster.
+     * Zuordnen laesst sich trotzdem jedes Bild des Medienordners.
+     */
+    public static function istBildquelle(object $s): bool
+    {
+        return (bool) $s->aktiv
+            && $s->ordner !== null && $s->ordner !== ''
+            && !str_contains((string) $s->ordner, '/')
+            && in_array($s->ansicht ?? 'foto', ['foto', 'raster'], true);
+    }
+
+    /** @return array<string,string> Anzeigetyp => Bezeichnung, wie in der Maske */
+    public static function ansichtNamen(): array
+    {
+        return [
+            'foto'     => I18N::translate('Photo gallery'),
+            'raster'   => I18N::translate('Photo grid'),
+            'gemischt' => I18N::translate('Mixed'),
+            'dokument' => I18N::translate('Document list'),
+            'postkarte' => I18N::translate('Postcards'),
+        ];
+    }
+
+    /**
+     * Die Felder einer vorhandenen Sammlung in der Form, die SammlungFormular liest.
+     *
+     * @return array<string,mixed>
+     */
+    public static function formularFelder(object $s): array
+    {
+        return [
+            'name'         => (string) $s->name,
+            'beschreibung' => (string) ($s->beschreibung ?? ''),
+            'icon'         => (string) $s->icon,
+            'farbe'        => (string) $s->farbe,
+            'ansicht'      => (string) $s->ansicht,
+            'ordner'       => (string) ($s->ordner ?? ''),
+            'aktiv'        => (bool) $s->aktiv,
+            'reihenfolge'  => (int) $s->reihenfolge,
+        ];
+    }
+
+    /** Was auf jeder Antwort steht - fuer Antworten ohne eigene Daten (Loeschen, Einstellungen). */
+    public function kopfFuer(Tree $tree): array
+    {
+        return $this->kopf($tree);
     }
 
     // ---------------------------------------------------------------
@@ -467,6 +614,27 @@ final class ApiViewModel
         }
 
         return $this->pfadEintraege($tree, [$datei], $this->slugsJeId($tree))[0];
+    }
+
+    /**
+     * Ein Eintrag einer Postkarte nach dem Schreiben: wie eintrag(), dazu die
+     * Abschnitte der Beschreibung und die andere Seite (`gegenseite`, Eintrag
+     * oder null). `gegenseite` statt `rueckseite`, weil die App auch die
+     * Rueckseite geschickt haben kann.
+     *
+     * @return array<string,mixed>
+     */
+    public function postkartenEintrag(Tree $tree, string $pfad, ?string $partner): array
+    {
+        $eintrag = $this->eintrag($tree, $pfad);
+        $teile   = Postkarten::abschnitte((string) $eintrag['beschreibung']);
+
+        $eintrag['motiv']         = $teile['motiv'];
+        $eintrag['transkription'] = $teile['transkription'];
+        $eintrag['notiz']         = $teile['notiz'];
+        $eintrag['gegenseite']    = $partner !== null ? $this->eintrag($tree, $partner) : null;
+
+        return $eintrag;
     }
 
     /**

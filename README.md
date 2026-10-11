@@ -328,6 +328,7 @@ All URLs live under `/tree/{tree}/archiv/…`:
 | `sammlungen.api.eintrag` | `/api/eintrag?pfad=…` | GET (JSON) |
 | `sammlungen.api.hochladen` | `/api/hochladen` | POST (JSON) |
 | `sammlungen.api.exif` | `/api/exif` | POST (JSON) |
+| `sammlungen.api.umbenennen`, `.zuordnen`, `.sichtbar`, `.sammlung-speichern`, `.sammlung-loeschen`, `.einstellungen`, `.cache-leeren` | `/api/…` | POST (JSON), `einstellungen` also GET |
 | `sammlungen.admin.sammlungen` | `/admin/sammlungen` | GET |
 | `sammlungen.admin.sammlungen.edit` | `/admin/sammlungen/edit` | POST |
 | `sammlungen.admin.sammlungen.toggle-aktiv` | `/admin/sammlungen/toggle-aktiv` | POST |
@@ -336,7 +337,7 @@ All URLs live under `/tree/{tree}/archiv/…`:
 ## Interface for apps
 
 JSON routes under `/tree/{tree}/archiv/api/`, made for [wtAnd](https://github.com/thobgg/app4webtrees).
-Access with the session cookie, permissions as in the gallery; every answer carries `api` (level, currently 5),
+Access with the session cookie, permissions as in the gallery; every answer carries `api` (level, currently 6),
 `modul` and `baum`. Field names are German.
 
 Since level 5 every image entry carries `bereiche`: the marked faces (and whatever other programs marked) as
@@ -347,18 +348,25 @@ are left out.
 
 | Call | |
 |---|---|
-| `GET …/sammlungen` | overview: collections with previews, unlinked media, free holdings, `darfHochladen`, `darfExif`, `darfBereiche`, `personenFilter`, `ordnerListe` |
+| `GET …/sammlungen` | overview: collections with previews, unlinked media, free holdings, `darfHochladen`, `darfExif`, `darfBereiche`, `personenFilter`, `ordnerListe`; since level 6 `darfOrdnen`, `darfVerwalten`, `darfEinstellungen` and per collection `album`, `bildquelle`. `?alle=1` (managers): plus `verwaltung` with all collections, hidden ones too, every field of the edit form and the choices (`symbole`, `ansichten`, `ordner`) |
 | `GET …/sammlung?kategorie=<slug>&seite=&pro_seite=` | entries of a collection with URLs for tile, full size and original; `kategorie=__unlinked__&typ=` for unlinked media |
 | `GET …/sammlung?person=<xref>&seite=&pro_seite=` | all images of the archive on which this person is marked as a face (`art: person`); `vollstaendig: false` while the index is still reading for the first time |
 | `GET …/eintrag?pfad=<file>` | a single entry in the same form, e.g. for a photo known from the tree |
 | `POST …/hochladen` (multipart) | store `file` in `ordner` – as a file, not a media object; `beschreibung`, `datum`, `personen`, `keywords` as EXIF, `sammlung` assigns. Anyone allowed to upload in webtrees |
-| `POST …/exif` | write `beschreibung`, `datum`, `datum_unsicher`, `personen`, `keywords`, `bereiche` (JSON, replaces all faces) into `pfad`. Fields not sent stay as they are in the file. Managers only |
+| `POST …/exif` | write `beschreibung`, `datum`, `datum_unsicher`, `personen`, `keywords`, `bereiche` (JSON, replaces all faces) into `pfad`. Fields not sent stay as they are in the file. Managers only. Postcards (level 6): `motiv`, `transkription`, `notiz` separately; `beschreibung` without headings is the motif; the card is written to both sides (`partner` only if the other side is not named `_V`/`_R`), faces only to the one file |
+| `POST …/umbenennen` | `pfad`, `neuer_name` (same folder, same extension); collections, face index and media object follow. Managers |
+| `POST …/zuordnen` | `pfad`, `sammlung` (slug of an album), `aktion` = `hinzufuegen`/`entfernen`. Managers |
+| `POST …/sichtbar` | `sammlung`, `aktiv` = 1/0. Managers |
+| `POST …/sammlung-speichern` | `slug` (empty = new), `name`, `beschreibung`, `icon`, `farbe`, `ansicht`, `ordner`, `aktiv`, `reihenfolge`; when editing, missing fields stay. Administrators |
+| `POST …/sammlung-loeschen` | `sammlung`; assignments go with it, files stay. Administrators |
+| `GET`/`POST …/einstellungen` | `cacheTtl`, `seitenGroesse` (clamped to the limits). Administrators |
+| `POST …/cache-leeren` | clear the module's cache. Administrators |
 
 POST needs the session's CSRF token (`X-CSRF-TOKEN`). `pro_seite` and `lang` apply to that answer only.
 Errors: `{"ok":false,"error":"…","status":…}` with HTTP 200 (as with api4webtrees; a real 4xx status would not
 reach the client as JSON through some web servers). Codes: `not-logged-in`, `not-member`, `upload-not-allowed`,
 `not-manager`, `unknown-collection`, `unknown-person`, `folder-not-found`, `file-not-found`, `bad-filename`,
-`blocked-extension`, `bad-date`, `bad-regions`, `not-image`, `exif-failed`. Existing files are never overwritten (`foto-2.jpg`).
+`blocked-extension`, `bad-date`, `bad-regions`, `not-image`, `exif-failed`; since level 6 also `not-admin`, `post-required`, `not-postcard`, `bad-partner`, `missing-pfad`, `bad-name`, `extension-changed`, `name-exists`, `rename-failed`, `postcard-pair`, `bad-action`, `not-album`, `missing-aktiv`, `missing-name`, `bad-description`, `bad-color`, `bad-icon`, `bad-view`, `bad-order`, `bad-slug`, `save-failed`. Existing files are never overwritten (`foto-2.jpg`).
 
 ## Data model
 

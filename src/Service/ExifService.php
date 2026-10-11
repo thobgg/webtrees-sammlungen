@@ -234,6 +234,7 @@ class ExifService
                 throw new \RuntimeException("Ordner nicht schreibbar: " . dirname($fullPath));
             }
             JpegXmp::schreibe($fullPath, $xmp);
+            $this->gelesenesVergessen($fullPath);
             return;
         }
 
@@ -264,6 +265,21 @@ class ExifService
 
         $imagick->writeImage($fullPath);
         $imagick->destroy();
+        $this->gelesenesVergessen($fullPath);
+    }
+
+    /**
+     * Der Zwischenspeicher von leseMeta() haengt an der Aenderungszeit, und die
+     * zaehlt in Sekunden: lesen, schreiben und wieder lesen in derselben Sekunde
+     * (die Schnittstelle bei Postkarten) gaebe sonst den alten Stand zurueck.
+     */
+    private function gelesenesVergessen(string $fullPath): void
+    {
+        clearstatcache(true, $fullPath);
+
+        if (function_exists('apcu_delete')) {
+            apcu_delete('exif2:' . md5($fullPath) . ':' . (@filemtime($fullPath) ?: 0));
+        }
     }
 
     /** Vollständiger Dateisystempfad aus Tree + relativer Pfad. */

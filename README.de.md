@@ -329,6 +329,7 @@ Alle URLs sind unter `/tree/{tree}/archiv/…` erreichbar:
 | `sammlungen.api.eintrag` | `/api/eintrag?pfad=…` | GET (JSON) |
 | `sammlungen.api.hochladen` | `/api/hochladen` | POST (JSON) |
 | `sammlungen.api.exif` | `/api/exif` | POST (JSON) |
+| `sammlungen.api.umbenennen`, `.zuordnen`, `.sichtbar`, `.sammlung-speichern`, `.sammlung-loeschen`, `.einstellungen`, `.cache-leeren` | `/api/…` | POST (JSON), `einstellungen` auch GET |
 | `sammlungen.admin.sammlungen` | `/admin/sammlungen` | GET |
 | `sammlungen.admin.sammlungen.edit` | `/admin/sammlungen/edit` | POST |
 | `sammlungen.admin.sammlungen.toggle-aktiv` | `/admin/sammlungen/toggle-aktiv` | POST |
@@ -337,7 +338,7 @@ Alle URLs sind unter `/tree/{tree}/archiv/…` erreichbar:
 ## Schnittstelle für Apps
 
 JSON-Routen unter `/tree/{tree}/archiv/api/`, gedacht für [wtAnd](https://github.com/thobgg/app4webtrees).
-Zugriff mit dem Sitzungs-Cookie, Rechte wie in der Galerie; jede Antwort trägt `api` (Stufe, derzeit 5),
+Zugriff mit dem Sitzungs-Cookie, Rechte wie in der Galerie; jede Antwort trägt `api` (Stufe, derzeit 6),
 `modul` und `baum`. Feldnamen sind deutsch. Seit Stufe 4 trägt jeder Eintrag `datumUnsicher`; in einer
 Postkarten-Sammlung außerdem `rueckseite` (Eintrag oder null), `motiv`, `transkription`, `notiz`.
 
@@ -349,18 +350,25 @@ verborgen, fehlen Name und Kennung.
 
 | Aufruf | |
 |---|---|
-| `GET …/sammlungen` | Übersicht: Sammlungen mit Vorschau, nicht eingebundene Medien, freier Bestand, `darfHochladen`, `darfExif`, `darfBereiche`, `personenFilter`, `ordnerListe` |
+| `GET …/sammlungen` | Übersicht: Sammlungen mit Vorschau, nicht eingebundene Medien, freier Bestand, `darfHochladen`, `darfExif`, `darfBereiche`, `personenFilter`, `ordnerListe`; seit Stufe 6 `darfOrdnen`, `darfVerwalten`, `darfEinstellungen` und je Sammlung `album`, `bildquelle`. `?alle=1` (Verwalter): dazu `verwaltung` mit allen Sammlungen, auch ausgeblendeten, allen Feldern der Maske und den Auswahllisten (`symbole`, `ansichten`, `ordner`) |
 | `GET …/sammlung?kategorie=<slug>&seite=&pro_seite=` | Einträge einer Sammlung mit Adressen für Kachel, Vollbild und Original; `kategorie=__unlinked__&typ=` für nicht eingebundene Medien |
 | `GET …/sammlung?person=<xref>&seite=&pro_seite=` | alle Bilder des Archivs, auf denen diese Person als Gesicht markiert ist (`art: person`); `vollstaendig: false`, solange der Index beim ersten Mal noch liest |
 | `GET …/eintrag?pfad=<Datei>` | ein einzelner Eintrag in derselben Form, etwa zu einem Foto aus dem Stammbaum |
 | `POST …/hochladen` (multipart) | `file` in `ordner` ablegen – als Datei, nicht als Medienobjekt; `beschreibung`, `datum`, `personen`, `keywords` als EXIF, `sammlung` ordnet zu. Wer in webtrees hochladen darf |
-| `POST …/exif` | `beschreibung`, `datum`, `datum_unsicher`, `personen`, `keywords`, `bereiche` (JSON, ersetzt alle Gesichter) an `pfad` schreiben. Was nicht mitgeschickt wird, bleibt in der Datei. Nur Verwalter |
+| `POST …/exif` | `beschreibung`, `datum`, `datum_unsicher`, `personen`, `keywords`, `bereiche` (JSON, ersetzt alle Gesichter) an `pfad` schreiben. Was nicht mitgeschickt wird, bleibt in der Datei. Nur Verwalter. Postkarten (Stufe 6): `motiv`, `transkription`, `notiz` je für sich; `beschreibung` ohne Überschriften ist das Motiv; die Karte wird in beide Seiten geschrieben (`partner` nur, wenn die Gegenseite nicht `_V`/`_R` heißt), Gesichter nur in die eine |
+| `POST …/umbenennen` | `pfad`, `neuer_name` (gleicher Ordner, gleiche Endung); zieht Sammlungen, Gesichter-Verzeichnis und Medienobjekt mit. Verwalter |
+| `POST …/zuordnen` | `pfad`, `sammlung` (Slug eines Albums), `aktion` = `hinzufuegen`/`entfernen`. Verwalter |
+| `POST …/sichtbar` | `sammlung`, `aktiv` = 1/0. Verwalter |
+| `POST …/sammlung-speichern` | `slug` (leer = neu), `name`, `beschreibung`, `icon`, `farbe`, `ansicht`, `ordner`, `aktiv`, `reihenfolge`; beim Ändern bleibt, was fehlt. Administrator |
+| `POST …/sammlung-loeschen` | `sammlung`; Zuordnungen gehen mit, Dateien bleiben. Administrator |
+| `GET`/`POST …/einstellungen` | `cacheTtl`, `seitenGroesse` (werden auf die Grenzen gesetzt). Administrator |
+| `POST …/cache-leeren` | Zwischenspeicher des Moduls leeren. Administrator |
 
 POST braucht den CSRF-Token der Sitzung (`X-CSRF-TOKEN`). `pro_seite` und `lang` gelten nur für die Antwort.
 Fehler: `{"ok":false,"error":"…","status":…}` mit HTTP 200 (wie bei api4webtrees; ein echter 4xx-Status käme
 durch manche Webserver nicht als JSON an). Codes: `not-logged-in`, `not-member`, `upload-not-allowed`,
 `not-manager`, `unknown-collection`, `unknown-person`, `folder-not-found`, `file-not-found`, `bad-filename`,
-`blocked-extension`, `bad-date`, `bad-regions`, `not-image`, `exif-failed`. Vorhandene Dateien werden nicht überschrieben (`foto-2.jpg`).
+`blocked-extension`, `bad-date`, `bad-regions`, `not-image`, `exif-failed`; seit Stufe 6 auch `not-admin`, `post-required`, `not-postcard`, `bad-partner`, `missing-pfad`, `bad-name`, `extension-changed`, `name-exists`, `rename-failed`, `postcard-pair`, `bad-action`, `not-album`, `missing-aktiv`, `missing-name`, `bad-description`, `bad-color`, `bad-icon`, `bad-view`, `bad-order`, `bad-slug`, `save-failed`. Vorhandene Dateien werden nicht überschrieben (`foto-2.jpg`).
 
 ## Datenmodell
 

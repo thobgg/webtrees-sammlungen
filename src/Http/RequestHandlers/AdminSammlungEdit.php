@@ -30,7 +30,7 @@ class AdminSammlungEdit implements RequestHandlerInterface
     use ViewResponseTrait;
 
     /** Nur Icons aus dem webtrees FA-Kit (bestätigt funktionsfähig) */
-    private const ICON_AUSWAHL = [
+    public const ICON_AUSWAHL = [
         'folder'      => 'Ordner',
         'users'       => 'Fotos / Personen',
         'user'        => 'Portrait / Konterfei',

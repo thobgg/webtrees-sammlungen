@@ -13,6 +13,7 @@ use function in_array;
 use function pathinfo;
 use function preg_match;
 use function preg_split;
+use function str_replace;
 use function strcmp;
 use function strtolower;
 use function strtoupper;
@@ -272,6 +273,55 @@ final class Postkarten
             'transkription' => trim(implode("\n", $felder['transkription'])),
             'notiz'         => trim(implode("\n", $felder['notiz'])),
         ];
+    }
+
+    /**
+     * Neue Angaben in eine vorhandene Beschreibung einarbeiten, ohne Abschnitte
+     * zu verlieren, die nicht mitkamen - der Weg der App-Schnittstelle.
+     *
+     * `beschreibung` mit Ueberschriften ersetzt alle drei Abschnitte (so
+     * schreibt die Lightbox). Ohne Ueberschrift ist sie das Motiv: Transkription
+     * und Notiz bleiben stehen - eine App, die nur eine Beschreibung kennt,
+     * loescht damit keine Rueckseite. `motiv`, `transkription`, `notiz` ersetzen
+     * danach je ihren Abschnitt; leer mitgeschickt leeren sie ihn.
+     *
+     * Zeilenenden werden vereinheitlicht (\r\n aus Textfeldern stuende sonst als
+     * &#13; im XMP).
+     *
+     * @param array{beschreibung?:string, motiv?:string, transkription?:string, notiz?:string} $neu
+     */
+    public static function zusammenfuehren(string $alt, array $neu): string
+    {
+        $teile = self::abschnitte($alt);
+
+        if (isset($neu['beschreibung'])) {
+            $text = self::zeilenenden($neu['beschreibung']);
+
+            if (self::hatUeberschriften($text)) {
+                $teile = self::abschnitte($text);
+            } else {
+                $teile['motiv'] = trim($text);
+            }
+        }
+
+        foreach (['motiv', 'transkription', 'notiz'] as $feld) {
+            if (isset($neu[$feld])) {
+                $teile[$feld] = trim(self::zeilenenden($neu[$feld]));
+            }
+        }
+
+        return self::beschreibung($teile['motiv'], $teile['transkription'], $teile['notiz']);
+    }
+
+    /** Steht irgendwo eine Abschnitts-Ueberschrift am Zeilenanfang? */
+    public static function hatUeberschriften(string $text): bool
+    {
+        return preg_match('/^\s*(Motiv|Transkription|Notiz)\s*:/imu', $text) === 1;
+    }
+
+    private static function zeilenenden(string $text): string
+    {
+        return str_replace(["\r\n", "\r"], "\n", $text);
     }
 
     /** Das Motiv allein - was als Bildunterschrift taugt. */

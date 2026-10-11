@@ -74,6 +74,36 @@ abstract class AbstractApiHandler implements RequestHandlerInterface
     }
 
     /**
+     * Fuer schreibende Aufrufe: null, wenn es ein POST von jemandem mit diesem
+     * Recht ist - sonst die Fehlerantwort. `verwalter`: Verwalter des Baums;
+     * `admin`: Administrator (Sammlungen anlegen/aendern/loeschen, Einstellungen).
+     */
+    protected function schreibenErlaubt(ServerRequestInterface $request, Tree $tree, string $recht): ?ResponseInterface
+    {
+        if ($request->getMethod() !== 'POST') {
+            return $this->fehler(StatusCodeInterface::STATUS_METHOD_NOT_ALLOWED, 'post-required');
+        }
+
+        $user = Auth::user();
+
+        if ($recht === 'admin' && !Auth::isAdmin($user)) {
+            return $this->fehler(StatusCodeInterface::STATUS_FORBIDDEN, 'not-admin');
+        }
+
+        if (!Auth::isManager($tree, $user)) {
+            return $this->fehler(StatusCodeInterface::STATUS_FORBIDDEN, 'not-manager');
+        }
+
+        return null;
+    }
+
+    /** @return array<string,mixed> der Rumpf eines POST */
+    protected function formular(ServerRequestInterface $request): array
+    {
+        return (array) $request->getParsedBody();
+    }
+
+    /**
      * ?lang=de: die Antwort in der Sprache der App, nicht der des Kontos.
      * Sonst stuenden die Bezeichnungen der Medientypen ("Grabstein") zwischen
      * den eigenen Texten der App in einer anderen Sprache. Gilt nur fuer diese

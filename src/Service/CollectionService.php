@@ -182,8 +182,13 @@ class CollectionService
 
     public function loeschen(int $id): bool
     {
-        // Zuerst alle Zuordnungen entfernen
+        // Zuerst alle Zuordnungen entfernen - Medienobjekte und Dateien. Die
+        // Dateien selbst bleiben, wo sie sind.
         DB::table('sammlungen_collection_medium')
+            ->where('collection_id', '=', $id)
+            ->delete();
+
+        DB::table('sammlungen_collection_pfad')
             ->where('collection_id', '=', $id)
             ->delete();
 
@@ -194,6 +199,36 @@ class CollectionService
         $this->cache->flush();
 
         return $affected > 0;
+    }
+
+    /** Nach Aenderungen, die der Dienst nicht selbst macht (Umbenennen einer Datei). */
+    public function cacheLeeren(): void
+    {
+        $this->cache->flush();
+    }
+
+    /**
+     * Die Postkarten-Sammlung, in deren Ordner (oder Unterordner) diese Datei
+     * liegt - oder null. Dieselbe Regel wie die Galerie: eine Ordner-Sammlung
+     * mit dem Anzeigetyp Postkarten, sichtbar oder nicht.
+     */
+    public function postkartenSammlung(Tree $tree, string $pfad): ?object
+    {
+        foreach ($this->alle($tree) as $s) {
+            if ($s->ansicht === Postkarten::ANSICHT && self::liegtIn($pfad, (string) $s->ordner)) {
+                return $s;
+            }
+        }
+
+        return null;
+    }
+
+    /** Liegt die Datei in diesem Ordner oder darunter? */
+    public static function liegtIn(string $pfad, string $ordner): bool
+    {
+        $ordner = trim($ordner, '/');
+
+        return $ordner !== '' && str_starts_with($pfad, $ordner . '/');
     }
 
     // ---------------------------------------------------------------

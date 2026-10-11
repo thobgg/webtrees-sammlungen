@@ -207,4 +207,51 @@ final class PostkartenTest extends TestCase
     {
         self::assertSame('Kirche', Postkarten::motiv("Motiv: Kirche\nTranskription:\nHallo"));
     }
+
+    // ---------------------------------------------------------------
+    // Zusammenfuehren (App-Schnittstelle, Stufe 6)
+    // ---------------------------------------------------------------
+
+    private const VOLL = "Motiv: Rheinufer\nTranskription:\nLiebe Grüße\nDein Karl\nNotiz: Stempel unleserlich";
+
+    public function testBeschreibungOhneUeberschriftErsetztNurDasMotiv(): void
+    {
+        self::assertSame(
+            "Motiv: Dom\nTranskription:\nLiebe Grüße\nDein Karl\nNotiz: Stempel unleserlich",
+            Postkarten::zusammenfuehren(self::VOLL, ['beschreibung' => 'Dom'])
+        );
+    }
+
+    public function testBeschreibungMitUeberschriftenErsetztAlles(): void
+    {
+        self::assertSame(
+            "Motiv: Dom\nTranskription:\nHallo",
+            Postkarten::zusammenfuehren(self::VOLL, ['beschreibung' => "Motiv: Dom\nTranskription:\nHallo"])
+        );
+    }
+
+    public function testEinzelnerAbschnitt(): void
+    {
+        self::assertSame(
+            "Motiv: Rheinufer\nTranskription:\nLiebe Grüße\nDein Karl",
+            Postkarten::zusammenfuehren(self::VOLL, ['notiz' => ''])
+        );
+        self::assertSame(
+            "Motiv: Rheinufer\nTranskription:\nZeile 1\nZeile 2\nNotiz: Stempel unleserlich",
+            Postkarten::zusammenfuehren(self::VOLL, ['transkription' => "Zeile 1\r\nZeile 2"])
+        );
+    }
+
+    public function testAbschnittGewinntUeberBeschreibung(): void
+    {
+        self::assertSame(
+            "Motiv: Kirche\nNotiz: neu",
+            Postkarten::zusammenfuehren('', ['beschreibung' => 'Dom', 'motiv' => 'Kirche', 'notiz' => 'neu'])
+        );
+    }
+
+    public function testNurMotivOhneUeberschrift(): void
+    {
+        self::assertSame('Dom', Postkarten::zusammenfuehren('Rhein', ['beschreibung' => 'Dom']));
+    }
 }

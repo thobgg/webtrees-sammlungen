@@ -27,6 +27,20 @@ _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Bl
   `sammlungen_bereich_index`), das sich beim Abfragen mit dem Medienordner
   abgleicht – auch Rahmen aus digiKam kommen so hinein. Übersicht:
   `darfBereiche`, `personenFilter`. `api: 5`.
+- **Schnittstelle Stufe 6: Verwaltung aus der App.** Was die Verwaltung im
+  Browser kann, geht jetzt auch über die Schnittstelle, mit denselben Rechten:
+  `POST …/umbenennen`, `…/zuordnen` (Bild in ein Album oder heraus),
+  `…/sichtbar` (Verwalter); `…/sammlung-speichern`, `…/sammlung-loeschen`,
+  `…/einstellungen` (auch GET), `…/cache-leeren` (Administrator). Sammlungen
+  werden über ihren Slug angesprochen, nicht über die Datenbank-Id; Fehler
+  kommen wie überall in der Schnittstelle als Code mit HTTP 200.
+  `GET …/sammlungen?alle=1` liefert für Verwalter zusätzlich `verwaltung`:
+  alle Sammlungen, auch ausgeblendete, mit den Feldern der Maske und den
+  Auswahllisten. Die Übersicht nennt `darfOrdnen`, `darfVerwalten`,
+  `darfEinstellungen` und je Sammlung `album` und `bildquelle`.
+  `POST …/exif` beschreibt Postkarten wie die Lightbox: `motiv`,
+  `transkription`, `notiz` einzeln, beide Seiten mit Kartenschlüssel und
+  Gegenseite, Gesichter nur auf der einen Seite. `api: 6`.
 
 ### Geändert
 - **`POST …/exif` lässt Ungesendetes stehen.** Bisher wurden fehlende Felder
@@ -35,6 +49,20 @@ _Sammelstelle fürs nächste Bündel-Release. Einzelne Patch-Hotfixes nur bei Bl
   merken keinen Unterschied – außer dass Kartenschlüssel, Gegenseite und
   „Datum unsicher“ einer Postkarte beim Speichern aus der App nicht mehr
   verloren gehen.
+- **Postkarten aus der App verlieren keine Rückseite mehr.** Schickt eine App
+  an eine Postkarte nur eine `beschreibung` (ohne die Überschriften „Motiv:“,
+  „Transkription:“, „Notiz:“), gilt sie als Motiv; Transkription und Notiz
+  bleiben stehen, und beide Seiten der Karte bekommen den neuen Text.
+- **Umbenennen zieht das Medienobjekt mit.** Gehört die Datei zu einem
+  Medienobjekt, ändert das Modul jetzt auch dessen FILE-Zeile im Stammbaum
+  (wie webtrees selbst beim Umbenennen), statt nur die Suchtabelle – vorher
+  zeigte das Medienobjekt danach auf eine Datei, die es nicht mehr gab. Auch
+  das Verzeichnis der Gesichter folgt dem neuen Namen. Die Endung der Datei
+  lässt sich nicht mehr ändern (aus einem Bild wird keine andere Dateiart).
+- **Löschen einer Sammlung räumt auch die Dateizuordnungen ab.** Bisher
+  blieben die Zuordnungen von Dateien eines Albums in der Datenbank liegen.
+- Zeilenenden aus Textfeldern werden vor dem Schreiben vereinheitlicht und
+  stehen nicht mehr als `&#13;` im XMP.
 
 ## [1.9.0] – 2026-10-09
 
